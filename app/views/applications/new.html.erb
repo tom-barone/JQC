@@ -2,13 +2,8 @@
 
 <%= form_with scope: :application, url: applications_path, local: true do |form| %>
   <p>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
-  </p>
- 
-  <p>
-    <%= form.label :text %><br>
-    <%= form.text_area :text %>
+    <%= form.label :reference_number %><br>
+    <%= form.text_field :reference_number %>
   </p>
  
   <p>
