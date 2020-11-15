@@ -23,12 +23,6 @@ Things you may want to cover:
 
 * ...
 
-## Remove warnings
-
-```
-export RUBYOPT='-W:no-deprecated -W:no-experimental'
-```
-
 
 ## Invoicing
 
