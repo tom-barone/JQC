@@ -1,0 +1,117 @@
+<%= form_with(model: client, local: true) do |form| %>
+  <% if client.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(client.errors.count, "error") %> prohibited this client from being saved:</h2>
+
+      <ul>
+        <% client.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :ClientType %>
+    <%= form.text_area :ClientType %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ClientName %>
+    <%= form.text_area :ClientName %>
+  </div>
+
+  <div class="field">
+    <%= form.label :FirstName %>
+    <%= form.text_area :FirstName %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Surname %>
+    <%= form.text_area :Surname %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Title %>
+    <%= form.text_area :Title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Initials %>
+    <%= form.text_area :Initials %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Salutation %>
+    <%= form.text_area :Salutation %>
+  </div>
+
+  <div class="field">
+    <%= form.label :CompanyName %>
+    <%= form.text_area :CompanyName %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Street %>
+    <%= form.text_area :Street %>
+  </div>
+
+  <div class="field">
+    <%= form.label :SuburbID %>
+    <%= form.number_field :SuburbID %>
+  </div>
+
+  <div class="field">
+    <%= form.label :PostalAddress %>
+    <%= form.text_area :PostalAddress %>
+  </div>
+
+  <div class="field">
+    <%= form.label :PostalSuburbID %>
+    <%= form.number_field :PostalSuburbID %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ABN %>
+    <%= form.text_area :ABN %>
+  </div>
+
+  <div class="field">
+    <%= form.label :State %>
+    <%= form.text_field :State %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Phone %>
+    <%= form.text_area :Phone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :MobileNo %>
+    <%= form.text_area :MobileNo %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Fax %>
+    <%= form.text_area :Fax %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Email %>
+    <%= form.text_area :Email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Notes %>
+    <%= form.text_area :Notes %>
+  </div>
+
+  <div class="field">
+    <%= form.label :BadPayer %>
+    <%= form.check_box :BadPayer %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

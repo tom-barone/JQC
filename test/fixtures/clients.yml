@@ -1,0 +1,45 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  ClientType: MyText
+  ClientName: MyText
+  FirstName: MyText
+  Surname: MyText
+  Title: MyText
+  Initials: MyText
+  Salutation: MyText
+  CompanyName: MyText
+  Street: MyText
+  SuburbID: 1
+  PostalAddress: MyText
+  PostalSuburbID: 1
+  ABN: MyText
+  State: MyString
+  Phone: MyText
+  MobileNo: MyText
+  Fax: MyText
+  Email: MyText
+  Notes: MyText
+  BadPayer: false
+
+two:
+  ClientType: MyText
+  ClientName: MyText
+  FirstName: MyText
+  Surname: MyText
+  Title: MyText
+  Initials: MyText
+  Salutation: MyText
+  CompanyName: MyText
+  Street: MyText
+  SuburbID: 1
+  PostalAddress: MyText
+  PostalSuburbID: 1
+  ABN: MyText
+  State: MyString
+  Phone: MyText
+  MobileNo: MyText
+  Fax: MyText
+  Email: MyText
+  Notes: MyText
+  BadPayer: false
