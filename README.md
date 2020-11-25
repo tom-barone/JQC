@@ -23,6 +23,20 @@ Things you may want to cover:
 
 - ...
 
+## Seeding the db with the existing AppMaker db
+
+in other folder, from JQC_PROD
+
+```
+./cloneDatabase.sh
+```
+
+Dump the existing database (from cloned) into seed file
+```
+#rails db:seed:dump
+#rails db:data:dump
+```
+
 ## Invoicing
 
 using jinja2 and weasyprint to make invoices
@@ -36,11 +50,13 @@ bean-query -f csv jqc.beancount 'select sum(value(position)) as total from has_a
 ## Rails Generators From AppMaker Database
 
 Generate
+
 ```
 scaffold -c -p ./db/old_schema_from_appmaker.rb
 ```
 
 Scripts. In order of parent models -> child models with foreign key references.
+
 ```
 # ApplicationType
 rails generate scaffold ApplicationType LastUsed:integer --no-migration

@@ -1,0 +1,7 @@
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
+  Exclude:
+    - db/migrate/**/*
