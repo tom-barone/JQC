@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Displayname:</strong>
+  <%= @suburb.DisplayName %>
+</p>
+
+<p>
+  <strong>Suburb:</strong>
+  <%= @suburb.Suburb %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @suburb.State %>
+</p>
+
+<p>
+  <strong>Postcode:</strong>
+  <%= @suburb.Postcode %>
+</p>
+
+<%= link_to 'Edit', edit_suburb_path(@suburb) %> |
+<%= link_to 'Back', suburbs_path %>

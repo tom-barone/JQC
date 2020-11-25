@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  InvoiceNo: MyText
+  Stage: MyText
+  Fee: 9.99
+  GST: 9.99
+  DAC: 9.99
+  Lodgement: 9.99
+  InsLevy: 9.99
+  PercentInvoiced: 9.99
+  InvoiceDate: 2020-11-25
+  Paid: false
+  ApplicationID: one
+
+two:
+  InvoiceNo: MyText
+  Stage: MyText
+  Fee: 9.99
+  GST: 9.99
+  DAC: 9.99
+  Lodgement: 9.99
+  InsLevy: 9.99
+  PercentInvoiced: 9.99
+  InvoiceDate: 2020-11-25
+  Paid: false
+  ApplicationID: two

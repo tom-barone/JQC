@@ -1,0 +1,37 @@
+<%= form_with(model: suburb, local: true) do |form| %>
+  <% if suburb.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(suburb.errors.count, "error") %> prohibited this suburb from being saved:</h2>
+
+      <ul>
+        <% suburb.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :DisplayName %>
+    <%= form.text_area :DisplayName %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Suburb %>
+    <%= form.text_area :Suburb %>
+  </div>
+
+  <div class="field">
+    <%= form.label :State %>
+    <%= form.text_area :State %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Postcode %>
+    <%= form.text_area :Postcode %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

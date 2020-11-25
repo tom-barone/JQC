@@ -1,0 +1,123 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Applications</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Applicationtype</th>
+      <th>Referenceno</th>
+      <th>Convertedtofrom</th>
+      <th>Dateentered</th>
+      <th>Councilid</th>
+      <th>Dano</th>
+      <th>Applicantid</th>
+      <th>Applicantcouncilid</th>
+      <th>Ownerid</th>
+      <th>Ownercouncilid</th>
+      <th>Clientid</th>
+      <th>Clientcouncilid</th>
+      <th>Description</th>
+      <th>Cancelled</th>
+      <th>Streetno</th>
+      <th>Lotno</th>
+      <th>Streetname</th>
+      <th>Suburbid</th>
+      <th>Section93a</th>
+      <th>Electroniclodgement</th>
+      <th>Hardcopy</th>
+      <th>Jobtypeadministration</th>
+      <th>Quoteaccepteddate</th>
+      <th>Administrationnotes</th>
+      <th>Feeamount</th>
+      <th>Buildingsurveyor</th>
+      <th>Structuralengineer</th>
+      <th>Riskrating</th>
+      <th>Assesmentcommenced</th>
+      <th>Rfiissued</th>
+      <th>Consentissued</th>
+      <th>Variationissued</th>
+      <th>Staged</th>
+      <th>Cooissued</th>
+      <th>Jobtype</th>
+      <th>Consent</th>
+      <th>Certifier</th>
+      <th>Certificationnotes</th>
+      <th>Invoiceto</th>
+      <th>Careof</th>
+      <th>Invoicetoid</th>
+      <th>Careofid</th>
+      <th>Invoiceemail</th>
+      <th>Attention</th>
+      <th>Purchaseorderno</th>
+      <th>Fullyinvoiced</th>
+      <th>Invoicedebtornotes</th>
+      <th>Applicantemail</th>
+      <th>Sortprioritygen</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @applications.each do |application| %>
+      <tr>
+        <td><%= application.ApplicationType %></td>
+        <td><%= application.ReferenceNo %></td>
+        <td><%= application.ConvertedToFrom %></td>
+        <td><%= application.DateEntered %></td>
+        <td><%= application.CouncilID_id %></td>
+        <td><%= application.DANo %></td>
+        <td><%= application.ApplicantID_id %></td>
+        <td><%= application.ApplicantCouncilID_id %></td>
+        <td><%= application.OwnerID_id %></td>
+        <td><%= application.OwnerCouncilID_id %></td>
+        <td><%= application.ClientID_id %></td>
+        <td><%= application.ClientCouncilID_id %></td>
+        <td><%= application.Description %></td>
+        <td><%= application.Cancelled %></td>
+        <td><%= application.StreetNo %></td>
+        <td><%= application.LotNo %></td>
+        <td><%= application.StreetName %></td>
+        <td><%= application.SuburbID_id %></td>
+        <td><%= application.Section93A %></td>
+        <td><%= application.ElectronicLodgement %></td>
+        <td><%= application.HardCopy %></td>
+        <td><%= application.JobTypeAdministration %></td>
+        <td><%= application.QuoteAcceptedDate %></td>
+        <td><%= application.AdministrationNotes %></td>
+        <td><%= application.FeeAmount %></td>
+        <td><%= application.BuildingSurveyor %></td>
+        <td><%= application.StructuralEngineer %></td>
+        <td><%= application.RiskRating %></td>
+        <td><%= application.AssesmentCommenced %></td>
+        <td><%= application.RFIIssued %></td>
+        <td><%= application.ConsentIssued %></td>
+        <td><%= application.VariationIssued %></td>
+        <td><%= application.Staged %></td>
+        <td><%= application.COOIssued %></td>
+        <td><%= application.JobType %></td>
+        <td><%= application.Consent %></td>
+        <td><%= application.Certifier %></td>
+        <td><%= application.CertificationNotes %></td>
+        <td><%= application.InvoiceTo %></td>
+        <td><%= application.CareOf %></td>
+        <td><%= application.InvoiceToID_id %></td>
+        <td><%= application.CareOfID_id %></td>
+        <td><%= application.InvoiceEmail %></td>
+        <td><%= application.Attention %></td>
+        <td><%= application.PurchaseOrderNo %></td>
+        <td><%= application.FullyInvoiced %></td>
+        <td><%= application.InvoiceDebtorNotes %></td>
+        <td><%= application.ApplicantEmail %></td>
+        <td><%= application.SortPriorityGen %></td>
+        <td><%= link_to 'Show', application %></td>
+        <td><%= link_to 'Edit', edit_application_path(application) %></td>
+        <td><%= link_to 'Destroy', application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Application', new_application_path %>
