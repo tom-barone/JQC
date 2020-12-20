@@ -1,2 +1,0 @@
-class Suburb < ApplicationRecord
-end
