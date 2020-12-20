@@ -1,15 +1,19 @@
-image: google/cloud-sdk:alpine
+# Cache gems in between builds
+cache:
+  paths:
+    - vendor/bundle
 
 build:
   stage: build
   image: ruby:2.7
-  before_script:
-    - gem install bundler
-    - bundle install
   script:
-    - RAILS_ENV=production rails assets:precompile
+    - bundle config set deployment 'true'
+    - bundle install -j $(nproc) 
+  only:
+    - master
 
 deploy:
+  image: google/cloud-sdk:alpine
   stage: deploy
   dependencies:
     - build
@@ -18,7 +22,6 @@ deploy:
   script:
     - echo $SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
-    - RAILS_ENV=production rails assets:precompile
     - gcloud app deploy --project=***REMOVED***
   after_script:
     - rm /tmp/$CI_PIPELINE_ID.json

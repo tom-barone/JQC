@@ -5,9 +5,6 @@
 .git
 .gitignore
 
-# Ignore gems installed by Travis CI
-/vendor/bundle
-
 # Ignore other local Rails files
 /.bundle
 /log/*
