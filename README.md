@@ -59,3 +59,4 @@ scaffold -c -p ./db/schema.rb
 
 - Create migrations for each database table
 - link foreign keys and things
+- Change Application.Client to Application.Contact

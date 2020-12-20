@@ -1,7 +1,14 @@
 inherit_gem:
   rubocop-shopify: rubocop.yml
 
+  .rubocop.yml
+  .ruby-version
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 Style/MethodCallWithArgsParentheses:
   Enabled: true
   Exclude:
     - db/migrate/**/*
+    - app/controllers/**/*
