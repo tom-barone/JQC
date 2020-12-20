@@ -9,6 +9,7 @@ build:
   script:
     - bundle config set deployment 'true'
     - bundle install -j $(nproc) 
+    - RAILS_ENV=production bundle exec rails assets:precompile
   only:
     - master
 

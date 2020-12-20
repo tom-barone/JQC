@@ -5,6 +5,9 @@
 .git
 .gitignore
 
+# Ignore CI gems
+vendor/*
+
 # Ignore other local Rails files
 /.bundle
 /log/*
