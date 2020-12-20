@@ -1,14 +1,21 @@
 image: google/cloud-sdk:alpine
 
+build:
+  stage: build
+  image: ruby:2.7
+  script:
+    - RAILS_ENV=production rails assets:precompile
+
 deploy:
   stage: deploy
-  environment: production
+  dependencies:
+    - build
   only:
-  - master
+    - master
   script:
-  - echo $SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
-  - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
-  - gcloud app deploy --project=***REMOVED***
-
-after_script:
-- rm /tmp/$CI_PIPELINE_ID.json
+    - echo $SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
+    - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+    - RAILS_ENV=production rails assets:precompile
+    - gcloud app deploy --project=***REMOVED***
+  after_script:
+    - rm /tmp/$CI_PIPELINE_ID.json
