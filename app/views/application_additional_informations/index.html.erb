@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Application Additional Informations</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Info date</th>
+      <th>Info text</th>
+      <th>Application</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @application_additional_informations.each do |application_additional_information| %>
+      <tr>
+        <td><%= application_additional_information.info_date %></td>
+        <td><%= application_additional_information.info_text %></td>
+        <td><%= application_additional_information.application_id %></td>
+        <td><%= link_to 'Show', application_additional_information %></td>
+        <td><%= link_to 'Edit', edit_application_additional_information_path(application_additional_information) %></td>
+        <td><%= link_to 'Destroy', application_additional_information, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Application Additional Information', new_application_additional_information_path %>

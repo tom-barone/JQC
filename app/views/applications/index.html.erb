@@ -1,0 +1,121 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Applications</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Application type</th>
+      <th>Reference number</th>
+      <th>Converted to from</th>
+      <th>Council</th>
+      <th>Development application number</th>
+      <th>Applicant</th>
+      <th>Applicant council</th>
+      <th>Owner</th>
+      <th>Owner council</th>
+      <th>Client</th>
+      <th>Client council</th>
+      <th>Description</th>
+      <th>Cancelled</th>
+      <th>Street number</th>
+      <th>Lot number</th>
+      <th>Street name</th>
+      <th>Suburb</th>
+      <th>Section 93a</th>
+      <th>Electronic lodgement</th>
+      <th>Hard copy</th>
+      <th>Job type administration</th>
+      <th>Quote accepted date</th>
+      <th>Administration notes</th>
+      <th>Fee amount</th>
+      <th>Building surveyor</th>
+      <th>Structural engineer</th>
+      <th>Risk rating</th>
+      <th>Assesment commenced</th>
+      <th>Request for information issued</th>
+      <th>Consent issued</th>
+      <th>Variation issued</th>
+      <th>Staged</th>
+      <th>Coo issued</th>
+      <th>Job type</th>
+      <th>Consent</th>
+      <th>Certifier</th>
+      <th>Certification notes</th>
+      <th>Invoice to</th>
+      <th>Care of</th>
+      <th>Invoice to</th>
+      <th>Care of</th>
+      <th>Invoice email</th>
+      <th>Attention</th>
+      <th>Purchase order number</th>
+      <th>Fully invoiced</th>
+      <th>Invoice debtor notes</th>
+      <th>Applicant email</th>
+      <th>Sort priority gen</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @applications.each do |application| %>
+      <tr>
+        <td><%= application.application_type %></td>
+        <td><%= application.reference_number %></td>
+        <td><%= application.converted_to_from %></td>
+        <td><%= application.council_id %></td>
+        <td><%= application.development_application_number %></td>
+        <td><%= application.applicant_id %></td>
+        <td><%= application.applicant_council_id %></td>
+        <td><%= application.owner_id %></td>
+        <td><%= application.owner_council_id %></td>
+        <td><%= application.client_id %></td>
+        <td><%= application.client_council_id %></td>
+        <td><%= application.description %></td>
+        <td><%= application.cancelled %></td>
+        <td><%= application.street_number %></td>
+        <td><%= application.lot_number %></td>
+        <td><%= application.street_name %></td>
+        <td><%= application.suburb_id %></td>
+        <td><%= application.section_93A %></td>
+        <td><%= application.electronic_lodgement %></td>
+        <td><%= application.hard_copy %></td>
+        <td><%= application.job_type_administration %></td>
+        <td><%= application.quote_accepted_date %></td>
+        <td><%= application.administration_notes %></td>
+        <td><%= application.fee_amount %></td>
+        <td><%= application.building_surveyor %></td>
+        <td><%= application.structural_engineer %></td>
+        <td><%= application.risk_rating %></td>
+        <td><%= application.assesment_commenced %></td>
+        <td><%= application.request_for_information_issued %></td>
+        <td><%= application.consent_issued %></td>
+        <td><%= application.variation_issued %></td>
+        <td><%= application.staged %></td>
+        <td><%= application.coo_issued %></td>
+        <td><%= application.job_type %></td>
+        <td><%= application.consent %></td>
+        <td><%= application.certifier %></td>
+        <td><%= application.certification_notes %></td>
+        <td><%= application.invoice_to %></td>
+        <td><%= application.care_of %></td>
+        <td><%= application.invoice_to_id %></td>
+        <td><%= application.care_of_id %></td>
+        <td><%= application.invoice_email %></td>
+        <td><%= application.attention %></td>
+        <td><%= application.purchase_order_number %></td>
+        <td><%= application.fully_invoiced %></td>
+        <td><%= application.invoice_debtor_notes %></td>
+        <td><%= application.applicant_email %></td>
+        <td><%= application.sort_priority_gen %></td>
+        <td><%= link_to 'Show', application %></td>
+        <td><%= link_to 'Edit', edit_application_path(application) %></td>
+        <td><%= link_to 'Destroy', application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Application', new_application_path %>

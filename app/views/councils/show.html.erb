@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @council.name %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @council.city %>
+</p>
+
+<p>
+  <strong>Street:</strong>
+  <%= @council.street %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @council.state %>
+</p>
+
+<p>
+  <strong>Suburb:</strong>
+  <%= @council.suburb_id %>
+</p>
+
+<p>
+  <strong>Postal address:</strong>
+  <%= @council.postal_address %>
+</p>
+
+<p>
+  <strong>Postal suburb:</strong>
+  <%= @council.postal_suburb_id %>
+</p>
+
+<p>
+  <strong>Phone:</strong>
+  <%= @council.phone %>
+</p>
+
+<p>
+  <strong>Fax:</strong>
+  <%= @council.fax %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @council.email %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @council.notes %>
+</p>
+
+<%= link_to 'Edit', edit_council_path(@council) %> |
+<%= link_to 'Back', councils_path %>

@@ -1,0 +1,72 @@
+<%= form_with(model: council, local: true) do |form| %>
+  <% if council.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(council.errors.count, "error") %> prohibited this council from being saved:</h2>
+
+      <ul>
+        <% council.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_area :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :city %>
+    <%= form.text_area :city %>
+  </div>
+
+  <div class="field">
+    <%= form.label :street %>
+    <%= form.text_area :street %>
+  </div>
+
+  <div class="field">
+    <%= form.label :state %>
+    <%= form.text_field :state %>
+  </div>
+
+  <div class="field">
+    <%= form.label :suburb_id %>
+    <%= form.text_field :suburb_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :postal_address %>
+    <%= form.text_area :postal_address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :postal_suburb_id %>
+    <%= form.text_field :postal_suburb_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :phone %>
+    <%= form.text_area :phone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fax %>
+    <%= form.text_area :fax %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_area :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :notes %>
+    <%= form.text_area :notes %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

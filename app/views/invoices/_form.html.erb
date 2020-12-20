@@ -1,0 +1,72 @@
+<%= form_with(model: invoice, local: true) do |form| %>
+  <% if invoice.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+
+      <ul>
+        <% invoice.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :invoice_number %>
+    <%= form.text_area :invoice_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :stage %>
+    <%= form.text_area :stage %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fee %>
+    <%= form.text_field :fee %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gst %>
+    <%= form.text_field :gst %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dac %>
+    <%= form.text_field :dac %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lodgement %>
+    <%= form.text_field :lodgement %>
+  </div>
+
+  <div class="field">
+    <%= form.label :insurance_levy %>
+    <%= form.text_field :insurance_levy %>
+  </div>
+
+  <div class="field">
+    <%= form.label :percent_invoiced %>
+    <%= form.text_field :percent_invoiced %>
+  </div>
+
+  <div class="field">
+    <%= form.label :invoice_date %>
+    <%= form.date_select :invoice_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :paid %>
+    <%= form.check_box :paid %>
+  </div>
+
+  <div class="field">
+    <%= form.label :application_id %>
+    <%= form.text_field :application_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Invoices</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Invoice number</th>
+      <th>Stage</th>
+      <th>Fee</th>
+      <th>Gst</th>
+      <th>Dac</th>
+      <th>Lodgement</th>
+      <th>Insurance levy</th>
+      <th>Percent invoiced</th>
+      <th>Invoice date</th>
+      <th>Paid</th>
+      <th>Application</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @invoices.each do |invoice| %>
+      <tr>
+        <td><%= invoice.invoice_number %></td>
+        <td><%= invoice.stage %></td>
+        <td><%= invoice.fee %></td>
+        <td><%= invoice.gst %></td>
+        <td><%= invoice.dac %></td>
+        <td><%= invoice.lodgement %></td>
+        <td><%= invoice.insurance_levy %></td>
+        <td><%= invoice.percent_invoiced %></td>
+        <td><%= invoice.invoice_date %></td>
+        <td><%= invoice.paid %></td>
+        <td><%= invoice.application_id %></td>
+        <td><%= link_to 'Show', invoice %></td>
+        <td><%= link_to 'Edit', edit_invoice_path(invoice) %></td>
+        <td><%= link_to 'Destroy', invoice, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Invoice', new_invoice_path %>

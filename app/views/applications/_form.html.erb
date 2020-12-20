@@ -1,0 +1,257 @@
+<%= form_with(model: application, local: true) do |form| %>
+  <% if application.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(application.errors.count, "error") %> prohibited this application from being saved:</h2>
+
+      <ul>
+        <% application.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :application_type %>
+    <%= form.text_field :application_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :reference_number %>
+    <%= form.text_area :reference_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :converted_to_from %>
+    <%= form.text_area :converted_to_from %>
+  </div>
+
+  <div class="field">
+    <%= form.label :council_id %>
+    <%= form.text_field :council_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :development_application_number %>
+    <%= form.text_area :development_application_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :applicant_id %>
+    <%= form.text_field :applicant_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :applicant_council_id %>
+    <%= form.text_field :applicant_council_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :owner_id %>
+    <%= form.text_field :owner_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :owner_council_id %>
+    <%= form.text_field :owner_council_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :client_id %>
+    <%= form.text_field :client_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :client_council_id %>
+    <%= form.text_field :client_council_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cancelled %>
+    <%= form.check_box :cancelled %>
+  </div>
+
+  <div class="field">
+    <%= form.label :street_number %>
+    <%= form.text_area :street_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :lot_number %>
+    <%= form.text_area :lot_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :street_name %>
+    <%= form.text_area :street_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :suburb_id %>
+    <%= form.text_field :suburb_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :section_93A %>
+    <%= form.date_select :section_93A %>
+  </div>
+
+  <div class="field">
+    <%= form.label :electronic_lodgement %>
+    <%= form.check_box :electronic_lodgement %>
+  </div>
+
+  <div class="field">
+    <%= form.label :hard_copy %>
+    <%= form.check_box :hard_copy %>
+  </div>
+
+  <div class="field">
+    <%= form.label :job_type_administration %>
+    <%= form.text_area :job_type_administration %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quote_accepted_date %>
+    <%= form.date_select :quote_accepted_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :administration_notes %>
+    <%= form.text_area :administration_notes %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fee_amount %>
+    <%= form.text_field :fee_amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :building_surveyor %>
+    <%= form.text_area :building_surveyor %>
+  </div>
+
+  <div class="field">
+    <%= form.label :structural_engineer %>
+    <%= form.text_area :structural_engineer %>
+  </div>
+
+  <div class="field">
+    <%= form.label :risk_rating %>
+    <%= form.text_area :risk_rating %>
+  </div>
+
+  <div class="field">
+    <%= form.label :assesment_commenced %>
+    <%= form.date_select :assesment_commenced %>
+  </div>
+
+  <div class="field">
+    <%= form.label :request_for_information_issued %>
+    <%= form.date_select :request_for_information_issued %>
+  </div>
+
+  <div class="field">
+    <%= form.label :consent_issued %>
+    <%= form.date_select :consent_issued %>
+  </div>
+
+  <div class="field">
+    <%= form.label :variation_issued %>
+    <%= form.date_select :variation_issued %>
+  </div>
+
+  <div class="field">
+    <%= form.label :staged %>
+    <%= form.date_select :staged %>
+  </div>
+
+  <div class="field">
+    <%= form.label :coo_issued %>
+    <%= form.date_select :coo_issued %>
+  </div>
+
+  <div class="field">
+    <%= form.label :job_type %>
+    <%= form.text_area :job_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :consent %>
+    <%= form.text_area :consent %>
+  </div>
+
+  <div class="field">
+    <%= form.label :certifier %>
+    <%= form.text_area :certifier %>
+  </div>
+
+  <div class="field">
+    <%= form.label :certification_notes %>
+    <%= form.text_area :certification_notes %>
+  </div>
+
+  <div class="field">
+    <%= form.label :invoice_to %>
+    <%= form.text_area :invoice_to %>
+  </div>
+
+  <div class="field">
+    <%= form.label :care_of %>
+    <%= form.text_area :care_of %>
+  </div>
+
+  <div class="field">
+    <%= form.label :invoice_to_id %>
+    <%= form.text_field :invoice_to_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :care_of_id %>
+    <%= form.text_field :care_of_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :invoice_email %>
+    <%= form.text_area :invoice_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :attention %>
+    <%= form.text_area :attention %>
+  </div>
+
+  <div class="field">
+    <%= form.label :purchase_order_number %>
+    <%= form.text_area :purchase_order_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fully_invoiced %>
+    <%= form.check_box :fully_invoiced %>
+  </div>
+
+  <div class="field">
+    <%= form.label :invoice_debtor_notes %>
+    <%= form.text_area :invoice_debtor_notes %>
+  </div>
+
+  <div class="field">
+    <%= form.label :applicant_email %>
+    <%= form.text_area :applicant_email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :sort_priority_gen %>
+    <%= form.number_field :sort_priority_gen %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
