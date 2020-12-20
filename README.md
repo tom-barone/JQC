@@ -28,8 +28,15 @@ Things you may want to cover:
 in other folder, from JQC_PROD
 
 ```
-./cloneDatabase.sh
+./cloneDatabaseToRails.sh
 ```
+
+Then migrate and seed the DB
+```
+rails db:migrate
+rails db:seed
+```
+
 
 Dump the existing database (from cloned) into seed file
 
@@ -95,6 +102,22 @@ Depending on your application's configuration some manual setup may be required:
 
    - Not required \*
 
+## Deploying
+
+Compile rails app and deplyo
+
+```
+RAILS_ENV=production rails assets:precompile
+gcloud app deploy
+```
+
+# google cloud proxy
+
+To start:
+
+```
+cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance=tcp:3306
+```
 
 ## Todo
 

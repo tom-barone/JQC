@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+
+# Add default jqc user
+User.create(:username => 'jqc', :password => 'test_password', :password_confirmation => 'test_password')

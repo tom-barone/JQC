@@ -1,10 +1,8 @@
-entrypoint: bundle exec rackup --port $PORT
-env: flex
-runtime: ruby
-
+entrypoint: bundle exec rails server Puma -p $PORT
+runtime: ruby27
 
 env_variables:
     SECRET_KEY_BASE: ***REMOVED***
 
 beta_settings:
-  cloud_sql_instances: /cloudsql/***REMOVED***:us-central1:sql-instance
+    cloud_sql_instances: ***REMOVED***:australia-southeast1:rails-jqc-instance
