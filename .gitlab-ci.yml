@@ -9,7 +9,7 @@ build:
   script:
     - bundle config set deployment 'true'
     - bundle install -j $(nproc)
-    - RAILS_ENV=production SECRET_KEY_BASE=`bin/rails secret` bin/rails assets:precompile
+    - SECRET_KEY_BASE=`bin/rails secret` bin/rails assets:precompile
   only:
     - master
 
