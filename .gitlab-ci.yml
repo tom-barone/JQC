@@ -1,0 +1,14 @@
+image: google/cloud-sdk:alpine
+
+deploy:
+  stage: deploy
+  environment: production
+  only:
+  - master
+  script:
+  - echo $SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
+  - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+  - gcloud app deploy --project=***REMOVED***
+
+after_script:
+- rm /tmp/$CI_PIPELINE_ID.json
