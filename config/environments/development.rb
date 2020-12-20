@@ -65,4 +65,6 @@ Rails.application.configure do
   config.google_cloud.use_logging = false
   config.google_cloud.use_error_reporting = false
   config.google_cloud.use_debugger = false
+
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
