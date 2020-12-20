@@ -3,6 +3,9 @@ image: google/cloud-sdk:alpine
 build:
   stage: build
   image: ruby:2.7
+  before_script:
+    - gem install bundler
+    - bundle install
   script:
     - RAILS_ENV=production rails assets:precompile
 
