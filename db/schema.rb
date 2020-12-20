@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_25_130653) do
+ActiveRecord::Schema.define(version: 2020_12_20_014701) do
 
   create_table "application_additional_information", primary_key: "info_id", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "info_date"
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 2020_11_25_130653) do
     t.string "application_type", limit: 5
     t.text "reference_number"
     t.text "converted_to_from"
-    t.date "date_entered"
     t.integer "council_id"
     t.text "development_application_number"
     t.integer "applicant_id"
@@ -95,7 +94,6 @@ ActiveRecord::Schema.define(version: 2020_11_25_130653) do
     t.index ["client_council_id"], name: "fk_client_council"
     t.index ["client_id"], name: "fk_client"
     t.index ["council_id"], name: "fk_council"
-    t.index ["date_entered"], name: "date_entered_idx"
     t.index ["invoice_to_id"], name: "fk_invoiceto"
     t.index ["owner_council_id"], name: "fk_owner_council"
     t.index ["owner_id"], name: "fk_owner"
