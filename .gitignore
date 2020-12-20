@@ -42,3 +42,5 @@ yarn-debug.log*
 
 # Ignore SSL stuff for now
 /SSL
+
+/config/credentials/production.key
