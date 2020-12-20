@@ -4,7 +4,7 @@ class ApplicationsController < ApplicationController
   # GET /applications
   # GET /applications.json
   def index
-    @applications = Application.take(10)
+    @applications = Application.order(updated_at: :desc).take(10)
   end
 
   # GET /applications/1
