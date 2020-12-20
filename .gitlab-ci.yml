@@ -8,8 +8,8 @@ build:
   image: ruby:2.7
   script:
     - bundle config set deployment 'true'
-    - bundle install -j $(nproc) 
-    - RAILS_ENV=production bundle exec rails assets:precompile
+    - bundle install -j $(nproc)
+    - RAILS_ENV=production SECRET_KEY_BASE=`bin/rails secret` bin/rails assets:precompile
   only:
     - master
 
