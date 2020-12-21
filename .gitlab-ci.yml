@@ -21,6 +21,10 @@ cache:
 build-ruby:
   stage: build
   image: ruby:2.7
+  artifacts:
+    paths:
+      - public/
+    expire_in: 12 hrs
   before_script:
     - curl https://deb.nodesource.com/setup_14.x | bash
     - curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
@@ -40,6 +44,7 @@ deploy:
   only:
     - master
   script:
+    - ls -al public/assets # for debugging
     - echo $SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
     - gcloud app deploy --project=***REMOVED***
