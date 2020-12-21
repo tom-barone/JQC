@@ -2,22 +2,36 @@
 cache:
   paths:
     - vendor/bundle
+    - .yarn
 
-build:
+stages:
+  - yarn
+  - build
+  - test
+  - deploy
+
+build-yarn:
+  stage: yarn
+  image: node:9.4.0
+  script:
+    - yarn install --frozen-lockfile --cache-folder .yarn
+  only:
+    - master
+
+build-ruby:
   stage: build
   image: ruby:2.7
   script:
     - bundle config set deployment 'true'
     - bundle install -j $(nproc)
+    - yarn install --check-files
     - SECRET_KEY_BASE=`bin/rails secret` bin/rails assets:precompile
   only:
     - master
 
 deploy:
-  image: google/cloud-sdk:alpine
   stage: deploy
-  dependencies:
-    - build
+  image: google/cloud-sdk:alpine
   only:
     - master
   script:
