@@ -4,27 +4,32 @@ cache:
     - vendor/bundle
     - .yarn
 
-stages:
-  - yarn
-  - build
-  - test
-  - deploy
+# stages:
+#   - yarn
+#   - build
+#   - test
+#   - deploy
 
-build-yarn:
-  stage: yarn
-  image: node:14.15
-  script:
-    - yarn install --frozen-lockfile --cache-folder .yarn
-  only:
-    - master
+# build-yarn:
+#   stage: yarn
+#   image: node:14.15
+#   script:
+#     - yarn install --frozen-lockfile --cache-folder .yarn
+#   only:
+#     - master
 
 build-ruby:
   stage: build
   image: ruby:2.7
+  before_script:
+    - curl https://deb.nodesource.com/setup_14.x | bash
+    - curl https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+    - echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+    - apt-get update && apt-get install -y nodejs yarn
   script:
     - bundle config set deployment 'true'
     - bundle install -j $(nproc)
-    - SECRET_KEY_BASE=`bin/rails secret` bin/rails assets:precompile
+    - SECRET_KEY_BASE=1 RAILS_ENV=production bin/rails assets:precompile
   only:
     - master
 
