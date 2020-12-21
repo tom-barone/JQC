@@ -12,7 +12,7 @@ stages:
 
 build-yarn:
   stage: yarn
-  image: node:9.4.0
+  image: node:14.15
   script:
     - yarn install --frozen-lockfile --cache-folder .yarn
   only:
@@ -24,7 +24,6 @@ build-ruby:
   script:
     - bundle config set deployment 'true'
     - bundle install -j $(nproc)
-    - yarn install --check-files
     - SECRET_KEY_BASE=`bin/rails secret` bin/rails assets:precompile
   only:
     - master
