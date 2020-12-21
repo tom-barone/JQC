@@ -30,6 +30,11 @@ build-ruby:
     - bundle config set deployment 'true'
     - bundle install -j $(nproc)
     - SECRET_KEY_BASE=1 RAILS_ENV=production bin/rails assets:precompile
+    - ls -al
+    - ls -al app
+    - ls -al bin
+    - ls -al public
+    - ls -al vendor
   only:
     - master
 

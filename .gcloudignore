@@ -5,8 +5,9 @@
 .git
 .gitignore
 
-# Ignore CI gems
+# Ignore CI gems & yarn artifacts
 vendor/*
+.yarn/*
 
 # Ignore other local Rails files
 /.bundle
