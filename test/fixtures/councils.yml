@@ -10,7 +10,7 @@ one:
   postal_suburb: one
   phone: MyText
   fax: MyText
-  email: MyText
+  email: a
   notes: MyText
 
 two:
@@ -23,5 +23,5 @@ two:
   postal_suburb: two
   phone: MyText
   fax: MyText
-  email: MyText
+  email: b
   notes: MyText

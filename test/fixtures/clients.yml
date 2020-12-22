@@ -18,7 +18,7 @@ one:
   phone: MyText
   mobile_number: MyText
   fax: MyText
-  email: MyText
+  email: a
   notes: MyText
   bad_payer: false
 
@@ -40,6 +40,6 @@ two:
   phone: MyText
   mobile_number: MyText
   fax: MyText
-  email: MyText
+  email: b
   notes: MyText
   bad_payer: false

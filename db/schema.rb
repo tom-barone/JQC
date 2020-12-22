@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_20_051330) do
+ActiveRecord::Schema.define(version: 2020_12_22_131050) do
 
-  create_table "application_additional_information", primary_key: "info_id", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "application_additional_informations", primary_key: "info_id", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "info_date"
     t.text "info_text"
     t.integer "application_id"
@@ -194,7 +194,7 @@ ActiveRecord::Schema.define(version: 2020_12_20_051330) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "application_additional_information", "applications", primary_key: "application_id", name: "application_additional_information_ibfk_1"
+  add_foreign_key "application_additional_informations", "applications", primary_key: "application_id", name: "application_additional_informations_ibfk_1"
   add_foreign_key "application_uploads", "applications", primary_key: "application_id", name: "application_uploads_ibfk_1"
   add_foreign_key "applications", "application_types", column: "application_type", primary_key: "application_type", name: "fk_type"
   add_foreign_key "applications", "clients", column: "applicant_id", primary_key: "client_id", name: "fk_applicant"

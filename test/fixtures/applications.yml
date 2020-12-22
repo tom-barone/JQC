@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  application_type: MyString
+  application_type: PC
   reference_number: MyText
   converted_to_from: MyText
   council: one
@@ -42,16 +42,16 @@ one:
   care_of: MyText
   invoice_to: one
   care_of: one
-  invoice_email: MyText
+  invoice_email: a
   attention: MyText
   purchase_order_number: MyText
   fully_invoiced: false
   invoice_debtor_notes: MyText
-  applicant_email: MyText
+  applicant_email: b
   sort_priority_gen: 1
 
 two:
-  application_type: MyString
+  application_type: PC
   reference_number: MyText
   converted_to_from: MyText
   council: two
@@ -92,10 +92,10 @@ two:
   care_of: MyText
   invoice_to: two
   care_of: two
-  invoice_email: MyText
+  invoice_email: c
   attention: MyText
   purchase_order_number: MyText
   fully_invoiced: false
   invoice_debtor_notes: MyText
-  applicant_email: MyText
+  applicant_email: d
   sort_priority_gen: 1
