@@ -46,4 +46,13 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
+
+  # Show all logs locally
+  #config.logger = Logger.new(STDOUT)
+
+  # Disable warnings
+  config.google_cloud.use_trace = false
+  config.google_cloud.use_logging = false
+  config.google_cloud.use_error_reporting = false
+  config.google_cloud.use_debugger = false
 end

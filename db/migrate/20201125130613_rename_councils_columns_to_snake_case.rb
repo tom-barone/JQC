@@ -2,7 +2,7 @@
 
 class RenameCouncilsColumnsToSnakeCase < ActiveRecord::Migration[6.0]
   def change
-    rename_column :councils, :CouncilID, :council_id
+    rename_column :councils, :CouncilID, :id
     rename_column :councils, :Name, :name
     rename_column :councils, :City, :city
     rename_column :councils, :Street, :street

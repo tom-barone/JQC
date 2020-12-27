@@ -1,17 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  application_type: PC
-  reference_number: MyText
-  converted_to_from: MyText
-  council: one
+application_1:
+  application_type: one
+  reference_number: PC123
+  converted_to_from: Q123
+  council: council_1
   development_application_number: MyText
-  applicant: one
-  applicant_council: one
-  owner: one
-  owner_council: one
-  client: one
-  client_council: one
+  applicant: client_1
+  applicant_council: council_1
+  owner: client_1
+  owner_council: council_1
+  client: client_1
+  client_council: council_1
   description: MyText
   cancelled: false
   street_number: MyText
@@ -40,8 +40,6 @@ one:
   certification_notes: MyText
   invoice_to: MyText
   care_of: MyText
-  invoice_to: one
-  care_of: one
   invoice_email: a
   attention: MyText
   purchase_order_number: MyText
@@ -51,7 +49,7 @@ one:
   sort_priority_gen: 1
 
 two:
-  application_type: PC
+  application_type: one
   reference_number: MyText
   converted_to_from: MyText
   council: two
@@ -90,8 +88,6 @@ two:
   certification_notes: MyText
   invoice_to: MyText
   care_of: MyText
-  invoice_to: two
-  care_of: two
   invoice_email: c
   attention: MyText
   purchase_order_number: MyText

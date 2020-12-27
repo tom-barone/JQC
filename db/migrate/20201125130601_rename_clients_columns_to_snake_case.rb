@@ -2,7 +2,7 @@
 
 class RenameClientsColumnsToSnakeCase < ActiveRecord::Migration[6.0]
   def change
-    rename_column :clients, :ClientID, :client_id
+    rename_column :clients, :ClientID, :id
     rename_column :clients, :ClientType, :client_type
     rename_column :clients, :ClientName, :client_name
     rename_column :clients, :FirstName, :first_name

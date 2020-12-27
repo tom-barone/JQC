@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class ApplicationsTest < ApplicationSystemTestCase
   setup do
-    @application = applications(:one)
+    @application = applications(:application_1)
   end
 
   test "visiting the index" do
@@ -24,7 +24,6 @@ class ApplicationsTest < ApplicationSystemTestCase
     fill_in "Building surveyor", with: @application.building_surveyor
     check "Cancelled" if @application.cancelled
     fill_in "Care of", with: @application.care_of
-    fill_in "Care of", with: @application.care_of_id
     fill_in "Certification notes", with: @application.certification_notes
     fill_in "Certifier", with: @application.certifier
     fill_in "Client council", with: @application.client_council_id
@@ -42,8 +41,8 @@ class ApplicationsTest < ApplicationSystemTestCase
     check "Hard copy" if @application.hard_copy
     fill_in "Invoice debtor notes", with: @application.invoice_debtor_notes
     fill_in "Invoice email", with: @application.invoice_email
+
     fill_in "Invoice to", with: @application.invoice_to
-    fill_in "Invoice to", with: @application.invoice_to_id
     fill_in "Job type", with: @application.job_type
     fill_in "Job type administration", with: @application.job_type_administration
     fill_in "Lot number", with: @application.lot_number
@@ -82,7 +81,6 @@ class ApplicationsTest < ApplicationSystemTestCase
     fill_in "Building surveyor", with: @application.building_surveyor
     check "Cancelled" if @application.cancelled
     fill_in "Care of", with: @application.care_of
-    fill_in "Care of", with: @application.care_of_id
     fill_in "Certification notes", with: @application.certification_notes
     fill_in "Certifier", with: @application.certifier
     fill_in "Client council", with: @application.client_council_id
@@ -101,7 +99,6 @@ class ApplicationsTest < ApplicationSystemTestCase
     fill_in "Invoice debtor notes", with: @application.invoice_debtor_notes
     fill_in "Invoice email", with: @application.invoice_email
     fill_in "Invoice to", with: @application.invoice_to
-    fill_in "Invoice to", with: @application.invoice_to_id
     fill_in "Job type", with: @application.job_type
     fill_in "Job type administration", with: @application.job_type_administration
     fill_in "Lot number", with: @application.lot_number

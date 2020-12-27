@@ -2,7 +2,7 @@
 
 class RenameInvoicesColumnsToSnakeCase < ActiveRecord::Migration[6.0]
   def change
-    rename_column :invoices, :InvoiceId, :invoice_id
+    rename_column :invoices, :InvoiceId, :id
     rename_column :invoices, :InvoiceNo, :invoice_number
     rename_column :invoices, :Stage, :stage
     rename_column :invoices, :Fee, :fee
