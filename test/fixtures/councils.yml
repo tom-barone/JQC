@@ -25,3 +25,16 @@ two:
   fax: MyText
   email: b
   notes: MyText
+
+unused:
+  name: MyText
+  city: MyText
+  street: MyText
+  state: MyString
+  suburb: two
+  postal_address: MyText
+  postal_suburb: two
+  phone: MyText
+  fax: MyText
+  email: b
+  notes: MyText

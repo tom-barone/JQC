@@ -11,7 +11,7 @@ one:
   percent_invoiced: 9.99
   invoice_date: 2020-12-20
   paid: false
-  application: one
+  application: application_1
 
 two:
   invoice_number: MyText
@@ -24,4 +24,4 @@ two:
   percent_invoiced: 9.99
   invoice_date: 2020-12-20
   paid: false
-  application: two
+  application: application_1

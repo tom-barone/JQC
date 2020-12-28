@@ -2,6 +2,7 @@ require 'test_helper'
 
 class StagesControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in_test_user
     @stage = stages(:one)
   end
 

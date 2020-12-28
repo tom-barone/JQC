@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_27_065916) do
+ActiveRecord::Schema.define(version: 2020_12_28_014526) do
 
   create_table "application_additional_informations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "info_date"
@@ -191,8 +191,8 @@ ActiveRecord::Schema.define(version: 2020_12_27_065916) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "application_additional_informations", "applications", name: "application_additional_informations_ibfk_1"
-  add_foreign_key "application_uploads", "applications", name: "application_uploads_ibfk_1"
+  add_foreign_key "application_additional_informations", "applications", name: "application_additional_informations_ibfk_1", on_delete: :cascade
+  add_foreign_key "application_uploads", "applications", name: "application_uploads_ibfk_1", on_delete: :cascade
   add_foreign_key "applications", "application_types"
   add_foreign_key "applications", "clients", column: "applicant_id", name: "fk_applicant"
   add_foreign_key "applications", "clients", column: "owner_id", name: "fk_owner"
@@ -206,6 +206,6 @@ ActiveRecord::Schema.define(version: 2020_12_27_065916) do
   add_foreign_key "clients", "suburbs", name: "clients_ibfk_1"
   add_foreign_key "councils", "suburbs", column: "postal_suburb_id", name: "councils_ibfk_2"
   add_foreign_key "councils", "suburbs", name: "councils_ibfk_1"
-  add_foreign_key "invoices", "applications", name: "invoices_ibfk_1"
-  add_foreign_key "stages", "applications", name: "stages_ibfk_1"
+  add_foreign_key "invoices", "applications", name: "invoices_ibfk_1", on_delete: :cascade
+  add_foreign_key "stages", "applications", name: "stages_ibfk_1", on_delete: :cascade
 end

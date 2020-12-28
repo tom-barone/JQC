@@ -11,3 +11,9 @@ two:
   suburb: MyText
   state: MyText
   postcode: MyText
+
+unused:
+  display_name: MyText
+  suburb: MyText
+  state: MyText
+  postcode: MyText

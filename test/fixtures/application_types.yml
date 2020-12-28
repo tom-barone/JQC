@@ -7,3 +7,8 @@ one:
 two:
   last_used: 2
   application_type: Q
+
+  # This one can be deleted safely
+unused:
+  last_used: 5
+  application_type: ZZZZ

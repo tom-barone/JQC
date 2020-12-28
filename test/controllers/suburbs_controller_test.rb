@@ -2,7 +2,9 @@ require 'test_helper'
 
 class SuburbsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in_test_user
     @suburb = suburbs(:one)
+    @unused = suburbs(:unused)
   end
 
   test "should get index" do
@@ -40,7 +42,7 @@ class SuburbsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy suburb" do
     assert_difference('Suburb.count', -1) do
-      delete suburb_url(@suburb)
+      delete suburb_url(@unused)
     end
 
     assert_redirected_to suburbs_url

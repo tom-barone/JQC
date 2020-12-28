@@ -3,9 +3,9 @@
 one:
   stage_date: 2020-12-20
   stage_text: MyText
-  application: one
+  application: application_1
 
 two:
   stage_date: 2020-12-20
   stage_text: MyText
-  application: two
+  application: application_1

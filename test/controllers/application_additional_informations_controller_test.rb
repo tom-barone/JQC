@@ -2,6 +2,7 @@ require 'test_helper'
 
 class ApplicationAdditionalInformationsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in_test_user
     @application_additional_information = application_additional_informations(:one)
   end
 

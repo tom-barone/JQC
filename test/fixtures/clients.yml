@@ -43,3 +43,25 @@ two:
   email: b
   notes: MyText
   bad_payer: false
+
+unused:
+  client_type: MyText
+  client_name: MyText
+  first_name: MyText
+  surname: MyText
+  title: MyText
+  initials: MyText
+  salutation: MyText
+  company_name: MyText
+  street: MyText
+  suburb: two
+  postal_address: MyText
+  postal_suburb: two
+  australian_business_number: MyText
+  state: MyString
+  phone: MyText
+  mobile_number: MyText
+  fax: MyText
+  email: b
+  notes: MyText
+  bad_payer: false

@@ -3,9 +3,9 @@
 one:
   uploaded_date: 2020-12-20
   uploaded_text: MyText
-  application: one
+  application: application_1
 
 two:
   uploaded_date: 2020-12-20
   uploaded_text: MyText
-  application: two
+  application: application_1

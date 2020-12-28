@@ -2,7 +2,9 @@ require 'test_helper'
 
 class ClientsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @client = clients(:one)
+    sign_in_test_user
+    @client = clients(:client_1)
+    @unused = clients(:unused)
   end
 
   test "should get index" do
@@ -40,7 +42,7 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy client" do
     assert_difference('Client.count', -1) do
-      delete client_url(@client)
+      delete client_url(@unused)
     end
 
     assert_redirected_to clients_url

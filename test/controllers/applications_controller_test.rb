@@ -1,16 +1,9 @@
 require "test_helper"
 
 class ApplicationsControllerTest < ActionDispatch::IntegrationTest
-  include Devise::Test::IntegrationHelpers
 
   setup do
-    # Sign in
-    get "/users/sign_in"
-    sign_in users(:test_user)
-    post user_session_url
-    follow_redirect!
-    assert_response :success
-
+    sign_in_test_user
     @application = applications(:application_1)
   end
 

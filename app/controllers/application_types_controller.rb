@@ -69,6 +69,6 @@ class ApplicationTypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def application_type_params
-      params.require(:application_type).permit(:last_used)
+      params.require(:application_type).permit(:application_type, :last_used)
     end
 end

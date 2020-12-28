@@ -2,7 +2,9 @@ require 'test_helper'
 
 class CouncilsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @council = councils(:one)
+    sign_in_test_user
+    @council = councils(:council_1)
+    @unused = councils(:unused)
   end
 
   test "should get index" do
@@ -40,7 +42,7 @@ class CouncilsControllerTest < ActionDispatch::IntegrationTest
 
   test "should destroy council" do
     assert_difference('Council.count', -1) do
-      delete council_url(@council)
+      delete council_url(@unused)
     end
 
     assert_redirected_to councils_url

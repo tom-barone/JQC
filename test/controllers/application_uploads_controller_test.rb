@@ -2,6 +2,7 @@ require 'test_helper'
 
 class ApplicationUploadsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in_test_user
     @application_upload = application_uploads(:one)
   end
 
