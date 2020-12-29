@@ -5,4 +5,4 @@ env_variables:
     SECRET_KEY_BASE: ***REMOVED***
 
 beta_settings:
-    cloud_sql_instances: ***REMOVED***:australia-southeast1:rails-jqc-instance
+    cloud_sql_instances: ***REMOVED***:australia-southeast1:rails-jqc-instance-v8

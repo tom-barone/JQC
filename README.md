@@ -116,7 +116,7 @@ gcloud app deploy
 To start:
 
 ```
-cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance=tcp:3306
+cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance-v8=tcp:3306
 ```
 
 ## Todo

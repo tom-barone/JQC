@@ -55,4 +55,4 @@ production:
   timeout: 5000
   username: development
   #username: production
-  socket: /cloudsql/***REMOVED***:australia-southeast1:rails-jqc-instance
+  socket: /cloudsql/***REMOVED***:australia-southeast1:rails-jqc-instance-v8
