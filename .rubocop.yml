@@ -1,6 +1,6 @@
 inherit_gem:
   rubocop-shopify: rubocop.yml
-
+  rubocop-config-prettier: config/rubocop.yml
   .rubocop.yml
   .ruby-version
 

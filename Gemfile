@@ -43,6 +43,10 @@ group :development do
 
   gem "seed_dump", "~> 3.3"
   gem "rubocop-shopify", "~> 1.0"
+  gem 'rubocop-config-prettier'
+  gem 'htmlbeautifier'
+  gem 'guard'
+  gem 'guard-livereload'
 end
 
 group :test do
@@ -59,3 +63,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "appengine", "~> 0.5.0"
 
 gem "devise"
+gem 'pagy', '~> 3.10'
