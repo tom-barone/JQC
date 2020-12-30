@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_28_232230) do
+ActiveRecord::Schema.define(version: 2020_12_29_032706) do
 
   create_table "application_additional_informations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "info_date"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 2020_12_28_232230) do
     t.index ["client_council_id"], name: "fk_client_council"
     t.index ["client_id"], name: "fk_client"
     t.index ["council_id"], name: "fk_council"
+    t.index ["description", "development_application_number", "street_name", "street_number", "lot_number"], name: "application_search_fulltext_index", type: :fulltext
     t.index ["owner_council_id"], name: "fk_owner_council"
     t.index ["owner_id"], name: "fk_owner"
     t.index ["suburb_id"], name: "fk_suburb"
@@ -120,6 +121,7 @@ ActiveRecord::Schema.define(version: 2020_12_28_232230) do
     t.boolean "bad_payer", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_name"], name: "index_clients_on_client_name", type: :fulltext
     t.index ["postal_suburb_id"], name: "fk_postalsuburb"
     t.index ["suburb_id"], name: "fk_suburb"
   end
@@ -138,6 +140,7 @@ ActiveRecord::Schema.define(version: 2020_12_28_232230) do
     t.text "notes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_councils_on_name", type: :fulltext
     t.index ["postal_suburb_id"], name: "fk_postalsuburb"
     t.index ["suburb_id"], name: "fk_suburb"
   end
@@ -175,6 +178,7 @@ ActiveRecord::Schema.define(version: 2020_12_28_232230) do
     t.text "postcode", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["display_name"], name: "index_suburbs_on_display_name", type: :fulltext
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|

@@ -1,16 +1,36 @@
 class ApplicationsController < ApplicationController
-  before_action :set_application, only: [:show, :edit, :update, :destroy]
+  include Pagy::Backend
+
+  before_action :set_application, only: %i[show edit update destroy]
 
   # GET /applications
   # GET /applications.json
   def index
-    @applications = Application.order(updated_at: :desc).take(10)
+    params.permit(:type, :start_date, :end_date, :search_text, :format)
+    @applications_not_paged = Application
+          .filter_by_search_text(params[:search_text])
+          .filter_by_type(params[:type])
+          .filter_by_date(params[:start_date], params[:end_date])
+          # Show PC's first, then Q's
+          .order(
+            'field (application_type_id, 3, 4, 1, 5, 2, 6) asc, reference_number desc'
+          )
+
+    @pagy, @applications =
+      pagy(@applications_not_paged)
+    @types = ApplicationType.pluck(:application_type)
+
+    respond_to do |format|
+      format.html
+      format.csv { 
+        send_data @applications_not_paged.to_csv
+      }
+    end
   end
 
   # GET /applications/1
   # GET /applications/1.json
-  def show
-  end
+  def show; end
 
   # GET /applications/new
   def new
@@ -18,8 +38,7 @@ class ApplicationsController < ApplicationController
   end
 
   # GET /applications/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /applications
   # POST /applications.json
@@ -28,11 +47,16 @@ class ApplicationsController < ApplicationController
 
     respond_to do |format|
       if @application.save
-        format.html { redirect_to @application, notice: 'Application was successfully created.' }
+        format.html do
+          redirect_to @application,
+                      notice: 'Application was successfully created.'
+        end
         format.json { render :show, status: :created, location: @application }
       else
         format.html { render :new }
-        format.json { render json: @application.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @application.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -42,11 +66,16 @@ class ApplicationsController < ApplicationController
   def update
     respond_to do |format|
       if @application.update(application_params)
-        format.html { redirect_to @application, notice: 'Application was successfully updated.' }
+        format.html do
+          redirect_to @application,
+                      notice: 'Application was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @application }
       else
         format.html { render :edit }
-        format.json { render json: @application.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @application.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -56,19 +85,72 @@ class ApplicationsController < ApplicationController
   def destroy
     @application.destroy
     respond_to do |format|
-      format.html { redirect_to applications_url, notice: 'Application was successfully destroyed.' }
+      format.html do
+        redirect_to applications_url,
+                    notice: 'Application was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_application
-      @application = Application.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def application_params
-      params.require(:application).permit(:application_type_id, :reference_number, :converted_to_from, :council_id, :development_application_number, :applicant_id, :applicant_council_id, :owner_id, :owner_council_id, :client_id, :client_council_id, :description, :cancelled, :street_number, :lot_number, :street_name, :suburb_id, :section_93A, :electronic_lodgement, :hard_copy, :job_type_administration, :quote_accepted_date, :administration_notes, :fee_amount, :building_surveyor, :structural_engineer, :risk_rating, :assesment_commenced, :request_for_information_issued, :consent_issued, :variation_issued, :staged, :coo_issued, :job_type, :consent, :certifier, :certification_notes, :invoice_to, :care_of, :invoice_email, :attention, :purchase_order_number, :fully_invoiced, :invoice_debtor_notes, :applicant_email, :sort_priority_gen)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_application
+    @application = Application.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def application_params
+    params
+      .require(:application)
+      .permit(
+        :application_type_id,
+        :reference_number,
+        :converted_to_from,
+        :council_id,
+        :development_application_number,
+        :applicant_id,
+        :applicant_council_id,
+        :owner_id,
+        :owner_council_id,
+        :client_id,
+        :client_council_id,
+        :description,
+        :cancelled,
+        :street_number,
+        :lot_number,
+        :street_name,
+        :suburb_id,
+        :section_93A,
+        :electronic_lodgement,
+        :hard_copy,
+        :job_type_administration,
+        :quote_accepted_date,
+        :administration_notes,
+        :fee_amount,
+        :building_surveyor,
+        :structural_engineer,
+        :risk_rating,
+        :assesment_commenced,
+        :request_for_information_issued,
+        :consent_issued,
+        :variation_issued,
+        :staged,
+        :coo_issued,
+        :job_type,
+        :consent,
+        :certifier,
+        :certification_notes,
+        :invoice_to,
+        :care_of,
+        :invoice_email,
+        :attention,
+        :purchase_order_number,
+        :fully_invoiced,
+        :invoice_debtor_notes,
+        :applicant_email,
+        :sort_priority_gen
+      )
+  end
 end
