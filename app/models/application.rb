@@ -9,6 +9,19 @@ class Application < ApplicationRecord
   belongs_to :suburb
   belongs_to :application_type
 
+  has_many :application_uploads, inverse_of: :application
+  accepts_nested_attributes_for :application_uploads, allow_destroy: true
+
+  has_many :application_additional_informations, inverse_of: :application
+  accepts_nested_attributes_for :application_additional_informations, allow_destroy: true
+
+  has_many :stages, inverse_of: :application
+  accepts_nested_attributes_for :stages, allow_destroy: true
+
+  has_many :invoices, inverse_of: :application
+  accepts_nested_attributes_for :invoices, allow_destroy: true
+
+
   scope :filter_by_type,
         ->(application_type) {
           if application_type != nil

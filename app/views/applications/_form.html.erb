@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= form.label :application_type_id %>
-    <%= form.text_field :application_type_id %>
+    <%= form.collection_select :application_type_id, ApplicationType.order(:application_type), :id, :application_type %>
   </div>
 
   <div class="field">
@@ -244,6 +244,37 @@
   <div class="actions">
     <%= form.submit %>
   </div>
+
+  Uploaded:
+  <ul>
+    <%= form.fields_for :application_uploads do |uploads_form| %>
+      <li>
+        <%= uploads_form.label :uploaded_date %>
+        <%= uploads_form.text_field :uploaded_date %>
+
+        <%= uploads_form.label :uploaded_text %>
+        <%= uploads_form.text_field :uploaded_text %>
+
+        <%= uploads_form.check_box :_destroy %>
+      </li>
+    <% end %>
+  </ul>
+
+  Additional Information:
+  <ul>
+    <%= form.fields_for :application_additional_informations do |info_form| %>
+      <li>
+        <%= info_form.label :info_date %>
+        <%= info_form.text_field :info_date %>
+
+        <%= info_form.label :info_text %>
+        <%= info_form.text_field :info_text %>
+
+        <%= info_form.check_box :_destroy %>
+      </li>
+    <% end %>
+  </ul>
+
 <% end %>
 
 <datalist id="suburbs">
