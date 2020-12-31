@@ -38,7 +38,11 @@ class ApplicationsController < ApplicationController
   end
 
   # GET /applications/1/edit
-  def edit; end
+  def edit
+    @suburbs = Suburb.where(state: 'SA').pluck(:display_name)
+    @clients = Client.pluck(:client_name)
+    @councils = Council.pluck(:name)
+  end
 
   # POST /applications
   # POST /applications.json
@@ -121,7 +125,7 @@ class ApplicationsController < ApplicationController
         :street_number,
         :lot_number,
         :street_name,
-        :suburb_id,
+        :suburb_display_name,
         :section_93A,
         :electronic_lodgement,
         :hard_copy,

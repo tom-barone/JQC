@@ -83,4 +83,11 @@ class Application < ApplicationRecord
       all.each { |user| csv << user.attributes.values_at(*attributes) }
     end
   end
+
+  def suburb_display_name=(display_name)
+    self.suburb = Suburb.find_by!(display_name: display_name)
+  end
+  def suburb_display_name=(display_name)
+    self.suburb ? self.suburb.display_name : nil
+  end
 end
