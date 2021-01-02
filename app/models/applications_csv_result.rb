@@ -1,4 +1,6 @@
 class ApplicationsCsvResult < ApplicationRecord
+  self.primary_key = :id
+
   scope :filter_all,
         ->(params) {
           filter_by_search_text(params[:search_text])
@@ -119,7 +121,7 @@ class ApplicationsCsvResult < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << headers
 
-      all.each do |a|
+      all.find_each do |a|
         csv << headers.map { |header| a.send(header) }
       end
     end
