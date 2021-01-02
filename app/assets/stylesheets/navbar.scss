@@ -1,0 +1,19 @@
+nav {
+    a {
+        font-size: 1rem;
+    }
+
+    // Underline links when selected
+    a.active:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #4EBA6F;
+    }
+    .nav-item {
+      position: relative;
+    }
+}
