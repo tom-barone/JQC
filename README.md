@@ -124,3 +124,4 @@ cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance
 - Create migrations for each database table
 - link foreign keys and things
 - Change Application.Client to Application.Contact
+- drop sortprioritygen column

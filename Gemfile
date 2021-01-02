@@ -65,3 +65,5 @@ gem "appengine", "~> 0.5.0"
 gem "devise"
 gem 'pagy', '~> 3.10'
 gem 'simple_form'
+gem 'scenic'
+gem 'scenic-mysql_adapter'
