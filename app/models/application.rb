@@ -13,7 +13,8 @@ class Application < ApplicationRecord
   accepts_nested_attributes_for :application_uploads, allow_destroy: true
 
   has_many :application_additional_informations, inverse_of: :application
-  accepts_nested_attributes_for :application_additional_informations, allow_destroy: true
+  accepts_nested_attributes_for :application_additional_informations,
+                                allow_destroy: true
 
   has_many :stages, inverse_of: :application
   accepts_nested_attributes_for :stages, allow_destroy: true
@@ -21,6 +22,16 @@ class Application < ApplicationRecord
   has_many :invoices, inverse_of: :application
   accepts_nested_attributes_for :invoices, allow_destroy: true
 
+  scope :filter_all,
+        ->(params) {
+          filter_by_search_text(params[:search_text])
+            .filter_by_type(params[:type])
+            .filter_by_date(params[:start_date], params[:end_date])
+            # Show PC's first, then Q's
+            .order(
+              'field (application_type_id, 3, 4, 1, 5, 2, 6) asc, reference_number desc'
+            )
+        }
 
   scope :filter_by_type,
         ->(application_type) {
@@ -81,21 +92,12 @@ class Application < ApplicationRecord
                 search_text,
                 search_text,
                 search_text,
-                "%" + search_text + "%"
+                '%' + search_text + '%'
               )
           else
             nil
           end
         }
-
-  def self.to_csv
-    attributes = %w[id reference_number ]
-    CSV.generate(headers: true) do |csv|
-      csv << attributes
-
-      all.each { |user| csv << user.attributes.values_at(*attributes) }
-    end
-  end
 
   def suburb_display_name=(display_name)
     self.suburb = Suburb.find_by!(display_name: display_name)

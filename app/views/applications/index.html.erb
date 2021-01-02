@@ -1,6 +1,10 @@
+<% content_for :nav_buttons do %>
+  <%= button_to  applications_path({format: :csv}), params: params.permit(:type, :start_date, :end_date, :search_text), class:"btn btn-sm btn-outline-primary mx-1 text-nowrap", method: :get do %>
+    Download as Spreadsheet
+  <% end %>
+<% end %>
 <p id="notice"><%= notice %></p>
 <h1>Applications</h1>
-<%= link_to "View CSV", applications_path({format: :csv}.merge(params.permit(:type, :start_date, :end_date, :search_text))) %>
 <div class="container">
   <div class="row justify-content-start">
     <div class="col-lg">

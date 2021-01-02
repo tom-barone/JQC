@@ -7,15 +7,7 @@ class ApplicationsController < ApplicationController
   # GET /applications.json
   def index
     params.permit(:type, :start_date, :end_date, :search_text, :format)
-    @applications_not_paged = Application
-          .filter_by_search_text(params[:search_text])
-          .filter_by_type(params[:type])
-          .filter_by_date(params[:start_date], params[:end_date])
-          # Show PC's first, then Q's
-          .order(
-            'field (application_type_id, 3, 4, 1, 5, 2, 6) asc, reference_number desc'
-          )
-
+    @applications_not_paged = Application.filter_all(params)
     @pagy, @applications =
       pagy(@applications_not_paged)
     @types = ApplicationType.pluck(:application_type)
@@ -23,7 +15,7 @@ class ApplicationsController < ApplicationController
     respond_to do |format|
       format.html
       format.csv { 
-        send_data @applications_not_paged.to_csv
+        send_data ApplicationsCsvResult.filter_all(params).to_csv
       }
     end
   end
