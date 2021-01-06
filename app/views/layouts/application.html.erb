@@ -13,7 +13,7 @@
   </head>
   <body>
     <% if user_signed_in? %>
-      <nav class="navbar navbar-default navbar-static-top navbar-expand-md navbar-light bg-light py-0">
+      <nav class="navbar navbar-default navbar-static-top navbar-expand-md navbar-light bg-light pt-0">
         <div class="container-fluid">
           <%= image_tag "logo.svg", class: "navbar-brand", style: "width: 10%;height: auto;"%>
           <div class="collapse navbar-collapse">
@@ -29,7 +29,7 @@
               </li>
             </ul>
           </div>
-          <div class="d-flex">
+          <div class="d-flex justify-content-end">
             <%= yield :nav_buttons %>
             <button type="button" class="btn btn-sm btn-outline-secondary mx-1 text-nowrap" data-bs-container="body" data-bs-html="true" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="
 If you have any issues at all then please contact me (Tom) and I'll get back to you as soon as possible.<br/>

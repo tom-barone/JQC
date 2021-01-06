@@ -121,7 +121,7 @@ class ApplicationsCsvResult < ApplicationRecord
     CSV.generate(headers: true) do |csv|
       csv << headers
 
-      all.find_each do |a|
+      all.find_each(batch_size: 10000) do |a|
         csv << headers.map { |header| a.send(header) }
       end
     end
