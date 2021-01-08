@@ -1,3 +1,43 @@
 // Place all the styles related to the Applications controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+.app-reference-number {
+  width: 5%;
+}
+.app-location {
+  width: 10%;
+}
+.app-suburb {
+  width: 10%;
+}
+.app-description {
+  width: 20%;
+}
+.app-contact {
+  width: 10%;
+}
+.app-owner {
+  width: 10%;
+}
+.app-applicant {
+  width: 10%;
+}
+.app-council {
+  width: 10%;
+}
+.app-date {
+  width: 7.5%;
+}
+.app-da {
+  width: 7.5%;
+}
+.app-buttons {
+  width: 5%;
+}
+
+.app-pagination {
+  .pagination {
+    justify-content: flex-end;
+  }
+}

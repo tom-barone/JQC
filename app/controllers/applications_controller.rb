@@ -9,7 +9,7 @@ class ApplicationsController < ApplicationController
     params.permit(:type, :start_date, :end_date, :search_text, :format)
     @applications_not_paged = Application.filter_all(params)
     @pagy, @applications =
-      pagy(@applications_not_paged)
+      pagy(@applications_not_paged, items: 30)
     @types = ApplicationType.pluck(:application_type)
 
     respond_to do |format|

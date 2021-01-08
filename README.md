@@ -125,3 +125,10 @@ cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance
 - link foreign keys and things
 - Change Application.Client to Application.Contact
 - drop sortprioritygen column
+
+- do this https://floatingcube.com/blog/action-cable/
+- tests: 
+- export works
+- export works lots of records
+- export works and can load page at the same time
+- export works and can load page at the same time

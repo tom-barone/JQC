@@ -26,76 +26,78 @@
         <button class="btn btn-primary" type="button" onclick="search()">Search</button>
         <button class="btn btn-outline-primary" type="button" data-bs-container="body" data-bs-html="true" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="
 <h6>Advanced Searching</h6>
-Find applications that contain at least one of the two words:
-<pre>flinders university</pre>
-
-Find applications that must contain both words:
-<pre>+flinders +university</pre>
-
-Find applications that contain the word &quot;university&quot; but not &quot;flinders&quot;:
-<pre>+university -flinders</pre>
-
-Find applications that have reference numbers in the PC61XXX range, eg PC612584, PC61293, PC61773...
-<pre>PC61*</pre>
-
-Find applications that contain the exact phrase &quot;Format Homes&quot;:
-<pre>&quot;Format Homes&quot;</pre>
-" >
-          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-            <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
-          </svg>
-        </button>
-        <button class="btn btn-outline-secondary" type="button" onclick="clearSearchParams()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="d-flex justify-content-end">
-        <%= button_to 'New Application', new_application_path, class:"btn btn-primary text-nowrap" %>
-      </div>
+        Find applications that contain at least one of the two words:
+        <pre>flinders university</pre>
+        Find applications that must contain both words:
+        <pre>+flinders +university</pre>
+        Find applications that contain the word &quot;university&quot; but not &quot;flinders&quot;:
+        <pre>+university -flinders</pre>
+        Find applications that have reference numbers in the PC61XXX range, eg PC612584, PC61293, PC61773...
+        <pre>PC61*</pre>
+        Find applications that contain the exact phrase &quot;Format Homes&quot;:
+        <pre>&quot;Format Homes&quot;</pre>
+        " >
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
+          <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+          <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+        </svg>
+      </button>
+      <button class="btn btn-outline-secondary" type="button" onclick="clearSearchParams()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+        </svg>
+      </button>
     </div>
   </div>
-  <table>
-    <thead>
+  <div class="col-sm-2">
+    <div class="d-flex justify-content-end">
+      <%= button_to 'New Application', new_application_path, class:"btn btn-primary text-nowrap" %>
+    </div>
+  </div>
+</div>
+<table class="table table-sm mb-0" style="table-layout:fixed">
+  <thead>
+    <tr>
+      <th class="app-reference-number">Reference Number</th>
+      <th class="app-location">Location</th>
+      <th class="app-suburb">Suburb</th>
+      <th class="app-description">Description</th>
+      <th class="app-contact">Contact</th>
+      <th class="app-owner">Owner</th>
+      <th class="app-applicant">Applicant</th>
+      <th class="app-council">Council</th>
+      <th class="app-date">Date Created</th>
+      <th class="app-da">DA No.</th>
+      <th class="app-buttons"></th>
+    </tr>
+  </thead>
+</table>
+<div class="border-bottom" style="max-height: 75vh; overflow: scroll">
+  <table class="table table-hover table-sm mb-0" style="table-layout: fixed">
+    <% @applications.each do |application| %>
       <tr>
-        <th>Reference No</th>
-        <th>Location</th>
-        <th>Suburb</th>
-        <th>Description</th>
-        <th>Contact</th>
-        <th>Owner</th>
-        <th>Applicant</th>
-        <th>Council</th>
-        <th>DateCreated</th>
-        <th>DA No</th>
-        <th colspan="3"></th>
+        <td class="app-reference-number align-top text-truncate" role="button"><%= application.reference_number %></td>
+        <td class="app-location align-top text-truncate" role="button"><%= 
+        (application.lot_number ? application.lot_number + ' ' : '') + \
+          (application.street_number ? application.street_number + ' ' : '') + \
+          (application.street_name ? application.street_name + ' ' : '')
+          %></td>
+        <td class="app-suburb align-top text-truncate" role="button"><%= application.suburb.try(:display_name) %></td>
+        <td class="app-description align-top text-truncate" role="button"><%= application.description %></td>
+        <td class="app-contact align-top text-truncate" role="button"><%= application.client.try(:client_name) %></td>
+        <td class="app-owner align-top text-truncate" role="button"><%= application.owner.try(:client_name) %></td>
+        <td class="app-applicant align-top text-truncate" role="button"><%= application.applicant.try(:client_name) %></td>
+        <td class="app-council align-top text-truncate" role="button"><%= application.council.try(:name)%></td>
+        <td class="app-date align-top text-truncate" role="button"><%= application.created_at.strftime('%-d %b %Y') %></td>
+        <td class="app-da align-top text-truncate" role="button"><%= application.development_application_number %></td>
+        <td class="app-buttons align-top text-truncate"><%= link_to 'Edit', edit_application_path(application) %></td>
       </tr>
-    </thead>
-    <tbody>
-      <% @applications.each do |application| %>
-        <tr>
-          <td><%= application.reference_number %></td>
-          <td><%= application.street_name %></td>
-          <td><%= application.suburb.try(:display_name) %></td>
-          <td><%= application.description %></td>
-          <td><%= application.client.try(:client_name) %></td>
-          <td><%= application.owner.try(:client_name) %></td>
-          <td><%= application.applicant.try(:client_name) %></td>
-          <td><%= application.council.try(:name)%></td>
-          <td><%= application.created_at %></td>
-          <td><%= application.development_application_number %></td>
-          <td><%= link_to 'Show', application %></td>
-          <td><%= link_to 'Edit', edit_application_path(application) %></td>
-          <td><%= link_to 'Destroy', application, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
+    <% end %>
   </table>
-  <%== pagy_nav(@pagy) %>
-  <br>
+</div>
+<div class="app-pagination mt-2">
+  <%== pagy_bootstrap_nav(@pagy) %>
+</div>
+<br>
 </div>
 <%= javascript_pack_tag 'applications_index_page' %>
