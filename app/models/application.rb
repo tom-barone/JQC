@@ -22,6 +22,8 @@ class Application < ApplicationRecord
   has_many :invoices, inverse_of: :application
   accepts_nested_attributes_for :invoices, allow_destroy: true
 
+  JOB_TYPE = ["Residential", "Commercial", "Section 49"]
+
   scope :filter_all,
         ->(params) {
           filter_by_search_text(params[:search_text])
@@ -102,7 +104,14 @@ class Application < ApplicationRecord
   def suburb_display_name=(display_name)
     self.suburb = Suburb.find_by!(display_name: display_name)
   end
-  def suburb_display_name=(display_name)
+  def suburb_display_name
     self.suburb ? self.suburb.display_name : nil
+  end
+
+  def council_name=(name)
+    self.council = Council.find_by!(name: name)
+  end
+  def council_name
+    self.council ? self.council.name : nil
   end
 end

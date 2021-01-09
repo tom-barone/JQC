@@ -72,10 +72,10 @@
     </tr>
   </thead>
 </table>
-<div class="border-bottom" style="max-height: 75vh; overflow: scroll">
+<div class="border-bottom" style="max-height: 75vh; overflow: auto">
   <table class="table table-hover table-sm mb-0" style="table-layout: fixed">
     <% @applications.each do |application| %>
-      <tr>
+      <tr onclick='Turbolinks.visit("<%= edit_application_path(application)%>")'>
         <td class="app-reference-number align-top text-truncate" role="button"><%= application.reference_number %></td>
         <td class="app-location align-top text-truncate" role="button"><%= 
         (application.lot_number ? application.lot_number + ' ' : '') + \
