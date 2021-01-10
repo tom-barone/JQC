@@ -6,9 +6,14 @@ class ApplicationsController < ApplicationController
   # GET /applications
   # GET /applications.json
   def index
-    params.permit(:type, :start_date, :end_date, :search_text, :format)
-    @applications_not_paged = Application.filter_all(params)
-    @pagy, @applications = pagy(@applications_not_paged, items: 40)
+    params.permit(:type, :start_date, :end_date, :search_text, :format, :page)
+
+    @number_results_per_page = 1000
+    
+    @applications_not_paged = ApplicationSearchResult.filter_all(params)
+    @pagy, @applications = pagy(@applications_not_paged, items: @number_results_per_page)
+
+    
     @types = ApplicationType.pluck(:application_type)
 
     respond_to do |format|
@@ -63,7 +68,7 @@ class ApplicationsController < ApplicationController
 
     respond_to do |format|
       if @application.update(application_params)
-        format.html { redirect_to applications_url + '/99455/edit' }
+        format.html { redirect_to applications_url }
         format.json { render :show, status: :ok, location: @application }
       else
         format.html { render :edit, location: @application }

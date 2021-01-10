@@ -72,22 +72,18 @@
     </tr>
   </thead>
 </table>
-<div class="border-bottom" style="max-height: 75vh; overflow: auto">
+<div class="border-bottom" style="max-height: 76vh; overflow: overlay">
   <table class="table table-hover table-sm mb-0" style="table-layout: fixed">
     <% @applications.each do |application| %>
       <tr onclick='Turbolinks.visit("<%= edit_application_path(application)%>")'>
         <td class="app-reference-number align-top text-truncate" role="button"><%= application.reference_number %></td>
-        <td class="app-location align-top text-truncate" role="button"><%= 
-        (application.lot_number ? application.lot_number + ' ' : '') + \
-          (application.street_number ? application.street_number + ' ' : '') + \
-          (application.street_name ? application.street_name + ' ' : '')
-          %></td>
-        <td class="app-suburb align-top text-truncate" role="button"><%= application.suburb.try(:display_name) %></td>
+        <td class="app-location align-top text-truncate" role="button"><%= application.location%></td>
+        <td class="app-suburb align-top text-truncate" role="button"><%= application.suburb %></td>
         <td class="app-description align-top text-truncate" role="button"><%= application.description %></td>
-        <td class="app-contact align-top text-truncate" role="button"><%= application.client.try(:client_name) %></td>
-        <td class="app-owner align-top text-truncate" role="button"><%= application.owner.try(:client_name) %></td>
-        <td class="app-applicant align-top text-truncate" role="button"><%= application.applicant.try(:client_name) %></td>
-        <td class="app-council align-top text-truncate" role="button"><%= application.council.try(:name)%></td>
+        <td class="app-contact align-top text-truncate" role="button"><%= application.contact %></td>
+        <td class="app-owner align-top text-truncate" role="button"><%= application.owner %></td>
+        <td class="app-applicant align-top text-truncate" role="button"><%= application.applicant %></td>
+        <td class="app-council align-top text-truncate" role="button"><%= application.council %></td>
         <td class="app-date align-top text-truncate" role="button"><%= application.created_at.strftime('%-d %b %Y') %></td>
         <td class="app-da align-top text-truncate" role="button"><%= application.development_application_number %></td>
         <td class="app-buttons align-top text-truncate"><%= link_to 'Edit', edit_application_path(application) %></td>
@@ -96,7 +92,14 @@
   </table>
 </div>
 <div class="app-pagination mt-2">
-  <%== pagy_bootstrap_nav(@pagy) %>
+  <div class="row">
+    <div class="col">
+      Showing <%= @number_results_per_page %> results per page
+    </div>
+    <div class="col">
+      <%== pagy_bootstrap_nav(@pagy) %>
+    </div>
+  </div>
 </div>
 <br>
 </div>

@@ -1,5 +1,5 @@
 // Find all inputs on the DOM which are bound to a datalist via their list attribute.
-var inputs = document.querySelectorAll('input[list]');
+var inputs = document.querySelectorAll('input[list].list-option-required');
 for (var i = 0; i < inputs.length; i++) {
   // When the value of the input changes…
   inputs[i].addEventListener('change', function() {
