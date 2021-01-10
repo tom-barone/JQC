@@ -8,15 +8,12 @@ class ApplicationsController < ApplicationController
   def index
     params.permit(:type, :start_date, :end_date, :search_text, :format)
     @applications_not_paged = Application.filter_all(params)
-    @pagy, @applications =
-      pagy(@applications_not_paged, items: 30)
+    @pagy, @applications = pagy(@applications_not_paged, items: 40)
     @types = ApplicationType.pluck(:application_type)
 
     respond_to do |format|
       format.html
-      format.csv { 
-        send_data ApplicationsCsvResult.filter_all(params).to_csv
-      }
+      format.csv { send_data ApplicationsCsvResult.filter_all(params).to_csv }
     end
   end
 
@@ -60,15 +57,16 @@ class ApplicationsController < ApplicationController
   # PATCH/PUT /applications/1
   # PATCH/PUT /applications/1.json
   def update
+    @suburbs = Suburb.where(state: 'SA').pluck(:display_name)
+    @clients = Client.pluck(:client_name)
+    @councils = Council.pluck(:name)
+
     respond_to do |format|
       if @application.update(application_params)
-        format.html do
-          redirect_to @application,
-                      notice: 'Application was successfully updated.'
-        end
+        format.html { redirect_to applications_url + '/99455/edit' }
         format.json { render :show, status: :ok, location: @application }
       else
-        format.html { render :edit }
+        format.html { render :edit, location: @application }
         format.json do
           render json: @application.errors, status: :unprocessable_entity
         end
@@ -106,11 +104,11 @@ class ApplicationsController < ApplicationController
         :converted_to_from,
         :council_id,
         :development_application_number,
-        :applicant_id,
+        :applicant_name,
         :applicant_council_id,
-        :owner_id,
+        :owner_name,
         :owner_council_id,
-        :client_id,
+        :client_name,
         :client_council_id,
         :description,
         :cancelled,
@@ -132,7 +130,6 @@ class ApplicationsController < ApplicationController
         :request_for_information_issued,
         :consent_issued,
         :variation_issued,
-        :staged,
         :coo_issued,
         :job_type,
         :consent,
@@ -146,7 +143,9 @@ class ApplicationsController < ApplicationController
         :fully_invoiced,
         :invoice_debtor_notes,
         :applicant_email,
-        :sort_priority_gen
+        invoices_attributes: [
+          Invoice.attribute_names.map(&:to_sym).push(:_destroy)
+        ]
       )
   end
 end

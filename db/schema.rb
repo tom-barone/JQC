@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_01_104959) do
+ActiveRecord::Schema.define(version: 2021_01_10_052148) do
 
   create_table "application_additional_informations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "info_date"
@@ -68,7 +68,6 @@ ActiveRecord::Schema.define(version: 2021_01_01_104959) do
     t.date "request_for_information_issued"
     t.date "consent_issued"
     t.date "variation_issued"
-    t.date "staged"
     t.date "coo_issued"
     t.text "job_type"
     t.text "consent"
@@ -82,7 +81,6 @@ ActiveRecord::Schema.define(version: 2021_01_01_104959) do
     t.boolean "fully_invoiced", default: false
     t.text "invoice_debtor_notes"
     t.text "applicant_email"
-    t.integer "sort_priority_gen", limit: 1
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "application_type_id"
@@ -153,7 +151,6 @@ ActiveRecord::Schema.define(version: 2021_01_01_104959) do
     t.decimal "dac", precision: 13, scale: 2
     t.decimal "lodgement", precision: 13, scale: 2
     t.decimal "insurance_levy", precision: 13, scale: 2
-    t.decimal "percent_invoiced", precision: 13, scale: 2
     t.date "invoice_date"
     t.boolean "paid"
     t.integer "application_id"

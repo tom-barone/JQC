@@ -1,0 +1,15 @@
+<tr>
+  <td><%= f.date_field :invoice_date, class: "form-control form-control-sm" %></td>
+  <td><%= f.text_field :stage %></td>
+  <td><%= f.text_field :fee, type: "number", min: "1", step: "any"  %></td>
+  <td><%= f.text_field :insurance_levy, type: "number", min: "1", step: "any"  %></td>
+  <td><%= f.text_field :gst, type: "number", min: "1", step: "any"  %></td>
+  <td><%= f.text_field :dac, type: "number", min: "1", step: "any"  %></td>
+  <td><%= f.text_field :lodgement, type: "number", min: "1", step: "any"  %></td>
+  <td><%= f.text_field :invoice_number %></td>
+  <td><%= f.check_box :paid %></td>
+  <td>
+    <%= f.check_box :_destroy, class: "sds"%>
+    <%= link_to 'Delete', '#', class: 'remove_record' %>
+  </td>
+</tr>

@@ -16,3 +16,22 @@ require("jquery");
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 //
+//
+
+$(document).on('turbolinks:load', function() {
+
+  $('form').on('click', '.remove_record', function(event) {
+    $(this).prev('input[type=checkbox]').click();
+    $(this).closest('tr').hide();
+    return event.preventDefault();
+  });
+
+  $('form').on('click', '.add_fields', function(event) {
+    var regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(this).data('id'), 'g');
+    $('.invoice_fields').append($(this).data('fields').replace(regexp, time));
+    return event.preventDefault();
+  });
+  
+});
