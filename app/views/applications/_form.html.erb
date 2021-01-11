@@ -59,42 +59,42 @@
               <div class="row">
                 <div class="col">
                   <div class="field">
-                    <%= form.label :applicant_name %>
+                    <%= form.label :applicant_name, "Applicant"%>
                     <%= form.text_field :applicant_name, list: "clients" %>
                   </div>
                 </div>
                 <div class="col">
                   <div class="field">
-                    <%= form.label :applicant_council_id %>
-                    <%= form.text_field :applicant_council_id %>
+                    <%= form.label :applicant_council_name, "Applicant Council"%>
+                    <%= form.text_field :applicant_council_name, list: "councils" %>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <div class="field">
-                    <%= form.label :owner_name %>
+                    <%= form.label :owner_name, "Owner"%>
                     <%= form.text_field :owner_name, list: "clients" %>
                   </div>
                 </div>
                 <div class="col">
                   <div class="field">
-                    <%= form.label :owner_council_id %>
-                    <%= form.text_field :owner_council_id %>
+                    <%= form.label :owner_council_name, "Owner Council" %>
+                    <%= form.text_field :owner_council_name, list: "councils" %>
                   </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col">
                   <div class="field">
-                    <%= form.label :client_name %>
+                    <%= form.label :client_name, "Contact"%>
                     <%= form.text_field :client_name, list: "clients" %>
                   </div>
                 </div>
                 <div class="col">
                   <div class="field">
-                    <%= form.label :client_council_id %>
-                    <%= form.text_field :client_council_id %>
+                    <%= form.label :client_council_name, "Contact Council"%>
+                    <%= form.text_field :client_council_name, list: "councils" %>
                   </div>
                 </div>
               </div>
@@ -136,7 +136,7 @@
             <div class="col">
               <div class="field">
                 <%= form.label :suburb_display_name %>
-                <%= form.text_field :suburb_display_name, list: "suburbs", class: "list-option-required" %>
+                <%= form.text_field :suburb_display_name, list: "suburbs", class: "form-control form-control-sm list-option-required" %>
               </div>
             </div>
             <div class="col">
@@ -180,51 +180,8 @@
           </div>
         </div>
         <div class="col">
-          <div class="row h-550">
-            Additional Information:
-            <ul>
-              <%= form.fields_for :application_additional_informations do |info_form| %>
-                <li>
-                  <%= info_form.label :info_date %>
-                  <%= info_form.text_field :info_date %>
-                  <%= info_form.label :info_text %>
-                  <%= info_form.text_field :info_text %>
-                  <%= info_form.check_box :_destroy %>
-                </li>
-              <% end %>
-              <%= form.fields_for :application_additional_informations, application.application_additional_informations.build do |info_fields| %>
-                <li>
-                  <%= info_fields.label :info_date %>
-                  <%= info_fields.text_field :info_date %>
-                  <%= info_fields.label :info_text %>
-                  <%= info_fields.text_field :info_text %>
-                </li>
-              <% end %>
-            </ul>
-          </div>
-          <div class="row">
-            Uploaded:
-            <ul>
-              <%= form.fields_for :application_uploads do |uploads_form| %>
-                <li>
-                  <%= uploads_form.label :uploaded_date %>
-                  <%= uploads_form.text_field :uploaded_date %>
-                  <%= uploads_form.label :uploaded_text %>
-                  <%= uploads_form.text_field :uploaded_text %>
-                  <%= uploads_form.check_box :_destroy %>
-                </li>
-              <% end %>
-              <%= form.fields_for :application_uploads, application.application_uploads.build do |uploads_fields| %>
-                <li>
-                  <%= uploads_fields.label :uploaded_date %>
-                  <%= uploads_fields.text_field :uploaded_date %>
-                  <%= uploads_fields.label :uploaded_text %>
-                  <%= uploads_fields.text_field :uploaded_text %>
-                  <%= uploads_fields.check_box :_destroy %>
-                </li>
-              <% end %>
-            </ul>
-          </div>
+          <div class="row"></div>
+          <div class="row"></div>
         </div>
       </div>
     </div>
@@ -406,8 +363,12 @@
                   <td id="gst-total"></td>
                   <td id="dac-total"></td>
                   <td id="lodgement-total"></td>
-                  <td class="invoice-table-invoice-number"></td>
-                  <td class="invoice-table-paid"></td>
+                  <td class="invoice-table-invoice-number">
+                    <%= form.label :fully_invoiced, "Fully invoiced" %>
+                  </td>
+                  <td class="invoice-table-paid">
+                    <%= form.check_box :fully_invoiced %>
+                  </td>
                   <td class="invoice-table-buttons">
                     <%= link_to_add_association 'Add', form, :invoices, 
                       'data-association-insertion-node': ".invoice-fields",
@@ -426,10 +387,6 @@
       <div class="field">
         <%= form.check_box :cancelled %>
         <%= form.label :cancelled %>
-      </div>
-      <div class="field">
-        <%= form.check_box :fully_invoiced %>
-        <%= form.label :fully_invoiced %>
       </div>
       <%= form.submit %>
     </div>

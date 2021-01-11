@@ -75,7 +75,7 @@
 <div class="border-bottom" style="max-height: 76vh; overflow: overlay">
   <table class="table table-hover table-sm mb-0" style="table-layout: fixed">
     <% @applications.each do |application| %>
-      <tr onclick='Turbolinks.visit("<%= edit_application_path(application)%>")'>
+      <tr onclick='Turbolinks.visit("<%= edit_application_path(application)%>")' class="bg-white">
         <td class="app-reference-number align-top text-truncate" role="button"><%= application.reference_number %></td>
         <td class="app-location align-top text-truncate" role="button"><%= application.location%></td>
         <td class="app-suburb align-top text-truncate" role="button"><%= application.suburb %></td>
@@ -86,7 +86,7 @@
         <td class="app-council align-top text-truncate" role="button"><%= application.council %></td>
         <td class="app-date align-top text-truncate" role="button"><%= application.created_at.strftime('%-d %b %Y') %></td>
         <td class="app-da align-top text-truncate" role="button"><%= application.development_application_number %></td>
-        <td class="app-buttons align-top text-truncate"><%= link_to 'Edit', edit_application_path(application) %></td>
+        <td class="app-buttons align-top text-truncate"><%= link_to 'Edit', edit_application_path(application), class: "btn btn-sm btn-outline-secondary py-0" %></td>
       </tr>
     <% end %>
   </table>
