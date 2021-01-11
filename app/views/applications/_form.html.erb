@@ -25,13 +25,13 @@
             </div>
             <div class="col">
               <div class="field">
-                <%= form.label :reference_number %>
+                <%= form.label :reference_number, "Reference no." %>
                 <%= form.text_field :reference_number %>
               </div>
             </div>
             <div class="col">
               <div class="field">
-                <%= form.label "Converted To/From" %>
+                <%= form.label :converted_to_from, "Converted to/from" %>
                 <%= form.text_field :converted_to_from %>
               </div>
             </div>
@@ -49,7 +49,7 @@
             </div>
             <div class="col">
               <div class="field">
-                <label>DA Number</label>
+                <%= form.label :development_application_number, "DA No." %>
                 <%= form.text_field :development_application_number%>
               </div>
             </div>
@@ -229,7 +229,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-4 border">
+      <div class="col-5 border">
         <div class="row text-center">
           <h4>Certification</h4>
         </div>
@@ -358,7 +358,7 @@
               </div>
               <div class="col">
                 <div class="field">
-                  <%= form.label :purchase_order_number %>
+                  <%= form.label :purchase_order_number, "Purchase No."%>
                   <%= form.text_field :purchase_order_number %>
                 </div>
               </div>
@@ -370,31 +370,49 @@
               </div>
             </div>
           </div>
-          <div class="col-8">
+          <div class="col-9">
             <table class="table table-sm mb-0" style="table-layout: fixed">
               <thead>
                 <tr>
-                  <th>Date</th>
-                  <th>Stage</th>
-                  <th>KD Fee</th>
-                  <th>Insurance levy</th>
-                  <th>GST</th>
-                  <th>DAC</th>
-                  <th>Lodgement</th>
-                  <th>Invoice number</th>
-                  <th>Paid</th>
-                  <th></th>
+                  <td class="invoice-table-date">Date</td>
+                  <td>Stage</td>
+                  <td>KD Fee</td>
+                  <td>Ins. levy</td>
+                  <td>GST</td>
+                  <td>DAC</td>
+                  <td>Lodgement</td>
+                  <td class="invoice-table-invoice-number">Invoice no.</td>
+                  <td class="invoice-table-paid">Paid</td>
+                  <td class="invoice-table-buttons"></td>
                 </tr>
               </thead>
             </table>
+            <div style="max-height: 220px; overflow:overlay">
+              <table class="table table-sm mb-0" style="table-layout: fixed">
+                <tbody class="invoice_fields">
+                  <%= form.fields_for :invoices do |invoices_form| %>
+                    <%= render 'invoice', f: invoices_form %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
             <table class="table table-sm mb-0" style="table-layout: fixed">
-              <tbody class="invoice_fields">
-                <%= link_to_add_row('Add Task', form, :invoices, class: 'btn btn-primary') %>
-                <%= form.label :fully_invoiced %>
-                <%= form.fields_for :invoices do |invoices_form| %>
-                  <%= render 'invoice', f: invoices_form %>
-                <% end %>
-              </tbody>
+              <tfoot class="invoice-footer">
+                <tr>
+                  <td class="invoice-table-date">Totals</td>
+                  <td></td>
+                  <td id="fee-total"></td>
+                  <td id="insurance-levy-total"></td>
+                  <td id="gst-total"></td>
+                  <td id="dac-total"></td>
+                  <td id="lodgement-total"></td>
+                  <td class="invoice-table-invoice-number"></td>
+                  <td class="invoice-table-paid"></td>
+                  <td class="invoice-table-buttons">
+                    <%= button_to_add_row(form, :invoices, class: 'btn btn-sm btn-primary') %>
+                  </td>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </div>

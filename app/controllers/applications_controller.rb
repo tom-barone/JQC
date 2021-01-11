@@ -11,6 +11,7 @@ class ApplicationsController < ApplicationController
     @number_results_per_page = 1000
     
     @applications_not_paged = ApplicationSearchResult.filter_all(params)
+    @total_count = @applications_not_paged.count
     @pagy, @applications = pagy(@applications_not_paged, items: @number_results_per_page)
 
     
