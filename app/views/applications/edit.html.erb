@@ -1,5 +1,12 @@
-
+<% content_for :submit_actions do %>
+  <div class="col">
+    <input type="submit" value="Save" form="application_form" class= "btn btn-success"/>
+  </div>
+  <div class="col">
+    <%= link_to 'Delete', @application, method: :delete, data: { confirm: 'Are you sure you want to to delete?'}, class: "btn btn-danger" %>
+  </div>
+  <div class="col">
+    <%= link_to 'Exit', applications_path, class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>
 <%= render 'form', application: @application %>
-
-<%= link_to 'Show', @application %> |
-<%= link_to 'Back', applications_path %>

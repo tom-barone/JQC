@@ -21,12 +21,14 @@
               <li class="nav-item">
                 <%= link_to 'Applications', applications_path, class: "nav-link" + (params[:controller] == "applications" ? " active" : "") %>
               </li>
+              <!-- Remove these links for now
               <li class="nav-item">
                 <a class="nav-link <%= 'active' if params[:controller] == 'clients'%>" href="clients">Clients</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link <%= 'active' if params[:controller] == 'councils'%>" href="councils">Councils</a>
               </li>
+              -->
             </ul>
           </div>
           <div class="d-flex justify-content-end">

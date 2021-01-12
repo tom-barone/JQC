@@ -30,6 +30,9 @@ class ApplicationsController < ApplicationController
   # GET /applications/new
   def new
     @application = Application.new
+    @suburbs = Suburb.where(state: 'SA').pluck(:display_name)
+    @clients = Client.pluck(:client_name)
+    @councils = Council.pluck(:name)
   end
 
   # GET /applications/1/edit

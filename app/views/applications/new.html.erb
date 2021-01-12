@@ -1,5 +1,9 @@
-<h1>New Application</h1>
-
+<% content_for :submit_actions do %>
+  <div class="col">
+    <input type="submit" value="Save" form="application_form" class= "btn btn-success"/>
+  </div>
+  <div class="col">
+    <%= link_to 'Exit', applications_path, class: "btn btn-outline-secondary", data: { confirm: 'Are you sure you want to to exit? All data for this application will be discarded.'} %>
+  </div>
+<% end %>
 <%= render 'form', application: @application %>
-
-<%= link_to 'Back', applications_path %>
