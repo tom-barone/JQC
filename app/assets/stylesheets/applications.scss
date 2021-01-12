@@ -56,3 +56,31 @@
 .invoice-table-buttons {
   width: 7%;
 }
+
+.additional-information-text,
+.uploaded-text {
+  width: 64%;
+}
+.additional-information-buttons,
+.uploaded-buttons {
+  width: 9%;
+}
+.uploaded-table-body-container,
+.additional-information-body-container {
+  max-height: 115px;
+  overflow: overlay;
+}
+
+.stages-body-container {
+  max-height: 100px;
+  overflow: overlay;
+}
+.stages-date {
+  width: 10%;
+}
+.stages-text {
+  width: 8%;
+}
+.stages-buttons {
+  width: 4%;
+}

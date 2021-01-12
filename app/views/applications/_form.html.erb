@@ -20,7 +20,7 @@
             <div class="col-1">
               <div class="field">
                 <%= form.label "Type" %>
-                <%= form.collection_select :application_type_id, ApplicationType.order(:application_type), :id, :application_type, include_blank: "Select..." %>
+                <%= form.collection_select :application_type_id, ApplicationType.order(:application_type), :id, :application_type, prompt: 'Select' %>
               </div>
             </div>
             <div class="col">
@@ -180,8 +180,62 @@
           </div>
         </div>
         <div class="col">
-          <div class="row"></div>
-          <div class="row"></div>
+          <div class="row additional-information-table h-50 flex-column">
+            <div>
+              <table class="table table-sm mb-0" style="table-layout: fixed">
+                <thead>
+                  <tr>
+                    <td>Additional Information</td>
+                    <td class="additional-information-text"></td>
+                    <td class="additional-information-buttons">
+                      <%= link_to_add_association 'Add', form, :application_additional_informations, 
+                        'data-association-insertion-node': ".additional-information-fields",
+                        'data-association-insertion-method': "append",
+                        class: 'btn btn-sm btn-outline-primary'
+                      %>
+                    </td>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="additional-information-body-container">
+              <table class="table table-sm mb-0" style="table-layout: fixed">
+                <tbody class="additional-information-fields">
+                  <%= form.fields_for :application_additional_informations do |additional_information_form| %>
+                    <%= render 'application_additional_information_fields', f: additional_information_form %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="row uploaded-table h-50 flex-column">
+            <div>
+              <table class="table table-sm mb-0" style="table-layout: fixed">
+                <thead>
+                  <tr>
+                    <td>Uploaded</td>
+                    <td class="uploaded-text"></td>
+                    <td class="uploaded-buttons">
+                      <%= link_to_add_association 'Add', form, :application_uploads, 
+                        'data-association-insertion-node': ".uploaded-fields",
+                        'data-association-insertion-method': "append",
+                        class: 'btn btn-sm btn-outline-primary'
+                      %>
+                    </td>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="uploaded-table-body-container">
+              <table class="table table-sm mb-0" style="table-layout: fixed">
+                <tbody class="uploaded-fields">
+                  <%= form.fields_for :application_uploads do |uploads_form| %>
+                    <%= render 'application_upload_fields', f: uploads_form %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -216,12 +270,12 @@
             </div>
           </div>
         </div>
-        <div class="row">
-          <div class="col-8">
+        <div class="row" style="height: 40%">
+          <div class="col">
             <div class="row">
               <div class="col">
                 <div class="field">
-                  <%= form.label :request_for_information_issued %>
+                  <%= form.label :request_for_information_issued, "RFI issued" %>
                   <%= form.date_field :request_for_information_issued %>
                 </div>
               </div>
@@ -247,7 +301,33 @@
               </div>
             </div>
           </div>
-          <div class="col-4">
+          <div class="col-6">
+            <div>
+              <table class="table table-sm mb-0" style="table-layout: fixed">
+                <thead>
+                  <tr style="vertical-align: top;">
+                    <td class="stages-date">Stages</td>
+                    <td class="stages-text"></td>
+                    <td class="stages-buttons">
+                      <%= link_to_add_association 'Add', form, :stages, 
+                        'data-association-insertion-node': ".stages-fields",
+                        'data-association-insertion-method': "append",
+                        class: 'btn btn-sm btn-outline-primary py-0'
+                      %>
+                    </td>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="stages-body-container">
+              <table class="table table-sm mb-0" style="table-layout: fixed">
+                <tbody class="stages-fields">
+                  <%= form.fields_for :stages do |stages_form| %>
+                    <%= render 'stage_fields', f: stages_form %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
         <div class="row">
@@ -277,7 +357,7 @@
           <div class="col">
             <div class="field">
               <%= form.label :certification_notes %>
-              <%= form.text_area :certification_notes, rows: 4 %>
+              <%= form.text_area :certification_notes, rows: 2 %>
             </div>
           </div>
         </div>
@@ -327,7 +407,7 @@
               </div>
             </div>
           </div>
-          <div class="col-9 invoice-table">
+          <div class="col-9 invoice-table h-100">
             <table class="table table-sm mb-0" style="table-layout: fixed">
               <thead>
                 <tr>

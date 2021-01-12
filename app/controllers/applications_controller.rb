@@ -154,6 +154,15 @@ class ApplicationsController < ApplicationController
         :applicant_email,
         invoices_attributes: [
           Invoice.attribute_names.map(&:to_sym).push(:_destroy)
+        ],
+        application_additional_informations_attributes: [
+          ApplicationAdditionalInformation.attribute_names.map(&:to_sym).push(:_destroy)
+        ],
+        application_uploads_attributes: [
+          ApplicationUpload.attribute_names.map(&:to_sym).push(:_destroy)
+        ],
+        stages_attributes: [
+          Stage.attribute_names.map(&:to_sym).push(:_destroy)
         ]
       )
   end
