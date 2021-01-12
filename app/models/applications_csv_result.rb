@@ -101,7 +101,6 @@ class ApplicationsCsvResult < ApplicationRecord
       request_for_information_issued
       consent_issued
       variation_issued
-      staged
       coo_issued
       job_type
       consent
