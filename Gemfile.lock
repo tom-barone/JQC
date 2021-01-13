@@ -58,6 +58,8 @@ GEM
       zeitwerk (~> 2.2, >= 2.2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
+    amoeba (3.1.0)
+      activerecord (>= 3.2.6)
     appengine (0.5.0)
       google-cloud-env (~> 1.2)
       stackdriver (~> 0.15)
@@ -378,6 +380,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  amoeba
   appengine (~> 0.5.0)
   bootsnap (>= 1.4.2)
   byebug
