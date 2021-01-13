@@ -39,10 +39,12 @@ class ApplicationSearchResult < ApplicationRecord
   scope :filter_by_search_text,
         ->(search_text) {
           if search_text != nil
-              where(
-                'match(
+            where(
+              'match(
                   development_application_number,
-                  location,
+                  street_name,
+                  street_number,
+                  lot_number,
                   description
               ) against (? in boolean mode)
               or match(suburb) against (? in boolean mode) 
@@ -52,17 +54,16 @@ class ApplicationSearchResult < ApplicationRecord
               or match(council) against (? in boolean mode) 
               or reference_number like ?
               ',
-                search_text,
-                search_text,
-                search_text,
-                search_text,
-                search_text,
-                search_text,
-                '%' + search_text + '%'
-              )
+              search_text,
+              search_text,
+              search_text,
+              search_text,
+              search_text,
+              search_text,
+              '%' + search_text + '%'
+            )
           else
             nil
           end
         }
-
 end
