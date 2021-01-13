@@ -9,6 +9,10 @@ class Application < ApplicationRecord
   belongs_to :suburb, optional: true
   belongs_to :application_type
 
+  amoeba do
+    enable
+  end
+
   has_many :application_uploads, inverse_of: :application, dependent: :destroy
   accepts_nested_attributes_for :application_uploads, allow_destroy: true
 
@@ -29,6 +33,32 @@ class Application < ApplicationRecord
   JOB_TYPE = %w[BRC Other]
   CONSENT = %w[Approved Refused]
   CERTIFIER = %w[Vic Peter]
+
+
+  before_update :update_last_used_reference_number
+  before_update :convert_to_new_application
+
+  def update_last_used_reference_number
+    if self.application_type_id_changed?
+      new_type = ApplicationType.find_by_id!(self.application_type_id)
+      new_type.update_column("last_used", new_type.last_used + 1)
+    end
+  end
+
+  def convert_to_new_application
+    if self.application_type_id_changed?
+
+      # Create the fields for the old record
+      old_record = self.amoeba_dup
+      old_record.save!
+      old_record.update_column("application_type_id", self.application_type_id_was)
+      old_record.update_column("reference_number", self.reference_number_was)
+      old_record.update_column("converted_to_from", self.reference_number)
+      
+      # Update the fields for the new record
+      self.update_column("converted_to_from", self.reference_number_was)
+    end
+  end
 
   def suburb_display_name=(display_name)
     self.suburb = Suburb.find_by(display_name: display_name)
@@ -82,4 +112,4 @@ class Application < ApplicationRecord
     self.client_council ? self.client_council.name : nil
   end
 
-end
+  end

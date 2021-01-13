@@ -16,9 +16,10 @@ class ApplicationsController < ApplicationController
 
     
     @types = ApplicationType.pluck(:application_type)
+    session[:search_results] = request.url
 
     respond_to do |format|
-      format.html
+      format.html 
       format.csv { send_data ApplicationsCsvResult.filter_all(params).to_csv }
     end
   end
@@ -72,7 +73,7 @@ class ApplicationsController < ApplicationController
 
     respond_to do |format|
       if @application.update(application_params)
-        format.html { redirect_to applications_url }
+        format.html { redirect_to session[:search_results] }
         format.json { render :show, status: :ok, location: @application }
       else
         format.html { render :edit, location: @application }
@@ -89,7 +90,7 @@ class ApplicationsController < ApplicationController
     @application.destroy
     respond_to do |format|
       format.html do
-        redirect_to applications_url,
+        redirect_to session[:search_results],
                     notice: 'Application was successfully destroyed.'
       end
       format.json { head :no_content }

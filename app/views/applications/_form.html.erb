@@ -20,7 +20,20 @@
             <div class="col-1">
               <div class="field">
                 <%= form.label "Type" %>
-                <%= form.collection_select :application_type_id, ApplicationType.order(:application_type), :id, :application_type, prompt: 'Select' %>
+                <%= form.collection_select :application_type_id, 
+                  ApplicationType.order(:application_type), 
+                  :id, 
+                  :application_type, 
+                  {prompt: 'Select'}, 
+                  {
+                    # prevent to change selectbox value if i say no to confirm
+                    onfocus: 'this.setAttribute("PrvSelectedValue",this.value);',
+                    onchange: 'if(confirm("You are about to convert to a new application, the old application will be kept.") === false) { 
+                      this.value=this.getAttribute("PrvSelectedValue");
+                      return false
+                     }
+                    '
+                  } %>
               </div>
             </div>
             <div class="col">
