@@ -25,7 +25,7 @@
       </div>
     </div>
   <% end %>
-  <div class="container-fluid">
+  <div class="container-fluid" id="application_form_container">
     <div class="row border">
       <div class="row text-center">
         <h4>Administration</h4>
@@ -66,10 +66,15 @@
                 <%= form.date_field :created_at %>
               </div>
             </div>
-            <div class="col">
+            <div class="col-3">
               <div class="field">
                 <%= form.label :council %>
-                <%= form.text_field :council_name, list: "councils" %>
+                <div class="input-group">
+                  <%= form.text_field :council_name, list: "councils", class:"editable-association" %>
+                  <% if @application.council_id %>
+                    <%= link_to 'Edit', edit_council_path(@application.council_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
+                  <% end %>
+                </div>
               </div>
             </div>
             <div class="col">
@@ -109,13 +114,23 @@
                 <div class="col">
                   <div class="field">
                     <%= form.label :owner_name, "Owner"%>
-                    <%= form.text_field :owner_name, list: "clients" %>
+                    <div class="input-group">
+                      <%= form.text_field :owner_name, list: "clients", class:"editable-association" %>
+                      <% if @application.owner_id %>
+                        <%= link_to 'Edit', edit_client_path(@application.owner_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
                 <div class="col">
                   <div class="field">
                     <%= form.label :owner_council_name, "Owner Council" %>
-                    <%= form.text_field :owner_council_name, list: "councils" %>
+                    <div class="input-group">
+                      <%= form.text_field :owner_council_name, list: "councils", class:"editable-association" %>
+                      <% if @application.owner_council_id %>
+                        <%= link_to 'Edit', edit_council_path(@application.owner_council_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -123,13 +138,23 @@
                 <div class="col">
                   <div class="field">
                     <%= form.label :client_name, "Contact"%>
-                    <%= form.text_field :client_name, list: "clients" %>
+                    <div class="input-group">
+                      <%= form.text_field :client_name, list: "clients", class:"editable-association" %>
+                      <% if @application.client_id %>
+                        <%= link_to 'Edit', edit_client_path(@application.client_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
                 <div class="col">
                   <div class="field">
                     <%= form.label :client_council_name, "Contact Council"%>
-                    <%= form.text_field :client_council_name, list: "councils" %>
+                    <div class="input-group">
+                      <%= form.text_field :client_council_name, list: "councils", class:"editable-association" %>
+                      <% if @application.client_council_id %>
+                        <%= link_to 'Edit', edit_council_path(@application.client_council_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -162,7 +187,7 @@
                 <%= form.text_field :street_number %>
               </div>
             </div>
-            <div class="col">
+            <div class="col-4">
               <div class="field">
                 <%= form.label :street_name %>
                 <%= form.text_field :street_name %>
@@ -209,7 +234,7 @@
             <div class="col">
               <div class="field">
                 <%= form.label :applicant_email %>
-                <%= form.text_field :applicant_email, type: "email" %>
+                <%= form.text_field :applicant_email %>
               </div>
             </div>
           </div>
@@ -498,22 +523,22 @@
         </div>
       </div>
     </div>
-    <div class="actions row my-2">
-      <div class="col"></div>
-      <div class="col-3">
-        <div class="row align-items-center">
-          <div class="col-5">
-            <div class="row">
-              <div class="col-1">
-                <%= form.check_box :cancelled %>
-              </div>
-              <div class="col">
-                <%= form.label :cancelled, "Mark as cancelled" %>
-              </div>
+  </div>
+  <div class="actions row my-2">
+    <div class="col"></div>
+    <div class="col-3">
+      <div class="row align-items-center">
+        <div class="col-5">
+          <div class="row">
+            <div class="col-1">
+              <%= form.check_box :cancelled %>
+            </div>
+            <div class="col">
+              <%= form.label :cancelled, "Mark as cancelled" %>
             </div>
           </div>
-          <%= yield :application_submit_actions %>
         </div>
+        <%= yield :application_submit_actions %>
       </div>
     </div>
   </div>

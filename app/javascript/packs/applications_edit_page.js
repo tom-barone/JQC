@@ -81,8 +81,22 @@ document.addEventListener("turbolinks:load", () => {
 
   // When they change an applicant / council input, don't let them click it until saved
   $(".editable-association").change(function () {
-    $(this).next('a').addClass("disabled")
+    //$(this).next('a').addClass("disabled")
+    $(this).next("a").remove();
   });
+
+  const updateCancelledView = function (isCancelled) {
+    if (isCancelled) {
+      $("#application_form_container").addClass("application-cancelled");
+    } else {
+      $("#application_form_container").removeClass("application-cancelled");
+    }
+  };
+  $("#application_cancelled").change(function () {
+    console.log(this.checked);
+    updateCancelledView(this.checked);
+  });
+  updateCancelledView($("#application_cancelled").is(":checked"));
 
   // When changing the application type...
   let previousValue = "";

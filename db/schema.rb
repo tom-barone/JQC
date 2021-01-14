@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_013242) do
+ActiveRecord::Schema.define(version: 2021_01_14_113921) do
 
   create_table "application_additional_informations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "info_date"
@@ -195,13 +195,13 @@ ActiveRecord::Schema.define(version: 2021_01_13_013242) do
   add_foreign_key "application_additional_informations", "applications", name: "application_additional_informations_ibfk_1", on_delete: :cascade
   add_foreign_key "application_uploads", "applications", name: "application_uploads_ibfk_1", on_delete: :cascade
   add_foreign_key "applications", "application_types"
-  add_foreign_key "applications", "clients", column: "applicant_id", name: "fk_applicant"
-  add_foreign_key "applications", "clients", column: "owner_id", name: "fk_owner"
-  add_foreign_key "applications", "clients", name: "fk_client"
-  add_foreign_key "applications", "councils", column: "applicant_council_id", name: "fk_applicant_council"
-  add_foreign_key "applications", "councils", column: "client_council_id", name: "fk_client_council"
-  add_foreign_key "applications", "councils", column: "owner_council_id", name: "fk_owner_council"
-  add_foreign_key "applications", "councils", name: "fk_council"
+  add_foreign_key "applications", "clients", column: "applicant_id", name: "fk_applicant", on_delete: :nullify
+  add_foreign_key "applications", "clients", column: "owner_id", name: "fk_owner", on_delete: :nullify
+  add_foreign_key "applications", "clients", name: "fk_client", on_delete: :nullify
+  add_foreign_key "applications", "councils", column: "applicant_council_id", name: "fk_applicant_council", on_delete: :nullify
+  add_foreign_key "applications", "councils", column: "client_council_id", name: "fk_client_council", on_delete: :nullify
+  add_foreign_key "applications", "councils", column: "owner_council_id", name: "fk_owner_council", on_delete: :nullify
+  add_foreign_key "applications", "councils", name: "fk_council", on_delete: :nullify
   add_foreign_key "applications", "suburbs", name: "applications_ibfk_1"
   add_foreign_key "clients", "suburbs", column: "postal_suburb_id", name: "clients_ibfk_2"
   add_foreign_key "clients", "suburbs", name: "clients_ibfk_1"

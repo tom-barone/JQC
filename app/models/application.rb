@@ -12,14 +12,14 @@ class Application < ApplicationRecord
   validates :application_type_id, presence: true
   validates :reference_number, presence: true
 
-  amoeba do
-    enable
-  end
+  amoeba { enable }
 
   has_many :application_uploads, inverse_of: :application, dependent: :destroy
   accepts_nested_attributes_for :application_uploads, allow_destroy: true
 
-  has_many :application_additional_informations, inverse_of: :application, dependent: :destroy
+  has_many :application_additional_informations,
+           inverse_of: :application,
+           dependent: :destroy
   accepts_nested_attributes_for :application_additional_informations,
                                 allow_destroy: true
 
@@ -37,29 +37,30 @@ class Application < ApplicationRecord
   CONSENT = %w[Approved Refused]
   CERTIFIER = %w[Vic Peter]
 
-
   before_update :update_last_used_reference_number
   before_update :convert_to_new_application
 
   def update_last_used_reference_number
     if self.application_type_id_changed?
       new_type = ApplicationType.find_by_id!(self.application_type_id)
-      new_type.update_column("last_used", new_type.last_used + 1)
+      new_type.update_column('last_used', new_type.last_used + 1)
     end
   end
 
   def convert_to_new_application
     if self.application_type_id_changed?
-
       # Create the fields for the old record
       old_record = self.amoeba_dup
       old_record.save!
-      old_record.update_column("application_type_id", self.application_type_id_was)
-      old_record.update_column("reference_number", self.reference_number_was)
-      old_record.update_column("converted_to_from", self.reference_number)
-      
+      old_record.update_column(
+        'application_type_id',
+        self.application_type_id_was
+      )
+      old_record.update_column('reference_number', self.reference_number_was)
+      old_record.update_column('converted_to_from', self.reference_number)
+
       # Update the fields for the new record
-      self.update_column("converted_to_from", self.reference_number_was)
+      self.update_column('converted_to_from', self.reference_number_was)
     end
   end
 
@@ -71,48 +72,47 @@ class Application < ApplicationRecord
   end
 
   def council_name=(name)
-    self.council = Council.find_or_create_by(name: name)
+    self.council = Council.find_or_create_by(name: name) if name != ''
   end
   def council_name
     self.council ? self.council.name : nil
   end
 
   def applicant_name=(name)
-    self.applicant = Client.find_or_create_by(client_name: name)
+    self.applicant = Client.find_or_create_by(client_name: name) if name != ''
   end
   def applicant_name
     self.applicant ? self.applicant.client_name : nil
   end
   def owner_name=(name)
-    self.owner = Client.find_or_create_by(client_name: name)
+    self.owner = Client.find_or_create_by(client_name: name) if name != ''
   end
   def owner_name
     self.owner ? self.owner.client_name : nil
   end
   def client_name=(name)
-    self.client = Client.find_or_create_by(client_name: name)
+    self.client = Client.find_or_create_by(client_name: name) if name != ''
   end
   def client_name
     self.client ? self.client.client_name : nil
   end
 
   def applicant_council_name=(name)
-    self.applicant_council = Council.find_or_create_by(name: name)
+    self.applicant_council = Council.find_or_create_by(name: name) if name != ''
   end
   def applicant_council_name
     self.applicant_council ? self.applicant_council.name : nil
   end
   def owner_council_name=(name)
-    self.owner_council = Council.find_or_create_by(name: name)
+    self.owner_council = Council.find_or_create_by(name: name) if name != ''
   end
   def owner_council_name
     self.owner_council ? self.owner_council.name : nil
   end
   def client_council_name=(name)
-    self.client_council = Council.find_or_create_by(name: name)
+    self.client_council = Council.find_or_create_by(name: name) if name != ''
   end
   def client_council_name
     self.client_council ? self.client_council.name : nil
   end
-
-  end
+end
