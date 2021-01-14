@@ -1,4 +1,4 @@
-<% content_for :submit_actions do %>
+<% content_for :application_submit_actions do %>
   <div class="col">
     <input type="submit" value="Save" form="application_form" class= "btn btn-success"/>
   </div>
@@ -6,7 +6,7 @@
     <%= link_to 'Delete', @application, method: :delete, data: { confirm: 'Are you sure you want to to delete?'}, class: "btn btn-danger" %>
   </div>
   <div class="col">
-    <%= link_to 'Exit', session[:search_results], class: "btn btn-outline-secondary" %>
+    <%= link_to 'Exit', session[:search_results], class: "btn btn-outline-secondary", data: { confirm: 'All changes will be discarded'} %>
   </div>
 <% end %>
 <%= render 'form', application: @application %>

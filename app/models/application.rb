@@ -9,6 +9,9 @@ class Application < ApplicationRecord
   belongs_to :suburb, optional: true
   belongs_to :application_type
 
+  validates :application_type_id, presence: true
+  validates :reference_number, presence: true
+
   amoeba do
     enable
   end

@@ -1,12 +1,28 @@
 <%= form_with model: application, local: true, builder: ApplicationHelper::BootstrapSmallFormBuilder, html: { autocomplete: "off", id: "application_form" } do |form| %>
   <% if application.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(application.errors.count, "error") %> prohibited this application from being saved:</h2>
-      <ul>
-        <% application.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div class="modal fade" id="errorsModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">The application couldn't be saved</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-danger" role="alert">
+              <ul>
+                <% application.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
     </div>
   <% end %>
   <div class="container-fluid">
@@ -19,7 +35,7 @@
           <div class="row">
             <div class="col-1">
               <div class="field">
-                <%= form.label "Type" %>
+                <%= form.label :application_type_id, "Type" %>
                 <%= form.collection_select :application_type_id, 
                   ApplicationType.order(:application_type), 
                   :id, 
@@ -27,12 +43,8 @@
                   {prompt: 'Select'}, 
                   {
                     # prevent to change selectbox value if i say no to confirm
-                    onfocus: 'this.setAttribute("PrvSelectedValue",this.value);',
-                    onchange: 'if(confirm("You are about to convert to a new application, the old application will be kept.") === false) { 
-                      this.value=this.getAttribute("PrvSelectedValue");
-                      return false
-                     }
-                    '
+                    onfocus: "window.onTypeFocus.call(this)",
+                    onchange: "window.onTypeChange.call(this, #{ApplicationType.all.to_json})"
                   } %>
               </div>
             </div>
@@ -50,7 +62,7 @@
             </div>
             <div class="col">
               <div class="field">
-                <%= form.label :created_at %>
+                <%= form.label :created_at, "Date Entered" %>
                 <%= form.date_field :created_at %>
               </div>
             </div>
@@ -73,13 +85,23 @@
                 <div class="col">
                   <div class="field">
                     <%= form.label :applicant_name, "Applicant"%>
-                    <%= form.text_field :applicant_name, list: "clients" %>
+                    <div class="input-group">
+                      <%= form.text_field :applicant_name, list: "clients", class:"editable-association" %>
+                      <% if @application.applicant_id %>
+                        <%= link_to 'Edit', edit_client_path(@application.applicant_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
                 <div class="col">
                   <div class="field">
                     <%= form.label :applicant_council_name, "Applicant Council"%>
-                    <%= form.text_field :applicant_council_name, list: "councils" %>
+                    <div class="input-group">
+                      <%= form.text_field :applicant_council_name, list: "councils", class:"editable-association" %>
+                      <% if @application.applicant_council_id %>
+                        <%= link_to 'Edit', edit_council_path(@application.applicant_council_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
+                      <% end %>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -148,7 +170,7 @@
             </div>
             <div class="col">
               <div class="field">
-                <%= form.label :suburb_display_name %>
+                <%= form.label :suburb_display_name, "Suburb" %>
                 <%= form.text_field :suburb_display_name, list: "suburbs", class: "form-control form-control-sm list-option-required" %>
               </div>
             </div>
@@ -490,7 +512,7 @@
               </div>
             </div>
           </div>
-          <%= yield :submit_actions %>
+          <%= yield :application_submit_actions %>
         </div>
       </div>
     </div>

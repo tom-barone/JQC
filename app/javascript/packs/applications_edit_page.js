@@ -66,10 +66,53 @@ document.addEventListener("turbolinks:load", () => {
     updateTotals();
   });
   $(".invoice-table").on("cocoon:after-remove", () => {
-    var x = $('.invoice-fields tr.nested-fields').filter(function () { 
-        return this.style.display == 'none' 
-    }).find('input.form-control').remove();
+    var x = $(".invoice-fields tr.nested-fields")
+      .filter(function () {
+        return this.style.display == "none";
+      })
+      .find("input.form-control")
+      .remove();
     updateTotals();
   });
   updateTotals();
+
+  // Show the errors modal when there is a problem saving
+  $("#errorsModal").modal("show");
+
+  // When they change an applicant / council input, don't let them click it until saved
+  $(".editable-association").change(function () {
+    $(this).next('a').addClass("disabled")
+  });
+
+  // When changing the application type...
+  let previousValue = "";
+  window.onTypeFocus = function () {
+    previousValue = this.value;
+  };
+  window.onTypeChange = function (types) {
+    if (window.location.pathname.includes("/edit")) {
+      if (
+        confirm(
+          "You are about to convert an application.\n\n A copy of the old application will be kept."
+        ) === false
+      ) {
+        this.value = previousValue;
+        return false;
+      }
+      $("#application_converted_to_from")
+        .prop("disabled", true)
+        .val("Auto generated");
+    } else {
+      onTypeChangeNew.call(this);
+    }
+
+    // Put the new reference number in
+    if (this.value) {
+      const { application_type, last_used } = types[this.value - 1];
+      $("#application_reference_number").val(
+        `${application_type}${last_used + 1}`
+      );
+    }
+  };
+  const onTypeChangeNew = function () {};
 });

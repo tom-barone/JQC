@@ -49,9 +49,11 @@ module ApplicationHelper
       )
     end
     def text_field(method, options = {})
+      # TODO: make all the field helpers do this
+      options[:class] = "#{options[:class]} form-control form-control-sm"
       super(
         method,
-        options.reverse_merge(class: 'form-control form-control-sm')
+        options
       )
     end
     def date_field(method, options = {})

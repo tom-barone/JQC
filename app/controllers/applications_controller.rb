@@ -2,6 +2,7 @@ class ApplicationsController < ApplicationController
   include Pagy::Backend
 
   before_action :set_application, only: %i[show edit update destroy]
+  before_action :get_association_lists, only: %i[new edit update create]
 
   # GET /applications
   # GET /applications.json
@@ -31,16 +32,12 @@ class ApplicationsController < ApplicationController
   # GET /applications/new
   def new
     @application = Application.new
-    @suburbs = Suburb.where(state: 'SA').pluck(:display_name)
-    @clients = Client.pluck(:client_name)
-    @councils = Council.pluck(:name)
+    session[:application_page] = request.url
   end
 
   # GET /applications/1/edit
   def edit
-    @suburbs = Suburb.where(state: 'SA').pluck(:display_name)
-    @clients = Client.pluck(:client_name)
-    @councils = Council.pluck(:name)
+    session[:application_page] = request.url
   end
 
   # POST /applications
@@ -51,10 +48,9 @@ class ApplicationsController < ApplicationController
     respond_to do |format|
       if @application.save
         format.html do
-          redirect_to @application,
-                      notice: 'Application was successfully created.'
+          redirect_to session[:search_results]
         end
-        format.json { render :show, status: :created, location: @application }
+        format.json { render :new, status: :created, location: @application }
       else
         format.html { render :new }
         format.json do
@@ -67,9 +63,6 @@ class ApplicationsController < ApplicationController
   # PATCH/PUT /applications/1
   # PATCH/PUT /applications/1.json
   def update
-    @suburbs = Suburb.where(state: 'SA').pluck(:display_name)
-    @clients = Client.pluck(:client_name)
-    @councils = Council.pluck(:name)
 
     respond_to do |format|
       if @application.update(application_params)
@@ -104,6 +97,13 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params[:id])
   end
 
+  # Use callbacks to share common setup or constraints between actions.
+  def get_association_lists
+    @suburbs = Suburb.where(state: 'SA').pluck(:display_name)
+    @clients = Client.pluck(:client_name)
+    @councils = Council.pluck(:name)
+  end
+
   # Only allow a list of trusted parameters through.
   def application_params
     params
@@ -112,6 +112,7 @@ class ApplicationsController < ApplicationController
         :application_type_id,
         :reference_number,
         :converted_to_from,
+        :created_at,
         :council_name,
         :development_application_number,
         :applicant_name,

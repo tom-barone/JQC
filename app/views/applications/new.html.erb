@@ -1,9 +1,14 @@
-<% content_for :submit_actions do %>
+<% content_for :application_submit_actions do %>
+  <div class="col">
+  </div>
   <div class="col">
     <input type="submit" value="Save" form="application_form" class= "btn btn-success"/>
   </div>
   <div class="col">
-    <%= link_to 'Exit', applications_path, class: "btn btn-outline-secondary", data: { confirm: 'Are you sure you want to to exit? All data for this application will be discarded.'} %>
+    <%= link_to 'Exit', session[:search_results], class: "btn btn-outline-secondary", data: { confirm: 'All changes will be discarded'} %>
   </div>
 <% end %>
 <%= render 'form', application: @application %>
+<script>
+  document.getElementById('application_created_at').parentElement.parentElement.remove();
+</script>
