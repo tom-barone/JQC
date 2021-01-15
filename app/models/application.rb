@@ -71,46 +71,82 @@ class Application < ApplicationRecord
     self.suburb ? self.suburb.display_name : nil
   end
 
+  # TODO refactor this into a function
   def council_name=(name)
-    self.council = Council.find_or_create_by(name: name) if name != ''
+    stripped = name.strip
+    if stripped == ''
+      self.council = nil
+      return
+    end
+    self.council = Council.find_or_create_by(name: stripped)
   end
   def council_name
     self.council ? self.council.name : nil
   end
 
   def applicant_name=(name)
-    self.applicant = Client.find_or_create_by(client_name: name) if name != ''
+    stripped = name.strip
+    if stripped == ''
+      self.applicant = nil
+      return
+    end
+    self.applicant = Client.find_or_create_by(client_name: stripped)
   end
   def applicant_name
     self.applicant ? self.applicant.client_name : nil
   end
   def owner_name=(name)
-    self.owner = Client.find_or_create_by(client_name: name) if name != ''
+    stripped = name.strip
+    if stripped == ''
+      self.owner = nil
+      return
+    end
+    self.owner = Client.find_or_create_by(client_name: stripped)
   end
   def owner_name
     self.owner ? self.owner.client_name : nil
   end
   def client_name=(name)
-    self.client = Client.find_or_create_by(client_name: name) if name != ''
+    stripped = name.strip
+    if stripped == ''
+      self.client = nil
+      return
+    end
+    self.client = Client.find_or_create_by(client_name: stripped)
   end
   def client_name
     self.client ? self.client.client_name : nil
   end
 
   def applicant_council_name=(name)
-    self.applicant_council = Council.find_or_create_by(name: name) if name != ''
+    stripped = name.strip
+    if stripped == ''
+      self.applicant_council = nil
+      return
+    end
+    self.applicant_council = Council.find_or_create_by(name: stripped)
   end
   def applicant_council_name
     self.applicant_council ? self.applicant_council.name : nil
   end
   def owner_council_name=(name)
-    self.owner_council = Council.find_or_create_by(name: name) if name != ''
+    stripped = name.strip
+    if stripped == ''
+      self.owner_council = nil
+      return
+    end
+    self.owner_council = Council.find_or_create_by(name: stripped)
   end
   def owner_council_name
     self.owner_council ? self.owner_council.name : nil
   end
   def client_council_name=(name)
-    self.client_council = Council.find_or_create_by(name: name) if name != ''
+    stripped = name.strip
+    if stripped == ''
+      self.client_council = nil
+      return
+    end
+    self.client_council = Council.find_or_create_by(name: stripped)
   end
   def client_council_name
     self.client_council ? self.client_council.name : nil
