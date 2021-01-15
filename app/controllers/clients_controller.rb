@@ -1,5 +1,6 @@
 class ClientsController < ApplicationController
-  before_action :set_client, only: [:show, :edit, :update, :destroy]
+  before_action :set_client, only: %i[show edit update destroy]
+  before_action :get_association_lists, only: %i[new edit update create]
 
   # GET /clients
   # GET /clients.json
@@ -9,8 +10,7 @@ class ClientsController < ApplicationController
 
   # GET /clients/1
   # GET /clients/1.json
-  def show
-  end
+  def show; end
 
   # GET /clients/new
   def new
@@ -18,8 +18,7 @@ class ClientsController < ApplicationController
   end
 
   # GET /clients/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /clients
   # POST /clients.json
@@ -28,11 +27,15 @@ class ClientsController < ApplicationController
 
     respond_to do |format|
       if @client.save
-        format.html { redirect_to @client, notice: 'Client was successfully created.' }
+        format.html do
+          redirect_to @client, notice: 'Client was successfully created.'
+        end
         format.json { render :show, status: :created, location: @client }
       else
         format.html { render :new }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @client.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -42,11 +45,13 @@ class ClientsController < ApplicationController
   def update
     respond_to do |format|
       if @client.update(client_params)
-        format.html { redirect_to @client, notice: 'Client was successfully updated.' }
+        format.html { redirect_to session[:application_page] }
         format.json { render :show, status: :ok, location: @client }
       else
         format.html { render :edit }
-        format.json { render json: @client.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @client.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -56,19 +61,51 @@ class ClientsController < ApplicationController
   def destroy
     @client.destroy
     respond_to do |format|
-      format.html { redirect_to clients_url, notice: 'Client was successfully destroyed.' }
+      #format.html { redirect_to clients_url, notice: 'Client was successfully destroyed.' }
+      format.html { redirect_to session[:search_results] }
+
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_client
-      @client = Client.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def client_params
-      params.require(:client).permit(:client_type, :client_name, :first_name, :surname, :title, :initials, :salutation, :company_name, :street, :suburb_id, :postal_address, :postal_suburb_id, :australian_business_number, :state, :phone, :mobile_number, :fax, :email, :notes, :bad_payer)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_client
+    @client = Client.find(params[:id])
+  end
+
+  def get_association_lists
+    @suburbs = Suburb.where(state: 'SA').pluck(:display_name)
+  end
+
+  # Only allow a list of trusted parameters through.
+  def client_params
+    params
+      .require(:client)
+      .permit(
+        :client_type,
+        :client_name,
+        :first_name,
+        :surname,
+        :title,
+        :initials,
+        :salutation,
+        :company_name,
+        :street,
+        :suburb_id,
+        :postal_address,
+        :postal_suburb_id,
+        :australian_business_number,
+        :state,
+        :phone,
+        :mobile_number,
+        :fax,
+        :email,
+        :notes,
+        :bad_payer,
+        :suburb_display_name,
+        :postal_suburb_display_name
+      )
+  end
 end

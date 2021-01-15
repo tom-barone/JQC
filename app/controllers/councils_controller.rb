@@ -1,5 +1,6 @@
 class CouncilsController < ApplicationController
-  before_action :set_council, only: [:show, :edit, :update, :destroy]
+  before_action :set_council, only: %i[show edit update destroy]
+  before_action :get_association_lists, only: %i[new edit update create]
 
   # GET /councils
   # GET /councils.json
@@ -9,8 +10,7 @@ class CouncilsController < ApplicationController
 
   # GET /councils/1
   # GET /councils/1.json
-  def show
-  end
+  def show; end
 
   # GET /councils/new
   def new
@@ -18,8 +18,7 @@ class CouncilsController < ApplicationController
   end
 
   # GET /councils/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /councils
   # POST /councils.json
@@ -28,11 +27,15 @@ class CouncilsController < ApplicationController
 
     respond_to do |format|
       if @council.save
-        format.html { redirect_to @council, notice: 'Council was successfully created.' }
+        format.html do
+          redirect_to @council, notice: 'Council was successfully created.'
+        end
         format.json { render :show, status: :created, location: @council }
       else
         format.html { render :new }
-        format.json { render json: @council.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @council.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -42,11 +45,13 @@ class CouncilsController < ApplicationController
   def update
     respond_to do |format|
       if @council.update(council_params)
-        format.html { redirect_to @council, notice: 'Council was successfully updated.' }
+        format.html { redirect_to session[:application_page] }
         format.json { render :show, status: :ok, location: @council }
       else
         format.html { render :edit }
-        format.json { render json: @council.errors, status: :unprocessable_entity }
+        format.json do
+          render json: @council.errors, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -56,19 +61,42 @@ class CouncilsController < ApplicationController
   def destroy
     @council.destroy
     respond_to do |format|
-      format.html { redirect_to councils_url, notice: 'Council was successfully destroyed.' }
+      format.html do
+        redirect_to councils_url, notice: 'Council was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_council
-      @council = Council.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def council_params
-      params.require(:council).permit(:name, :city, :street, :state, :suburb_id, :postal_address, :postal_suburb_id, :phone, :fax, :email, :notes)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_council
+    @council = Council.find(params[:id])
+  end
+
+  def get_association_lists
+    @suburbs = Suburb.where(state: 'SA').pluck(:display_name)
+  end
+
+  # Only allow a list of trusted parameters through.
+  def council_params
+    params
+      .require(:council)
+      .permit(
+        :name,
+        :city,
+        :street,
+        :state,
+        :suburb_id,
+        :postal_address,
+        :postal_suburb_id,
+        :phone,
+        :fax,
+        :email,
+        :notes,
+        :suburb_display_name,
+        :postal_suburb_display_name
+      )
+  end
 end

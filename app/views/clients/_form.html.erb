@@ -1,95 +1,193 @@
-<%= form_with(model: client, local: true, html: {id: "client_form" }) do |form| %>
+<%= form_with model: client, local: true, builder: ApplicationHelper::BootstrapSmallFormBuilder, html: { autocomplete: "off", id: "client_form", class: "container" } do |form| %>
   <% if client.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(client.errors.count, "error") %> prohibited this client from being saved:</h2>
-      <ul>
-        <% client.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div class="modal fade" id="errorsModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">The client couldn't be saved</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-danger" role="alert">
+              <ul>
+                <% client.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
     </div>
   <% end %>
-  <div class="field">
-    <%= form.label :client_type %>
-    <%= form.text_area :client_type %>
+  <div class="container-fluid" id="client_form_container">
+    <div class="row border">
+      <div class="row text-center">
+        <h4>Client Details</h4>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :client_type, "Type" %>
+            <%= form.select :client_type, Client::TYPE, prompt: true %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :client_name %>
+            <%= form.text_field :client_name %>
+          </div>
+        </div>
+        <div class="col"></div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :bad_payer %>
+            <%= form.check_box :bad_payer %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :first_name %>
+            <%= form.text_field :first_name %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :surname %>
+            <%= form.text_field :surname %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :initials %>
+            <%= form.text_field :initials %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :title %>
+            <%= form.text_field :title %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :salutation %>
+            <%= form.text_field :salutation %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :company_name, "Company" %>
+            <%= form.text_field :company_name %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :australian_business_number, "ABN" %>
+            <%= form.text_field :australian_business_number %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :state %>
+            <%= form.select :state, Suburb::STATE, prompt: true %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :phone %>
+            <%= form.text_field :phone %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :fax %>
+            <%= form.text_field :fax %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :mobile_number, "Mobile" %>
+            <%= form.text_field :mobile_number %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :email %>
+            <%= form.text_field :email %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col border">
+        <div class="row text-center">
+          <h4>Street Address</h4>
+        </div>
+        <div class="row">
+          <div class="field">
+            <%= form.label :street %>
+            <%= form.text_field :street %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <%= form.label :suburb_display_name, "Suburb" %>
+            <%= form.text_field :suburb_display_name, list: "suburbs", class: "list-option-required" %>
+          </div>
+        </div>
+      </div>
+      <div class="col border">
+        <div class="row text-center">
+          <h4>Postal Address</h4>
+        </div>
+        <div class="row">
+          <div class="field">
+            <%= form.label :postal_address %>
+            <%= form.text_field :postal_address %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <%= form.label :postal_suburb_display_name, "Postal Suburb" %>
+            <%= form.text_field :postal_suburb_display_name, list: "suburbs", class: "list-option-required" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row border">
+      <div class="col">
+        <div class="field">
+          <%= form.label :notes %>
+          <%= form.text_area :notes, rows: 6 %>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="field">
-    <%= form.label :client_name %>
-    <%= form.text_area :client_name %>
-  </div>
-  <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_area :first_name %>
-  </div>
-  <div class="field">
-    <%= form.label :surname %>
-    <%= form.text_area :surname %>
-  </div>
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_area :title %>
-  </div>
-  <div class="field">
-    <%= form.label :initials %>
-    <%= form.text_area :initials %>
-  </div>
-  <div class="field">
-    <%= form.label :salutation %>
-    <%= form.text_area :salutation %>
-  </div>
-  <div class="field">
-    <%= form.label :company_name %>
-    <%= form.text_area :company_name %>
-  </div>
-  <div class="field">
-    <%= form.label :street %>
-    <%= form.text_area :street %>
-  </div>
-  <div class="field">
-    <%= form.label :suburb_id %>
-    <%= form.text_field :suburb_id %>
-  </div>
-  <div class="field">
-    <%= form.label :postal_address %>
-    <%= form.text_area :postal_address %>
-  </div>
-  <div class="field">
-    <%= form.label :postal_suburb_id %>
-    <%= form.text_field :postal_suburb_id %>
-  </div>
-  <div class="field">
-    <%= form.label :australian_business_number %>
-    <%= form.text_area :australian_business_number %>
-  </div>
-  <div class="field">
-    <%= form.label :state %>
-    <%= form.text_field :state %>
-  </div>
-  <div class="field">
-    <%= form.label :phone %>
-    <%= form.text_area :phone %>
-  </div>
-  <div class="field">
-    <%= form.label :mobile_number %>
-    <%= form.text_area :mobile_number %>
-  </div>
-  <div class="field">
-    <%= form.label :fax %>
-    <%= form.text_area :fax %>
-  </div>
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_area :email %>
-  </div>
-  <div class="field">
-    <%= form.label :notes %>
-    <%= form.text_area :notes %>
-  </div>
-  <div class="field">
-    <%= form.label :bad_payer %>
-    <%= form.check_box :bad_payer %>
-  </div>
-  <div class="actions">
-    <%= yield :client_submit_actions %>
+  <div class="actions container-fluid my-2">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-2">
+        <div class="row">
+          <%= yield :client_submit_actions %>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>
+<datalist id="suburbs">
+  <% @suburbs.each do |suburb| %>
+    <option value="<%= suburb %>"/>
+  <% end %>
+</datalist>

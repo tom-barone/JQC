@@ -1,72 +1,134 @@
-<%= form_with(model: council, local: true) do |form| %>
+<%= form_with(model: council, local: true, builder: ApplicationHelper::BootstrapSmallFormBuilder, html: { autocomplete: "off", id: "council_form", class: "container" }) do |form| %>
   <% if council.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(council.errors.count, "error") %> prohibited this council from being saved:</h2>
-
-      <ul>
-        <% council.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+    <div class="modal fade" id="errorsModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">The council couldn't be saved</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-danger" role="alert">
+              <ul>
+                <% council.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+          </div>
+        </div>
+      </div>
     </div>
   <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_area :name %>
+  <div class="container-fluid" id="council_form_container">
+    <div class="row border">
+      <div class="row text-center">
+        <h4>Council Details</h4>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :name, "Council name" %>
+            <%= form.text_field :name %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :city %>
+            <%= form.text_field :city %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="field">
+            <%= form.label :phone %>
+            <%= form.text_field :phone %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :fax %>
+            <%= form.text_field :fax %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :email %>
+            <%= form.text_field :email %>
+          </div>
+        </div>
+        <div class="col">
+          <div class="field">
+            <%= form.label :state %>
+            <%= form.select :state, Suburb::STATE, prompt: true %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col border">
+        <div class="row text-center">
+          <h4>Street Address</h4>
+        </div>
+        <div class="row">
+          <div class="field">
+            <%= form.label :street %>
+            <%= form.text_field :street %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <%= form.label :suburb_display_name, "Suburb" %>
+            <%= form.text_field :suburb_display_name, list: "suburbs", class: "list-option-required" %>
+          </div>
+        </div>
+      </div>
+      <div class="col border">
+        <div class="row text-center">
+          <h4>Postal Address</h4>
+        </div>
+        <div class="row">
+          <div class="field">
+            <%= form.label :postal_address %>
+            <%= form.text_field :postal_address %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <%= form.label :postal_suburb_display_name, "Postal Suburb" %>
+            <%= form.text_field :postal_suburb_display_name, list: "suburbs", class: "list-option-required" %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row border">
+      <div class="col">
+        <div class="field">
+          <%= form.label :notes %>
+          <%= form.text_area :notes, rows: 6 %>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= form.label :city %>
-    <%= form.text_area :city %>
-  </div>
-
-  <div class="field">
-    <%= form.label :street %>
-    <%= form.text_area :street %>
-  </div>
-
-  <div class="field">
-    <%= form.label :state %>
-    <%= form.text_field :state %>
-  </div>
-
-  <div class="field">
-    <%= form.label :suburb_id %>
-    <%= form.text_field :suburb_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :postal_address %>
-    <%= form.text_area :postal_address %>
-  </div>
-
-  <div class="field">
-    <%= form.label :postal_suburb_id %>
-    <%= form.text_field :postal_suburb_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :phone %>
-    <%= form.text_area :phone %>
-  </div>
-
-  <div class="field">
-    <%= form.label :fax %>
-    <%= form.text_area :fax %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_area :email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :notes %>
-    <%= form.text_area :notes %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="actions container-fluid my-2">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-2">
+        <div class="row">
+          <%= yield :council_submit_actions %>
+        </div>
+      </div>
+    </div>
   </div>
 <% end %>
+<datalist id="suburbs">
+  <% @suburbs.each do |suburb| %>
+    <option value="<%= suburb %>"/>
+  <% end %>
+</datalist>
