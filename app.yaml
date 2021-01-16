@@ -3,6 +3,8 @@ runtime: ruby27
 
 env_variables:
     SECRET_KEY_BASE: ***REMOVED***
+    RAILS_DATABASE_HOST: 'null'
+    RAILS_DATABASE_SOCKET: '/cloudsql/***REMOVED***:australia-southeast1:rails-jqc-instance-v8'
 
 instance_class: B2
 basic_scaling:
