@@ -1,5 +1,6 @@
 class ApplicationsController < ApplicationController
   include Pagy::Backend
+  include ActionController::Live
 
   before_action :set_application, only: %i[show edit update destroy]
   before_action :get_association_lists, only: %i[new edit update create]
@@ -10,18 +11,18 @@ class ApplicationsController < ApplicationController
     params.permit(:type, :start_date, :end_date, :search_text, :format, :page)
 
     @number_results_per_page = 1000
-    
+
     @applications_not_paged = ApplicationSearchResult.filter_all(params)
     @total_count = @applications_not_paged.count
-    @pagy, @applications = pagy(@applications_not_paged, items: @number_results_per_page)
+    @pagy, @applications =
+      pagy(@applications_not_paged, items: @number_results_per_page)
 
-    
     @types = ApplicationType.pluck(:application_type)
     session[:search_results] = request.url
 
     respond_to do |format|
-      format.html 
-      format.csv { send_data ApplicationsCsvResult.filter_all(params).to_csv }
+      format.html
+      format.csv { send_csv_export }
     end
   end
 
@@ -47,9 +48,7 @@ class ApplicationsController < ApplicationController
 
     respond_to do |format|
       if @application.save
-        format.html do
-          redirect_to session[:search_results]
-        end
+        format.html { redirect_to session[:search_results] }
         format.json { render :new, status: :created, location: @application }
       else
         format.html { render :new }
@@ -63,7 +62,6 @@ class ApplicationsController < ApplicationController
   # PATCH/PUT /applications/1
   # PATCH/PUT /applications/1.json
   def update
-
     respond_to do |format|
       if @application.update(application_params)
         format.html { redirect_to session[:search_results] }
@@ -91,6 +89,30 @@ class ApplicationsController < ApplicationController
   end
 
   private
+
+  def send_csv_export
+    file_name = "JQC_Applications_Export_#{Time.now.strftime('%d/%m/%Y')}.csv"
+    response.headers['Content-Type'] = 'text/csv'
+    response.headers['Content-disposition'] =
+      "attachment; filename=\"#{file_name}\""
+    response.headers['X-Accel-Buffering'] = 'no'
+    response.headers['Cache-Control'] ||= 'no-cache'
+    response.headers['Last-Modified'] = Time.current.httpdate
+    response.headers.delete('Content-Length')
+    response.status = 200
+
+    response.stream.write(ApplicationsCsvResult.csv_header.to_s)
+
+    ApplicationsCsvResult.find_in_batches(params) do |a|
+      response.stream.write(
+        CSV.generate_line(
+          ApplicationsCsvResult::HEADERS.map { |header| a.send(header) }
+        )
+      )
+    end
+  ensure
+    response.stream.close
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_application
@@ -158,14 +180,15 @@ class ApplicationsController < ApplicationController
           Invoice.attribute_names.map(&:to_sym).push(:_destroy)
         ],
         application_additional_informations_attributes: [
-          ApplicationAdditionalInformation.attribute_names.map(&:to_sym).push(:_destroy)
+          ApplicationAdditionalInformation
+            .attribute_names
+            .map(&:to_sym)
+            .push(:_destroy)
         ],
         application_uploads_attributes: [
           ApplicationUpload.attribute_names.map(&:to_sym).push(:_destroy)
         ],
-        stages_attributes: [
-          Stage.attribute_names.map(&:to_sym).push(:_destroy)
-        ]
+        stages_attributes: [Stage.attribute_names.map(&:to_sym).push(:_destroy)]
       )
   end
 end
