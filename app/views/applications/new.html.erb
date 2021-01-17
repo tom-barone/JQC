@@ -10,5 +10,18 @@
 <% end %>
 <%= render 'form', application: @application %>
 <script>
-  document.getElementById('application_created_at').parentElement.parentElement.remove();
+  function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+  
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+  
+    return [year, month, day].join('-');
+  }
+  document.getElementById('application_created_at').value = formatDate(new Date())
 </script>
