@@ -1,5 +1,5 @@
 <% content_for :nav_buttons do %>
-  <%= button_to  applications_path({format: :csv}), params: params.permit(:type, :start_date, :end_date, :search_text), class:"btn btn-sm btn-primary mx-1 text-nowrap", method: :get do %>
+  <%= button_to  applications_path({format: :csv}), params: params.permit(:type, :start_date, :end_date, :search_text), class:"btn btn-sm btn-primary mx-1 text-nowrap", data: { confirm: 'This may take up to 30 seconds. Click OK to continue.' }, method: :get do %>
     Download as Spreadsheet
   <% end %>
 <% end %>
