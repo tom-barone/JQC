@@ -213,7 +213,7 @@
                 <%= form.date_field :section_93A %>
               </div>
             </div>
-            <div class="col-2">
+            <div class="col-1">
               <div class="field">
                 <%= form.label :electronic_lodgement %>
                 <%= form.check_box :electronic_lodgement %>
@@ -229,6 +229,12 @@
               <div class="field">
                 <%= form.label :job_type %>
                 <%= form.select :job_type, Application::JOB_TYPE_ADMINISTRATION, prompt: true %>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="field">
+                <%= form.label :quote_accepted_date %>
+                <%= form.date_field :quote_accepted_date %>
               </div>
             </div>
             <div class="col">
