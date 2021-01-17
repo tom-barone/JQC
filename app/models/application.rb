@@ -38,6 +38,7 @@ class Application < ApplicationRecord
   CERTIFIER = %w[Vic Peter]
 
   before_update :update_last_used_reference_number
+  before_create :update_last_used_reference_number
   before_update :convert_to_new_application
 
   def update_last_used_reference_number
