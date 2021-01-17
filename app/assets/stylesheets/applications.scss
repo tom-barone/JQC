@@ -90,3 +90,11 @@
   pointer-events: none;
 }
 
+.applications-table {
+  tbody td {
+    padding: 0;
+  }
+  .app-buttons .btn.btn-sm { 
+    font-size: 0.65rem;
+  }
+}
