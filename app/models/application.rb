@@ -32,7 +32,7 @@ class Application < ApplicationRecord
   JOB_TYPE_ADMINISTRATION = ['Residential', 'Commercial', 'Section 49']
   BUILDING_SURVEYOR = %w[Vic Ian Peter Darryl Kanchanie Simon Sam Matt]
   STRUCTURAL_ENGINEER = %w[Internal External]
-  RISK_RATING = %w[High Medium Low]
+  RISK_RATING = %w[High Standard Low]
   JOB_TYPE = %w[BRC Other]
   CONSENT = %w[Approved Refused]
   CERTIFIER = %w[Vic Peter]
