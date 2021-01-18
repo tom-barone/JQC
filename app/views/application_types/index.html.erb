@@ -1,27 +1,20 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Application Types</h1>
-
-<table>
-  <thead>
+<%= form_for :application_type, :url => update_all_path, :html => { :method => :put, id: 'application_type_form' } do %>
+  <table>
     <tr>
-      <th>Last used</th>
-      <th colspan="3"></th>
+      <th>Application Type</th>
+      <th>Last used number</th>
     </tr>
-  </thead>
-
-  <tbody>
     <% @application_types.each do |application_type| %>
-      <tr>
-        <td><%= application_type.last_used %></td>
-        <td><%= link_to 'Show', application_type %></td>
-        <td><%= link_to 'Edit', edit_application_type_path(application_type) %></td>
-        <td><%= link_to 'Destroy', application_type, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <%= fields_for "application_type_attributes[]", application_type do |application_type_fields| %>
+        <tr>
+          <td><%= application_type_fields.text_field :application_type, disabled: "true" %></td>
+          <td><%= application_type_fields.text_field :last_used %></td>
+        </tr>
+      <% end %>
     <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Application Type', new_application_type_path %>
+  </table>
+  <div class="actions container-fluid my-2">
+    <input type="submit" value="Save" form="application_type_form" class= "btn btn-success"/>
+    <%= link_to 'Exit', session[:search_results], class: "btn btn-outline-secondary" %>
+  </div>
+<% end %>

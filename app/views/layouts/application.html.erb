@@ -21,6 +21,9 @@
               <li class="nav-item">
                 <%= link_to 'Applications', applications_path, class: "nav-link" + (params[:controller] == "applications" ? " active" : "") %>
               </li>
+              <li class="nav-item">
+                <a class="nav-link <%= 'active' if params[:controller] == 'application_types'%>" href="application_types">Settings</a>
+              </li>
               <!-- Remove these links for now
               <li class="nav-item">
                 <a class="nav-link <%= 'active' if params[:controller] == 'clients'%>" href="clients">Clients</a>
@@ -43,7 +46,7 @@ If you have any issues at all then please contact me (Tom) and I'll get back to 
                 Send me an email at <a href='mailto:mail@tombarone.net'>mail@tombarone.net</a> or call me at 0468 624 137" >
                 Request Support
               </button>
-              <%= button_to destroy_user_session_path, method: :delete, class: "btn btn-sm btn-secondary mx-1 text-nowrap" do %>
+              <%= button_to destroy_user_session_path, method: :delete, class: "btn btn-sm btn-danger mx-1 text-nowrap" do %>
                 Sign out
               <% end %>
             </div>

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { registrations: "registrations" }
+  put 'application_types/all', to: 'application_types#update_all', as: 'update_all'
+
   resources :suburbs
   resources :stages
   resources :invoices
