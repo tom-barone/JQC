@@ -76,7 +76,7 @@ class ClientsController < ApplicationController
   end
 
   def get_association_lists
-    @suburbs = Suburb.where(state: 'SA').pluck(:display_name)
+    @suburbs = Suburb.pluck(:display_name)
   end
 
   # Only allow a list of trusted parameters through.

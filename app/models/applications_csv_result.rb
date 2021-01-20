@@ -103,6 +103,7 @@ class ApplicationsCsvResult < ApplicationRecord
               or match(applicant) against (? in boolean mode) 
               or match(council) against (? in boolean mode) 
               or reference_number like ?
+              or converted_to_from like ?
               ',
               search_text,
               search_text,
@@ -110,6 +111,7 @@ class ApplicationsCsvResult < ApplicationRecord
               search_text,
               search_text,
               search_text,
+              '%' + search_text + '%',
               '%' + search_text + '%'
             )
           else

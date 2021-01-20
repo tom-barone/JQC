@@ -121,7 +121,7 @@ class ApplicationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def get_association_lists
-    @suburbs = Suburb.where(state: 'SA').pluck(:display_name)
+    @suburbs = Suburb.pluck(:display_name)
     @clients = Client.pluck(:client_name)
     @councils = Council.pluck(:name)
   end
