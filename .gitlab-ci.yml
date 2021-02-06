@@ -21,6 +21,8 @@ cache:
 build-ruby:
   stage: build
   image: ruby:2.7
+  only:
+    - master
   artifacts:
     paths:
       - public/
@@ -35,8 +37,7 @@ build-ruby:
     - bundle install -j $(nproc)
     - bin/yarn install --frozen-lockfile --cache-folder .yarn
     - SECRET_KEY_BASE=1 RAILS_ENV=production bundle exec rails assets:precompile
-  only:
-    - master
+    - RAILS_ENV=production bundle exec rails db:migrate
 
 deploy:
   stage: deploy

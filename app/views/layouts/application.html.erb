@@ -22,7 +22,7 @@
                 <%= link_to 'Applications', applications_path, class: "nav-link" + (params[:controller] == "applications" ? " active" : "") %>
               </li>
               <li class="nav-item">
-                <a class="nav-link <%= 'active' if params[:controller] == 'application_types'%>" href="application_types">Settings</a>
+                <%= link_to 'Settings', application_types_path, class: "nav-link" + (params[:controller] == "application_types" ? " active" : "") %>
               </li>
               <!-- Remove these links for now
               <li class="nav-item">
