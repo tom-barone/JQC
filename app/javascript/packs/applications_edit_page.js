@@ -93,7 +93,6 @@ document.addEventListener("turbolinks:load", () => {
     }
   };
   $("#application_cancelled").change(function () {
-    console.log(this.checked);
     updateCancelledView(this.checked);
   });
   updateCancelledView($("#application_cancelled").is(":checked"));
@@ -129,4 +128,24 @@ document.addEventListener("turbolinks:load", () => {
     }
   };
   const onTypeChangeNew = function () {};
+
+  const checkRiskRatingAndUpdateUploaded = function () {
+    const risk_rating_is_set = $("#application_risk_rating").val() !== "";
+    if (risk_rating_is_set) {
+      // Allow entry
+      $(".uploaded-text-enabled").removeClass("d-none");
+      $(".uploaded-text-disabled").removeClass("d-none").addClass("d-none");
+    } else {
+      // Disable entry
+      $(".uploaded-text-enabled").removeClass("d-none").addClass("d-none");
+      $(".uploaded-text-disabled").removeClass("d-none");
+    }
+  };
+  // Initial set
+  checkRiskRatingAndUpdateUploaded();
+  // On risk rating change
+  $("#application_risk_rating").change(checkRiskRatingAndUpdateUploaded);
+  $("#application-add-uploaded").click(
+      () => setTimeout(checkRiskRatingAndUpdateUploaded, 100)
+  );
 });
