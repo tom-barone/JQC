@@ -70,3 +70,7 @@ gem 'scenic-mysql_adapter'
 gem 'cocoon'
 gem 'amoeba'
 gem 'highline', '~> 1.7', '>= 1.7.8'
+
+# https://github.com/rails/rails/issues/41757
+# TODO: Update the rails version and remove this line (the new version doesn't use mimemagic)
+gem 'mimemagic', github: 'mimemagicrb/mimemagic', ref: '01f92d86d15d85cfd0f20dabd025dcbd36a8a60f'
