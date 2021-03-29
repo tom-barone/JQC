@@ -44,6 +44,8 @@ deploy:
   only:
     - master
   script:
+    # https://github.com/mimemagicrb/mimemagic/issues/98
+    - apk add shared-mime-info
     - ls -al public/assets # for debugging
     - echo $SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
     - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
