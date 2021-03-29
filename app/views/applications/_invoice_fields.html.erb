@@ -4,8 +4,9 @@
   <td class="invoice-fee-cell"><%= f.text_field :fee, type: "number", min: "0", step: "any"  %></td>
   <td class="invoice-insurance-levy-cell"><%= f.text_field :insurance_levy, type: "number", min: "0", step: "any"  %></td>
   <td class="invoice-gst-cell"><%= f.text_field :gst, type: "number", min: "0", step: "any", readonly: true %></td>
-  <td class="invoice-dac-cell"><%= f.text_field :dac, type: "number", min: "0", step: "any"  %></td>
-  <td class="invoice-lodgement-cell"><%= f.text_field :lodgement, type: "number", min: "0", step: "any"  %></td>
+  <td class="invoice-admin-cell"><%= f.text_field :admin_fee, type: "number", min: "0", step: "any" %></td>
+  <td class="invoice-table-dac invoice-dac-cell"><%= f.text_field :dac, type: "number", min: "0", step: "any"  %></td>
+  <td class="invoice-table-lodgement invoice-lodgement-cell"><%= f.text_field :lodgement, type: "number", min: "0", step: "any"  %></td>
   <td class="invoice-table-invoice-number"><%= f.text_field :invoice_number %></td>
   <td class="invoice-table-paid"><%= f.check_box :paid %></td>
   <td class="invoice-table-buttons">

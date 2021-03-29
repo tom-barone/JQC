@@ -26,7 +26,7 @@ document.addEventListener("turbolinks:load", () => {
 
   // Do the calculations for the invoice table totals
   const updateTotals = function () {
-    var fields = ["fee", "insurance-levy", "gst", "dac", "lodgement"];
+    var fields = ["fee", "insurance-levy", "gst", "admin", "dac", "lodgement"];
 
     var values_to_array = function (jquery_objects) {
       return jquery_objects
