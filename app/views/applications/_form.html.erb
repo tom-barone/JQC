@@ -227,8 +227,8 @@
             </div>
             <div class="col-2">
               <div class="field">
-                <%= form.label :job_type %>
-                <%= form.select :job_type, Application::JOB_TYPE_ADMINISTRATION, prompt: true %>
+                <%= form.label :job_type_administration %>
+                <%= form.select :job_type_administration, Application::JOB_TYPE_ADMINISTRATION %>
               </div>
             </div>
             <div class="col-2">
@@ -314,19 +314,19 @@
           <div class="col">
             <div class="field">
               <%= form.label :building_surveyor %>
-              <%= form.select :building_surveyor, Application::BUILDING_SURVEYOR, prompt: true %>
+              <%= form.select :building_surveyor, Application::BUILDING_SURVEYOR %>
             </div>
           </div>
           <div class="col">
             <div class="field">
               <%= form.label :structural_engineer %>
-              <%= form.select :structural_engineer, Application::STRUCTURAL_ENGINEER, prompt: true %>
+              <%= form.select :structural_engineer, Application::STRUCTURAL_ENGINEER %>
             </div>
           </div>
           <div class="col">
             <div class="field">
               <%= form.label :risk_rating %>
-              <%= form.select :risk_rating, Application::RISK_RATING, prompt: true %>
+              <%= form.select :risk_rating, Application::RISK_RATING %>
             </div>
           </div>
           <div class="col">
@@ -403,19 +403,19 @@
           <div class="col-3">
             <div class="field">
               <%= form.label :job_type %>
-              <%= form.select :job_type, Application::JOB_TYPE, prompt: true %>
+              <%= form.select :job_type, Application::JOB_TYPE %>
             </div>
           </div>
           <div class="col-3">
             <div class="field">
               <%= form.label :consent %>
-              <%= form.select :consent, Application::CONSENT, prompt: true %>
+              <%= form.select :consent, Application::CONSENT %>
             </div>
           </div>
           <div class="col-3">
             <div class="field">
               <%= form.label :certifier %>
-              <%= form.select :certifier, Application::CERTIFIER, prompt: true %>
+              <%= form.select :certifier, Application::CERTIFIER %>
             </div>
           </div>
         </div>

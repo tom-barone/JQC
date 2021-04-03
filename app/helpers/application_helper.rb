@@ -22,7 +22,7 @@ module ApplicationHelper
       super(
         method,
         choices,
-        options,
+        options.reverse_merge(include_blank: true),
         html_options.reverse_merge(class: 'form-control form-control-sm')
       )
     end
