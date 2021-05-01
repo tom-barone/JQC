@@ -88,35 +88,67 @@ class ApplicationsCsvResult < ApplicationRecord
 
   scope :filter_by_search_text,
         ->(search_text) {
-          if search_text != nil
-            where(
-              'match(
-                  development_application_number,
-                  street_name,
-                  street_number,
-                  lot_number,
-                  description
-              ) against (? in boolean mode)
-              or match(suburb) against (? in boolean mode) 
-              or match(contact) against (? in boolean mode) 
-              or match(owner) against (? in boolean mode) 
-              or match(applicant) against (? in boolean mode) 
-              or match(council) against (? in boolean mode) 
-              or reference_number like ?
-              or converted_to_from like ?
-              ',
-              search_text,
-              search_text,
-              search_text,
-              search_text,
-              search_text,
-              search_text,
-              '%' + search_text + '%',
-              '%' + search_text + '%'
-            )
-          else
-            nil
+          return nil if search_text == nil
+
+          result = nil
+          search_text.split.each_with_index do |search_word, index|
+            if index == 0
+              result =
+                where(
+                  'match(
+                      development_application_number,
+                      street_name,
+                      street_number,
+                      lot_number,
+                      description
+                  ) against (? in boolean mode)
+                  or match(suburb) against (? in boolean mode) 
+                  or match(contact) against (? in boolean mode) 
+                  or match(owner) against (? in boolean mode) 
+                  or match(applicant) against (? in boolean mode) 
+                  or match(council) against (? in boolean mode) 
+                  or reference_number like ?
+                  or converted_to_from like ?
+                  ',
+                  search_word,
+                  search_word,
+                  search_word,
+                  search_word,
+                  search_word,
+                  search_word,
+                  '%' + search_word + '%',
+                  '%' + search_word + '%'
+                )
+            else
+              result =
+                result.where(
+                  'match(
+                      development_application_number,
+                      street_name,
+                      street_number,
+                      lot_number,
+                      description
+                  ) against (? in boolean mode)
+                  or match(suburb) against (? in boolean mode) 
+                  or match(contact) against (? in boolean mode) 
+                  or match(owner) against (? in boolean mode) 
+                  or match(applicant) against (? in boolean mode) 
+                  or match(council) against (? in boolean mode) 
+                  or reference_number like ?
+                  or converted_to_from like ?
+                  ',
+                  search_word,
+                  search_word,
+                  search_word,
+                  search_word,
+                  search_word,
+                  search_word,
+                  '%' + search_word + '%',
+                  '%' + search_word + '%'
+                )
+            end
           end
+          return result
         }
 
   def self.csv_header
@@ -125,8 +157,6 @@ class ApplicationsCsvResult < ApplicationRecord
 
   def self.find_in_batches(params)
     filter_all(params)
-      .find_each(batch_size: 1000) do |application|
-        yield application
-      end
+      .find_each(batch_size: 1000) { |application| yield application }
   end
 end
