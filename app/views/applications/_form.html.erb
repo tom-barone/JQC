@@ -71,9 +71,11 @@
                 <%= form.label :council %>
                 <div class="input-group">
                   <%= form.text_field :council_name, list: "councils", class:"editable-association" %>
+                  <!-- Removed the edit button as requested
                   <% if @application.council_id %>
-                    <%= link_to 'Edit', edit_council_path(@application.council_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
+                    <%= link_to 'Details', edit_council_path(@application.council_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
                   <% end %>
+                  -->
                 </div>
               </div>
             </div>
