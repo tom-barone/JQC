@@ -1,3 +1,26 @@
+# Pre requisites
+
+```bash
+brew install git-crypt
+```
+
+## Encryption
+
+Rails keys are stored in the *.key files.
+
+Unlock/lock them with git-crypt:
+
+```bash
+git-crypt unlock
+git-crypt lock
+```
+
+RAILS_MASTER_KEY and SECRET_KEY_BASE are stored in the gitlab project settings so the runners have access to them: 
+https://gitlab.com/tombarone/jqc/-/settings/ci_cd
+
+RAILS_MASTER_KEY is config/credentials/production.key and not config/master.key
+
+
 # README
 
 This README would normally document whatever steps are necessary to get the
@@ -120,6 +143,8 @@ cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance
 ```
 
 ## Todo
+
+- git crypt the master.key, development.key, test.key & production.key files
 
 - Create migrations for each database table
 - link foreign keys and things
