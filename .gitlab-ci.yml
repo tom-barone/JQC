@@ -25,7 +25,7 @@ build-ruby:
     - master
   artifacts:
     paths:
-      - .
+      - "*"
     expire_in: 12 hrs
   before_script:
     - curl https://deb.nodesource.com/setup_14.x | bash
