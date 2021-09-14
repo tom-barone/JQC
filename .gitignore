@@ -32,6 +32,9 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/credentials/production.key
+/config/credentials/development.key
+/config/credentials/test.key
 
 /public/packs
 /public/packs-test
@@ -43,4 +46,3 @@ yarn-debug.log*
 # Ignore SSL stuff for now
 /SSL
 
-/config/credentials/production.key

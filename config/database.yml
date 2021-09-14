@@ -13,13 +13,17 @@ default: &default
   adapter: mysql2
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  host: <%= ENV.fetch("RAILS_DATABASE_HOST") { '127.0.0.1' } %>
   socket: <%= ENV.fetch("RAILS_DATABASE_SOCKET") { 'null' } %>
+  # The default host and port assume you're using the google cloud_sql_proxy
+  # https://cloud.google.com/sql/docs/mysql/sql-proxy
+  host: <%= ENV.fetch("RAILS_DATABASE_HOST") { '127.0.0.1' } %>
+  port: <%= ENV.fetch("RAILS_DATABASE_PORT") { 3306 } %>
+  username: <%= Rails.application.credentials.db_username! %>
+  password: <%= Rails.application.credentials.db_password! %>
 
 development:
   <<: *default
   database: DEV
-  username: development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -27,7 +31,6 @@ development:
 test:
   <<: *default
   database: TEST
-  username: test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -50,5 +53,3 @@ test:
 
 production:
   <<: *default
-  database: PROD
-  username: production
