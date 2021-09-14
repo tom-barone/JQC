@@ -1,8 +1,8 @@
 # Cache gems in between builds
-cache:
-  paths:
-    - vendor/bundle
-    - .yarn
+#cache:
+  #paths:
+    #- vendor/bundle
+    #- .yarn
 
 # stages:
 #   - yarn
