@@ -53,3 +53,4 @@ test:
 
 production:
   <<: *default
+  database: PROD

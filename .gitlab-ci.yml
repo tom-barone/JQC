@@ -1,8 +1,8 @@
 # Cache gems in between builds
-#cache:
-  #paths:
-    #- vendor/bundle
-    #- .yarn
+cache:
+  paths:
+    - vendor/bundle
+    - .yarn
 
 # stages:
 #   - yarn
@@ -36,7 +36,7 @@ build-ruby:
     - bundle config set deployment 'true'
     - bundle install -j $(nproc)
     - bin/yarn install --frozen-lockfile --cache-folder .yarn
-    - SECRET_KEY_BASE=1 RAILS_ENV=production bundle exec rails assets:precompile
+    - RAILS_ENV=production bundle exec rails assets:precompile
 
 deploy:
   stage: deploy
