@@ -1,14 +1,14 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  last_used: 1
-  application_type: PC
-
-two:
-  last_used: 2
-  application_type: Q
-
-  # This one can be deleted safely
-unused:
-  last_used: 5
-  application_type: ZZZZ
+# # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# 
+# one:
+#   last_used: 1
+#   application_type: PC
+# 
+# two:
+#   last_used: 2
+#   application_type: Q
+# 
+#   # This one can be deleted safely
+# unused:
+#   last_used: 5
+#   application_type: ZZZZ

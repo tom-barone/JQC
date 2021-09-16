@@ -1,11 +1,11 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  stage_date: 2020-12-20
-  stage_text: MyText
-  application: application_1
-
-two:
-  stage_date: 2020-12-20
-  stage_text: MyText
-  application: application_1
+# # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# 
+# one:
+#   stage_date: 2020-12-20
+#   stage_text: MyText
+#   application: application_1
+# 
+# two:
+#   stage_date: 2020-12-20
+#   stage_text: MyText
+#   application: application_1

@@ -1,40 +1,40 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-council_1:
-  name: MyText
-  city: MyText
-  street: MyText
-  state: MyString
-  suburb: one
-  postal_address: MyText
-  postal_suburb: one
-  phone: MyText
-  fax: MyText
-  email: a
-  notes: MyText
-
-two:
-  name: MyText
-  city: MyText
-  street: MyText
-  state: MyString
-  suburb: two
-  postal_address: MyText
-  postal_suburb: two
-  phone: MyText
-  fax: MyText
-  email: b
-  notes: MyText
-
-unused:
-  name: MyText
-  city: MyText
-  street: MyText
-  state: MyString
-  suburb: two
-  postal_address: MyText
-  postal_suburb: two
-  phone: MyText
-  fax: MyText
-  email: b
-  notes: MyText
+# # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# 
+# council_1:
+#   name: MyText
+#   city: MyText
+#   street: MyText
+#   state: MyString
+#   suburb: one
+#   postal_address: MyText
+#   postal_suburb: one
+#   phone: MyText
+#   fax: MyText
+#   email: a
+#   notes: MyText
+# 
+# two:
+#   name: MyText
+#   city: MyText
+#   street: MyText
+#   state: MyString
+#   suburb: two
+#   postal_address: MyText
+#   postal_suburb: two
+#   phone: MyText
+#   fax: MyText
+#   email: b
+#   notes: MyText
+# 
+# unused:
+#   name: MyText
+#   city: MyText
+#   street: MyText
+#   state: MyString
+#   suburb: two
+#   postal_address: MyText
+#   postal_suburb: two
+#   phone: MyText
+#   fax: MyText
+#   email: b
+#   notes: MyText

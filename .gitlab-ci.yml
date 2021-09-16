@@ -4,11 +4,11 @@ cache:
     - vendor/bundle
     - .yarn
 
-# stages:
-#   - yarn
-#   - build
-#   - test
-#   - deploy
+stages:
+   - yarn
+   - build
+   - test
+   - deploy
 
 # build-yarn:
 #   stage: yarn
@@ -18,14 +18,15 @@ cache:
 #   only:
 #     - master
 
-build-ruby:
+build-rails:
   stage: build
   image: ruby:2.7
   only:
     - master
+    - develop
   artifacts:
     paths:
-      - "*"
+      - public/
     expire_in: 12 hrs
   before_script:
     - curl https://deb.nodesource.com/setup_14.x | bash
@@ -37,6 +38,17 @@ build-ruby:
     - bundle install -j $(nproc)
     - bin/yarn install --frozen-lockfile --cache-folder .yarn
     - RAILS_ENV=production bundle exec rails assets:precompile
+
+test-rails:
+  stage: test
+  image: ruby:2.7
+  only:
+    - master
+    - develop
+  script:
+    - bundle install -j $(nproc)
+    - ls bin
+    - bundle exec rails test
 
 deploy:
   stage: deploy
