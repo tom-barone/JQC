@@ -30,7 +30,7 @@ class Application < ApplicationRecord
   accepts_nested_attributes_for :invoices, allow_destroy: true
 
   JOB_TYPE_ADMINISTRATION = ['Residential', 'Commercial', 'Section 49']
-  BUILDING_SURVEYOR = %w[Vic Ian Peter Darryl Kanchanie Simon Sam Matt]
+  BUILDING_SURVEYOR = %w[Vic Ian Peter Darryl Kanchanie Simon Sam Matt Frank]
   STRUCTURAL_ENGINEER = %w[Internal External]
   RISK_RATING = %w[High Standard Low]
   JOB_TYPE = %w[BRC Other]
