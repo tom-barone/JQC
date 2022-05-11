@@ -7,8 +7,8 @@ cache:
 stages:
    - yarn
    - build
-   - test
    - deploy
+#- test
 
 # build-yarn:
 #   stage: yarn
@@ -39,16 +39,16 @@ build-rails:
     - bin/yarn install --frozen-lockfile --cache-folder .yarn
     - RAILS_ENV=production bundle exec rails assets:precompile
 
-test-rails:
-  stage: test
-  image: ruby:2.7
-  only:
-    - master
-    - develop
-  script:
-    - bundle install -j $(nproc)
-    - ls bin
-    - bundle exec rails test
+#test-rails:
+  #stage: test
+  #image: ruby:2.7
+  #only:
+    #- master
+    #- develop
+  #script:
+    #- bundle install -j $(nproc)
+    #- ls bin
+    #- bundle exec rails test
 
 deploy:
   stage: deploy
