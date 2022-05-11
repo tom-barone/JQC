@@ -7,7 +7,7 @@ cache:
 stages:
    - yarn
    - build
-   - deploy
+#- deploy
 #- test
 
 # build-yarn:
@@ -50,17 +50,18 @@ build-rails:
     #- ls bin
     #- bundle exec rails test
 
-deploy:
-  stage: deploy
-  image: google/cloud-sdk:alpine
-  only:
-    - master
-  script:
-    # https://github.com/mimemagicrb/mimemagic/issues/98
-    - apk add shared-mime-info
-    - ls -al public/assets # for debugging
-    - echo $SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
-    - gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
-    - gcloud app deploy --project=***REMOVED***
-  after_script:
-    - rm /tmp/$CI_PIPELINE_ID.json
+      #TODO: Fix this (or migrate to github)
+#deploy:
+  #stage: deploy
+  #image: google/cloud-sdk:alpine
+  #only:
+    #- master
+  #script:
+    ## https://github.com/mimemagicrb/mimemagic/issues/98
+    #- apk add shared-mime-info
+    #- ls -al public/assets # for debugging
+    #- echo $SERVICE_ACCOUNT_KEY > /tmp/$CI_PIPELINE_ID.json
+    #- gcloud auth activate-service-account --key-file /tmp/$CI_PIPELINE_ID.json
+    #- gcloud app deploy --project=***REMOVED***
+  #after_script:
+    #- rm /tmp/$CI_PIPELINE_ID.json
