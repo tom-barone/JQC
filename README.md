@@ -163,3 +163,5 @@ cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance
 
 
 - remove cancelled reports from the monthly exports
+
+- remove all references to original email / password

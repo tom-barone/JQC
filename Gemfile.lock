@@ -385,11 +385,12 @@ PLATFORMS
 DEPENDENCIES
   amoeba
   appengine (~> 0.5.0)
+  bcrypt (~> 3.1.16)
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
   cocoon
-  devise
+  devise (~> 4.7.3)
   guard
   guard-livereload
   highline (~> 1.7, >= 1.7.8)
