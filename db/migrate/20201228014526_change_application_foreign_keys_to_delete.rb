@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ChangeApplicationForeignKeysToDelete < ActiveRecord::Migration[6.0]
   def up
     # Delete old foreign keys

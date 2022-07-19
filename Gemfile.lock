@@ -303,6 +303,10 @@ GEM
       unicode-display_width (>= 1.4.0, < 2.0)
     rubocop-ast (1.2.0)
       parser (>= 2.7.1.5)
+    rubocop-rails (2.9.1)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 0.90.0, < 2.0)
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
     rubyzip (2.3.0)
@@ -425,6 +429,7 @@ DEPENDENCIES
   pagy (~> 3.10)
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)
+  rubocop-rails
   sass-rails (>= 6)
   scenic
   scenic-mysql_adapter

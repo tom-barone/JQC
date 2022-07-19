@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ApplicationUploadsController < ApplicationController
   before_action :set_application_upload, only: [:show, :edit, :update, :destroy]
 

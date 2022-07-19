@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -44,6 +45,7 @@ group :development do
   gem "seed_dump", "~> 3.3"
   gem 'htmlbeautifier'
   gem 'guard'
+  gem 'rubocop-rails', require: false
   gem 'guard-livereload'
   gem 'solargraph'
 end

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class DeleteEmptyClientsAndCouncils < ActiveRecord::Migration[6.0]
   def up
     remove_foreign_key :applications, name: :fk_applicant

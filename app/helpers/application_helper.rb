@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ApplicationHelper
   class BootstrapSmallFormBuilder < ActionView::Helpers::FormBuilder
     def collection_select(

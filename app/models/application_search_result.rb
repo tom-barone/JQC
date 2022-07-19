@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ApplicationSearchResult < ApplicationRecord
   self.primary_key = :id
 

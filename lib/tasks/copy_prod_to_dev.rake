@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 namespace :db do
   desc 'Copy the PROD database to DEV'
   task :copy_prod_to_dev do

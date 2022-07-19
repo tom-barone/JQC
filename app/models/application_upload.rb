@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ApplicationUpload < ApplicationRecord
   belongs_to :application
 
