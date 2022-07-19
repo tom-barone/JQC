@@ -2,13 +2,12 @@ require 'test_helper'
 
 class CouncilsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    #sign_in_test_user
-    #@council = councils(:council_1)
+    sign_in_test_user
+    @council = councils(:council_1)
     #@unused = councils(:unused)
   end
 
   test "should get index" do
-    skip
     get councils_url
     assert_response :success
   end

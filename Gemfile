@@ -42,11 +42,10 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   gem "seed_dump", "~> 3.3"
-  gem "rubocop-shopify", "~> 1.0"
-  gem 'rubocop-config-prettier'
   gem 'htmlbeautifier'
   gem 'guard'
   gem 'guard-livereload'
+  gem 'solargraph'
 end
 
 group :test do

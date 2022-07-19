@@ -1,5 +1,21 @@
 # # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-# 
+
+<% 5.times do |n| %>
+  application_PC_<%= n %>:
+   name: <%= "council name #{n}" %>
+   city: <%= "council city #{n}" %>
+   street: <%= "council street #{n}" %>
+   state: "SA"
+   suburb: suburb_<%=n%>
+   postal_address: <%= "council postal address #{n}" %>
+   postal_suburb: suburb_<%=n%>
+   phone: <%= "0000 000 00#{n}" %>
+   fax: <%= "council fax #{n}" %>
+   email: <%= "council_#{n}@email.com" %> 
+   notes: <%= "council notes #{n}" %> 
+<% end %>
+
+
 # application_1:
 #   application_type: one
 #   reference_number: PC123
