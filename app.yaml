@@ -2,8 +2,8 @@ entrypoint: bundle exec rails server Puma -p $PORT
 runtime: ruby27
 
 env_variables:
-    RAILS_DATABASE_HOST: 'null'
-    RAILS_DATABASE_SOCKET: '/cloudsql/***REMOVED***:australia-southeast1:rails-jqc-instance-v8'
+  RAILS_DATABASE_HOST: "null"
+  RAILS_DATABASE_SOCKET: "/cloudsql/***REMOVED***:australia-southeast1:rails-jqc-instance-v8"
 
 instance_class: B2
 basic_scaling:
@@ -11,4 +11,4 @@ basic_scaling:
   idle_timeout: 10m
 
 beta_settings:
-    cloud_sql_instances: ***REMOVED***:australia-southeast1:rails-jqc-instance-v8
+  cloud_sql_instances: ***REMOVED***:australia-southeast1:rails-jqc-instance-v8

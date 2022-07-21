@@ -1,17 +1,17 @@
-require: 
+require:
   - rubocop-rails
 
 #inherit_gem:
-  #rubocop-shopify: rubocop.yml
-  #rubocop-config-prettier: config/rubocop.yml
-  #.rubocop.yml
-  #.ruby-version
+#rubocop-shopify: rubocop.yml
+#rubocop-config-prettier: config/rubocop.yml
+#.rubocop.yml
+#.ruby-version
 
 #Style/FrozenStringLiteralComment:
-  #Enabled: false
+#Enabled: false
 
 #Style/MethodCallWithArgsParentheses:
-  #Enabled: true
-  #Exclude:
-    #- db/migrate/**/*
-    #- app/controllers/**/*
+#Enabled: true
+#Exclude:
+#- db/migrate/**/*
+#- app/controllers/**/*

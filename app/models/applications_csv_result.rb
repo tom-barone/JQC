@@ -59,7 +59,7 @@ class ApplicationsCsvResult < ApplicationRecord
             .filter_by_date(params[:start_date], params[:end_date])
             # Show PC's first, then Q's
             .order(
-              'field (application_type, "PC", "Q", "C", "RC", "LG", "SC") asc, reference_number desc'
+              Arel.sql('field (application_type, "PC", "Q", "C", "RC", "LG", "SC") asc, reference_number desc')
             )
         }
 

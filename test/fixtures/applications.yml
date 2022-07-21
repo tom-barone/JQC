@@ -1,18 +1,25 @@
 # # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+# PCs
 <% 5.times do |n| %>
-  application_PC_<%= n %>:
-   name: <%= "council name #{n}" %>
-   city: <%= "council city #{n}" %>
-   street: <%= "council street #{n}" %>
-   state: "SA"
-   suburb: suburb_<%=n%>
-   postal_address: <%= "council postal address #{n}" %>
-   postal_suburb: suburb_<%=n%>
-   phone: <%= "0000 000 00#{n}" %>
-   fax: <%= "council fax #{n}" %>
-   email: <%= "council_#{n}@email.com" %> 
-   notes: <%= "council notes #{n}" %> 
+  application_PC<%= n %>:
+    application_type: PC
+    reference_number: PC<%=n%>
+    converted_to_from: 
+
+    fully_invoiced: true
+    fully_invoiced: true
+<% end %>
+
+# LGs
+<% 5.times do |n| %>
+  application_LG<%= n %>:
+    application_type: LG
+    reference_number: LG<%=n%>
+    converted_to_from: 
+
+    fully_invoiced: true
+    fully_invoiced: true
 <% end %>
 
 
@@ -63,7 +70,7 @@
 #   invoice_debtor_notes: MyText
 #   applicant_email: b
 #   sort_priority_gen: 1
-# 
+#
 # two:
 #   application_type: one
 #   reference_number: MyText
