@@ -1,17 +1,10 @@
 require:
   - rubocop-rails
 
-#inherit_gem:
-#rubocop-shopify: rubocop.yml
-#rubocop-config-prettier: config/rubocop.yml
-#.rubocop.yml
-#.ruby-version
+inherit_gem:
+  prettier: rubocop.yml
 
-#Style/FrozenStringLiteralComment:
-#Enabled: false
-
-#Style/MethodCallWithArgsParentheses:
-#Enabled: true
-#Exclude:
-#- db/migrate/**/*
-#- app/controllers/**/*
+# Allow long blocks in the system tests, because we don't want to be constantly logging in and out
+Metrics/BlockLength:
+  Exclude:
+    - "test/system/**/*"

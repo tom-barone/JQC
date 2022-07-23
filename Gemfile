@@ -46,6 +46,7 @@ group :development do
   gem 'htmlbeautifier'
   gem 'guard'
   gem 'rubocop-rails', require: false
+  gem 'prettier'
   gem 'guard-livereload'
   gem 'solargraph'
 end

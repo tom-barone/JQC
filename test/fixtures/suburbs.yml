@@ -1,9 +1,9 @@
 # # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-<% 9.times do |n| %>
-suburb_<%= n %>:
-   display_name: <%="suburb display name #{n}"%>
-   suburb: <%="suburb #{n}"%>
+<% 1.upto(9) do |n| %>
+suburb<%= n %>:
+   display_name: <%="Suburb display name #{n}"%>
+   suburb: <%="Suburb #{n}"%>
    state: "SA"
    postcode: <%="506#{n}"%>
 <% end %>
