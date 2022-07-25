@@ -100,6 +100,11 @@ GEM
       http_parser.rb (~> 0.6.0)
     erubi (1.10.0)
     eventmachine (1.2.7)
+    factory_bot (6.2.1)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     faraday (1.1.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
@@ -420,6 +425,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   cocoon
   devise (~> 4.7.3)
+  factory_bot_rails
   guard
   guard-livereload
   highline (~> 1.7, >= 1.7.8)

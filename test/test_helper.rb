@@ -13,6 +13,8 @@ class ActiveSupport::TestCase
 
   # Add more helper methods to be used by all tests here...
 
+  include FactoryBot::Syntax::Methods
+
   # Sign in - only for integration tests
   include Devise::Test::IntegrationHelpers
   def sign_in_test_user

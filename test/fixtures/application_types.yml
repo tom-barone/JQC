@@ -1,25 +1,25 @@
 # # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-C:
-  last_used: 2457
-  application_type: "C"
-
-LG:
-  last_used: 20000
-  application_type: "LG"
-
-PC:
-  last_used: 63920
-  application_type: "PC"
-
-Q:
-  last_used: 14229
-  application_type: "Q"
-
-RC:
-  last_used: 2090
-  application_type: "RC"
-
-SC:
-  last_used: 428
-  application_type: "SC"
+# C:
+#   last_used: 2457
+#   application_type: "C"
+# 
+# LG:
+#   last_used: 20000
+#   application_type: "LG"
+# 
+# PC:
+#   last_used: 63920
+#   application_type: "PC"
+# 
+# Q:
+#   last_used: 14229
+#   application_type: "Q"
+# 
+# RC:
+#   last_used: 2090
+#   application_type: "RC"
+# 
+# SC:
+#   last_used: 428
+#   application_type: "SC"
