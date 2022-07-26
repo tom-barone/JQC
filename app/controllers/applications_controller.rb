@@ -19,10 +19,9 @@ class ApplicationsController < ApplicationController
       pagy(@applications_not_paged, items: @number_results_per_page)
 
     @types = ApplicationType.pluck(:application_type)
-    session[:search_results] = request.url
 
     respond_to do |format|
-      format.html
+      format.html { session[:search_results] = request.url }
       format.csv { send_csv_export }
     end
   end
