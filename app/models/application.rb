@@ -25,6 +25,9 @@ class Application < ApplicationRecord
   accepts_nested_attributes_for :application_additional_informations,
                                 allow_destroy: true
 
+  has_many :request_for_informations, inverse_of: :application, dependent: :destroy
+  accepts_nested_attributes_for :request_for_informations, allow_destroy: true
+
   has_many :stages, inverse_of: :application, dependent: :destroy
   accepts_nested_attributes_for :stages, allow_destroy: true
 

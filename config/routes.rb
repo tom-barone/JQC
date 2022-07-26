@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :suburbs
   resources :stages
+  resources :request_for_informations
   resources :invoices
   resources :councils
   resources :clients

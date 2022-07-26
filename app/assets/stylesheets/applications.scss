@@ -77,17 +77,26 @@
   overflow: overlay;
 }
 
-.stages-body-container {
+.stages-body-container, .request-for-informations-body-container {
   max-height: 100px;
   overflow: overlay;
+}
+.stages-title, .rfis-title {
+  width: 10%;
 }
 .stages-date {
   width: 10%;
 }
+.rfis-number {
+  width: 1%;
+}
+.rfis-date {
+  width: 9%;
+}
 .stages-text {
   width: 8%;
 }
-.stages-buttons {
+.stages-buttons, .rfis-buttons {
   width: 4%;
 }
 

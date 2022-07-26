@@ -160,7 +160,7 @@ class ApplicationsController < ApplicationController
         :building_surveyor,
         :structural_engineer,
         :risk_rating,
-        :assesment_commenced,
+        :assessment_commenced,
         :request_for_information_issued,
         :consent_issued,
         :variation_issued,
@@ -189,7 +189,8 @@ class ApplicationsController < ApplicationController
         application_uploads_attributes: [
           ApplicationUpload.attribute_names.map(&:to_sym).push(:_destroy)
         ],
-        stages_attributes: [Stage.attribute_names.map(&:to_sym).push(:_destroy)]
+        stages_attributes: [Stage.attribute_names.map(&:to_sym).push(:_destroy)],
+        request_for_informations_attributes: [RequestForInformation.attribute_names.map(&:to_sym).push(:_destroy)]
       )
   end
 end

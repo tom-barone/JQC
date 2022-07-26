@@ -31,7 +31,7 @@ class ApplicationsCsvResult < ApplicationRecord
     building_surveyor
     structural_engineer
     risk_rating
-    assesment_commenced
+    assessment_commenced
     request_for_information_issued
     consent_issued
     variation_issued

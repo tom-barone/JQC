@@ -30,7 +30,7 @@
 #     building_surveyor: "Vic"
 #     structural_engineer: "Internal"
 #     risk_rating: Standard
-#     assesment_commenced: "2020-07-<%=n%>"
+#     assessment_commenced: "2020-07-<%=n%>"
 #     request_for_information_issued: "2020-07-<%=n%>"
 #     consent_issued: "2020-07-<%=n%>"
 #     variation_issued: "2020-07-<%=n%>"
@@ -89,7 +89,7 @@
 # #   building_surveyor: MyText
 # #   structural_engineer: MyText
 # #   risk_rating: MyText
-# #   assesment_commenced: 2020-12-20
+# #   assessment_commenced: 2020-12-20
 # #   request_for_information_issued: 2020-12-20
 # #   consent_issued: 2020-12-20
 # #   variation_issued: 2020-12-20
@@ -137,7 +137,7 @@
 # #   building_surveyor: MyText
 # #   structural_engineer: MyText
 # #   risk_rating: MyText
-# #   assesment_commenced: 2020-12-20
+# #   assessment_commenced: 2020-12-20
 # #   request_for_information_issued: 2020-12-20
 # #   consent_issued: 2020-12-20
 # #   variation_issued: 2020-12-20
