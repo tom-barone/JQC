@@ -333,48 +333,45 @@
           </div>
           <div class="col">
             <div class="field">
-              <%= form.label :assesment_commenced %>
-              <%= form.date_field :assesment_commenced %>
+              <%= form.label :assessment_commenced %>
+              <%= form.date_field :assessment_commenced %>
             </div>
           </div>
         </div>
         <div class="row" style="height: 40%">
-          <div class="col">
-            <div class="row">
-              <div class="col">
-                <div class="field">
-                  <%= form.label :request_for_information_issued, "RFI issued" %>
-                  <%= form.date_field :request_for_information_issued %>
-                </div>
-              </div>
-              <div class="col">
-                <div class="field">
-                  <%= form.label :consent_issued %>
-                  <%= form.date_field :consent_issued %>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="field">
-                  <%= form.label :variation_issued %>
-                  <%= form.date_field :variation_issued %>
-                </div>
-              </div>
-              <div class="col">
-                <div class="field">
-                  <%= form.label :coo_issued %>
-                  <%= form.date_field :coo_issued %>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-6">
+          <div class="col-5 rfis-table">
             <div>
               <table class="table table-sm mb-0" style="table-layout: fixed">
                 <thead>
                   <tr style="vertical-align: top;">
-                    <td class="stages-date">Stages</td>
+                    <td class="rfis-title">RFIs Issued</td>
+                    <td class="rfis-buttons">
+                      <%= link_to_add_association 'Add', form, :request_for_informations, 
+                        'data-association-insertion-node': ".request-for-informations-fields",
+                        'data-association-insertion-method': "append",
+                        class: 'btn btn-sm btn-outline-primary py-0'
+                      %>
+                    </td>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="request-for-informations-body-container">
+              <table class="table table-sm mb-0" style="table-layout: fixed">
+                <tbody class="request-for-informations-fields">
+                  <%= form.fields_for :request_for_informations do |request_for_informations_form| %>
+                    <%= render 'request_for_information_fields', f: request_for_informations_form %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-7">
+            <div>
+              <table class="table table-sm mb-0" style="table-layout: fixed">
+                <thead>
+                  <tr style="vertical-align: top;">
+                    <td class="stages-title">Stages</td>
                     <td class="stages-text"></td>
                     <td class="stages-buttons">
                       <%= link_to_add_association 'Add', form, :stages, 
@@ -399,25 +396,22 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-2">
-            <h6>Performance Indicators</h6>
-          </div>
-          <div class="col-3">
+          <div class="col">
             <div class="field">
-              <%= form.label :job_type %>
-              <%= form.select :job_type, Application::JOB_TYPE %>
+               <%= form.label :consent_issued %>
+               <%= form.date_field :consent_issued %>
             </div>
           </div>
-          <div class="col-3">
+          <div class="col">
             <div class="field">
-              <%= form.label :consent %>
-              <%= form.select :consent, Application::CONSENT %>
+               <%= form.label :variation_issued %>
+               <%= form.date_field :variation_issued %>
             </div>
           </div>
-          <div class="col-3">
+          <div class="col">
             <div class="field">
-              <%= form.label :certifier %>
-              <%= form.select :certifier, Application::CERTIFIER %>
+               <%= form.label :coo_issued %>
+               <%= form.date_field :coo_issued %>
             </div>
           </div>
         </div>

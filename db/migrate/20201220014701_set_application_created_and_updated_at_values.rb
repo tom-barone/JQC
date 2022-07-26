@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'date'
 
 class SetApplicationCreatedAndUpdatedAtValues < ActiveRecord::Migration[6.0]

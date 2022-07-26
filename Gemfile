@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -20,7 +21,7 @@ gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
+gem 'bcrypt', '~> 3.1.16'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -42,11 +43,12 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 
   gem "seed_dump", "~> 3.3"
-  gem "rubocop-shopify", "~> 1.0"
-  gem 'rubocop-config-prettier'
   gem 'htmlbeautifier'
   gem 'guard'
+  gem 'rubocop-rails', require: false
+  gem 'prettier'
   gem 'guard-livereload'
+  gem 'solargraph'
 end
 
 group :test do
@@ -55,6 +57,7 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  gem "factory_bot_rails"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -62,7 +65,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "appengine", "~> 0.5.0"
 
-gem "devise"
+gem "devise", "~> 4.7.3"
 gem 'pagy', '~> 3.10'
 gem 'simple_form'
 gem 'scenic'

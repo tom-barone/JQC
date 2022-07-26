@@ -1,14 +1,16 @@
+require:
+  - rubocop-rails
+
 inherit_gem:
-  rubocop-shopify: rubocop.yml
-  rubocop-config-prettier: config/rubocop.yml
-  .rubocop.yml
-  .ruby-version
+  prettier: rubocop.yml
 
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
-Style/MethodCallWithArgsParentheses:
-  Enabled: true
+# Allow long code blocks...
+Metrics/BlockLength:
   Exclude:
-    - db/migrate/**/*
-    - app/controllers/**/*
+    - "test/system/**/*" # in system tests, since we don't want to be constantly logging in and out
+    - "test/factories.rb" # in the factories spec, since it's recommended practice to have them all in one file
+
+# Rubocop complains about "task :download_prod => :environment do", but its necessary for rails
+Style/HashSyntax:
+  Exclude:
+    - "lib/tasks/**/*"

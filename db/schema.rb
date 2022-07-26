@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_29_104056) do
+ActiveRecord::Schema.define(version: 2022_07_26_140734) do
 
   create_table "application_additional_informations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "info_date"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2021_03_29_104056) do
     t.text "building_surveyor"
     t.text "structural_engineer"
     t.text "risk_rating"
-    t.date "assesment_commenced"
+    t.date "assessment_commenced"
     t.date "request_for_information_issued"
     t.date "consent_issued"
     t.date "variation_issued"
@@ -160,6 +160,14 @@ ActiveRecord::Schema.define(version: 2021_03_29_104056) do
     t.index ["application_id"], name: "fk_application"
   end
 
+  create_table "request_for_informations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.date "request_for_information_date"
+    t.integer "application_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["application_id"], name: "fk_rails_dde47abfd9"
+  end
+
   create_table "stages", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "stage_date"
     t.text "stage_text"
@@ -209,13 +217,14 @@ ActiveRecord::Schema.define(version: 2021_03_29_104056) do
   add_foreign_key "councils", "suburbs", column: "postal_suburb_id", name: "councils_ibfk_2"
   add_foreign_key "councils", "suburbs", name: "councils_ibfk_1"
   add_foreign_key "invoices", "applications", name: "invoices_ibfk_1", on_delete: :cascade
+  add_foreign_key "request_for_informations", "applications", on_delete: :cascade
   add_foreign_key "stages", "applications", name: "stages_ibfk_1", on_delete: :cascade
 
   create_view "application_search_results", sql_definition: <<-SQL
       select `a`.`id` AS `id`,`t`.`application_type` AS `application_type`,`a`.`reference_number` AS `reference_number`,`a`.`converted_to_from` AS `converted_to_from`,`a`.`street_number` AS `street_number`,`a`.`lot_number` AS `lot_number`,`a`.`street_name` AS `street_name`,concat(if((`a`.`lot_number` is null),'',concat(`a`.`lot_number`,' ')),if((`a`.`street_number` is null),'',concat(`a`.`street_number`,' ')),`a`.`street_name`) AS `location`,`s`.`display_name` AS `suburb`,`a`.`description` AS `description`,`contact`.`client_name` AS `contact`,`owner`.`client_name` AS `owner`,`applicant`.`client_name` AS `applicant`,`council`.`name` AS `council`,`a`.`created_at` AS `created_at`,`a`.`development_application_number` AS `development_application_number` from ((((((`applications` `a` left join `clients` `contact` on((`a`.`client_id` = `contact`.`id`))) left join `clients` `owner` on((`a`.`owner_id` = `owner`.`id`))) left join `clients` `applicant` on((`a`.`applicant_id` = `applicant`.`id`))) left join `councils` `council` on((`a`.`council_id` = `council`.`id`))) left join `application_types` `t` on((`a`.`application_type_id` = `t`.`id`))) left join `suburbs` `s` on((`a`.`suburb_id` = `s`.`id`)))
   SQL
   create_view "applications_csv_results", sql_definition: <<-SQL
-      select `a`.`id` AS `id`,`t`.`application_type` AS `application_type`,`a`.`reference_number` AS `reference_number`,`a`.`converted_to_from` AS `converted_to_from`,`council`.`name` AS `council`,`a`.`development_application_number` AS `development_application_number`,`applicant`.`client_name` AS `applicant`,`applicant_c`.`name` AS `applicant_council`,`owner`.`client_name` AS `owner`,`owner_c`.`name` AS `owner_council`,`client`.`client_name` AS `contact`,`client_c`.`name` AS `contact_council`,`a`.`description` AS `description`,`a`.`cancelled` AS `cancelled`,`a`.`street_number` AS `street_number`,`a`.`lot_number` AS `lot_number`,`a`.`street_name` AS `street_name`,`s`.`display_name` AS `suburb`,`a`.`section_93A` AS `section_93A`,`a`.`electronic_lodgement` AS `electronic_lodgement`,`a`.`hard_copy` AS `hard_copy`,`a`.`job_type_administration` AS `job_type_administration`,`a`.`quote_accepted_date` AS `quote_accepted_date`,`a`.`administration_notes` AS `administration_notes`,`a`.`fee_amount` AS `fee_amount`,`a`.`building_surveyor` AS `building_surveyor`,`a`.`structural_engineer` AS `structural_engineer`,`a`.`risk_rating` AS `risk_rating`,`a`.`assesment_commenced` AS `assesment_commenced`,`a`.`request_for_information_issued` AS `request_for_information_issued`,`a`.`consent_issued` AS `consent_issued`,`a`.`variation_issued` AS `variation_issued`,`a`.`coo_issued` AS `coo_issued`,`a`.`job_type` AS `job_type`,`a`.`consent` AS `consent`,`a`.`certifier` AS `certifier`,`a`.`certification_notes` AS `certification_notes`,`a`.`invoice_to` AS `invoice_to`,`a`.`care_of` AS `care_of`,`a`.`invoice_email` AS `invoice_email`,`a`.`attention` AS `attention`,`a`.`purchase_order_number` AS `purchase_order_number`,`a`.`fully_invoiced` AS `fully_invoiced`,`a`.`invoice_debtor_notes` AS `invoice_debtor_notes`,`a`.`applicant_email` AS `applicant_email`,`a`.`created_at` AS `created_at`,`a`.`updated_at` AS `updated_at` from (((((((((`applications` `a` left join `application_types` `t` on((`a`.`application_type_id` = `t`.`id`))) left join `suburbs` `s` on((`a`.`suburb_id` = `s`.`id`))) left join `councils` `council` on((`a`.`council_id` = `council`.`id`))) left join `clients` `client` on((`a`.`client_id` = `client`.`id`))) left join `clients` `applicant` on((`a`.`applicant_id` = `applicant`.`id`))) left join `clients` `owner` on((`a`.`owner_id` = `owner`.`id`))) left join `councils` `client_c` on((`a`.`client_council_id` = `client_c`.`id`))) left join `councils` `applicant_c` on((`a`.`applicant_council_id` = `applicant_c`.`id`))) left join `councils` `owner_c` on((`a`.`owner_council_id` = `owner_c`.`id`)))
+      select `a`.`id` AS `id`,`t`.`application_type` AS `application_type`,`a`.`reference_number` AS `reference_number`,`a`.`converted_to_from` AS `converted_to_from`,`council`.`name` AS `council`,`a`.`development_application_number` AS `development_application_number`,`applicant`.`client_name` AS `applicant`,`applicant_c`.`name` AS `applicant_council`,`owner`.`client_name` AS `owner`,`owner_c`.`name` AS `owner_council`,`client`.`client_name` AS `contact`,`client_c`.`name` AS `contact_council`,`a`.`description` AS `description`,`a`.`cancelled` AS `cancelled`,`a`.`street_number` AS `street_number`,`a`.`lot_number` AS `lot_number`,`a`.`street_name` AS `street_name`,`s`.`display_name` AS `suburb`,`a`.`section_93A` AS `section_93A`,`a`.`electronic_lodgement` AS `electronic_lodgement`,`a`.`hard_copy` AS `hard_copy`,`a`.`job_type_administration` AS `job_type_administration`,`a`.`quote_accepted_date` AS `quote_accepted_date`,`a`.`administration_notes` AS `administration_notes`,`a`.`fee_amount` AS `fee_amount`,`a`.`building_surveyor` AS `building_surveyor`,`a`.`structural_engineer` AS `structural_engineer`,`a`.`risk_rating` AS `risk_rating`,`a`.`assessment_commenced` AS `assessment_commenced`,`a`.`request_for_information_issued` AS `request_for_information_issued`,`a`.`consent_issued` AS `consent_issued`,`a`.`variation_issued` AS `variation_issued`,`a`.`coo_issued` AS `coo_issued`,`a`.`job_type` AS `job_type`,`a`.`consent` AS `consent`,`a`.`certifier` AS `certifier`,`a`.`certification_notes` AS `certification_notes`,`a`.`invoice_to` AS `invoice_to`,`a`.`care_of` AS `care_of`,`a`.`invoice_email` AS `invoice_email`,`a`.`attention` AS `attention`,`a`.`purchase_order_number` AS `purchase_order_number`,`a`.`fully_invoiced` AS `fully_invoiced`,`a`.`invoice_debtor_notes` AS `invoice_debtor_notes`,`a`.`applicant_email` AS `applicant_email`,`a`.`created_at` AS `created_at`,`a`.`updated_at` AS `updated_at` from (((((((((`applications` `a` left join `application_types` `t` on((`a`.`application_type_id` = `t`.`id`))) left join `suburbs` `s` on((`a`.`suburb_id` = `s`.`id`))) left join `councils` `council` on((`a`.`council_id` = `council`.`id`))) left join `clients` `client` on((`a`.`client_id` = `client`.`id`))) left join `clients` `applicant` on((`a`.`applicant_id` = `applicant`.`id`))) left join `clients` `owner` on((`a`.`owner_id` = `owner`.`id`))) left join `councils` `client_c` on((`a`.`client_council_id` = `client_c`.`id`))) left join `councils` `applicant_c` on((`a`.`applicant_council_id` = `applicant_c`.`id`))) left join `councils` `owner_c` on((`a`.`owner_council_id` = `owner_c`.`id`)))
   SQL
   create_view "report_overdue_pcs", sql_definition: <<-SQL
       select `a`.`reference_number` AS `reference_number`,`a`.`assesment_commenced` AS `assesment_commenced`,`a`.`request_for_information_issued` AS `request_for_information_issued`,`a`.`consent_issued` AS `consent_issued`,`a`.`created_at` AS `created_at`,`a`.`risk_rating` AS `risk_rating`,`c`.`client_name` AS `applicant_name`,`a`.`building_surveyor` AS `building_surveyor`,`a`.`structural_engineer` AS `structural_engineer`,`a`.`job_type_administration` AS `job_type`,`a`.`description` AS `description` from (`applications` `a` left join `clients` `c` on((`c`.`id` = `a`.`applicant_id`)))

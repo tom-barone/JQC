@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ApplicationAdditionalInformationsController < ApplicationController
   before_action :set_application_additional_information, only: [:show, :edit, :update, :destroy]
 

@@ -148,4 +148,17 @@ document.addEventListener("turbolinks:load", () => {
   $("#application-add-uploaded").click(
       () => setTimeout(checkRiskRatingAndUpdateUploaded, 100)
   );
+
+  // Update the numbers on RFI_issued list
+  const updateRFIs = function () {
+    // In the RFI table, add a numbered list to the left
+    $(".request-for-informations-fields td.rfis-number:visible").each(function (index) {
+        $(this).html(index + 1)
+    });
+  };
+  // Make sure to update the numbers on add/remove RFI
+  $(".rfis-table").on("cocoon:after-insert", updateRFIs);
+  $(".rfis-table").on("cocoon:after-remove", updateRFIs);
+  // Update the RFIs on edit page load
+  updateRFIs();
 });

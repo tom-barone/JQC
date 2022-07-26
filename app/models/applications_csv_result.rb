@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ApplicationsCsvResult < ApplicationRecord
   self.primary_key = :id
 
@@ -30,7 +31,7 @@ class ApplicationsCsvResult < ApplicationRecord
     building_surveyor
     structural_engineer
     risk_rating
-    assesment_commenced
+    assessment_commenced
     request_for_information_issued
     consent_issued
     variation_issued
@@ -58,7 +59,7 @@ class ApplicationsCsvResult < ApplicationRecord
             .filter_by_date(params[:start_date], params[:end_date])
             # Show PC's first, then Q's
             .order(
-              'field (application_type, "PC", "Q", "C", "RC", "LG", "SC") asc, reference_number desc'
+              Arel.sql('field (application_type, "PC", "Q", "C", "RC", "LG", "SC") asc, reference_number desc')
             )
         }
 

@@ -1,40 +1,55 @@
 # # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 # 
-# council_1:
-#   name: MyText
-#   city: MyText
-#   street: MyText
-#   state: MyString
-#   suburb: one
-#   postal_address: MyText
-#   postal_suburb: one
-#   phone: MyText
-#   fax: MyText
-#   email: a
-#   notes: MyText
+# <% 1.upto(5) do |n| %>
+# council<%= n %>:
+#    name: <%= "Council name #{n}" %>
+#    city: <%= "Council city #{n}" %>
+#    street: <%= "Council street #{n}" %>
+#    state: "SA"
+#    suburb: suburb<%=n%>
+#    postal_address: <%= "Council postal address #{n}" %>
+#    postal_suburb: suburb<%=n%>
+#    phone: <%= "0000 000 00#{n}" %>
+#    fax: <%= "Council fax #{n}" %>
+#    email: <%= "council#{n}@email.com" %> 
+#    notes: <%= "Council notes #{n}" %> 
+# <% end %>
 # 
-# two:
-#   name: MyText
-#   city: MyText
-#   street: MyText
-#   state: MyString
-#   suburb: two
-#   postal_address: MyText
-#   postal_suburb: two
-#   phone: MyText
-#   fax: MyText
-#   email: b
-#   notes: MyText
-# 
-# unused:
-#   name: MyText
-#   city: MyText
-#   street: MyText
-#   state: MyString
-#   suburb: two
-#   postal_address: MyText
-#   postal_suburb: two
-#   phone: MyText
-#   fax: MyText
-#   email: b
-#   notes: MyText
+# # council_1:
+# #   name: MyText
+# #   city: MyText
+# #   street: MyText
+# #   state: MyString
+# #   suburb: one
+# #   postal_address: MyText
+# #   postal_suburb: one
+# #   phone: MyText
+# #   fax: MyText
+# #   email: a
+# #   notes: MyText
+# # 
+# # two:
+# #   name: MyText
+# #   city: MyText
+# #   street: MyText
+# #   state: MyString
+# #   suburb: two
+# #   postal_address: MyText
+# #   postal_suburb: two
+# #   phone: MyText
+# #   fax: MyText
+# #   email: b
+# #   notes: MyText
+# # 
+# # unused:
+# #   name: MyText
+# #   city: MyText
+# #   street: MyText
+# #   state: MyString
+# #   suburb: two
+# #   postal_address: MyText
+# #   postal_suburb: two
+# #   phone: MyText
+# #   fax: MyText
+# #   email: b
+# #   notes: MyText

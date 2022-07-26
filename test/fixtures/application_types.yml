@@ -1,14 +1,25 @@
 # # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# C:
+#   last_used: 2457
+#   application_type: "C"
 # 
-# one:
-#   last_used: 1
-#   application_type: PC
+# LG:
+#   last_used: 20000
+#   application_type: "LG"
 # 
-# two:
-#   last_used: 2
-#   application_type: Q
+# PC:
+#   last_used: 63920
+#   application_type: "PC"
 # 
-#   # This one can be deleted safely
-# unused:
-#   last_used: 5
-#   application_type: ZZZZ
+# Q:
+#   last_used: 14229
+#   application_type: "Q"
+# 
+# RC:
+#   last_used: 2090
+#   application_type: "RC"
+# 
+# SC:
+#   last_used: 428
+#   application_type: "SC"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Application < ApplicationRecord
   belongs_to :council, class_name: 'Council', optional: true
   belongs_to :applicant, class_name: 'Client', optional: true
@@ -23,6 +25,9 @@ class Application < ApplicationRecord
   accepts_nested_attributes_for :application_additional_informations,
                                 allow_destroy: true
 
+  has_many :request_for_informations, inverse_of: :application, dependent: :destroy
+  accepts_nested_attributes_for :request_for_informations, allow_destroy: true
+
   has_many :stages, inverse_of: :application, dependent: :destroy
   accepts_nested_attributes_for :stages, allow_destroy: true
 
@@ -31,7 +36,7 @@ class Application < ApplicationRecord
 
   JOB_TYPE_ADMINISTRATION = ['Residential', 'Commercial', 'Section 49']
   BUILDING_SURVEYOR = %w[Vic Ian Peter Darryl Kanchanie Simon Sam Matt Frank]
-  STRUCTURAL_ENGINEER = %w[Internal External]
+  STRUCTURAL_ENGINEER = %w[Jack Dan Leo External Internal]
   RISK_RATING = %w[High Standard Low]
   JOB_TYPE = %w[BRC Other]
   CONSENT = %w[Approved Refused]

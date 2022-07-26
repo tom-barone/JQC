@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SuburbsController < ApplicationController
   before_action :set_suburb, only: [:show, :edit, :update, :destroy]
 

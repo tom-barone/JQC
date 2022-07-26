@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CouncilsController < ApplicationController
   before_action :set_council, only: %i[show edit update destroy]
   before_action :get_association_lists, only: %i[new edit update create]

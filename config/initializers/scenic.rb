@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # config/initializers/scenic.rb
 
 require 'scenic/mysql_adapter'

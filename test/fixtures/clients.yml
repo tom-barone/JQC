@@ -1,67 +1,69 @@
 # # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-# 
-# client_1:
-#   client_type: MyText
-#   client_name: MyText
-#   first_name: MyText
-#   surname: MyText
-#   title: MyText
-#   initials: MyText
-#   salutation: MyText
-#   company_name: MyText
-#   street: MyText
-#   suburb: one
-#   postal_address: MyText
-#   postal_suburb: one
-#   australian_business_number: MyText
-#   state: MyString
-#   phone: MyText
-#   mobile_number: MyText
-#   fax: MyText
-#   email: a
-#   notes: MyText
-#   bad_payer: false
-# 
-# two:
-#   client_type: MyText
-#   client_name: MyText
-#   first_name: MyText
-#   surname: MyText
-#   title: MyText
-#   initials: MyText
-#   salutation: MyText
-#   company_name: MyText
-#   street: MyText
-#   suburb: two
-#   postal_address: MyText
-#   postal_suburb: two
-#   australian_business_number: MyText
-#   state: MyString
-#   phone: MyText
-#   mobile_number: MyText
-#   fax: MyText
-#   email: b
-#   notes: MyText
-#   bad_payer: false
-# 
-# unused:
-#   client_type: MyText
-#   client_name: MyText
-#   first_name: MyText
-#   surname: MyText
-#   title: MyText
-#   initials: MyText
-#   salutation: MyText
-#   company_name: MyText
-#   street: MyText
-#   suburb: two
-#   postal_address: MyText
-#   postal_suburb: two
-#   australian_business_number: MyText
-#   state: MyString
-#   phone: MyText
-#   mobile_number: MyText
-#   fax: MyText
-#   email: b
-#   notes: MyText
-#   bad_payer: false
+
+# <% 1.upto(20) do |n| %>
+#   client<%=n%>:
+#     client_type: "Invidual"
+#     client_name: "Client name <%=n%>"
+#     first_name: "FirstName<%=n%>"
+#     surname: "Surname<%=n%>"
+#     title: "Mr"
+#     initials: "F.S."
+#     salutation: ""
+#     company_name: "Client company <%=n%>"
+#     street: "Client street <%=n%>"
+#     suburb: suburb<%=n%>
+#     postal_address: "Postal address <%=n%>"
+#     postal_suburb: suburb<%=n%>
+#     australian_business_number: "ABN<%=n%>"
+#     state: SA
+#     phone: "Phone number <%=n%>"
+#     mobile_number: "Mobile number <%=n%>"
+#     fax: "Fax number <%=n%>"
+#     email: "client<%=n%>@email.com"
+#     notes: "Client Notes <%=n%>"
+#     bad_payer: false
+# <% end %>
+#   
+# # two:
+# #   client_type: MyText
+# #   client_name: MyText
+# #   first_name: MyText
+# #   surname: MyText
+# #   title: MyText
+# #   initials: MyText
+# #   salutation: MyText
+# #   company_name: MyText
+# #   street: MyText
+# #   suburb: two
+# #   postal_address: MyText
+# #   postal_suburb: two
+# #   australian_business_number: MyText
+# #   state: MyString
+# #   phone: MyText
+# #   mobile_number: MyText
+# #   fax: MyText
+# #   email: b
+# #   notes: MyText
+# #   bad_payer: false
+# # 
+# # unused:
+# #   client_type: MyText
+# #   client_name: MyText
+# #   first_name: MyText
+# #   surname: MyText
+# #   title: MyText
+# #   initials: MyText
+# #   salutation: MyText
+# #   company_name: MyText
+# #   street: MyText
+# #   suburb: two
+# #   postal_address: MyText
+# #   postal_suburb: two
+# #   australian_business_number: MyText
+# #   state: MyString
+# #   phone: MyText
+# #   mobile_number: MyText
+# #   fax: MyText
+# #   email: b
+# #   notes: MyText
+# #   bad_payer: false

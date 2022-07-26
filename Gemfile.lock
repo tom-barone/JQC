@@ -64,7 +64,9 @@ GEM
       google-cloud-env (~> 1.2)
       stackdriver (~> 0.15)
     ast (2.4.1)
+    backport (1.2.0)
     bcrypt (3.1.16)
+    benchmark (0.2.0)
     bindex (0.8.1)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
@@ -92,11 +94,17 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    e2mmap (0.1.0)
     em-websocket (0.5.2)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
     erubi (1.10.0)
     eventmachine (1.2.7)
+    factory_bot (6.2.1)
+      activesupport (>= 5.0.0)
+    factory_bot_rails (6.2.0)
+      factory_bot (~> 6.2.0)
+      railties (>= 5.0.0)
     faraday (1.1.0)
       multipart-post (>= 1.2, < 3)
       ruby2_keywords
@@ -195,9 +203,14 @@ GEM
     http_parser.rb (0.6.0)
     i18n (1.8.5)
       concurrent-ruby (~> 1.0)
+    jaro_winkler (1.5.4)
     jbuilder (2.10.1)
       activesupport (>= 5.0.0)
     jwt (2.2.2)
+    kramdown (2.4.0)
+      rexml
+    kramdown-parser-gfm (1.1.0)
+      kramdown (~> 2.0)
     listen (3.3.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -234,6 +247,7 @@ GEM
     parallel (1.20.1)
     parser (2.7.2.0)
       ast (~> 2.4.1)
+    prettier (2.1.0)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -280,6 +294,8 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    reverse_markdown (2.1.1)
+      nokogiri
     rexml (3.2.4)
     rly (0.2.3)
     rubocop (1.4.2)
@@ -293,9 +309,10 @@ GEM
       unicode-display_width (>= 1.4.0, < 2.0)
     rubocop-ast (1.2.0)
       parser (>= 2.7.1.5)
-    rubocop-config-prettier (0.1.11)
-    rubocop-shopify (1.0.7)
-      rubocop (~> 1.4)
+    rubocop-rails (2.9.1)
+      activesupport (>= 4.2.0)
+      rack (>= 1.1)
+      rubocop (>= 0.90.0, < 2.0)
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
     rubyzip (2.3.0)
@@ -330,6 +347,20 @@ GEM
     simple_form (5.0.3)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
+    solargraph (0.40.1)
+      backport (~> 1.1)
+      benchmark
+      bundler (>= 1.17.2)
+      e2mmap
+      jaro_winkler (~> 1.5)
+      kramdown (~> 2.3)
+      kramdown-parser-gfm (~> 1.1)
+      parser (~> 2.3)
+      reverse_markdown (>= 1.0.5, < 3)
+      rubocop (>= 0.52)
+      thor (~> 1.0)
+      tilt (~> 2.0)
+      yard (~> 0.9, >= 0.9.24)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -372,11 +403,14 @@ GEM
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
       railties (>= 4.2)
+    webrick (1.7.0)
     websocket-driver (0.7.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
+    yard (0.9.28)
+      webrick (~> 1.7.0)
     zeitwerk (2.4.1)
 
 PLATFORMS
@@ -385,11 +419,13 @@ PLATFORMS
 DEPENDENCIES
   amoeba
   appengine (~> 0.5.0)
+  bcrypt (~> 3.1.16)
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
   cocoon
-  devise
+  devise (~> 4.7.3)
+  factory_bot_rails
   guard
   guard-livereload
   highline (~> 1.7, >= 1.7.8)
@@ -398,16 +434,17 @@ DEPENDENCIES
   listen (~> 3.2)
   mysql2 (>= 0.4.4)
   pagy (~> 3.10)
+  prettier
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)
-  rubocop-config-prettier
-  rubocop-shopify (~> 1.0)
+  rubocop-rails
   sass-rails (>= 6)
   scenic
   scenic-mysql_adapter
   seed_dump (~> 3.3)
   selenium-webdriver
   simple_form
+  solargraph
   spring
   spring-watcher-listen (~> 2.0.0)
   turbolinks (~> 5)
