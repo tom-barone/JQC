@@ -158,6 +158,7 @@ class ApplicationsController < ApplicationController
         :fee_amount,
         :building_surveyor,
         :structural_engineer,
+        :external_engineer_date,
         :risk_rating,
         :assessment_commenced,
         :request_for_information_issued,

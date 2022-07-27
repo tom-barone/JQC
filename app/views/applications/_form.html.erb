@@ -321,20 +321,20 @@
           </div>
           <div class="col">
             <div class="field">
+              <%= form.label :assessment_commenced %>
+              <%= form.date_field :assessment_commenced %>
+            </div>
+          </div>
+          <div class="col">
+            <div class="field">
               <%= form.label :structural_engineer %>
               <%= form.select :structural_engineer, Application::STRUCTURAL_ENGINEER %>
             </div>
           </div>
           <div class="col">
             <div class="field">
-              <%= form.label :risk_rating %>
-              <%= form.select :risk_rating, Application::RISK_RATING %>
-            </div>
-          </div>
-          <div class="col">
-            <div class="field">
-              <%= form.label :assessment_commenced %>
-              <%= form.date_field :assessment_commenced %>
+              <%= form.label :external_engineer_date, "External engineer" %>
+              <%= form.date_field :external_engineer_date %>
             </div>
           </div>
         </div>
@@ -396,6 +396,12 @@
           </div>
         </div>
         <div class="row">
+          <div class="col">
+            <div class="field">
+              <%= form.label :risk_rating %>
+              <%= form.select :risk_rating, Application::RISK_RATING %>
+            </div>
+          </div>
           <div class="col">
             <div class="field">
                <%= form.label :consent_issued %>
