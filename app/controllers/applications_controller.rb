@@ -155,6 +155,8 @@ class ApplicationsController < ApplicationController
         :job_type_administration,
         :quote_accepted_date,
         :administration_notes,
+        :number_of_storeys,
+        :construction_value,
         :fee_amount,
         :building_surveyor,
         :structural_engineer,

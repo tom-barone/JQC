@@ -87,7 +87,7 @@
             </div>
           </div>
           <div class="row h-50">
-            <div class="col-7">
+            <div class="col-3">
               <div class="row">
                 <div class="col">
                   <div class="field">
@@ -96,17 +96,6 @@
                       <%= form.text_field :applicant_name, list: "clients", class:"editable-association" %>
                       <% if @application.applicant_id %>
                         <%= link_to 'Edit', edit_client_path(@application.applicant_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="field">
-                    <%= form.label :applicant_council_name, "Applicant Council"%>
-                    <div class="input-group">
-                      <%= form.text_field :applicant_council_name, list: "councils", class:"editable-association" %>
-                      <% if @application.applicant_council_id %>
-                        <%= link_to 'Edit', edit_council_path(@application.applicant_council_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
                       <% end %>
                     </div>
                   </div>
@@ -124,17 +113,6 @@
                     </div>
                   </div>
                 </div>
-                <div class="col">
-                  <div class="field">
-                    <%= form.label :owner_council_name, "Owner Council" %>
-                    <div class="input-group">
-                      <%= form.text_field :owner_council_name, list: "councils", class:"editable-association" %>
-                      <% if @application.owner_council_id %>
-                        <%= link_to 'Edit', edit_council_path(@application.owner_council_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
               </div>
               <div class="row">
                 <div class="col">
@@ -148,30 +126,35 @@
                     </div>
                   </div>
                 </div>
-                <div class="col">
-                  <div class="field">
-                    <%= form.label :client_council_name, "Contact Council"%>
-                    <div class="input-group">
-                      <%= form.text_field :client_council_name, list: "councils", class:"editable-association" %>
-                      <% if @application.client_council_id %>
-                        <%= link_to 'Edit', edit_council_path(@application.client_council_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
             <div class="col">
               <div class="row">
-                <div class="field">
-                  <%= form.label :description %>
-                  <%= form.text_area :description, rows: 3 %>
+                <div class="col-9">
+                  <div class="field">
+                    <%= form.label :description %>
+                    <%= form.text_area :description, rows: 3 %>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="field">
+                    <%= form.label :number_of_storeys %>
+                    <%= form.text_field :number_of_storeys, type: "number", min: "0", max: "99", step: "1" %>
+                  </div>
                 </div>
               </div>
               <div class="row">
-                <div class="field">
-                  <%= form.label :administration_notes %>
-                  <%= form.text_area :administration_notes %>
+                <div class="col-9">
+                  <div class="field">
+                    <%= form.label :administration_notes %>
+                    <%= form.text_area :administration_notes %>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="field">
+                    <%= form.label :construction_value, "Construction value ($)" %>
+                    <%= form.text_field :construction_value, type: "number", min: "0", max: "1000000", step: "any" %>
+                  </div>
                 </div>
               </div>
             </div>
