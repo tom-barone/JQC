@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_18_162623) do
+ActiveRecord::Schema.define(version: 2022_09_25_065712) do
 
   create_table "application_additional_informations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.date "info_date"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 2022_08_18_162623) do
     t.text "job_type"
     t.text "consent"
     t.text "certifier"
+    t.date "engineer_certificate_received"
     t.text "certification_notes"
     t.text "invoice_to"
     t.text "care_of"
