@@ -35,7 +35,7 @@ class ApplicationsCsvResult < ApplicationRecord
     external_engineer_date
     risk_rating
     assessment_commenced
-    request_for_information_issued
+    request_for_information_dates
     consent_issued
     variation_issued
     coo_issued
