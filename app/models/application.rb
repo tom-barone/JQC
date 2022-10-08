@@ -25,7 +25,9 @@ class Application < ApplicationRecord
   accepts_nested_attributes_for :application_additional_informations,
                                 allow_destroy: true
 
-  has_many :request_for_informations, inverse_of: :application, dependent: :destroy
+  has_many :request_for_informations,
+           inverse_of: :application,
+           dependent: :destroy
   accepts_nested_attributes_for :request_for_informations, allow_destroy: true
 
   has_many :stages, inverse_of: :application, dependent: :destroy
@@ -36,7 +38,13 @@ class Application < ApplicationRecord
 
   JOB_TYPE_ADMINISTRATION = ['Residential', 'Commercial', 'Section 49']
   BUILDING_SURVEYOR = %w[Vic Ian Peter Darryl Kanchanie Simon Sam Matt Frank]
-  STRUCTURAL_ENGINEER = ['Jack Adcock', 'Triaxial', 'Leo Noicos', 'External', 'Internal']
+  STRUCTURAL_ENGINEER = [
+    'Jack Adcock',
+    'Triaxial',
+    'Leo Noicos',
+    'External',
+    'Internal'
+  ]
   RISK_RATING = %w[High Standard Low]
   JOB_TYPE = %w[BRC Other]
   CONSENT = %w[Approved Refused]
@@ -155,5 +163,143 @@ class Application < ApplicationRecord
   end
   def client_council_name
     self.client_council ? self.client_council.name : nil
+  end
+
+  # Emailed reports
+  def self.last_3_months_quotes(this_month)
+    three_months_ago = (this_month << 3).to_s
+    end_of_last_month = this_month - 1
+    convert_to_csv(
+      ActiveRecord::Base.connection.exec_query(
+        "select 
+              created_at,
+              quote_number,
+              building_surveyor,
+              fee_amount as quote_cost,
+              quote_accepted_date,
+              case 
+                  when (converted_to_from REGEXP '^PC.*') = 1 then converted_to_from
+              else null end as PC_converted,
+              case 
+                  when (converted_to_from REGEXP '^C.*') = 1 then converted_to_from
+              else null end as C_converted
+          from (
+              select 
+                  created_at,
+                  case 
+                      when (reference_number REGEXP '^Q.*') = 1 then reference_number
+                  else converted_to_from end as quote_number,
+                  case 
+                      when (reference_number REGEXP '^Q.*') = 1 then converted_to_from
+                  else reference_number end as converted_to_from,
+                  quote_accepted_date,
+                  fee_amount,
+                  building_surveyor
+              from applications
+              where
+              (reference_number like 'Q%' or converted_to_from like 'Q%') and
+              created_at >= '#{three_months_ago}' and created_at <= '#{end_of_last_month}' and
+              cancelled is not true
+              group by quote_number
+          ) as a order by created_at asc"
+      )
+    )
+  end
+
+  def self.overdue_pcs(this_month)
+    three_months_ago = (this_month << 3).to_s
+    convert_to_csv(
+      ActiveRecord::Base.connection.exec_query(
+        "select
+          a.reference_number,
+          a.assessment_commenced as assessment_started,
+          a.request_for_information_issued,
+          a.consent_issued,
+          a.created_at as date_entered,
+          a.risk_rating,
+          c.client_name,
+          a.building_surveyor,
+          a.structural_engineer,
+          a.job_type_administration as job_type,
+          a.description
+      from applications a
+      left join clients c on c.id = a.applicant_id
+      where 
+          a.reference_number like 'PC%' and
+          a.consent_issued is null and
+          a.assessment_commenced is not null and
+          (
+              -- 3 months have passed since assesment and no RFI date
+              a.request_for_information_issued is null and a.assessment_commenced <= '#{three_months_ago}' or 
+              -- 3 months have passed since the RFI date
+              a.request_for_information_issued is not null and 
+              a.request_for_information_issued <= '#{three_months_ago}'
+          ) and cancelled is not true
+      order by date_entered asc"
+      )
+    )
+  end
+
+  def self.last_month_pcs(this_month)
+    last_month_end = this_month - 1 # minus one day to get last day of month
+    last_month_start = last_month_end.beginning_of_month
+    convert_to_csv(
+      ActiveRecord::Base.connection.exec_query(
+        "select
+          a.reference_number,
+          a.consent_issued,
+          a.created_at as date_entered,
+          a.risk_rating,
+          c.client_name,
+          a.building_surveyor,
+          a.structural_engineer,
+          a.job_type_administration as job_type,
+          a.assessment_commenced as assessment_started,
+          a.consent
+      from applications a
+      left join clients c on c.id = a.applicant_id
+      where a.reference_number like 'PC%' and
+      a.consent_issued >= '#{last_month_start}' and a.consent_issued <= '#{last_month_end}'
+      order by consent_issued asc"
+      )
+    )
+  end
+
+  def self.pcs_with_invoices_sent_and_consent_not_issued
+    convert_to_csv(
+      ActiveRecord::Base.connection.exec_query(
+        "select 
+          i.invoice_date,
+          a.reference_number,
+          c.client_name as applicant,
+          a.invoice_email,
+          c.email as applicant_email,
+          concat(a.lot_number, ' ', a.street_number, ' ', a.street_name, ' ', s.display_name) as street_address,
+          a.building_surveyor,
+          i.invoice_number,
+          i.fee,
+          case when i.paid is true then 'yes' else 'no' end as paid
+      from invoices as i 
+      inner join applications as a on a.id = i.application_id
+      inner join suburbs as s on a.suburb_id = s.id
+      inner join clients as c on a.applicant_id = c.id
+      inner join application_types as t on a.application_type_id = t.id
+      where 
+          i.invoice_date is not null and 
+          i.fee is not null and
+          t.application_type = 'pc' and
+          a.consent_issued is null and
+          i.invoice_date >= '2021-01-01' and
+          a.cancelled is not true
+      order by invoice_date"
+      )
+    )
+  end
+
+  def self.convert_to_csv(report)
+    CSV.generate(headers: true) do |csv|
+      csv << report.columns
+      report.rows.each { |row| csv << row }
+    end
   end
 end

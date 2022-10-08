@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
-  devise_for :users, controllers: { registrations: "registrations" }
+  devise_for :users, controllers: { registrations: 'registrations' }
   put 'application_types/all', to: 'application_types#update_all', as: 'update_all'
 
   resources :suburbs
@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   resources :application_uploads
   resources :application_types
   resources :application_additional_informations
+
+  get 'crons/last_month_csv_reports', to: 'crons#last_month_csv_reports'
 
   authenticated :user do
     root to: 'applications#index', as: :authenticated_root

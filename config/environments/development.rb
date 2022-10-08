@@ -67,5 +67,15 @@ Rails.application.configure do
   config.google_cloud.use_error_reporting = false
   config.google_cloud.use_debugger = false
 
-  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  # Mail setup
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.gmail.com',
+    port:                 587,
+    domain:               'tombarone.net',
+    user_name:            Rails.application.credentials.action_mailer_gmail_username!,
+    password:             Rails.application.credentials.action_mailer_gmail_password!,
+    authentication:       'plain',
+    enable_starttls_auto: true }
+
 end
