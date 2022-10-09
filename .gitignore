@@ -40,3 +40,5 @@ yarn-debug.log*
 # Ignore SSL stuff for now
 /SSL
 
+# Ignore all credential key files
+/config/**/*.key
