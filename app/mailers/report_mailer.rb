@@ -38,6 +38,7 @@ class ReportMailer < ApplicationMailer
     # Mail it
     mail(
       to: @recipient_email,
+      bcc: 'mail@tombarone.net',
       subject: "JQC #{@last_month_name} #{@year} Reports"
     )
   end
