@@ -12,8 +12,10 @@ class ReportMailer < ApplicationMailer
     # Set email template values
     @last_month_name = last_month.strftime('%B') # e.g. September
     @year = last_month.strftime('%Y') # e.g. 2022
-    @recipient_email = 'mail@tombarone.net'
-    @recipient_name = 'Annmarie'
+    @recipient_email =
+      Rails.application.credentials.monthly_report_recipient_email
+    @recipient_name =
+      Rails.application.credentials.monthly_report_recipient_name
 
     # Add report attachments
     attachments['Quotes_last_3_months.csv'] = {

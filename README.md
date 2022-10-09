@@ -86,6 +86,22 @@ Generate
 scaffold -c -p ./db/schema.rb
 ```
 
+## Rails Generators from database
+Scheduled cron jobs are stored in cron.yaml.
+https://cloud.google.com/appengine/docs/standard/scheduling-jobs-with-cron-yaml
+View app engine cron jobs in Cloud Scheduler on the Google cloud console.
+
+To update the cron jobs:
+
+```bash
+gcloud app deploy cron.yaml --project=***REMOVED***
+```
+
+To test and trigger the mail in development:
+```bash
+curl --header "X-Appengine-Cron: true" http://localhost:3000/crons/last_month_csv_reports
+```
+
 ## Devise initial install instructions
 
 Depending on your application's configuration some manual setup may be required:

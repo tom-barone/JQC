@@ -1,0 +1,5 @@
+cron:
+- description: "Monthly JQC reports"
+  url: /crons/last_month_csv_reports
+  schedule: 2 of month 08:00
+  timezone: Australia/Adelaide
