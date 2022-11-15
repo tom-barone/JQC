@@ -160,7 +160,6 @@ cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance
 
 ## Todo
 
-- git crypt the master.key, development.key, test.key & production.key files
 
 - Create migrations for each database table
 - link foreign keys and things
@@ -179,5 +178,3 @@ cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance
 
 
 - remove cancelled reports from the monthly exports
-
-- remove all references to original email / password

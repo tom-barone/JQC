@@ -14,9 +14,9 @@
           <% end %>
         </select>
         <span class="input-group-text">From</span>
-        <input class="form-control" type="date" id="start_date" min="1970-01-01" max="2000-13-13"=>
+        <input class="form-control" id="start-datepicker" type="date" data-controller="search-datepicker" min="1970-01-01">
         <span class="input-group-text">To</span>
-        <input class="form-control" type="date" id="end_date" min="1970-01-01" max="2000-13-13"=>
+        <input class="form-control" id="end-datepicker" type="date" data-controller="search-datepicker" min="1970-01-01">
         <span class="input-group-text">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -85,4 +85,3 @@
 </div>
 <br>
 </div>
-<%= javascript_pack_tag 'applications_index_page' %>
