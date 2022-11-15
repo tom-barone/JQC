@@ -1,0 +1,8 @@
+_fixture:
+  model_class: Application
+
+<% 4990.upto(6000) do |n| %>
+application_PC<%=n%>:
+  application_type: PC
+  reference_number: PC<%=n%>
+<% end %>

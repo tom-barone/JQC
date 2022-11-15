@@ -1,5 +1,14 @@
 # # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+application_001:
+  application_type: PC
+  reference_number: PC123
+
+
+application_002:
+  application_type: Q
+  reference_number: Q543
+
 # PCs
 # <% 1.upto(5) do |n| %>
 #   application_PC<%=n%>:

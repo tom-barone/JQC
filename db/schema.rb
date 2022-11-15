@@ -2,42 +2,41 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_27_082848) do
-
-  create_table "application_additional_informations", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+ActiveRecord::Schema[7.0].define(version: 2022_11_15_125351) do
+  create_table "application_additional_informations", id: :integer, charset: "utf8", force: :cascade do |t|
     t.date "info_date"
     t.text "info_text"
     t.integer "application_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["application_id"], name: "fk_application"
   end
 
-  create_table "application_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "application_types", charset: "utf8", force: :cascade do |t|
     t.string "application_type", limit: 10, null: false
     t.integer "last_used", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table "application_uploads", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "application_uploads", id: :integer, charset: "utf8", force: :cascade do |t|
     t.date "uploaded_date"
     t.text "uploaded_text"
     t.integer "application_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["application_id"], name: "fk_application"
   end
 
-  create_table "applications", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "applications", id: :integer, charset: "utf8", force: :cascade do |t|
     t.text "reference_number"
     t.text "converted_to_from"
     t.integer "council_id"
@@ -84,8 +83,8 @@ ActiveRecord::Schema.define(version: 2022_10_27_082848) do
     t.boolean "fully_invoiced", default: false
     t.text "invoice_debtor_notes"
     t.text "applicant_email"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "application_type_id"
     t.date "external_engineer_date"
     t.index ["applicant_council_id"], name: "fk_applicant_council"
@@ -102,7 +101,7 @@ ActiveRecord::Schema.define(version: 2022_10_27_082848) do
     t.index ["suburb_id"], name: "fk_suburb"
   end
 
-  create_table "clients", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "clients", id: :integer, charset: "utf8", force: :cascade do |t|
     t.text "client_type"
     t.text "client_name"
     t.text "first_name"
@@ -123,14 +122,14 @@ ActiveRecord::Schema.define(version: 2022_10_27_082848) do
     t.text "email"
     t.text "notes"
     t.boolean "bad_payer", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["client_name"], name: "index_clients_on_client_name", type: :fulltext
     t.index ["postal_suburb_id"], name: "fk_postalsuburb"
     t.index ["suburb_id"], name: "fk_suburb"
   end
 
-  create_table "councils", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "councils", id: :integer, charset: "utf8", force: :cascade do |t|
     t.text "name"
     t.text "city"
     t.text "street"
@@ -142,14 +141,14 @@ ActiveRecord::Schema.define(version: 2022_10_27_082848) do
     t.text "fax"
     t.text "email"
     t.text "notes"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["name"], name: "index_councils_on_name", type: :fulltext
     t.index ["postal_suburb_id"], name: "fk_postalsuburb"
     t.index ["suburb_id"], name: "fk_suburb"
   end
 
-  create_table "invoices", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "invoices", id: :integer, charset: "utf8", force: :cascade do |t|
     t.text "invoice_number"
     t.text "stage"
     t.decimal "fee", precision: 13, scale: 2
@@ -161,46 +160,46 @@ ActiveRecord::Schema.define(version: 2022_10_27_082848) do
     t.date "invoice_date"
     t.boolean "paid"
     t.integer "application_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["application_id"], name: "fk_application"
   end
 
-  create_table "request_for_informations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "request_for_informations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.date "request_for_information_date"
     t.integer "application_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["application_id"], name: "fk_rails_dde47abfd9"
   end
 
-  create_table "stages", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "stages", id: :integer, charset: "utf8", force: :cascade do |t|
     t.date "stage_date"
     t.text "stage_text"
     t.integer "application_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["application_id"], name: "fk_application"
   end
 
-  create_table "suburbs", id: :integer, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "suburbs", id: :integer, charset: "utf8", force: :cascade do |t|
     t.text "display_name", null: false
     t.text "suburb", null: false
     t.text "state", null: false
     t.text "postcode", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["display_name"], name: "index_suburbs_on_display_name", type: :fulltext
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "username"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

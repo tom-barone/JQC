@@ -3,28 +3,37 @@
 require 'application_system_test_case'
 
 class ApplicationsTest < ApplicationSystemTestCase
+  fixtures :applications, :application_types, :users
+
+  setup { sign_in_test_user }
+
   test 'The main application page' do
-    created_pcs = create_list(:application, 5)
-    #created_lgs =
-      #create_list(:application, 5) do |application, i|
-        #application.reference_number = "LG#{i}"
-      #end
 
-    sign_in_test_user
 
-    # Test both urls "/" and "/applications" show the applications table
-    [root_path, applications_url].each do |url|
-      visit url
-      assert_text 'Reference Number'
+    assert_selector('#start-datepicker', max: '2022-11-15')
 
-      # Check all the PC & LG reference numbers are there
-      created_pcs.each do |application|
-        assert_text application.reference_number
-      end
-      #created_lgs.each do |application|
+
+    #created_pcs = create_list(:application, 5)
+    ##created_lgs =
+      ##create_list(:application, 5) do |application, i|
+        ##application.reference_number = "LG#{i}"
+      ##end
+
+    #sign_in_test_user
+
+    ## Test both urls "/" and "/applications" show the applications table
+    #[root_path, applications_url].each do |url|
+      #visit url
+      #assert_text 'Reference Number'
+
+      ## Check all the PC & LG reference numbers are there
+      #created_pcs.each do |application|
         #assert_text application.reference_number
       #end
-    end
+      ##created_lgs.each do |application|
+        ##assert_text application.reference_number
+      ##end
+    #end
 
     # Test that all column headers are shown
     #[
