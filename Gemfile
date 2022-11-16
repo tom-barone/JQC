@@ -42,6 +42,8 @@ gem 'scenic'
 gem 'scenic-mysql_adapter'
 gem 'simple_form'
 
+# https://github.com/ruby/net-imap/issues/16 
+gem 'net-http'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
