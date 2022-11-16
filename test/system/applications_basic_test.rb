@@ -3,15 +3,18 @@
 require 'application_system_test_case'
 
 class ApplicationsTest < ApplicationSystemTestCase
-  fixtures :applications, :application_types, :users
-
-  setup { sign_in_test_user }
 
   test 'The main application page' do
+    sign_in_test_user
 
+    # Ask the browser what it thinks todays date is (including timezone)
+    current_javascript_time = evaluate_script('new Date().toISOString()')
+    current_ruby_time = Time.zone.parse(current_javascript_time)
+    current_date_string = current_ruby_time.strftime('%Y-%m-%d')
 
-    assert_selector('#start-datepicker', max: '2022-11-15')
-
+    # Check the date fields are setup correctly so that you can't search in the future
+    assert_selector("#start-datepicker[max=\"#{current_date_string}\"]")
+    assert_selector("#end-datepicker[max=\"#{current_date_string}\"]")
 
     #created_pcs = create_list(:application, 5)
     ##created_lgs =

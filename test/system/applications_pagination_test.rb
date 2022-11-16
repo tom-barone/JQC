@@ -3,33 +3,27 @@
 require 'application_system_test_case'
 
 class ApplicationsTest < ApplicationSystemTestCase
-  fixtures :applications5000, :application_types, :users
-
-  setup { sign_in_test_user }
 
   test 'The pagination of applications' do
-    visit applications_url
+    sign_in_test_user 
 
     # Check the first page shows 1000 results
-    5995.upto(6000) { |n| assert_text "PC#{n}" }
-    5001.upto(5005) { |n| assert_text "PC#{n}" }
+    5995.upto(5999) { |n| assert_text "PC#{n}" }
+    5002.upto(5007) { |n| assert_text "PC#{n}" }
     assert_no_text 'PC5000'
-    assert_no_text 'PC4999'
+    assert_no_text 'PC5001'
 
-    assert_text '1011 results available'
+    assert_text '1002 results available'
 
     # Check clicking page 2 shows next 1000 results
     within('.pagination') do
       click_on '2'
     end
 
-    # Need to wait a bit longer for turbolinks
-    wait_for_ajax
     assert_text 'PC5000'
-    assert_text 'PC4999'
-    assert_no_text 'PC5001'
+    assert_text 'PC5001'
+    assert_no_text 'PC5002'
 
-    #byebug
 
     #3990.upto(4000) { |n| assert_text "PC#{n}" }
     #3001.upto(3010) { |n| assert_text "PC#{n}" }
