@@ -23,5 +23,16 @@ class SignInsTest < ApplicationSystemTestCase
 
     assert_no_text 'New Application'
     assert_text 'Please sign in'
+    assert_text 'Invalid username or password.'
+
+  end
+
+  test 'Signing out takes you to the login page' do
+    sign_in_test_user
+    click_on 'Sign out'
+
+    assert_no_text 'New Application'
+    assert_text 'Please sign in'
+    assert_text 'Signed out successfully.'
   end
 end

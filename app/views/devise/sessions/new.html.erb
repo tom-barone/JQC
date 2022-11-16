@@ -1,19 +1,27 @@
 <div class="text-center form-signin">
-  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
     <%= image_tag "mstile-150x150_cropped.png", class: "mb-2"%>
+
     <h2 class="h4 mb-3 fw-normal">Please sign in</h2>
-    <%= f.input :username, label: false, autofocus: true, autocomplete: "username", placeholder: "Username" %>
-    <%= f.input :password, label: false, autocomplete: "current-password", placeholder: "Password" %>
+    <% flash.each do |key, value| %>
+      <div class="alert <%=flash_class(key)%>" role="alert">
+        <%= value %>
+      </div>
+    <% end %>
+    <%= f.input :username, wrapper: :sign_in_input, label: false, autofocus: true, input_html: { autocomplete: "username" }, placeholder: "Username" %>
+    <%= f.input :password, label: false, input_html: { autocomplete: "current-password" }, placeholder: "Password" %>
     <% if devise_mapping.rememberable? %>
       <div class="signin-checkbox">
-        <%= f.input :remember_me, as: :boolean, wrapper_html: {class: "mb-2"}, inline_label: 'Yes, remember me' %>
+        <%= f.input :remember_me, wrapper: :sign_in_checkbox, as: :boolean, wrapper_html: {class: "mb-2"}, inline_label: 'Yes, remember me' %>
       </div>
     <% end %>
     <div class="actions">
-      <%= f.button :button, "Sign in", class:"w-100 btn btn-lg btn-primary", data: {disable_with: "
-        <span class='spinner-border spinner-border-sm' role='status' aria-hidden='true'></span>
-        Signing in...".html_safe} %>
+      <%= f.button :button, "Sign in", type: "submit", class:"w-100 btn btn-lg btn-primary", data: {
+        controller: "button-spinner",
+        action:"button-spinner#setSpinner",
+        "button-spinner-loading-text-param": "Signing in..." } do %>
+        Sign in
+      <% end %>
     </div>
   <% end %>
-  <%= render "devise/shared/links" %>
 </div>
