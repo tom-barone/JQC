@@ -48,9 +48,9 @@ If you have any issues at all then please contact me (Tom) and I'll get back to 
               </button>
               <%= button_to destroy_user_session_path, method: :delete, class: "btn btn-sm btn-danger mx-1 text-nowrap", style: "min-width: 10em",
                 data: {
-                    controller: "button-spinner",
-                    action:"button-spinner#setSpinner",
-                    "button-spinner-loading-text-param": "Signing out..." } do %>
+                    controller: "submit-button",
+                    action:"submit-button#onSubmit",
+                    "submit-button-loading-text-param": "Signing out..." } do %>
                 Sign out
               <% end %>
 

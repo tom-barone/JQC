@@ -17,9 +17,9 @@
     <% end %>
     <div class="actions">
       <%= f.button :button, "Sign in", type: "submit", class:"w-100 btn btn-lg btn-primary", data: {
-        controller: "button-spinner",
-        action:"button-spinner#setSpinner",
-        "button-spinner-loading-text-param": "Signing in..." } do %>
+        controller: "submit-button",
+        action:"submit-button#onSubmit",
+        "submit-button-loading-text-param": "Signing in..." } do %>
         Sign in
       <% end %>
     </div>
