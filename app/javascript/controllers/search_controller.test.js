@@ -1,4 +1,4 @@
-import { _getFormattedDateString } from "./search_datepicker_controller";
+import { _getFormattedDateString } from "./search_controller";
 
 
 test("_getFormattedDateString", () => {

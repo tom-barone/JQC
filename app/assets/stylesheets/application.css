@@ -13,23 +13,3 @@
  *= require_tree .
  *= require_self
  */
-body {
-  background-color: #f5f5f5;
-  margin: 0;
-}
-
-input[type="date"].form-control-sm {
-  min-width: 140px;
-}
-
-.form-control-sm {
-  font-size: 0.75rem;
-}
-
-/* Remove the bootstrap blue outline focus box */
-.form-control:focus,
-.btn:focus,
-.form-check-input:focus,
-.form-select:focus {
-  box-shadow: none !important;
-}

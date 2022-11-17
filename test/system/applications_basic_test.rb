@@ -15,14 +15,14 @@ class ApplicationsTest < ApplicationSystemTestCase
     # the headless browser and ruby, and could even fail anyway if the browser loads 
     # at 11:59:59pm and this test runs at 12:00:01am
     assert_any_of_selectors(
-      "#start-datepicker[max=\"#{yesterday}\"]",
-      "#start-datepicker[max=\"#{today}\"]",
-      "#start-datepicker[max=\"#{tomorrow}\"]"
+      "#start_date[max=\"#{yesterday}\"]",
+      "#start_date[max=\"#{today}\"]",
+      "#start_date[max=\"#{tomorrow}\"]"
     )
     assert_any_of_selectors(
-      "#end-datepicker[max=\"#{yesterday}\"]",
-      "#end-datepicker[max=\"#{today}\"]",
-      "#end-datepicker[max=\"#{tomorrow}\"]"
+      "#end_date[max=\"#{yesterday}\"]",
+      "#end_date[max=\"#{today}\"]",
+      "#end_date[max=\"#{tomorrow}\"]"
     )
 
     #created_pcs = create_list(:application, 5)

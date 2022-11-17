@@ -6,34 +6,45 @@ class ApplicationSearchResult < ApplicationRecord
         ->(params) {
           filter_by_search_text(params[:search_text])
             .filter_by_type(params[:type])
-            .filter_by_date(params[:start_date], params[:end_date])
+            .filter_by_start_date(params[:start_date])
+            .filter_by_end_date(params[:end_date])
+            # Filter out outliers
+            # TODO: These outliers should be removed from the DB    
+            .where("created_at >= '1900-01-01'")
+            .where("created_at <= '#{DateTime.now}'")
             # Show PC's first, then Q's
             .order(
-              Arel.sql('field (application_type, "PC", "Q", "C", "RC", "LG", "SC") asc, reference_number desc')
+              Arel.sql(
+                'field (application_type, "PC", "Q", "C", "RC", "LG", "SC") asc, reference_number desc'
+              )
             )
         }
 
   scope :filter_by_type,
         ->(application_type) {
-          if application_type != nil
+          if application_type.present?
             where(
               "application_type = '#{application_type}'" # Default to PC's
             )
-          else
-            nil
           end
+        }
+
+  scope :filter_by_start_date,
+        ->(start_date) {
+          where("created_at >= '#{start_date}'") if start_date.present?
+        }
+
+  scope :filter_by_end_date,
+        ->(end_date) {
+          where("created_at <= '#{end_date}'") if end_date.present?
         }
 
   scope :filter_by_date,
         ->(start_date, end_date) {
-          if start_date != nil or end_date != nil
+          if start_date.present? || end_date.present?
             where(
-              "created_at >= '#{
-                start_date ||= '1900-01-01'
-              }' and created_at <= '#{end_date ||= DateTime.now}'"
+              "created_at >= '#{start_date}' and created_at <= '#{end_date}'"
             )
-          else
-            nil
           end
         }
 

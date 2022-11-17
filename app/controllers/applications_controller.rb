@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 class ApplicationsController < ApplicationController
   include Pagy::Backend
-  include ActionController::Live
+  # TODO: Maybe needed for csv exports
+  #include ActionController::Live
 
   before_action :set_application, only: %i[show edit update destroy]
   before_action :get_association_lists, only: %i[new edit update create]
@@ -9,7 +10,7 @@ class ApplicationsController < ApplicationController
   # GET /applications
   # GET /applications.json
   def index
-    params.permit(:type, :start_date, :end_date, :search_text, :format, :page)
+    params.permit(:type, :start_date, :end_date, :search_text, :commit, :format, :page)
 
     @number_results_per_page = 1000
 

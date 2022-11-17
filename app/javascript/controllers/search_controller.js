@@ -14,10 +14,18 @@ export function _getFormattedDateString(date) {
 }
 
 export default class extends Controller {
+  static targets = ["type", "startDate", "endDate", "searchText"];
+
   connect() {
-    // Set the max of both datepickers to be today
     const today = _getFormattedDateString(new Date());
-    this.element.setAttribute("max", today);
+    this.startDateTarget.setAttribute("max", today);
+    this.endDateTarget.setAttribute("max", today);
+  }
+
+  resetForm() {
+      this.typeTarget.value = "";
+      this.startDateTarget.value = "";
+      this.endDateTarget.value = "";
+      this.searchTextTarget.value = "";
   }
 }
-

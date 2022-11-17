@@ -1,35 +1,30 @@
 <% content_for :nav_buttons do %>
-  <%= button_to  applications_path({format: :csv}), params: params.permit(:type, :start_date, :end_date, :search_text), class:"btn btn-sm btn-primary mx-1 text-nowrap", data: { confirm: 'This may take up to 30 seconds. Click OK to continue.' }, method: :get do %>
+  <%= button_to  applications_path({format: :csv}), params: params.permit(:type, :start_date, :end_date, :search_text, :commit), class:"btn btn-sm btn-primary mx-1 text-nowrap", data: { confirm: 'This may take up to 30 seconds. Click OK to continue.' }, method: :get do %>
     Download as Spreadsheet
   <% end %>
 <% end %>
 <div class="container-fluid">
   <div class="row justify-content-start">
     <div class="col-xxl-10">
-      <div class="input-group" onkeypress="if(event.keyCode == 13){search()}">
-        <select class="form-select" id="select_type" style="max-width: 12%">
-          <option value="" selected>Select Type:</option>
-          <% @types.each do |type| %>
-            <option value=<%=type%>><%=type%></option>
-          <% end %>
-        </select>
+      <%= form_with url: applications_path, class: "search-form input-group", html: {"data-controller": "search"}, method: :get do |search_form| %>
+        <%= search_form.select :type, @types, {include_blank: "Select Type:", selected: params.dig(:type)}, {class:"form-select", "data-search-target": "type"} %>
         <span class="input-group-text">From</span>
-        <input class="form-control" id="start-datepicker" type="date" data-controller="search-datepicker" min="1970-01-01">
+        <%= search_form.date_field :start_date, {value: params.dig(:start_date), class:"form-control", "data-search-target": "startDate", min: "1970-01-01" }%>
         <span class="input-group-text">To</span>
-        <input class="form-control" id="end-datepicker" type="date" data-controller="search-datepicker" min="1970-01-01">
+        <%= search_form.date_field :end_date, {value: params.dig(:end_date), class:"form-control", "data-search-target": "endDate", min: "1970-01-01" }%>
         <span class="input-group-text">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
             <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
           </svg>
         </span>
-        <input class="form-control w-25" id="search_text" type="text"=>
-        <button class="btn btn-primary" type="button" onclick="search()">Search</button>
-      <button class="btn btn-outline-secondary" type="button" onclick="clearSearchParams()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-        </svg>
-      </button>
-    </div>
+        <%= search_form.text_field :search_text, value: params.dig(:search_text), class: "form-control w-25", "data-search-target": "searchText" %>
+        <%= search_form.submit "Search", class: "btn btn-primary" %>
+        <button type="button" id="clear-search" class="btn btn-outline-secondary" data-action="search#resetForm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
+          </svg>
+        </button>
+      <% end %>
   </div>
   <div class="col-sm-2">
     <div class="d-flex justify-content-end">

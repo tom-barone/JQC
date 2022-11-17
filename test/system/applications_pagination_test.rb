@@ -13,7 +13,7 @@ class ApplicationsTest < ApplicationSystemTestCase
     assert_no_text 'PC5000'
     assert_no_text 'PC5001'
 
-    assert_text '1002 results available'
+    assert_text '1012 results available'
 
     # Check clicking page 2 shows next 1000 results
     within('.pagination') do

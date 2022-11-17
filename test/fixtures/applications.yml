@@ -1,15 +1,72 @@
 # # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-application_001:
+DEFAULTS: &DEFAULTS
+  created_at: <%= Date.new(2022,7,10) %>
+
+application_PC1:
+  <<: *DEFAULTS
   application_type: PC
   reference_number: PC9001
 
-application_002:
+application_PC2:
+  <<: *DEFAULTS
   application_type: PC
   reference_number: PC9002
 
+application_Q1:
+  <<: *DEFAULTS
+  application_type: Q
+  reference_number: Q8001
+
+application_Q2:
+  <<: *DEFAULTS
+  application_type: Q
+  reference_number: Q8002
+
+application_C1:
+  <<: *DEFAULTS
+  application_type: C
+  reference_number: C7001
+
+application_C2:
+  <<: *DEFAULTS
+  application_type: C
+  reference_number: C7002
+
+application_LG1:
+  <<: *DEFAULTS
+  application_type: LG
+  reference_number: LG6001
+
+application_LG2:
+  <<: *DEFAULTS
+  application_type: LG
+  reference_number: LG6002
+
+application_RC1:
+  <<: *DEFAULTS
+  application_type: RC
+  reference_number: RC5001
+
+application_RC2:
+  <<: *DEFAULTS
+  application_type: RC
+  reference_number: RC5002
+
+application_SC1:
+  <<: *DEFAULTS
+  application_type: SC
+  reference_number: SC4001
+
+application_SC2:
+  <<: *DEFAULTS
+  application_type: SC
+  reference_number: SC4002
+
+# For testing pagination
 <% 5000.upto(5999) do |n| %>
 application_PC<%=n%>:
+  <<: *DEFAULTS
   application_type: PC
   reference_number: PC<%=n%>
 <% end %>

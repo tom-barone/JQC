@@ -1,0 +1,5 @@
+.search-form {
+    & [data-search-target="type"] {
+        max-width: 10em;
+    }
+}

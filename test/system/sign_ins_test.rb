@@ -6,12 +6,19 @@ class SignInsTest < ApplicationSystemTestCase
   test 'Before signing in, all URLs redirect to the login page' do
     visit root_path
     assert_text 'Please sign in'
+    assert_no_text 'Please sign in before continuing.'
 
     visit applications_url
     assert_text 'Please sign in'
+    assert_text 'Please sign in before continuing.'
+
+    visit "#{applications_url}?type=&start_date=&end_date=&search_text=&commit=Search"
+    assert_text 'Please sign in'
+    assert_text 'Please sign in before continuing.'
 
     visit clients_url
     assert_text 'Please sign in'
+    assert_text 'Please sign in before continuing.'
   end
 
   test 'Logging into the system with incorrect credentials fails' do
