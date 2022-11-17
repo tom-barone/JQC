@@ -3,9 +3,8 @@
 require 'application_system_test_case'
 
 class ApplicationsTest < ApplicationSystemTestCase
-
   test 'The pagination of applications' do
-    sign_in_test_user 
+    sign_in_test_user
 
     # Check the first page shows 1000 results
     5995.upto(5999) { |n| assert_text "PC#{n}" }
@@ -16,19 +15,15 @@ class ApplicationsTest < ApplicationSystemTestCase
     assert_text '1012 results available'
 
     # Check clicking page 2 shows next 1000 results
-    within('.pagination') do
-      click_on '2'
-    end
+    within('.pagination') { click_on '2' }
 
     assert_text 'PC5000'
     assert_text 'PC5001'
     assert_no_text 'PC5002'
 
-
     #3990.upto(4000) { |n| assert_text "PC#{n}" }
     #3001.upto(3010) { |n| assert_text "PC#{n}" }
     #2990.upto(3000) { |n| assert_no_text "PC#{n}" }
-
 
     # Check page 5 shows results 5001 to 5500
 
