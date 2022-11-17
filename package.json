@@ -1,5 +1,5 @@
 {
-  "packageManager": "yarn@3.2.4",
+  "packageManager": "yarn@3.3.0",
   "devDependencies": {
     "@hotwired/stimulus": "^3.1.1",
     "jest": "^29.3.1"
