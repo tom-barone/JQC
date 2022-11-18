@@ -36,19 +36,19 @@ class Application < ApplicationRecord
   has_many :invoices, inverse_of: :application, dependent: :destroy
   accepts_nested_attributes_for :invoices, allow_destroy: true
 
-  JOB_TYPE_ADMINISTRATION = ['Residential', 'Commercial', 'Section 49']
-  BUILDING_SURVEYOR = %w[Vic Ian Peter Darryl Kanchanie Simon Sam Matt Frank]
+  JOB_TYPE_ADMINISTRATION = ['Residential', 'Commercial', 'Section 49'].freeze
+  BUILDING_SURVEYOR = %w[Vic Ian Peter Darryl Kanchanie Simon Sam Matt Frank].freeze
   STRUCTURAL_ENGINEER = [
     'Jack Adcock',
     'Triaxial',
     'Leo Noicos',
     'External',
     'Internal'
-  ]
-  RISK_RATING = %w[High Standard Low]
-  JOB_TYPE = %w[BRC Other]
-  CONSENT = %w[Approved Refused]
-  CERTIFIER = %w[Vic Peter]
+  ].freeze
+  RISK_RATING = %w[High Standard Low].freeze
+  JOB_TYPE = %w[BRC Other].freeze
+  CONSENT = %w[Approved Refused].freeze
+  CERTIFIER = %w[Vic Peter].freeze
 
   before_create :update_last_used_reference_number
   before_update :convert_to_new_application
@@ -56,7 +56,7 @@ class Application < ApplicationRecord
   def update_last_used_reference_number
     return unless application_type_id_changed?
 
-    new_type = ApplicationType.find_by_id!(application_type_id)
+    new_type = ApplicationType.find_id!(application_type_id)
     new_type.update_column('last_used', new_type.last_used + 1)
   end
 
@@ -66,10 +66,7 @@ class Application < ApplicationRecord
     # Create the fields for the old record
     old_record = amoeba_dup
     old_record.save!
-    old_record.update_column(
-      'application_type_id',
-      application_type_id_was
-    )
+    old_record.update_column('application_type_id', application_type_id_was)
     old_record.update_column('reference_number', reference_number_was)
     old_record.update_column('converted_to_from', reference_number)
 

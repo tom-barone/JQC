@@ -2,6 +2,11 @@
 
 DEFAULTS: &DEFAULTS
   created_at: <%= Date.new(2022,7,10) %>
+  suburb: suburb1
+  council: council1
+  client: client1
+  owner: owner1
+  applicant: applicant1
 
 application_PC1:
   <<: *DEFAULTS
