@@ -1,5 +1,8 @@
 .search-form {
-    & [data-search-target="type"] {
-        max-width: 10em;
-    }
+  & [data-search-target="type"] {
+    max-width: 10em;
+  }
+  & button[type="submit"] {
+    min-width: 5.5em;
+  }
 }

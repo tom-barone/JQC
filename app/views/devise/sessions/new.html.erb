@@ -1,27 +1,55 @@
 <div class="text-center form-signin">
   <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: false }) do |f| %>
-    <%= image_tag "mstile-150x150_cropped.png", class: "mb-2"%>
-
+    <%= image_tag 'mstile-150x150_cropped.png', class: 'mb-2' %>
     <h2 class="h4 mb-3 fw-normal">Please sign in</h2>
     <% flash.each do |key, value| %>
-      <div class="alert <%=flash_class(key)%>" role="alert">
+      <div class="alert <%= flash_class(key) %>" role="alert">
         <%= value %>
       </div>
     <% end %>
-    <%= f.input :username, wrapper: :sign_in_input, label: false, autofocus: true, input_html: { autocomplete: "username" }, placeholder: "Username" %>
-    <%= f.input :password, label: false, input_html: { autocomplete: "current-password" }, placeholder: "Password" %>
+    <%=
+      f.input :username,
+              wrapper: :sign_in_input,
+              label: false,
+              autofocus: true,
+              input_html: {
+                autocomplete: 'username',
+              },
+              placeholder: 'Username'
+    %>
+    <%=
+      f.input :password,
+              label: false,
+              input_html: {
+                autocomplete: 'current-password',
+              },
+              placeholder: 'Password'
+    %>
     <% if devise_mapping.rememberable? %>
       <div class="signin-checkbox">
-        <%= f.input :remember_me, wrapper: :sign_in_checkbox, as: :boolean, wrapper_html: {class: "mb-2"}, inline_label: 'Yes, remember me' %>
+        <%=
+          f.input :remember_me,
+                  wrapper: :sign_in_checkbox,
+                  as: :boolean,
+                  wrapper_html: {
+                    class: 'mb-2',
+                  },
+                  inline_label: 'Yes, remember me'
+        %>
       </div>
     <% end %>
     <div class="actions">
-      <%= f.button :button, "Sign in", type: "submit", class:"w-100 btn btn-lg btn-primary", data: {
-        controller: "submit-button",
-        action:"submit-button#onSubmit",
-        "submit-button-loading-text-param": "Signing in..." } do %>
-        Sign in
-      <% end %>
+      <%=
+        f.button :button,
+                 'Sign in',
+                 type: 'submit',
+                 class: 'w-100 btn btn-lg btn-primary',
+                 data: {
+                   controller: 'submit-button',
+                   action: 'submit-button#onSubmit',
+                   'submit-button-loading-text-param': 'Signing in...',
+                 }
+      %>
     </div>
   <% end %>
 </div>

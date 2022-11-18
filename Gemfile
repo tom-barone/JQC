@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -25,12 +26,11 @@ gem 'jbuilder'
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 gem 'bcrypt', '~> 3.1.16'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[ mingw mswin x64_mingw jruby ]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 # Use Sass to process CSS
 gem 'sassc-rails'
-
 
 gem 'amoeba'
 gem 'appengine', '~> 0.5.0'
@@ -42,22 +42,25 @@ gem 'scenic'
 gem 'scenic-mysql_adapter'
 gem 'simple_form'
 
-# https://github.com/ruby/net-imap/issues/16 
+# https://github.com/ruby/net-imap/issues/16
 gem 'net-http'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'debug', platforms: %i[ mri mingw x64_mingw ]
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 
-  gem 'prettier'
+  gem 'prettier_print'
+  gem 'rubocop'
   gem 'rubocop-rails', require: false
   gem 'solargraph'
-
+  gem 'syntax_tree'
+  gem 'syntax_tree-haml'
+  gem 'syntax_tree-rbs'
 end
 
 group :test do
@@ -66,4 +69,3 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
-

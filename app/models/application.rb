@@ -54,37 +54,38 @@ class Application < ApplicationRecord
   before_update :convert_to_new_application
 
   def update_last_used_reference_number
-    if self.application_type_id_changed?
-      new_type = ApplicationType.find_by_id!(self.application_type_id)
-      new_type.update_column('last_used', new_type.last_used + 1)
-    end
+    return unless application_type_id_changed?
+
+    new_type = ApplicationType.find_by_id!(application_type_id)
+    new_type.update_column('last_used', new_type.last_used + 1)
   end
 
   def convert_to_new_application
-    if self.application_type_id_changed?
-      # Create the fields for the old record
-      old_record = self.amoeba_dup
-      old_record.save!
-      old_record.update_column(
-        'application_type_id',
-        self.application_type_id_was
-      )
-      old_record.update_column('reference_number', self.reference_number_was)
-      old_record.update_column('converted_to_from', self.reference_number)
+    return unless application_type_id_changed?
 
-      # Update the fields for the new record
-      self.update_column('converted_to_from', self.reference_number_was)
-    end
+    # Create the fields for the old record
+    old_record = amoeba_dup
+    old_record.save!
+    old_record.update_column(
+      'application_type_id',
+      application_type_id_was
+    )
+    old_record.update_column('reference_number', reference_number_was)
+    old_record.update_column('converted_to_from', reference_number)
+
+    # Update the fields for the new record
+    update_column('converted_to_from', reference_number_was)
   end
 
   def suburb_display_name=(display_name)
     self.suburb = Suburb.find_by(display_name: display_name)
   end
+
   def suburb_display_name
-    self.suburb ? self.suburb.display_name : nil
+    suburb ? suburb.display_name : nil
   end
 
-  # TODO refactor this into a function
+  # TODO: refactor this into a function
   def council_name=(name)
     stripped = name.strip
     if stripped == ''
@@ -93,8 +94,9 @@ class Application < ApplicationRecord
     end
     self.council = Council.find_or_create_by(name: stripped)
   end
+
   def council_name
-    self.council ? self.council.name : nil
+    council ? council.name : nil
   end
 
   def applicant_name=(name)
@@ -105,9 +107,11 @@ class Application < ApplicationRecord
     end
     self.applicant = Client.find_or_create_by(client_name: stripped)
   end
+
   def applicant_name
-    self.applicant ? self.applicant.client_name : nil
+    applicant ? applicant.client_name : nil
   end
+
   def owner_name=(name)
     stripped = name.strip
     if stripped == ''
@@ -116,9 +120,11 @@ class Application < ApplicationRecord
     end
     self.owner = Client.find_or_create_by(client_name: stripped)
   end
+
   def owner_name
-    self.owner ? self.owner.client_name : nil
+    owner ? owner.client_name : nil
   end
+
   def client_name=(name)
     stripped = name.strip
     if stripped == ''
@@ -127,8 +133,9 @@ class Application < ApplicationRecord
     end
     self.client = Client.find_or_create_by(client_name: stripped)
   end
+
   def client_name
-    self.client ? self.client.client_name : nil
+    client ? client.client_name : nil
   end
 
   def applicant_council_name=(name)
@@ -139,9 +146,11 @@ class Application < ApplicationRecord
     end
     self.applicant_council = Council.find_or_create_by(name: stripped)
   end
+
   def applicant_council_name
-    self.applicant_council ? self.applicant_council.name : nil
+    applicant_council ? applicant_council.name : nil
   end
+
   def owner_council_name=(name)
     stripped = name.strip
     if stripped == ''
@@ -150,9 +159,11 @@ class Application < ApplicationRecord
     end
     self.owner_council = Council.find_or_create_by(name: stripped)
   end
+
   def owner_council_name
-    self.owner_council ? self.owner_council.name : nil
+    owner_council ? owner_council.name : nil
   end
+
   def client_council_name=(name)
     stripped = name.strip
     if stripped == ''
@@ -161,8 +172,9 @@ class Application < ApplicationRecord
     end
     self.client_council = Council.find_or_create_by(name: stripped)
   end
+
   def client_council_name
-    self.client_council ? self.client_council.name : nil
+    client_council ? client_council.name : nil
   end
 
   # Emailed reports
@@ -171,25 +183,25 @@ class Application < ApplicationRecord
     end_of_last_month = this_month - 1
     convert_to_csv(
       ActiveRecord::Base.connection.exec_query(
-        "select 
+        "select
               created_at,
               quote_number,
               building_surveyor,
               fee_amount as quote_cost,
               quote_accepted_date,
-              case 
+              case
                   when (converted_to_from REGEXP '^PC.*') = 1 then converted_to_from
               else null end as PC_converted,
-              case 
+              case
                   when (converted_to_from REGEXP '^C.*') = 1 then converted_to_from
               else null end as C_converted
           from (
-              select 
+              select
                   created_at,
-                  case 
+                  case
                       when (reference_number REGEXP '^Q.*') = 1 then reference_number
                   else converted_to_from end as quote_number,
-                  case 
+                  case
                       when (reference_number REGEXP '^Q.*') = 1 then converted_to_from
                   else reference_number end as converted_to_from,
                   quote_accepted_date,
@@ -224,15 +236,15 @@ class Application < ApplicationRecord
           a.description
       from applications a
       left join clients c on c.id = a.applicant_id
-      where 
+      where
           a.reference_number like 'PC%' and
           a.consent_issued is null and
           a.assessment_commenced is not null and
           (
               -- 3 months have passed since assesment and no RFI date
-              a.request_for_information_issued is null and a.assessment_commenced <= '#{three_months_ago}' or 
+              a.request_for_information_issued is null and a.assessment_commenced <= '#{three_months_ago}' or
               -- 3 months have passed since the RFI date
-              a.request_for_information_issued is not null and 
+              a.request_for_information_issued is not null and
               a.request_for_information_issued <= '#{three_months_ago}'
           ) and cancelled is not true
       order by date_entered asc"
@@ -268,7 +280,7 @@ class Application < ApplicationRecord
   def self.pcs_with_invoices_sent_and_consent_not_issued
     convert_to_csv(
       ActiveRecord::Base.connection.exec_query(
-        "select 
+        "select
           i.invoice_date,
           a.reference_number,
           c.client_name as applicant,
@@ -279,13 +291,13 @@ class Application < ApplicationRecord
           i.invoice_number,
           i.fee,
           case when i.paid is true then 'yes' else 'no' end as paid
-      from invoices as i 
+      from invoices as i
       inner join applications as a on a.id = i.application_id
       inner join suburbs as s on a.suburb_id = s.id
       inner join clients as c on a.applicant_id = c.id
       inner join application_types as t on a.application_type_id = t.id
-      where 
-          i.invoice_date is not null and 
+      where
+          i.invoice_date is not null and
           i.fee is not null and
           t.application_type = 'pc' and
           a.consent_issued is null and

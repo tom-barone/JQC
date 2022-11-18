@@ -1,9 +1,6 @@
 require:
   - rubocop-rails
 
-inherit_gem:
-  prettier: rubocop.yml
-
 # Allow long code blocks...
 Metrics/BlockLength:
   Exclude:

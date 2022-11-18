@@ -178,6 +178,10 @@ GEM
     grpc (1.50.0-x86_64-darwin)
       google-protobuf (~> 3.21)
       googleapis-common-protos-types (~> 1.0)
+    haml (6.0.10)
+      temple (>= 0.8.2)
+      thor
+      tilt
     highline (1.7.10)
     i18n (1.12.0)
       concurrent-ruby (~> 1.0)
@@ -234,7 +238,7 @@ GEM
     parallel (1.22.1)
     parser (3.1.2.1)
       ast (~> 2.4.1)
-    prettier (2.1.0)
+    prettier_print (1.1.0)
     public_suffix (5.0.0)
     puma (4.3.12)
       nio4r (~> 2.0)
@@ -270,6 +274,7 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    rbs (2.7.0)
     regexp_parser (2.6.0)
     reline (0.3.1)
       io-console (~> 0.5)
@@ -355,6 +360,17 @@ GEM
       google-cloud-core (~> 1.2)
     stimulus-rails (1.1.1)
       railties (>= 6.0.0)
+    syntax_tree (5.0.1)
+      prettier_print (>= 1.1.0)
+    syntax_tree-haml (2.0.0)
+      haml (>= 5.2, != 6.0.0)
+      prettier_print (>= 1.0.0)
+      syntax_tree (>= 4.0.0)
+    syntax_tree-rbs (0.5.1)
+      prettier_print
+      rbs
+      syntax_tree (>= 2.0.1)
+    temple (0.9.1)
     thor (1.2.1)
     tilt (2.0.11)
     timeout (0.3.0)
@@ -407,9 +423,10 @@ DEPENDENCIES
   mysql2 (~> 0.5)
   net-http
   pagy (~> 3.10)
-  prettier
+  prettier_print
   puma (~> 4.1)
   rails (~> 7.0.4)
+  rubocop
   rubocop-rails
   sassc-rails
   scenic
@@ -418,6 +435,9 @@ DEPENDENCIES
   simple_form
   solargraph
   stimulus-rails
+  syntax_tree
+  syntax_tree-haml
+  syntax_tree-rbs
   turbo-rails
   tzinfo-data
   web-console

@@ -5,66 +5,118 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+      crossorigin="anonymous"
+    ></script>
+    <%=
+      stylesheet_link_tag 'application',
+                          media: 'all',
+                          'data-turbolinks-track': 'reload'
+    %>
     <%= favicon_link_tag asset_path('favicon.ico') %>
     <%= javascript_importmap_tags %>
   </head>
   <body>
     <% if user_signed_in? %>
-      <nav class="navbar navbar-default navbar-static-top navbar-expand-md navbar-light bg-light pt-0">
+      <nav
+        class="navbar navbar-default navbar-static-top navbar-expand-md navbar-light bg-light pt-0"
+      >
         <div class="container-fluid">
-          <%= image_tag "logo.png", class: "navbar-brand", style: "width: 10%;height: auto;"%>
+          <%=
+            image_tag 'logo.png',
+                      class: 'navbar-brand',
+                      style: 'width: 10%;height: auto;'
+          %>
           <div class="collapse navbar-collapse">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <%= link_to 'Applications', applications_path, class: "nav-link" + (params[:controller] == "applications" ? " active" : "") %>
+                <%=
+                  link_to 'Applications',
+                          applications_path,
+                          class:
+                            'nav-link' +
+                              (
+                                if params[:controller] == 'applications'
+                                  ' active'
+                                else
+                                  ''
+                                end
+                              )
+                %>
               </li>
               <li class="nav-item">
-                <%= link_to 'Settings', application_types_path, class: "nav-link" + (params[:controller] == "application_types" ? " active" : "") %>
+                <%=
+                  link_to 'Settings',
+                          application_types_path,
+                          class:
+                            'nav-link' +
+                              (
+                                if params[:controller] == 'application_types'
+                                  ' active'
+                                else
+                                  ''
+                                end
+                              )
+                %>
               </li>
               <!-- Remove these links for now
               <li class="nav-item">
-                <a class="nav-link <%= 'active' if params[:controller] == 'clients'%>" href="clients">Clients</a>
+                <a class="nav-link <%= 'active' if params[:controller] == 'clients' %>" href="clients">Clients</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link <%= 'active' if params[:controller] == 'councils'%>" href="councils">Councils</a>
+                <a class="nav-link <%= 'active' if params[:controller] == 'councils' %>" href="councils">Councils</a>
               </li>
               -->
             </ul>
           </div>
           <div class="d-flex justify-content-end">
             <%= yield :nav_buttons %>
-            <button type="button" class="btn btn-sm btn-outline-secondary mx-1 text-nowrap" data-bs-container="body" data-bs-html="true" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="
-If you have any issues at all then please contact me (Tom) and I'll get back to you as soon as possible.<br/>
-                <br/>
-                - Something isn't working properly and you need it fixed.<br/>
-                - A specific report or summary (e.g. a list of all PC's for 2014 to 2019).<br/>
-                - General feedback about what could be improved.<br/>
-                <br/>
-                Send me an email at <a href='mailto:mail@tombarone.net'>mail@tombarone.net</a> or call me at 0468 624 137" >
-                Request Support
-              </button>
-              <%= button_to destroy_user_session_path, method: :delete, class: "btn btn-sm btn-danger mx-1 text-nowrap", style: "min-width: 10em",
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary mx-1 text-nowrap"
+              data-bs-container="body"
+              data-bs-html="true"
+              data-bs-toggle="popover"
+              data-bs-placement="bottom"
+              data-bs-content="
+            If you have any issues at all then please contact me (Tom) and I'll get back to you as soon as possible.<br/>
+            <br/>
+            - Something isn't working properly and you need it fixed.<br/>
+            - A specific report or summary (e.g. a list of all PC's for 2014 to 2019).<br/>
+            - General feedback about what could be improved.<br/>
+            <br/>
+            Send me an email at <a href='mailto:mail@tombarone.net'>mail@tombarone.net</a> or call me at 0468 624 137"
+            >
+              Request Support
+            </button>
+            <%= button_to destroy_user_session_path, method: :delete, class: "btn btn-sm btn-danger mx-1 text-nowrap", style: "min-width: 10em",
                 data: {
                     controller: "submit-button",
                     action:"submit-button#onSubmit",
                     "submit-button-loading-text-param": "Signing out..." } do %>
-                Sign out
-              <% end %>
-
-            </div>
+              Sign out
+            <% end %>
           </div>
-        </nav>
-      <% end %>
-      <%= yield %>
-    </body>
-    <script>
-      // Initialise popovers
-      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-      var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-        return new bootstrap.Popover(popoverTriggerEl)
-      })
-    </script>
-  </html>
+        </div>
+      </nav>
+    <% end %>
+    <%= yield %>
+  </body>
+  <script>
+    // Initialise popovers
+    var popoverTriggerList = [].slice.call(
+      document.querySelectorAll('[data-bs-toggle="popover"]')
+    );
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+      return new bootstrap.Popover(popoverTriggerEl);
+    });
+  </script>
+</html>
