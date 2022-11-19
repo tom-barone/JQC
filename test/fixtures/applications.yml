@@ -12,6 +12,11 @@ application_PC1:
   <<: *DEFAULTS
   application_type: PC
   reference_number: PC9001
+  street_number: "12"
+  lot_number: "3"
+  street_name: "Romito street"
+  description: "Some demolition happened here"
+  development_application_number: "123487423"
 
 application_PC2:
   <<: *DEFAULTS

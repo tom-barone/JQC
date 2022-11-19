@@ -21,6 +21,25 @@ class ApplicationsTest < ApplicationSystemTestCase
 
   test 'searching by start & end date' do
     sign_in_test_user
+
+    # Check the search datepickers are setup correctly so you can't search in the future
+    # NOTE: Accept a range of 3 days, because it's too hard to try matching timezones between
+    # the headless browser and ruby, and could even fail anyway if the browser loads
+    # at 11:59:59pm and this test runs at 12:00:01am
+    yesterday = (Time.zone.now - 1.day).strftime('%Y-%m-%d')
+    today = Time.zone.now.strftime('%Y-%m-%d')
+    tomorrow = (Time.zone.now + 1.day).strftime('%Y-%m-%d')
+    assert_any_of_selectors(
+      "#start_date[max=\"#{yesterday}\"]",
+      "#start_date[max=\"#{today}\"]",
+      "#start_date[max=\"#{tomorrow}\"]"
+    )
+    assert_any_of_selectors(
+      "#end_date[max=\"#{yesterday}\"]",
+      "#end_date[max=\"#{today}\"]",
+      "#end_date[max=\"#{tomorrow}\"]"
+    )
+
     april_application = applications(:application_Q1)
     april_application.update!(created_at: Date.new(2022, 4, 5))
     assert_no_text 'Q8001'
