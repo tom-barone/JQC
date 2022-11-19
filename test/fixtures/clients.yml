@@ -1,9 +1,9 @@
 # # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-client1:
+contact1:
   client_name: "contact1 of group1"
 
-client2:
+contact2:
   client_name: "contact2 of group2"
 
 owner1:

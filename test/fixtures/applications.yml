@@ -4,7 +4,7 @@ DEFAULTS: &DEFAULTS
   created_at: <%= Date.new(2022,7,10) %>
   suburb: suburb1
   council: council1
-  client: client1
+  client: contact1
   owner: owner1
   applicant: applicant1
 
@@ -17,6 +17,14 @@ application_PC2:
   <<: *DEFAULTS
   application_type: PC
   reference_number: PC9002
+
+# For testing pagination
+<% 5000.upto(5999) do |n| %>
+application_PC<%=n%>:
+  <<: *DEFAULTS
+  application_type: PC
+  reference_number: PC<%=n%>
+<% end %>
 
 application_Q1:
   <<: *DEFAULTS
@@ -67,11 +75,3 @@ application_SC2:
   <<: *DEFAULTS
   application_type: SC
   reference_number: SC4002
-
-# For testing pagination
-<% 5000.upto(5999) do |n| %>
-application_PC<%=n%>:
-  <<: *DEFAULTS
-  application_type: PC
-  reference_number: PC<%=n%>
-<% end %>

@@ -139,6 +139,12 @@ class ApplicationsTest < ApplicationSystemTestCase
     assert_no_text 'PC5909'
     assert_no_text 'PC5920'
 
+    # Hitting the enter key also works
+    fill_in 'search_text', with: 'SC4'
+    find('#search_text').send_keys(:enter)
+    assert_text('SC4001')
+    assert_text('SC4002')
+
     # Location
     app = applications(:application_PC5900)
     app.update!(street_name: 'Easy street', street_number: 1234)
@@ -178,11 +184,34 @@ class ApplicationsTest < ApplicationSystemTestCase
     assert_text('council2')
     assert_no_text('council1')
 
-    # TODO: finish me
-    # contact
-    # owner
-    # applicant
-  end
+    # Contact
+    app = applications(:application_PC5906)
+    contact2 = clients(:contact2)
+    app.update!(client: contact2)
+    text_search_and_assert('contact2', 'assert', 'PC5906')
+    text_search_and_assert('contactzzzz', 'assert_no', 'PC5906')
+    text_search_and_assert('contact2 of group2', 'assert', 'PC5906')
+    assert_text('contact2')
+    assert_no_text('contact1')
 
-  # TODO: Add tests for search text
+    # Owner
+    app = applications(:application_PC5907)
+    owner2 = clients(:owner2)
+    app.update!(owner: owner2)
+    text_search_and_assert('owner2', 'assert', 'PC5907')
+    text_search_and_assert('ownerzzzz', 'assert_no', 'PC5907')
+    text_search_and_assert('owner2 lastname', 'assert', 'PC5907')
+    assert_text('owner2')
+    assert_no_text('owner1')
+
+    # Applicant
+    app = applications(:application_PC5908)
+    applicant2 = clients(:applicant2)
+    app.update!(applicant: applicant2)
+    text_search_and_assert('applicant2', 'assert', 'PC5908')
+    text_search_and_assert('applicantzzzz', 'assert_no', 'PC5908')
+    text_search_and_assert('applicant2 from firm2', 'assert', 'PC5908')
+    assert_text('applicant2')
+    assert_no_text('applicant1')
+  end
 end

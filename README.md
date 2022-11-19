@@ -175,6 +175,5 @@ cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance
 - export works and can load page at the same time
 - Delete stages/uploads/invoices/clients with no attached application
 
-
-
 - remove cancelled reports from the monthly exports
+- rename client to contact
