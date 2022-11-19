@@ -64,9 +64,9 @@
                              type: 'submit',
                              class: 'btn btn-primary',
                              data: {
-                               controller: 'submit-button',
-                               action: 'submit-button#onSubmit',
-                               'submit-button-loading-text-param': '',
+                               controller: 'loading-button',
+                               action: 'loading-button#onSubmit',
+                               'loading-button-loading-text-param': '',
                              }
         %>
         <button
@@ -124,7 +124,9 @@
     >
       <% @applications.each do |application| %>
         <tr
-          onclick='Turbolinks.visit("<%= edit_application_path(application) %>")'
+          data-controller="applications-table-row"
+          data-applications-table-row-edit-path-param="<%= edit_application_path(application) %>"
+          data-action="click->applications-table-row#navigate"
           class="bg-white"
         >
           <td
@@ -161,11 +163,15 @@
             <%= application.development_application_number %>
           </td>
           <td class="app-buttons align-top text-truncate">
-            <%=
-              link_to 'Edit',
-                      edit_application_path(application),
-                      class: 'btn btn-sm btn-outline-secondary py-0'
-            %>
+            <button
+              class="btn btn-sm btn-outline-secondary py-0"
+              data-applications-table-row-target="editButton"
+              data-controller="loading-button"
+              data-action="loading-button#setSpin"
+              data-loading-button-loading-text-param=""
+            >
+              Edit
+            </button>
           </td>
         </tr>
       <% end %>

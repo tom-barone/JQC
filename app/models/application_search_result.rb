@@ -12,7 +12,6 @@ class ApplicationSearchResult < ApplicationRecord
             # Filter out outliers
             # TODO: These outliers should be removed from the DB
             .where("created_at >= '1900-01-01'")
-            .where("created_at <= '#{DateTime.now}'")
             # Show PC's first, then Q's
             .order(
               Arel.sql(

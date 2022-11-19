@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 class ApplicationsController < ApplicationController
   include Pagy::Backend
+
   # TODO: Maybe needed for csv exports
   #include ActionController::Live
 
@@ -10,7 +11,15 @@ class ApplicationsController < ApplicationController
   # GET /applications
   # GET /applications.json
   def index
-    params.permit(:type, :start_date, :end_date, :search_text, :commit, :format, :page)
+    params.permit(
+      :type,
+      :start_date,
+      :end_date,
+      :search_text,
+      :commit,
+      :format,
+      :page
+    )
 
     @number_results_per_page = 1000
 
@@ -117,7 +126,8 @@ class ApplicationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_application
-    @application = Application.find(params[:id])
+    @application =
+      Application.find(params[:id])
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -193,8 +203,12 @@ class ApplicationsController < ApplicationController
         application_uploads_attributes: [
           ApplicationUpload.attribute_names.map(&:to_sym).push(:_destroy)
         ],
-        stages_attributes: [Stage.attribute_names.map(&:to_sym).push(:_destroy)],
-        request_for_informations_attributes: [RequestForInformation.attribute_names.map(&:to_sym).push(:_destroy)]
+        stages_attributes: [
+          Stage.attribute_names.map(&:to_sym).push(:_destroy)
+        ],
+        request_for_informations_attributes: [
+          RequestForInformation.attribute_names.map(&:to_sym).push(:_destroy)
+        ]
       )
   end
 end
