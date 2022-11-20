@@ -32,32 +32,35 @@
       </div>
       <div class="row">
         <div class="col-8">
-          <div class="row">
+          <div class="row" data-controller="reference-number">
             <div class="col-1">
               <div class="field">
                 <%= form.label :application_type_id, "Type" %>
                 <%= form.collection_select :application_type_id, 
-                  ApplicationType.order(:application_type), 
+                  @types, 
                   :id, 
                   :application_type, 
                   {prompt: 'Select'}, 
                   {
-                    # prevent to change selectbox value if i say no to confirm
-                    onfocus: "window.onTypeFocus.call(this)",
-                    onchange: "window.onTypeChange.call(this, #{ApplicationType.all.to_json})"
+                    "data-action": "reference-number#onApplicationTypeChange",
+                    "data-reference-number-type-details-param": @types.to_json
                   } %>
               </div>
             </div>
             <div class="col">
               <div class="field">
                 <%= form.label :reference_number, "Reference no." %>
-                <%= form.text_field :reference_number %>
+                <%= form.text_field :reference_number, {
+                  "data-reference-number-target": "referenceNumber"
+                } %>
               </div>
             </div>
             <div class="col">
               <div class="field">
                 <%= form.label :converted_to_from, "Converted to/from" %>
-                <%= form.text_field :converted_to_from %>
+                <%= form.text_field :converted_to_from, {
+                  "data-reference-number-target": "convertedToFrom"
+                } %>
               </div>
             </div>
             <div class="col">

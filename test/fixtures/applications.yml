@@ -2,11 +2,6 @@
 
 DEFAULTS: &DEFAULTS
   created_at: <%= Date.new(2022,7,10) %>
-  suburb: suburb1
-  council: council1
-  client: contact1
-  owner: owner1
-  applicant: applicant1
 
 application_PC1:
   <<: *DEFAULTS
@@ -17,11 +12,21 @@ application_PC1:
   street_name: "Romito street"
   description: "Some demolition happened here"
   development_application_number: "123487423"
+  suburb: suburb1
+  council: council1
+  client: contact1
+  owner: owner1
+  applicant: applicant1
 
 application_PC2:
   <<: *DEFAULTS
   application_type: PC
   reference_number: PC9002
+  suburb: suburb1
+  council: council1
+  client: contact1
+  owner: owner1
+  applicant: applicant1
 
 # For testing pagination
 <% 5000.upto(5999) do |n| %>

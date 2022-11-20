@@ -126,8 +126,7 @@ class ApplicationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_application
-    @application =
-      Application.find(params[:id])
+    @application = Application.find(params[:id])
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -135,6 +134,8 @@ class ApplicationsController < ApplicationController
     @suburbs = Suburb.pluck(:display_name)
     @clients = Client.pluck(:client_name)
     @councils = Council.pluck(:name)
+    @types =
+      ApplicationType.all.order(:application_type)
   end
 
   # Only allow a list of trusted parameters through.

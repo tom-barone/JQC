@@ -56,7 +56,7 @@ class Application < ApplicationRecord
   def update_last_used_reference_number
     return unless application_type_id_changed?
 
-    new_type = ApplicationType.find_id!(application_type_id)
+    new_type = ApplicationType.find_by!(id: application_type_id)
     new_type.update_column('last_used', new_type.last_used + 1)
   end
 

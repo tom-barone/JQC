@@ -7,7 +7,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   #driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
 
   fixtures :all
-  Capybara.default_max_wait_time = 10 # Seconds
+  Capybara.default_max_wait_time = 15 # Seconds
 
   # Don't put this in a setup {} block! Call manually in every single test
   def sign_in_test_user

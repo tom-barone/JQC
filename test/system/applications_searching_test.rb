@@ -82,18 +82,14 @@ class ApplicationsTest < ApplicationSystemTestCase
   test 'start and end date outliers do not show' do
     sign_in_test_user
     assert_text 'PC9001'
-    assert_text 'PC9002'
 
     pc1 = applications(:application_PC1)
-    pc2 = applications(:application_PC2)
     pc1.update!(created_at: Date.new(1855, 4, 5)) # too old
-    pc2.update!(created_at: Date.new(2500, 4, 5)) # too new
 
     # refresh page and check they are not there anymore
     click_on 'clear-search'
     click_on 'Search'
     assert_no_text 'PC9001'
-    assert_no_text 'PC9002'
   end
 
   test 'clearing search parameters' do
