@@ -3,14 +3,45 @@
 require 'application_system_test_case'
 
 class ApplicationTypesTest < ApplicationSystemTestCase
-  def edit_application(reference_number)
-    assert_text reference_number
-    find('td', text: reference_number).click
-    assert_text 'Administration'
+  test 'selecting and adding a new council' do
+    sign_in_test_user
+
+    edit_application 'PC9001'
+    assert_field_has_value(
+      '#application_council_name',
+      'the council1 of place1'
+    )
+
+    select 'the council2 of place2', from: 'application_council_name'
+    click_on 'Save'
+    assert_on_homepage
+
+    assert_text 'the council2 of place2'
+
+    edit_application 'PC9001'
+    assert_field_has_value(
+      '#application_council_name',
+      'the council2 of place2'
+    )
+    fill_in 'application_council_name', with: 'a completely new council'
+    click_on 'Save'
+    assert_on_homepage
+
+    assert_text 'a completely new council'
+
+    edit_application 'PC9001'
+    fill_in 'application_council_name', with: ''
+    click_on 'Save'
+    assert_on_homepage
+
+    assert_no_text 'a completely new council'
   end
 
-  def assert_field_has_value(id, str)
-    assert_equal(find(id)[:value], str)
+  test 'selecting and adding new clients' do
+    sign_in_test_user
+
+    edit_application 'PC9001'
+    # TODO: Finish me off
   end
 
   test 'converting to a new application type' do

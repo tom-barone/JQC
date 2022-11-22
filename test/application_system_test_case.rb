@@ -4,7 +4,8 @@ require 'test_helper'
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
-  #driven_by :selenium, using: :chrome, screen_size: [1400, 1400]
+
+  # driven_by :selenium, using: :chrome, screen_size: [1800, 1000]
 
   fixtures :all
   Capybara.default_max_wait_time = 15 # Seconds
@@ -17,5 +18,23 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     fill_in 'Password', with: 'test_password'
     click_on 'Sign in'
     assert_text('Sign out')
+  end
+
+  def assert_on_homepage
+    # Can see the "New Application" button
+    assert_text('New Application')
+  end
+
+  def edit_application(reference_number)
+    assert_text reference_number
+    find("#row-#{reference_number}").click
+    sleep(4)
+    assert_text 'Administration'
+  end
+
+  # Use like
+  #   assert_field_has_value('#application_reference_number', 'Q8003')
+  def assert_field_has_value(id, str)
+    assert_equal(find(id)[:value], str)
   end
 end

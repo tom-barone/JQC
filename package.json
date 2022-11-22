@@ -1,5 +1,4 @@
 {
-  "packageManager": "yarn@1.22.19",
   "devDependencies": {
     "@hotwired/stimulus": "^3.1.1",
     "jest": "^29.3.1",
