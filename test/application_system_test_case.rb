@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
-  driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
+  driven_by :selenium, using: :headless_chrome, screen_size: [1800, 1000]
 
   # driven_by :selenium, using: :chrome, screen_size: [1800, 1000]
 
@@ -36,5 +36,11 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   #   assert_field_has_value('#application_reference_number', 'Q8003')
   def assert_field_has_value(id, str)
     assert_equal(find(id)[:value], str)
+  end
+
+  # Use like
+  #   assert_datalist_option_exists('clients', 'applicant1 from firm1')
+  def assert_datalist_option_exists(id, value)
+    assert_selector("##{id} option[value='#{value}']", visible: :all)
   end
 end
