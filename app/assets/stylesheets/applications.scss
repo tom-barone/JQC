@@ -126,3 +126,11 @@
     }
   }
 }
+
+#application_form .application-actions {
+  & button,
+  a {
+    // Save / Delete / Exit buttons
+    min-width: 8em;
+  }
+}

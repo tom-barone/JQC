@@ -40,8 +40,42 @@ class ApplicationTypesTest < ApplicationSystemTestCase
   test 'selecting and adding new clients' do
     sign_in_test_user
 
+    # Check correct fields
     edit_application 'PC9001'
-    # TODO: Finish me off
+    assert_field_has_value(
+      '#application_applicant_name',
+      'applicant1 from firm1'
+    )
+    assert_field_has_value('#application_owner_name', 'owner1 lastname1')
+    assert_field_has_value('#application_client_name', 'contact1 of group1')
+
+    # Choose new client settings
+    select 'applicant2 from firm2', from: 'application_applicant_name'
+    select 'owner2 lastname2',      from: 'application_owner_name'
+    select 'contact2 of group2',    from: 'application_client_name'
+    click_on 'Save'
+    assert_on_homepage
+
+    # Check they're visible in the table
+    assert_text 'applicant2 from firm2'
+    assert_text 'owner2 lastname2'
+    assert_text 'contact2 of group2'
+
+    # Add completely new clients
+    edit_application 'PC9001'
+    assert_field_has_value(
+      '#application_applicant_name',
+      'applicant2 from firm2'
+    )
+    assert_field_has_value('#application_owner_name', 'owner2 lastname2')
+    assert_field_has_value('#application_client_name', 'contact2 of group2')
+    select 'newClient1', from: 'application_applicant_name'
+    select 'newClient1',      from: 'application_owner_name'
+    select 'newClient1',    from: 'application_client_name'
+    click_on 'Save'
+    assert_on_homepage
+
+    assert_text 'newClient1', count: 3
   end
 
   test 'converting to a new application type' do
