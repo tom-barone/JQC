@@ -253,6 +253,7 @@ class ApplicationTypesTest < ApplicationSystemTestCase
   end
 
   test 'saving deleting and exiting works as expected' do
+    # TODO: Add a god test that checks every single field saves properly
     sign_in_test_user
 
     edit_application 'PC9001'

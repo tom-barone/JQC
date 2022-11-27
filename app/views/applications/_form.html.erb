@@ -1,11 +1,22 @@
 <%= form_with model: application, local: true, builder: ApplicationHelper::BootstrapSmallFormBuilder, html: { autocomplete: "off", id: "application_form" } do |form| %>
   <% if application.errors.any? %>
-    <div class="modal fade" id="errorsModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="errorsModal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">The application couldn't be saved</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              class="close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -19,7 +30,13 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Ok
+            </button>
           </div>
         </div>
       </div>
@@ -35,37 +52,49 @@
           <div class="row" data-controller="reference-number">
             <div class="col-1">
               <div class="field">
-                <%= form.label :application_type_id, "Type" %>
-                <%= form.collection_select :application_type_id, 
-                  @types, 
-                  :id, 
-                  :application_type, 
-                  {prompt: 'Select'}, 
-                  {
-                    "data-action": "reference-number#onApplicationTypeChange",
-                    "data-reference-number-type-details-param": @types.to_json
-                  } %>
+                <%= form.label :application_type_id, 'Type' %>
+                <%=
+                  form.collection_select :application_type_id,
+                                         @types,
+                                         :id,
+                                         :application_type,
+                                         { prompt: 'Select' },
+                                         {
+                                           'data-action':
+                                             'reference-number#onApplicationTypeChange',
+                                           'data-reference-number-type-details-param':
+                                             @types.to_json,
+                                         }
+                %>
               </div>
             </div>
             <div class="col">
               <div class="field">
-                <%= form.label :reference_number, "Reference no." %>
-                <%= form.text_field :reference_number, {
-                  "data-reference-number-target": "referenceNumber"
-                } %>
+                <%= form.label :reference_number, 'Reference no.' %>
+                <%=
+                  form.text_field :reference_number,
+                                  {
+                                    'data-reference-number-target':
+                                      'referenceNumber',
+                                  }
+                %>
               </div>
             </div>
             <div class="col">
               <div class="field">
-                <%= form.label :converted_to_from, "Converted to/from" %>
-                <%= form.text_field :converted_to_from, {
-                  "data-reference-number-target": "convertedToFrom"
-                } %>
+                <%= form.label :converted_to_from, 'Converted to/from' %>
+                <%=
+                  form.text_field :converted_to_from,
+                                  {
+                                    'data-reference-number-target':
+                                      'convertedToFrom',
+                                  }
+                %>
               </div>
             </div>
             <div class="col">
               <div class="field">
-                <%= form.label :created_at, "Date Entered" %>
+                <%= form.label :created_at, 'Date Entered' %>
                 <%= form.date_field :created_at %>
               </div>
             </div>
@@ -73,10 +102,18 @@
               <div class="field">
                 <%= form.label :council %>
                 <div class="input-group">
-                  <%= form.text_field :council_name, list: "councils", class:"editable-association" %>
+                  <%=
+                    form.text_field :council_name,
+                                    list: 'councils',
+                                    class: 'editable-association'
+                  %>
                   <!-- Removed the edit button as requested
                   <% if @application.council_id %>
-                    <%= link_to 'Details', edit_council_path(@application.council_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
+                    <%=
+  link_to 'Details',
+          edit_council_path(@application.council_id ||= 0),
+          class: 'btn btn-sm btn-outline-secondary'
+%>
                   <% end %>
                   -->
                 </div>
@@ -84,8 +121,8 @@
             </div>
             <div class="col">
               <div class="field">
-                <%= form.label :development_application_number, "DA No." %>
-                <%= form.text_field :development_application_number%>
+                <%= form.label :development_application_number, 'DA No.' %>
+                <%= form.text_field :development_application_number %>
               </div>
             </div>
           </div>
@@ -94,11 +131,21 @@
               <div class="row">
                 <div class="col">
                   <div class="field">
-                    <%= form.label :applicant_name, "Applicant"%>
+                    <%= form.label :applicant_name, 'Applicant' %>
                     <div class="input-group">
-                      <%= form.text_field :applicant_name, list: "clients", class:"editable-association" %>
+                      <%=
+                        form.text_field :applicant_name,
+                                        list: 'clients',
+                                        class: 'editable-association'
+                      %>
                       <% if @application.applicant_id %>
-                        <%= link_to 'Edit', edit_client_path(@application.applicant_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
+                        <%=
+                          link_to 'Edit',
+                                  edit_client_path(
+                                    @application.applicant_id ||= 0,
+                                  ),
+                                  class: 'btn btn-sm btn-outline-secondary'
+                        %>
                       <% end %>
                     </div>
                   </div>
@@ -107,11 +154,19 @@
               <div class="row">
                 <div class="col">
                   <div class="field">
-                    <%= form.label :owner_name, "Owner"%>
+                    <%= form.label :owner_name, 'Owner' %>
                     <div class="input-group">
-                      <%= form.text_field :owner_name, list: "clients", class:"editable-association" %>
+                      <%=
+                        form.text_field :owner_name,
+                                        list: 'clients',
+                                        class: 'editable-association'
+                      %>
                       <% if @application.owner_id %>
-                        <%= link_to 'Edit', edit_client_path(@application.owner_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
+                        <%=
+                          link_to 'Edit',
+                                  edit_client_path(@application.owner_id ||= 0),
+                                  class: 'btn btn-sm btn-outline-secondary'
+                        %>
                       <% end %>
                     </div>
                   </div>
@@ -120,11 +175,21 @@
               <div class="row">
                 <div class="col">
                   <div class="field">
-                    <%= form.label :client_name, "Contact"%>
+                    <%= form.label :client_name, 'Contact' %>
                     <div class="input-group">
-                      <%= form.text_field :client_name, list: "clients", class:"editable-association" %>
+                      <%=
+                        form.text_field :client_name,
+                                        list: 'clients',
+                                        class: 'editable-association'
+                      %>
                       <% if @application.client_id %>
-                        <%= link_to 'Edit', edit_client_path(@application.client_id ||= 0), class: "btn btn-sm btn-outline-secondary"%>
+                        <%=
+                          link_to 'Edit',
+                                  edit_client_path(
+                                    @application.client_id ||= 0,
+                                  ),
+                                  class: 'btn btn-sm btn-outline-secondary'
+                        %>
                       <% end %>
                     </div>
                   </div>
@@ -142,7 +207,13 @@
                 <div class="col">
                   <div class="field">
                     <%= form.label :number_of_storeys %>
-                    <%= form.text_field :number_of_storeys, type: "number", min: "0", max: "99", step: "1" %>
+                    <%=
+                      form.text_field :number_of_storeys,
+                                      type: 'number',
+                                      min: '0',
+                                      max: '99',
+                                      step: '1'
+                    %>
                   </div>
                 </div>
               </div>
@@ -155,8 +226,16 @@
                 </div>
                 <div class="col">
                   <div class="field">
-                    <%= form.label :construction_value, "Construction value ($)" %>
-                    <%= form.text_field :construction_value, type: "number", min: "0", max: "1000000000", step: "any" %>
+                    <%=
+                      form.label :construction_value, 'Construction value ($)'
+                    %>
+                    <%=
+                      form.text_field :construction_value,
+                                      type: 'number',
+                                      min: '0',
+                                      max: '1000000000',
+                                      step: 'any'
+                    %>
                   </div>
                 </div>
               </div>
@@ -183,14 +262,28 @@
             </div>
             <div class="col">
               <div class="field">
-                <%= form.label :suburb_display_name, "Suburb" %>
-                <%= form.text_field :suburb_display_name, list: "suburbs", class: "form-control form-control-sm list-option-required" %>
+                <%= form.label :suburb_display_name, 'Suburb' %>
+                <%=
+                  form.text_field :suburb_display_name,
+                                  list: 'suburbs',
+                                  class:
+                                    'form-control form-control-sm list-option-required',
+                                  data: {
+                                    controller: 'datalist-input',
+                                    action: 'change->datalist-input#onChange',
+                                  }
+                %>
               </div>
             </div>
             <div class="col-2">
               <div class="field">
                 <label>Fee amount ($)</label>
-                <%= form.text_field :fee_amount, type: "number", min: "1", step: "any" %>
+                <%=
+                  form.text_field :fee_amount,
+                                  type: 'number',
+                                  min: '1',
+                                  step: 'any'
+                %>
               </div>
             </div>
           </div>
@@ -216,7 +309,10 @@
             <div class="col-2">
               <div class="field">
                 <%= form.label :job_type_administration %>
-                <%= form.select :job_type_administration, Application::JOB_TYPE_ADMINISTRATION %>
+                <%=
+                  form.select :job_type_administration,
+                              Application::JOB_TYPE_ADMINISTRATION
+                %>
               </div>
             </div>
             <div class="col-2">
@@ -242,10 +338,16 @@
                     <td>Additional Information</td>
                     <td class="additional-information-text"></td>
                     <td class="additional-information-buttons">
-                      <%= link_to_add_association 'Add', form, :application_additional_informations, 
-                        'data-association-insertion-node': ".additional-information-fields",
-                        'data-association-insertion-method': "append",
-                        class: 'btn btn-sm btn-outline-primary'
+                      <%=
+                        link_to_add_association 'Add',
+                                                form,
+                                                :application_additional_informations,
+                                                'data-association-insertion-node':
+                                                  '.additional-information-fields',
+                                                'data-association-insertion-method':
+                                                  'append',
+                                                class:
+                                                  'btn btn-sm btn-outline-primary'
                       %>
                     </td>
                   </tr>
@@ -256,7 +358,10 @@
               <table class="table table-sm mb-0" style="table-layout: fixed">
                 <tbody class="additional-information-fields">
                   <%= form.fields_for :application_additional_informations do |additional_information_form| %>
-                    <%= render 'application_additional_information_fields', f: additional_information_form %>
+                    <%=
+                      render 'application_additional_information_fields',
+                             f: additional_information_form
+                    %>
                   <% end %>
                 </tbody>
               </table>
@@ -270,10 +375,17 @@
                     <td>Uploaded</td>
                     <td class="uploaded-text"></td>
                     <td class="uploaded-buttons">
-                      <%= link_to_add_association 'Add', form, :application_uploads, 
-                        'data-association-insertion-node': ".uploaded-fields",
-                        'data-association-insertion-method': "append",
-                        class: 'btn btn-sm btn-outline-primary', id: 'application-add-uploaded'
+                      <%=
+                        link_to_add_association 'Add',
+                                                form,
+                                                :application_uploads,
+                                                'data-association-insertion-node':
+                                                  '.uploaded-fields',
+                                                'data-association-insertion-method':
+                                                  'append',
+                                                class:
+                                                  'btn btn-sm btn-outline-primary',
+                                                id: 'application-add-uploaded'
                       %>
                     </td>
                   </tr>
@@ -302,24 +414,29 @@
           <div class="col">
             <div class="field">
               <%= form.label :building_surveyor %>
-              <%= form.select :building_surveyor, Application::BUILDING_SURVEYOR %>
+              <%=
+                form.select :building_surveyor, Application::BUILDING_SURVEYOR
+              %>
             </div>
           </div>
           <div class="col">
             <div class="field">
-              <%= form.label :assessment_commenced, "Assessment Assigned" %>
+              <%= form.label :assessment_commenced, 'Assessment Assigned' %>
               <%= form.date_field :assessment_commenced %>
             </div>
           </div>
           <div class="col">
             <div class="field">
               <%= form.label :structural_engineer %>
-              <%= form.select :structural_engineer, Application::STRUCTURAL_ENGINEER %>
+              <%=
+                form.select :structural_engineer,
+                            Application::STRUCTURAL_ENGINEER
+              %>
             </div>
           </div>
           <div class="col">
             <div class="field">
-              <%= form.label :external_engineer_date, "External engineer" %>
+              <%= form.label :external_engineer_date, 'External engineer' %>
               <%= form.date_field :external_engineer_date %>
             </div>
           </div>
@@ -332,10 +449,17 @@
                   <tr style="vertical-align: top;">
                     <td class="rfis-title">RFIs Issued</td>
                     <td class="rfis-buttons">
-                      <%= link_to_add_association 'Add', form, :request_for_informations, 
-                        'data-association-insertion-node': ".request-for-informations-fields",
-                        'data-association-insertion-method': "append",
-                        class: 'btn btn-sm btn-outline-primary py-0', id: 'rfis-button-add'
+                      <%=
+                        link_to_add_association 'Add',
+                                                form,
+                                                :request_for_informations,
+                                                'data-association-insertion-node':
+                                                  '.request-for-informations-fields',
+                                                'data-association-insertion-method':
+                                                  'append',
+                                                class:
+                                                  'btn btn-sm btn-outline-primary py-0',
+                                                id: 'rfis-button-add'
                       %>
                     </td>
                   </tr>
@@ -346,7 +470,10 @@
               <table class="table table-sm mb-0" style="table-layout: fixed">
                 <tbody class="request-for-informations-fields">
                   <%= form.fields_for :request_for_informations do |request_for_informations_form| %>
-                    <%= render 'request_for_information_fields', f: request_for_informations_form %>
+                    <%=
+                      render 'request_for_information_fields',
+                             f: request_for_informations_form
+                    %>
                   <% end %>
                 </tbody>
               </table>
@@ -360,10 +487,16 @@
                     <td class="stages-title">Stages</td>
                     <td class="stages-text"></td>
                     <td class="stages-buttons">
-                      <%= link_to_add_association 'Add', form, :stages, 
-                        'data-association-insertion-node': ".stages-fields",
-                        'data-association-insertion-method': "append",
-                        class: 'btn btn-sm btn-outline-primary py-0'
+                      <%=
+                        link_to_add_association 'Add',
+                                                form,
+                                                :stages,
+                                                'data-association-insertion-node':
+                                                  '.stages-fields',
+                                                'data-association-insertion-method':
+                                                  'append',
+                                                class:
+                                                  'btn btn-sm btn-outline-primary py-0'
                       %>
                     </td>
                   </tr>
@@ -390,27 +523,30 @@
           </div>
           <div class="col">
             <div class="field">
-               <%= form.label :consent_issued %>
-               <%= form.date_field :consent_issued %>
+              <%= form.label :consent_issued %>
+              <%= form.date_field :consent_issued %>
             </div>
           </div>
           <div class="col">
             <div class="field">
-               <%= form.label :variation_issued %>
-               <%= form.date_field :variation_issued %>
+              <%= form.label :variation_issued %>
+              <%= form.date_field :variation_issued %>
             </div>
           </div>
           <div class="col">
             <div class="field">
-               <%= form.label :coo_issued %>
-               <%= form.date_field :coo_issued %>
+              <%= form.label :coo_issued %>
+              <%= form.date_field :coo_issued %>
             </div>
           </div>
         </div>
         <div class="row">
           <div class="col-3">
             <div class="field">
-              <%= form.label :engineer_certificate_received, style: 'font-size:smaller' %>
+              <%=
+                form.label :engineer_certificate_received,
+                           style: 'font-size:smaller'
+              %>
               <%= form.date_field :engineer_certificate_received %>
             </div>
           </div>
@@ -455,7 +591,7 @@
               </div>
               <div class="col">
                 <div class="field">
-                  <%= form.label :purchase_order_number, "Purchase No."%>
+                  <%= form.label :purchase_order_number, 'Purchase No.' %>
                   <%= form.text_field :purchase_order_number %>
                 </div>
               </div>
@@ -506,17 +642,23 @@
                   <td class="invoice-table-dac" id="dac-total"></td>
                   <td class="invoice-table-lodgement" id="lodgement-total"></td>
                   <td class="invoice-table-invoice-number">
-                    <%= form.label :fully_invoiced, "Fully invoiced" %>
+                    <%= form.label :fully_invoiced, 'Fully invoiced' %>
                   </td>
                   <td class="invoice-table-paid">
                     <%= form.check_box :fully_invoiced %>
                   </td>
                   <td class="invoice-table-buttons">
-                    <%= link_to_add_association 'Add', form, :invoices, 
-                      'data-association-insertion-node': ".invoice-fields",
-                      'data-association-insertion-method': "append",
-                      class: 'btn btn-sm btn-outline-primary'
-                     %>
+                    <%=
+                      link_to_add_association 'Add',
+                                              form,
+                                              :invoices,
+                                              'data-association-insertion-node':
+                                                '.invoice-fields',
+                                              'data-association-insertion-method':
+                                                'append',
+                                              class:
+                                                'btn btn-sm btn-outline-primary'
+                    %>
                   </td>
                 </tr>
               </tfoot>
@@ -531,15 +673,15 @@
       <div class="col"></div>
 
       <div class="col-auto d-flex align-items-center">
-            <div class="row">
-              <div class="col-auto">
-                <%= form.check_box :cancelled %>
-              </div>
-              <div class="col">
-                <%= form.label :cancelled, "Mark as cancelled" %>
-              </div>
-            </div>
+        <div class="row">
+          <div class="col-auto">
+            <%= form.check_box :cancelled %>
           </div>
+          <div class="col">
+            <%= form.label :cancelled, 'Mark as cancelled' %>
+          </div>
+        </div>
+      </div>
       <div class="col-3">
         <div class="row align-items-center">
           <%= yield :application_submit_actions %>
@@ -547,20 +689,22 @@
       </div>
     </div>
   </div>
-</div>
 <% end %>
 <datalist id="suburbs">
   <% @suburbs.each do |suburb| %>
-    <option value="<%= suburb %>"/>
+    <option value="<%= suburb %>" />
   <% end %>
+  <option value="" />
 </datalist>
 <datalist id="clients">
   <% @clients.each do |client| %>
-    <option value="<%= client %>"/>
+    <option value="<%= client %>" />
+    <option value="" />
   <% end %>
 </datalist>
 <datalist id="councils">
   <% @councils.each do |council| %>
-    <option value="<%= council %>"/>
+    <option value="<%= council %>" />
+    <option value="" />
   <% end %>
 </datalist>
