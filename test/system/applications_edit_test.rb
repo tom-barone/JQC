@@ -4,47 +4,40 @@ require 'application_system_test_case'
 
 class ApplicationTypesTest < ApplicationSystemTestCase
   test 'selecting and adding a new council' do
+    # TODO: Refactor all the other tests to use this format
     sign_in_test_user
 
     # Check correct fields and datalist options
     edit_application 'PC9001'
-    assert_field_has_value(
-      '#application_council_name',
-      'the council1 of place1'
-    )
-    assert_datalist_option_exists('councils', 'the council1 of place1')
-    assert_datalist_option_exists('councils', 'the council2 of place2')
+    assert application_council == 'the council1 of place1'
+    assert_can_select 'the council1 of place1', from: 'councils'
+    assert_can_select 'the council2 of place2', from: 'councils'
 
-    # Choose a new council
-    select 'the council2 of place2', from: 'application_council_name'
-    click_on 'Save'
-    assert_on_homepage
+    # Choose a different council
+    self.application_council = 'the council2 of place2'
+    save_application
 
     # Check visible in the application table
-    assert_text 'the council2 of place2'
+    assert_in_homepage_table 'the council2 of place2'
 
     # Add a new council
     edit_application 'PC9001'
-    assert_field_has_value(
-      '#application_council_name',
-      'the council2 of place2'
-    )
-    fill_in 'application_council_name', with: 'a completely new council'
-    click_on 'Save'
-    assert_on_homepage
+    assert application_council == 'the council2 of place2'
+    new_application_council 'a completely new council'
+    save_application
 
     # Check new council visible in the application table
-    assert_text 'a completely new council'
+    assert_in_homepage_table 'a completely new council'
 
     # Check they are now selectable in the dropdown for councils
     edit_application 'PC9001'
-    assert_datalist_option_exists('councils', 'a completely new council')
+    assert_can_select 'a completely new council', from: 'councils'
 
     # Check remove
-    fill_in 'application_council_name', with: ''
-    click_on 'Save'
+    new_application_council ''
+    save_application
     assert_on_homepage
-    assert_no_text 'a completely new council'
+    assert_not_in_homepage_table 'a completely new council'
   end
 
   test 'selecting and adding new clients' do
@@ -52,62 +45,58 @@ class ApplicationTypesTest < ApplicationSystemTestCase
 
     # Check correct fields and datalist options
     edit_application 'PC9001'
-    assert_field_has_value(
-      '#application_applicant_name',
-      'applicant1 from firm1'
-    )
-    assert_field_has_value('#application_owner_name', 'owner1 lastname1')
-    assert_field_has_value('#application_client_name', 'contact1 of group1')
-    assert_datalist_option_exists('clients', 'contact1 of group1')
-    assert_datalist_option_exists('clients', 'contact2 of group2')
-    assert_datalist_option_exists('clients', 'owner1 lastname1')
-    assert_datalist_option_exists('clients', 'owner2 lastname2')
-    assert_datalist_option_exists('clients', 'applicant1 from firm1')
-    assert_datalist_option_exists('clients', 'applicant2 from firm2')
+    assert application_applicant == 'applicant1 from firm1'
+    assert application_owner == 'owner1 lastname1'
+    assert application_contact == 'contact1 of group1'
+
+    assert_can_select 'contact1 of group1', from: 'clients'
+    assert_can_select 'contact2 of group2', from: 'clients'
+    assert_can_select 'owner1 lastname1', from: 'clients'
+    assert_can_select 'owner2 lastname2', from: 'clients'
+    assert_can_select 'applicant1 from firm1', from: 'clients'
+    assert_can_select 'applicant2 from firm2', from: 'clients'
 
     # Choose new client settings
-    select 'applicant2 from firm2', from: 'application_applicant_name'
-    select 'owner2 lastname2', from: 'application_owner_name'
-    select 'contact2 of group2', from: 'application_client_name'
-    click_on 'Save'
+    self.application_applicant = 'applicant2 from firm2'
+    self.applicanion_owner = 'owner2 lastname2'
+    self.applicanion_contact = 'contact2 of group2'
+    save_application
     assert_on_homepage
 
     # Check they're visible in the table
-    assert_text 'applicant2 from firm2'
-    assert_text 'owner2 lastname2'
-    assert_text 'contact2 of group2'
+    assert_in_homepage_table 'applicant2 from firm2'
+    assert_in_homepage_table 'owner2 lastname2'
+    assert_in_homepage_table 'contact2 of group2'
 
     # Add completely new clients
     edit_application 'PC9001'
-    assert_field_has_value(
-      '#application_applicant_name',
-      'applicant2 from firm2'
-    )
-    assert_field_has_value('#application_owner_name', 'owner2 lastname2')
-    assert_field_has_value('#application_client_name', 'contact2 of group2')
-    fill_in 'application_applicant_name', with: 'newClient1'
-    fill_in 'application_owner_name', with: 'newClient2'
-    fill_in 'application_client_name', with: 'newClient1'
-    click_on 'Save'
+    assert application_applicant == 'applicant2 from firm2'
+    assert application_owner == 'owner2 lastname2'
+    assert application_contact == 'contact2 of group2'
+
+    new_application_applicant 'newClient1'
+    new_application_owner 'newClient2'
+    new_application_contact 'newClient1'
+    save_application
     assert_on_homepage
 
     # Check they show up in the applications table
-    assert_text 'newClient1', count: 2
-    assert_text 'newClient2', count: 1
+    assert_in_homepage_table 'newClient1', count: 2
+    assert_in_homepage_table 'newClient2', count: 1
 
     # Check they are now selectable in the dropdown for clients
-    edit_application 'PC9002'
-    assert_datalist_option_exists('clients', 'newClient1')
-    assert_datalist_option_exists('clients', 'newClient2')
+    edit_application 'PC9001'
+    assert_can_select 'newClient1', from: 'clients'
+    assert_can_select 'newClient2', from: 'clients'
 
     # Check remove
-    fill_in 'application_applicant_name', with: 'newClient1'
-    fill_in 'application_owner_name', with: 'newClient2'
-    fill_in 'application_client_name', with: 'newClient1'
-    click_on 'Save'
+    new_application_applicant ''
+    new_application_owner ''
+    new_application_contact ''
+    save_application
     assert_on_homepage
-    assert_no_text 'newClient1'
-    assert_no_text 'newClient2'
+    assert_not_in_homepage_table 'newClient1'
+    assert_not_in_homepage_table 'newClient2'
   end
 
   test 'converting to a new application type' do
@@ -154,7 +143,7 @@ class ApplicationTypesTest < ApplicationSystemTestCase
     assert_field_has_value('#application_converted_to_from', 'Auto generated')
   end
 
-  test 'converting to a different application types does not break ' do
+  test 'converting to a different application type does not break ' do
     sign_in_test_user
 
     edit_application 'PC9001'
