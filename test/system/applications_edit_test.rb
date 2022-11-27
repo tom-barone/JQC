@@ -58,8 +58,8 @@ class ApplicationTypesTest < ApplicationSystemTestCase
 
     # Choose new client settings
     self.application_applicant = 'applicant2 from firm2'
-    self.applicanion_owner = 'owner2 lastname2'
-    self.applicanion_contact = 'contact2 of group2'
+    self.application_owner = 'owner2 lastname2'
+    self.application_contact = 'contact2 of group2'
     save_application
     assert_on_homepage
 
@@ -250,5 +250,67 @@ class ApplicationTypesTest < ApplicationSystemTestCase
         'input[value="Neither should I"]'
       )
     end
+  end
+
+  test 'saving deleting and exiting works as expected' do
+    sign_in_test_user
+
+    edit_application 'PC9001'
+    assert application_description == 'Some demolition happened here'
+    self.application_description = 'A changed description'
+    save_application
+    assert_in_homepage_table 'A changed description'
+
+    edit_application 'PC9001'
+    self.application_description = 'An unsaved description'
+    exit_application
+    assert_on_homepage
+    assert_in_homepage_table 'A changed description'
+    assert_not_in_homepage_table 'An unsaved description'
+
+    edit_application 'PC9001'
+    delete_application
+    assert_on_homepage
+    assert_not_in_homepage_table 'PC9001'
+    assert_not_in_homepage_table 'A changed description'
+  end
+
+  test 'client side validiation of form fields' do
+    sign_in_test_user
+
+    edit_application 'PC9001'
+    self.application_number_of_storeys = '999999999'
+    save_application
+
+    assert_validation_message(
+      'application_number_of_storeys',
+      shows: 'Value must be less than or equal to 99.'
+    )
+
+    # The button shouldn't be stuck on saving
+    assert_no_text 'Saving...'
+    assert_text 'Save'
+
+    # Removing problem allows save
+    self.application_number_of_storeys = '1'
+    save_application
+    assert_on_homepage
+
+    # Can exit and it won't complain
+    edit_application 'PC9001'
+    assert application_number_of_storeys == '1'
+    self.application_number_of_storeys = '999999999'
+    self.application_description = 'Something' # fixes click issue
+    exit_application
+    assert_on_homepage
+
+    # Can delete and it won't complain
+    edit_application 'PC9001'
+    assert application_number_of_storeys == '1'
+    self.application_number_of_storeys = '999999999'
+    self.application_description = 'Something else' # fixes click issue
+    delete_application
+    assert_on_homepage
+    assert_not_in_homepage_table 'PC9001'
   end
 end

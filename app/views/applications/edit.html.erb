@@ -7,7 +7,7 @@
                  form: 'application_form',
                  data: {
                    controller: 'loading-button',
-                   action: 'loading-button#onClick',
+                   action: 'loading-button#onSaveButton',
                    'loading-button-loading-text-param': 'Saving...',
                  }
     %>
@@ -31,7 +31,7 @@
               class: 'btn btn-outline-secondary btn-block',
               data: {
                 controller: 'loading-button',
-                action: 'loading-button#onClick',
+                action: 'loading-button#onExitButton',
                 'loading-button-loading-text-param': 'Exiting...',
                 'loading-button-confirm-param': 'All changes will be discarded',
               }

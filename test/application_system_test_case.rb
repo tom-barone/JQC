@@ -45,7 +45,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def application_council
-    find(:field, 'application_council_name')[:value]
+    find(:field, 'application_council_name').value
   end
 
   def application_council=(council)
@@ -57,7 +57,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def application_applicant
-    find(:field, 'application_applicant_name')[:value]
+    find(:field, 'application_applicant_name').value
   end
 
   def application_applicant=(applicant)
@@ -69,7 +69,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def application_owner
-    find(:field, 'application_owner_name')[:value]
+    find(:field, 'application_owner_name').value
   end
 
   def application_owner=(owner)
@@ -81,7 +81,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   def application_contact
-    find(:field, 'application_client_name')[:value]
+    find(:field, 'application_client_name').value
   end
 
   def application_contact=(contact)
@@ -92,8 +92,32 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     fill_in 'application_client_name', with: contact
   end
 
+  def application_description
+    find(:field, 'application_description').text
+  end
+
+  def application_description=(description)
+    fill_in 'application_description', with: description
+  end
+
+  def application_number_of_storeys
+    find(:field, 'application_number_of_storeys').value
+  end
+
+  def application_number_of_storeys=(num)
+    fill_in 'application_number_of_storeys', with: num
+  end
+
   def save_application
     click_on 'Save'
+  end
+
+  def delete_application
+    accept_confirm { click_on 'Delete' }
+  end
+
+  def exit_application
+    accept_confirm { click_on 'Exit' }
   end
 
   def assert_can_select(text, from:)
@@ -121,6 +145,13 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   #   assert_datalist_option_exists('clients', 'applicant1 from firm1')
   def assert_datalist_option_exists(id, value)
     assert_selector("##{id} option[value='#{value}']", visible: :all)
+  rescue MiniTest::Assertion
+    raise
+  end
+
+  def assert_validation_message(field, shows:)
+    message = page.find(:field, field).native.attribute('validationMessage')
+    assert message == shows
   rescue MiniTest::Assertion
     raise
   end

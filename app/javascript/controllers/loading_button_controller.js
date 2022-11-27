@@ -3,10 +3,13 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   _setSpin(event) {
     this.element.innerHTML = `
-        <span class='spinner-border spinner-border-sm' 
-            role='status' 
-            aria-hidden='true'></span>
-        ${event.params.loadingText || ""}`;
+				<div data-turbo-cache="false">
+					<span class='spinner-border spinner-border-sm' 
+							role='status' 
+							aria-hidden='true'></span>
+					${event.params.loadingText || ""}
+			</div>
+		`;
     return true;
   }
 
@@ -21,6 +24,26 @@ export default class extends Controller {
       }
     }
     return true;
+  }
+
+	onSaveButton(event) {
+    if (!this._checkConfirm(event)) {
+      return false;
+    }
+		if (this.element.form) {
+			if (!this.element.form.reportValidity()) {
+        event.preventDefault();
+				return false
+			}
+		}
+    this._setSpin(event);
+  }
+
+	onExitButton(event) {
+    if (!this._checkConfirm(event)) {
+      return false;
+    }
+    this._setSpin(event);
   }
 
   // Use when the button needs to submit a form
