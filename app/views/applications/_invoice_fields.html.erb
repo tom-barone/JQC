@@ -1,15 +1,86 @@
-<tr class="nested-fields">
-  <td class="invoice-table-date"><%= f.date_field :invoice_date %></td>
-  <td><%= f.text_field :stage %></td>
-  <td class="invoice-fee-cell"><%= f.text_field :fee, type: "number", min: "0", step: "any"  %></td>
-  <td class="invoice-insurance-levy-cell"><%= f.text_field :insurance_levy, type: "number", min: "0", step: "any"  %></td>
-  <td class="invoice-gst-cell"><%= f.text_field :gst, type: "number", min: "0", step: "any", readonly: true %></td>
-  <td class="invoice-admin-cell"><%= f.text_field :admin_fee, type: "number", min: "0", step: "any" %></td>
-  <td class="invoice-table-dac invoice-dac-cell"><%= f.text_field :dac, type: "number", min: "0", step: "any"  %></td>
-  <td class="invoice-table-lodgement invoice-lodgement-cell"><%= f.text_field :lodgement, type: "number", min: "0", step: "any"  %></td>
-  <td class="invoice-table-invoice-number"><%= f.text_field :invoice_number %></td>
-  <td class="invoice-table-paid"><%= f.check_box :paid %></td>
-  <td class="invoice-table-buttons">
-    <%= link_to_remove_association "⌫", f, class: 'btn btn-sm btn-outline-danger' %>
+<tr class="invoice-table-row nested-fields">
+  <td class="invoice-table-date invoice-date-cell">
+    <%= f.date_field :invoice_date %>
+  </td>
+  <td class="invoice-table-stage invoice-stage-cell">
+    <%= f.text_field :stage %>
+  </td>
+  <td class="invoice-table-fee invoice-fee-cell">
+    <%=
+      f.text_field :fee,
+                   type: 'number',
+                   min: '0',
+                   step: 'any',
+                   data: {
+                     action: 'invoice-table#updateGstAndTotals',
+                   }
+    %>
+  </td>
+  <td class="invoice-table-insurance-levy invoice-insurance-levy-cell">
+    <%=
+      f.text_field :insurance_levy,
+                   type: 'number',
+                   min: '0',
+                   step: 'any',
+                   data: {
+                     action: 'invoice-table#updateGstAndTotals',
+                   }
+    %>
+  </td>
+  <td class="invoice-table-gst invoice-gst-cell">
+    <%=
+      f.text_field :gst,
+                   type: 'number',
+                   min: '0',
+                   step: 'any',
+                   readonly: true,
+                   data: {
+                     action: 'invoice-table#updateGstAndTotals',
+                   }
+    %>
+  </td>
+  <td class="invoice-table-admin invoice-admin-cell">
+    <%=
+      f.text_field :admin_fee,
+                   type: 'number',
+                   min: '0',
+                   step: 'any',
+                   data: {
+                     action: 'invoice-table#updateGstAndTotals',
+                   }
+    %>
+  </td>
+  <td class="invoice-table-dac invoice-dac-cell">
+    <%=
+      f.text_field :dac,
+                   type: 'number',
+                   min: '0',
+                   step: 'any',
+                   data: {
+                     action: 'invoice-table#updateGstAndTotals',
+                   }
+    %>
+  </td>
+  <td class="invoice-table-lodgement invoice-lodgement-cell">
+    <%=
+      f.text_field :lodgement,
+                   type: 'number',
+                   min: '0',
+                   step: 'any',
+                   data: {
+                     action: 'invoice-table#updateGstAndTotals',
+                   }
+    %>
+  </td>
+  <td class="invoice-table-invoice-number invoice-invoice-number-cell">
+    <%= f.text_field :invoice_number %>
+  </td>
+  <td class="invoice-table-paid invoice-paid-cell"><%= f.check_box :paid %></td>
+  <td class="invoice-table-buttons invoice-buttons-cell">
+    <%=
+      link_to_remove_association '⌫',
+                                 f,
+                                 class: 'btn btn-sm btn-outline-danger'
+    %>
   </td>
 </tr>

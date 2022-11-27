@@ -603,16 +603,20 @@
               </div>
             </div>
           </div>
-          <div class="col-9 invoice-table h-100">
+          <div
+            class="col-9 invoice-table h-100"
+            data-controller="invoice-table"
+            data-action="cocoon:after-remove->invoice-table#updateGstAndTotals"
+          >
             <table class="table table-sm mb-0" style="table-layout: fixed">
               <thead>
                 <tr>
                   <td class="invoice-table-date">Date</td>
-                  <td>Stage</td>
-                  <td>KD Fee</td>
-                  <td>Ins. levy</td>
-                  <td>GST</td>
-                  <td>Admin</td>
+                  <td class="invoice-table-stage">Stage</td>
+                  <td class="invoice-table-fee">KD Fee</td>
+                  <td class="invoice-table-insurance-levy">Ins. levy</td>
+                  <td class="invoice-table-gst">GST</td>
+                  <td class="invoice-table-admin-fee">Admin</td>
                   <td class="invoice-table-dac">DAC</td>
                   <td class="invoice-table-lodgement">Ldgmt.</td>
                   <td class="invoice-table-invoice-number">Invoice no.</td>
@@ -623,7 +627,10 @@
             </table>
             <div style="max-height: 256px; overflow:overlay">
               <table class="table table-sm mb-0" style="table-layout: fixed">
-                <tbody class="invoice-fields">
+                <tbody
+                  class="invoice-fields"
+                  data-invoice-table-target="fields"
+                >
                   <%= form.fields_for :invoices do |invoices_form| %>
                     <%= render 'invoice_fields', f: invoices_form %>
                   <% end %>
@@ -631,14 +638,17 @@
               </table>
             </div>
             <table class="table table-sm mb-0" style="table-layout: fixed">
-              <tfoot class="invoice-footer">
+              <tfoot class="invoice-footer" data-invoice-table-target="footer">
                 <tr>
                   <td class="invoice-table-date">Totals</td>
                   <td></td>
-                  <td id="fee-total"></td>
-                  <td id="insurance-levy-total"></td>
-                  <td id="gst-total"></td>
-                  <td id="admin-total"></td>
+                  <td class="invoice-table-fee" id="fee-total"></td>
+                  <td
+                    class="invoice-table-insurance-levy"
+                    id="insurance-levy-total"
+                  ></td>
+                  <td class="invoice-table-gst" id="gst-total"></td>
+                  <td class="invoice-table-admin-fee" id="admin-total"></td>
                   <td class="invoice-table-dac" id="dac-total"></td>
                   <td class="invoice-table-lodgement" id="lodgement-total"></td>
                   <td class="invoice-table-invoice-number">

@@ -112,6 +112,7 @@ class ApplicationTypesTest < ApplicationSystemTestCase
 
     fill_in 'application_administration_notes', with: 'The admin has been too!'
     click_on 'Save'
+    assert_on_homepage
 
     select 'Q', from: 'type'
     click_on 'Search'
@@ -314,4 +315,21 @@ class ApplicationTypesTest < ApplicationSystemTestCase
     assert_on_homepage
     assert_not_in_homepage_table 'PC9001'
   end
+
+  # Invoice table test
+  # empty application with no invoices still shows $0.00
+  # Add invoice button shows all fields and delete button
+  # Add Date,Stage,KD Fee (updates total and gst), Ins Levy (updates total & gst),
+  #   Admin (updates total), Dac (updates total), lodgement (updates total), invoice number, paid,
+  #   fully invoiced, save
+  # Check all fields saved properly, correct totals and gst are shown
+  # Add new invoice field, shows more fields and delete button
+  # Add more data and save, check that there are still 2
+  #
+  # Update 2nd with bad data, check doesn't work
+  # Update 2nd Kd fee, ins levy, admin, dac, lodgment -> check totals & gst
+  # Delete 2nd -> check totals and gst
+  # Click exit, check changes aren't saved
+  #
+  # Check delete still updates the totals
 end
