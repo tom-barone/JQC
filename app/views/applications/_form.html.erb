@@ -83,13 +83,22 @@
             <div class="col">
               <div class="field">
                 <%= form.label :converted_to_from, 'Converted to/from' %>
-                <%=
-                  form.text_field :converted_to_from,
-                                  {
-                                    'data-reference-number-target':
-                                      'convertedToFrom',
-                                  }
-                %>
+                <div class="input-group">
+                  <%=
+                    form.text_field :converted_to_from,
+                                    {
+                                      'data-reference-number-target':
+                                        'convertedToFrom',
+                                    }
+                  %>
+                  <% if @converted_application.present? %>
+                    <%=
+                      link_to 'Go to',
+                              edit_application_path(@converted_application),
+                              class: 'btn btn-sm btn-outline-secondary'
+                    %>
+                  <% end %>
+                </div>
               </div>
             </div>
             <div class="col">

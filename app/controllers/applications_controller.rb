@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 class ApplicationsController < ApplicationController
   include Pagy::Backend
 
   # TODO: Maybe needed for csv exports
-  #include ActionController::Live
+  # include ActionController::Live
 
   before_action :set_application, only: %i[show edit update destroy]
   before_action :get_association_lists, only: %i[new edit update create]
@@ -20,6 +21,7 @@ class ApplicationsController < ApplicationController
       :format,
       :page
     )
+    flash.clear
 
     @number_results_per_page = 1000
 
@@ -48,6 +50,15 @@ class ApplicationsController < ApplicationController
 
   # GET /applications/1/edit
   def edit
+    @converted_application =
+      Application.where(reference_number: @application[:converted_to_from])
+                 .first
+
+    if @converted_application.present? &&
+       @converted_application[:updated_at] > @application[:updated_at]
+      flash.now[:warning] =
+        "Warning: The related application #{@application[:converted_to_from]} has been updated more recently. "
+    end
     session[:application_page] = request.url
   end
 
@@ -91,8 +102,7 @@ class ApplicationsController < ApplicationController
     @application.destroy
     respond_to do |format|
       format.html do
-        redirect_to session[:search_results],
-                    notice: 'Application was successfully destroyed.'
+        redirect_to session[:search_results]
       end
       format.json { head :no_content }
     end
@@ -134,8 +144,7 @@ class ApplicationsController < ApplicationController
     @suburbs = Suburb.pluck(:display_name)
     @clients = Client.pluck(:client_name)
     @councils = Council.pluck(:name)
-    @types =
-      ApplicationType.all.order(:application_type)
+    @types = ApplicationType.all.order(:application_type)
   end
 
   # Only allow a list of trusted parameters through.

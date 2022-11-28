@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module ApplicationHelper
   class BootstrapSmallFormBuilder < ActionView::Helpers::FormBuilder
     def collection_select(
@@ -27,12 +28,14 @@ module ApplicationHelper
         html_options.reverse_merge(class: 'form-control form-control-sm')
       )
     end
+
     def text_area(method, options = {})
       super(
         method,
         options.reverse_merge(class: 'form-control form-control-sm')
       )
     end
+
     def check_box(
       method,
       options = {},
@@ -49,6 +52,7 @@ module ApplicationHelper
         unchecked_value
       )
     end
+
     def text_field(method, options = {})
       # TODO: make all the field helpers do this
       options[:class] = "#{options[:class]} form-control form-control-sm"
@@ -57,6 +61,7 @@ module ApplicationHelper
         options
       )
     end
+
     def date_field(method, options = {})
       super(
         method,
@@ -64,12 +69,14 @@ module ApplicationHelper
       )
     end
   end
+
   def flash_class(level)
     case level
-        when "notice" then "alert-secondary"
-        when "success" then "alert-success"
-        when "error" then "alert-danger"
-        when "alert" then "alert-danger"
+    when 'notice' then 'alert-secondary'
+    when 'success' then 'alert-success'
+    when 'warning' then 'alert-warning'
+    when 'error' then 'alert-danger'
+    when 'alert' then 'alert-danger'
     end
   end
 end

@@ -44,6 +44,24 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     end
   end
 
+  def assert_application_reference_number(reference_number)
+    assert_selector(
+      "#application_reference_number[value='#{reference_number}']",
+      visible: :all
+    )
+  rescue MiniTest::Assertion
+    raise
+  end
+
+  def assert_application_converted_to_from(converted_to_from)
+    assert_selector(
+      "#application_converted_to_from[value='#{converted_to_from}']",
+      visible: :all
+    )
+  rescue MiniTest::Assertion
+    raise
+  end
+
   def application_council
     find(:field, 'application_council_name').value
   end
@@ -131,6 +149,16 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     find("#row-#{reference_number}").click
     sleep(4)
     assert_text 'Administration'
+  rescue MiniTest::Assertion
+    raise
+  end
+
+  def homepage_search_type=(type)
+    select type, from: 'type'
+  end
+
+  def homepage_search
+    click_on 'Search'
   end
 
   # Use like

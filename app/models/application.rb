@@ -72,6 +72,8 @@ class Application < ApplicationRecord
 
     # Update the fields for the new record
     update_column('converted_to_from', reference_number_was)
+    # Make sure the new application has a later "updated" value
+    update_column('updated_at', old_record[:updated_at] + 1.minute)
   end
 
   def suburb_display_name=(display_name)
