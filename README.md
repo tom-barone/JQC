@@ -177,3 +177,5 @@ cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance
 
 - remove cancelled reports from the monthly exports
 - rename client to contact
+
+- Remove "Edit" buttons when the applicant/contact/owner changes in application_edit

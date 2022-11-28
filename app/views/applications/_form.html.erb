@@ -1,4 +1,4 @@
-<%= form_with model: application, local: true, builder: ApplicationHelper::BootstrapSmallFormBuilder, html: { autocomplete: "off", id: "application_form", 'data-controller':"application-form" } do |form| %>
+<%= form_with model: application, local: true, builder: ApplicationHelper::BootstrapSmallFormBuilder, html: { autocomplete: "off", id: "application_form", 'data-controller':"application-form", 'data-action': 'change->application-form#onFormChange  cocoon:after-insert->application-form#onFormChange cocoon:after-remove->application-form#onFormChange' } do |form| %>
   <% if application.errors.any? %>
     <div
       class="modal fade"
