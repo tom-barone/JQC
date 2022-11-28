@@ -4,15 +4,21 @@ export default class extends Controller {
   static targets = ["referenceNumber", "convertedToFrom"];
 
   onApplicationTypeChange(event) {
-    if (
-      !confirm(
-        "You are about to convert an application.\n\n A copy of the old application will be kept."
-      )
-    ) {
-      return false;
+    if (window.location.pathname.includes("/edit")) {
+      // Currently editing an application
+      if (
+        !confirm(
+          "You are about to convert an application.\n\n A copy of the old application will be kept."
+        )
+      ) {
+        return false;
+      }
+      this._disableConvertToFromField();
+      this._updateReferenceNumber(event);
+    } else if (window.location.pathname.includes("/new")) {
+      // New application
+      this._updateReferenceNumber(event);
     }
-    this._disableConvertToFromField();
-    this._updateReferenceNumber(event);
   }
 
   _disableConvertToFromField() {
@@ -27,7 +33,7 @@ export default class extends Controller {
       console.error("Could not find the application type id");
       return;
     }
-    
+
     const { application_type, last_used } = event.params.typeDetails.find(
       (x) => x.id === selected_application_type_id
     );

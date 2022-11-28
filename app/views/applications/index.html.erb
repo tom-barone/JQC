@@ -1,5 +1,10 @@
 <% content_for :nav_buttons do %>
-  <%= button_to  applications_path({format: :csv}), params: params.permit(:type, :start_date, :end_date, :search_text, :commit), class:"btn btn-sm btn-primary mx-1 text-nowrap", data: { confirm: 'This may take up to 30 seconds. Click OK to continue.' }, method: :get do %>
+  <%= button_to applications_path({format: :csv}), params: params.permit(:type, :start_date, :end_date, :search_text, :commit), class:"btn btn-sm btn-primary mx-1 text-nowrap", data: { 
+                  controller: 'loading-button',
+                  action: 'loading-button#onDownload',
+                  'loading-button-loading-text-param': 'Downloading...',
+                  'loading-button-confirm-param': 'This may take up to 30 seconds. Click OK to continue.' }, 
+                  method: :get do %>
     Download as Spreadsheet
   <% end %>
 <% end %>
@@ -95,7 +100,12 @@
         <%=
           link_to 'New Application',
                   new_application_path,
-                  class: 'btn btn-primary text-nowrap'
+                  class: 'btn btn-primary text-nowrap new-application-button',
+                  data: {
+                    controller: 'loading-button',
+                    action: 'loading-button#onClick',
+                    'turbo-cache': false
+                  }
         %>
       </div>
     </div>
@@ -128,7 +138,7 @@
           data-applications-table-row-edit-path-param="<%= edit_application_path(application) %>"
           data-action="click->applications-table-row#navigate"
           class="bg-white"
-          id="row-<%=application.reference_number%>"
+          id="row-<%= application.reference_number %>"
         >
           <td
             class="app-reference-number align-top text-truncate"

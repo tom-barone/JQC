@@ -9,50 +9,6 @@ document.addEventListener("turbolinks:load", () => {
     $(this).next("a").remove();
   });
 
-  const updateCancelledView = function (isCancelled) {
-    if (isCancelled) {
-      $("#application_form_container").addClass("application-cancelled");
-    } else {
-      $("#application_form_container").removeClass("application-cancelled");
-    }
-  };
-  $("#application_cancelled").change(function () {
-    updateCancelledView(this.checked);
-  });
-  updateCancelledView($("#application_cancelled").is(":checked"));
-
-  // When changing the application type...
-  let previousValue = "";
-  window.onTypeFocus = function () {
-    previousValue = this.value;
-  };
-  window.onTypeChange = function (types) {
-    if (window.location.pathname.includes("/edit")) {
-      if (
-        confirm(
-          "You are about to convert an application.\n\n A copy of the old application will be kept."
-        ) === false
-      ) {
-        this.value = previousValue;
-        return false;
-      }
-      $("#application_converted_to_from")
-        .prop("disabled", true)
-        .val("Auto generated");
-    } else {
-      onTypeChangeNew.call(this);
-    }
-
-    // Put the new reference number in
-    if (this.value) {
-      const { application_type, last_used } = types[this.value - 1];
-      $("#application_reference_number").val(
-        `${application_type}${last_used + 1}`
-      );
-    }
-  };
-  const onTypeChangeNew = function () {};
-
   const checkRiskRatingAndUpdateUploaded = function () {
     const risk_rating_is_set = $("#application_risk_rating").val() !== "";
     if (risk_rating_is_set) {

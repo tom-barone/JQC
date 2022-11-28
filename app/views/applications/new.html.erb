@@ -1,26 +1,44 @@
 <% content_for :application_submit_actions do %>
-  <div class="col">
-    <div class="d-flex flex-row justify-content-between">
-      <div></div>
-      <%= submit_tag "Save", class: "btn btn-success btn-block", form: "application_form", data: { disable_with: "Saving..." } %>
-      <%= link_to 'Exit', session[:search_results], class: "btn btn-outline-secondary btn-block", data: { confirm: 'All changes will be discarded', disable_with: "Exiting..."} %>
-    </div>
+  <div class="application-actions d-flex flex-row justify-content-between">
+    <div></div>
+    <%=
+      button_tag 'Save',
+                 type: 'submit',
+                 class: 'btn btn-success btn-block',
+                 form: 'application_form',
+                 data: {
+                   controller: 'loading-button',
+                   action: 'loading-button#onSaveButton',
+                   'loading-button-loading-text-param': 'Saving...',
+                 }
+    %>
+    <%=
+      link_to 'Exit',
+              session[:search_results],
+              class: 'btn btn-outline-secondary btn-block',
+              data: {
+                controller: 'loading-button',
+                action: 'loading-button#onClick',
+                'loading-button-loading-text-param': 'Exiting...',
+                'loading-button-confirm-param': 'All changes will be discarded',
+              }
+    %>
   </div>
 <% end %>
 <%= render 'form', application: @application %>
 <script>
   function formatDate(date) {
     var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
 
-    if (month.length < 2)
-        month = '0' + month;
-    if (day.length < 2)
-        day = '0' + day;
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
 
-    return [year, month, day].join('-');
+    return [year, month, day].join("-");
   }
-  document.getElementById('application_created_at').value = formatDate(new Date())
+  document.getElementById("application_created_at").value = formatDate(
+    new Date()
+  );
 </script>

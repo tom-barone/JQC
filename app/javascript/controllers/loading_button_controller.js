@@ -13,6 +13,14 @@ export default class extends Controller {
     return true;
   }
 
+  _setLinkDisable() {
+    // If we're clicking on an <a> tag, make it look disabled
+    // https://getbootstrap.com/docs/5.2/components/buttons/#disabled-state
+    if (this.element.nodeName == "A") {
+      this.element.classList.add("disabled");
+    }
+  }
+
   _checkConfirm(event) {
     if (event.params.confirm) {
       // If we've got a confirm message to show
@@ -26,22 +34,15 @@ export default class extends Controller {
     return true;
   }
 
-	onSaveButton(event) {
+  onSaveButton(event) {
     if (!this._checkConfirm(event)) {
       return false;
     }
-		if (this.element.form) {
-			if (!this.element.form.reportValidity()) {
+    if (this.element.form) {
+      if (!this.element.form.reportValidity()) {
         event.preventDefault();
-				return false
-			}
-		}
-    this._setSpin(event);
-  }
-
-	onExitButton(event) {
-    if (!this._checkConfirm(event)) {
-      return false;
+        return false;
+      }
     }
     this._setSpin(event);
   }
@@ -61,6 +62,14 @@ export default class extends Controller {
     if (!this._checkConfirm(event)) {
       return false;
     }
+    this._setLinkDisable();
     this._setSpin(event);
   }
+
+	onDownload(event) {
+		// TODO: Fix how this works
+    if (!this._checkConfirm(event)) {
+      return false;
+    }
+	}
 }
