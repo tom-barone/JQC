@@ -4,10 +4,16 @@ require:
 # Allow long code blocks in system tests, since we don't want to be constantly logging in and out
 Metrics/BlockLength:
   Exclude:
-    - "test/system/**/*"
+    - "test/**/*"
 Metrics/ClassLength:
   Exclude:
-    - "test/system/**/*"
+    - "test/**/*"
+Metrics/MethodLength:
+  Exclude:
+    - "test/**/*"
+Metrics/AbcSize:
+  Exclude:
+    - "test/**/*"
 
 # Rubocop complains about "task :download_prod => :environment do", but its necessary for rails
 Style/HashSyntax:

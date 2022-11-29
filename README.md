@@ -179,3 +179,11 @@ cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance
 - rename client to contact
 
 - Remove "Edit" buttons when the applicant/contact/owner changes in application_edit
+
+
+- Fields no longer used
+--  request_for_information_issued
+--  job_type
+--  consent
+--  certifier
+
