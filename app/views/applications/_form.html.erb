@@ -456,7 +456,11 @@
           </div>
         </div>
         <div class="row" style="height: 40%">
-          <div class="col-5 rfis-table">
+          <div
+            class="col-5 rfis-table"
+            data-controller="rfis-table"
+            data-action="cocoon:after-remove->rfis-table#updateRfiNumbers cocoon:after-insert->rfis-table#updateRfiNumbers"
+          >
             <div>
               <table class="table table-sm mb-0" style="table-layout: fixed">
                 <thead>
@@ -621,6 +625,7 @@
             class="col-9 invoice-table h-100"
             data-controller="invoice-table"
             data-action="cocoon:after-remove->invoice-table#updateGstAndTotals"
+            data-action="cocoon:after-insert->invoice-table#updateGstAndTotals"
           >
             <table class="table table-sm mb-0" style="table-layout: fixed">
               <thead>
