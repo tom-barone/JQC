@@ -1,9 +1,23 @@
 <tr class="nested-fields">
-  <td><%= f.date_field :uploaded_date %></td>
-  <td class="uploaded-text uploaded-text-enabled"><%= f.select :uploaded_text, ApplicationUpload::STAGE, prompt: true %></td>
-  <td class="uploaded-text uploaded-text-disabled d-none"><%= f.select :uploaded_text, ApplicationUpload::STAGE, { prompt: "Please add a risk rating first" } , {disabled: true} %></td>
-  <td class="uploaded-buttons">
-    <%= link_to_remove_association "⌫", f, class: 'btn btn-sm btn-outline-danger' %>
+  <td>
+    <%= f.label :uploaded_date, class: 'd-none' %>
+  <%= f.date_field :uploaded_date %></td>
+  <td class="uploaded-text uploaded-text-enabled">
+    <%= f.label :uploaded_text, class: 'd-none' %>
+    <%= f.select :uploaded_text, ApplicationUpload::STAGE, prompt: true %>
   </td>
-</td>
+  <td class="uploaded-text uploaded-text-disabled d-none">
+    <%= f.label :uploaded_text, class: 'd-none' %>
+    <%=
+      f.select :uploaded_text,
+               ApplicationUpload::STAGE,
+               { prompt: 'Please add a risk rating first' },
+               { disabled: true }
+    %>
+  </td>
+  <td class="uploaded-buttons">
+    <%=
+      link_to_remove_association '⌫', f, class: 'btn btn-sm btn-outline-danger'
+    %>
+  </td>
 </tr>

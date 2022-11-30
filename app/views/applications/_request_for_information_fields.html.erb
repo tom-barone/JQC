@@ -1,8 +1,12 @@
 <tr class="nested-fields">
   <td class="rfis-number">1</td>
-  <td class="rfis-date"><%= f.date_field :request_for_information_date %></td>
-  <td class="rfis-buttons">
-    <%= link_to_remove_association "⌫", f, class: 'btn btn-sm btn-outline-danger' %>
+  <td class="rfis-date">
+    <%= f.label :request_for_information_date, class: 'd-none' %>
+    <%= f.date_field :request_for_information_date %>
   </td>
-</td>
+  <td class="rfis-buttons">
+    <%=
+      link_to_remove_association '⌫', f, class: 'btn btn-sm btn-outline-danger'
+    %>
+  </td>
 </tr>

@@ -26,6 +26,14 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     raise
   end
 
+  def homepage_search_type=(type)
+    select type, from: 'type'
+  end
+
+  def homepage_search
+    click_on 'Search'
+  end
+
   def assert_in_homepage_table(...)
     within('.applications-table') { assert_text(...) }
   rescue MiniTest::Assertion
@@ -39,7 +47,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   end
 
   # Application setters
-  # rubocop:disable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Metrics/AbcSize, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
+  # rubocop:disable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
   def application_type=(application_type) accept_confirm { select application_type, from: 'application_application_type_id' } end
   def application_new_type=(application_type) select application_type, from: 'application_application_type_id' end
   def application_reference_number=(reference_number) fill_in 'application_reference_number', with: reference_number end
@@ -69,17 +77,17 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def application_job_type_administration=(job_type_administration) select job_type_administration, from: 'application_job_type_administration' end
   def application_quote_accepted_date=(quote_accepted_date) fill_in 'application_quote_accepted_date', with: quote_accepted_date end
   def application_applicant_email=(applicant_email) fill_in 'application_applicant_email', with: applicant_email end
-  def application_add_additional_information(date, text) within('.additional-information-table') { click_on 'Add'; dates = all('input[type="date"]'); texts = all('input[type="text"]'); dates.last.fill_in with: date; texts.last.fill_in with: text } end
+  def application_add_additional_information(date, text) within('.additional-information-table') { click_on 'Add'; all('input[type="date"]').last.fill_in with: date; all('input[type="text"]').last.fill_in with: text } end
   def application_remove_additional_information() within('.additional-information-table') { all('.remove_fields').last.click } end
-  def application_add_uploaded(date, text) within('.uploaded-table') { click_on 'Add'; dates = all('input[type="date"]'); texts = all('select'); dates.last.fill_in with: date; texts.last.select text } end
+  def application_add_uploaded(date, text) within('.uploaded-table') { click_on 'Add'; all('input[type="date"]').last.fill_in with: date; all('select').last.select text } end
   def application_remove_uploaded() within('.uploaded-table') { all('.remove_fields').last.click } end
   def application_building_surveyor=(building_surveyor) select building_surveyor, from: 'application_building_surveyor' end
   def application_assessment_assigned=(assessment_assigned) fill_in 'application_assessment_commenced', with: assessment_assigned end
   def application_structural_engineer=(structural_engineer) select structural_engineer, from: 'application_structural_engineer' end
   def application_external_engineer_date=(external_engineer_date) fill_in 'application_external_engineer_date', with: external_engineer_date end
-  def application_add_rfi(date) within('.rfis-table') { click_on 'Add'; dates = all('input[type="date"]'); dates.last.fill_in with: date } end
+  def application_add_rfi(date) within('.rfis-table') { click_on 'Add'; all('input[type="date"]').last.fill_in with: date } end
   def application_remove_rfi() within('.rfis-table') { all('.remove_fields').last.click } end
-  def application_add_stage(date, text) within('.stages-table') { click_on 'Add'; dates = all('input[type="date"]'); texts = all('select'); dates.last.fill_in with: date; texts.last.select text } end
+  def application_add_stage(date, text) within('.stages-table') { click_on 'Add'; all('input[type="date"]').last.fill_in with: date; all('select').last.select text } end
   def application_remove_stage() within('.stages-table') { all('.remove_fields').last.click } end
   def application_risk_rating=(risk_rating) select risk_rating, from: 'application_risk_rating' end
   def application_consent_issued=(consent_issued) fill_in 'application_consent_issued', with: consent_issued end
@@ -93,6 +101,9 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def application_attention=(attention) fill_in 'application_attention', with: attention end
   def application_purchase_order_number=(purchase_order_number) fill_in 'application_purchase_order_number', with: purchase_order_number end
   def application_invoice_debtor_notes=(invoice_debtor_notes) fill_in 'application_invoice_debtor_notes', with: invoice_debtor_notes end
+  def application_remove_invoice() within('.invoice-table') { all('.remove_fields').last.click } end
+  def application_fully_invoiced=(fully_invoiced) fully_invoiced ? check('application_fully_invoiced') : uncheck('application_fully_invoiced') end
+  def application_cancelled=(cancelled) cancelled ? check('application_cancelled') : uncheck('application_cancelled') end
   def application_add_invoice(invoice_date, stage, fee, insurance_levy, admin_fee, dac, lodgement, invoice_number, paid)
     within('.invoice-table') { click_on 'Add' }
     within('.invoice-fields') do
@@ -108,16 +119,13 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
       paid ? all('.invoice-paid-cell input[type="checkbox"]').last.check : all('.invoice-paid-cell input[type="checkbox"]').last.uncheck
     end
   end
-  def application_remove_invoice() within('.invoice-table') { all('.remove_fields').last.click } end
-  def application_fully_invoiced=(fully_invoiced) fully_invoiced ? check('application_fully_invoiced') : uncheck('application_fully_invoiced') end
-  def application_cancelled=(cancelled) cancelled ? check('application_cancelled') : uncheck('application_cancelled') end
-  # rubocop:enable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Metrics/AbcSize, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
+  # rubocop:enable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
 
-  # Application asserters
-  # rubocop:disable Style/SingleLineMethods, Layout/LineLength
-  def assert_application_type(type) find(:field, 'application_application_type_id').assert_text(type) end
+  # Application positive asserters
+  # rubocop:disable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
+  def assert_application_type(type) assert_select('application_application_type_id', selected: type) end
   def assert_application_reference_number(reference_number) assert_field('application_reference_number', with: reference_number) end
-  def assert_application_converted_to_from(converted_to_from) assert_field('application_converted_to_from', with: converted_to_from) end
+  def assert_application_converted_to_from(converted_to_from) assert_field('application_converted_to_from', with: converted_to_from, disabled: :all) end
   def assert_application_date_entered(date_entered) assert_field('application_created_at', with: date_entered) end
   def assert_application_council(council) assert_field('application_council_name', with: council) end
   def assert_application_development_application_number(development_application_number) assert_field('application_development_application_number', with: development_application_number) end
@@ -136,18 +144,18 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def assert_application_section_93a(section_93a) assert_field('application_section_93A', with: section_93a) end
   def assert_application_electronic_lodgement(electronic_lodgement) electronic_lodgement ? assert_checked_field('application_electronic_lodgement') : assert_unchecked_field('application_electronic_lodgement') end
   def assert_application_hard_copy(hard_copy) hard_copy ? assert_checked_field('application_hard_copy') : assert_unchecked_field('application_hard_copy') end
-  def assert_application_job_type_administration(job_type_administration) find(:field, 'application_job_type_administration').assert_text(job_type_administration) end
+  def assert_application_job_type_administration(job_type_administration) assert_select('application_job_type_administration', selected: job_type_administration) end
   def assert_application_quote_accepted_date(quote_accepted_date) assert_field('application_quote_accepted_date', with: quote_accepted_date) end
   def assert_application_applicant_email(applicant_email) assert_field('application_applicant_email', with: applicant_email) end
-  # Additional info
-  # Uploaded
-  def assert_application_building_surveyor(building_surveyor) find(:field, 'application_building_surveyor').assert_text(building_surveyor) end
+  def assert_application_additional_information(date, text, at:) within(all('.additional-information-table .nested-fields').at(at)) { assert_field('Info date', with: date); assert_field('Info text', with: text) } end
+  def assert_application_uploaded(date, text, at:) within(all('.uploaded-table .nested-fields').at(at)) { assert_field('Uploaded date', with: date); assert_select('Uploaded text', selected: text) } end
+  def assert_application_building_surveyor(building_surveyor) assert_select('application_building_surveyor', selected: building_surveyor) end
   def assert_application_assessment_assigned(assessment_assigned) assert_field('application_assessment_commenced', with: assessment_assigned) end
-  def assert_application_structural_engineer(structural_engineer) find(:field, 'application_structural_engineer').assert_text(structural_engineer) end
+  def assert_application_structural_engineer(structural_engineer) assert_select('application_structural_engineer', selected: structural_engineer) end
   def assert_application_external_engineer_date(external_engineer_date) assert_field('application_external_engineer_date', with: external_engineer_date) end
-  # RFIS
-  # Stages
-  def assert_application_risk_rating(risk_rating) find(:field, 'application_risk_rating').assert_text(risk_rating) end
+  def assert_application_rfi(date, at:) within(all('.rfis-table .nested-fields').at(at)) { assert_field('Request for information date', with: date) } end
+  def assert_application_stage(date, text, at:) within(all('.stages-table .nested-fields').at(at)) { assert_field('Stage date', with: date); assert_select('Stage text', selected: text) } end
+  def assert_application_risk_rating(risk_rating) assert_select('application_risk_rating', selected: risk_rating) end
   def assert_application_consent_issued(consent_issued) assert_field('application_consent_issued', with: consent_issued) end
   def assert_application_variation_issued(variation_issued) assert_field('application_variation_issued', with: variation_issued) end
   def assert_application_coo_issued(coo_issued) assert_field('application_coo_issued', with: coo_issued) end
@@ -159,53 +167,114 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def assert_application_attention(attention) assert_field('application_attention', with: attention) end
   def assert_application_purchase_order_number(purchase_order_number) assert_field('application_purchase_order_number', with: purchase_order_number) end
   def assert_application_invoice_debtor_notes(invoice_debtor_notes) assert_field('application_invoice_debtor_notes', with: invoice_debtor_notes) end
-  # Invoices
   def assert_application_fully_invoiced(fully_invoiced) fully_invoiced ? assert_checked_field('application_fully_invoiced') : assert_unchecked_field('application_fully_invoiced') end
   def assert_application_cancelled(cancelled) cancelled ? assert_checked_field('application_cancelled') : assert_unchecked_field('application_cancelled') end
-
-  # For invoicing, stages, uploaded
-  # def assert_application_paid(paid) paid ? assert_checked_field('application_paid') : assert_unchecked_field('application_paid') end
-  # def assert_application_stages(stages) find(:field, 'application_stages').assert_text(stages) end
-  # def assert_application_uploaded(uploaded) find(:field, 'application_uploaded').assert_text(uploaded) end
-
-  ## Method with exception raise
-  # def assert_application_reference_number(reference_number) assert_selector("#application_reference_number[value='#{reference_number}']")
-  # rescue MiniTest::Assertion
-  #   raise
-  # end
-
-  # rubocop:enable Style/SingleLineMethods, Layout/LineLength
-
-  def application_council
-    find(:field, 'application_council_name').value
+  def assert_application_invoice(invoice_date, stage, fee, insurance_levy, gst, admin_fee, dac, lodgement, invoice_number, paid, at:)
+    within(all('.invoice-table .nested-fields').at(at)) do
+      assert_field('Invoice date', with: invoice_date)
+      assert_field('Stage', with: stage)
+      assert_field('Fee', with: fee)
+      assert_field('Insurance levy', with: insurance_levy)
+      assert_field('Gst', with: gst)
+      assert_field('Admin fee', with: admin_fee)
+      assert_field('Dac', with: dac)
+      assert_field('Lodgement', with: lodgement)
+      assert_field('Invoice number', with: invoice_number)
+      paid ? assert_checked_field('Paid') : assert_unchecked_field('Paid')
+    end
   end
-
-  def application_applicant
-    find(:field, 'application_applicant_name').value
+  def assert_application_invoice_total(fee, insurance_levy, gst, admin_fee, dac, lodgement)
+    within('.invoice-table') do
+      assert_selector('#fee-total', text: fee)
+      assert_selector('#insurance-levy-total', text: insurance_levy)
+      assert_selector('#gst-total', text: gst)
+      assert_selector('#admin-total', text: admin_fee)
+      assert_selector('#dac-total', text: dac)
+      assert_selector('#lodgement-total', text: lodgement)
+    end
   end
+  # rubocop:enable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
 
-  def new_application_applicant(applicant)
-    fill_in 'application_applicant_name', with: applicant
+  # Application negative asserters
+  # rubocop:disable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
+  def assert_no_application_type(type) assert_no_select('application_application_type_id', selected: type) end
+  def assert_no_application_reference_number(reference_number) assert_no_field('application_reference_number', with: reference_number) end
+  def assert_no_application_converted_to_from(converted_to_from) assert_no_field('application_converted_to_from', with: converted_to_from, disabled: :all) end
+  def assert_no_application_date_entered(date_entered) assert_no_field('application_created_at', with: date_entered) end
+  def assert_no_application_council(council) assert_no_field('application_council_name', with: council) end
+  def assert_no_application_development_application_number(development_application_number) assert_no_field('application_development_application_number', with: development_application_number) end
+  def assert_no_application_applicant(applicant) assert_no_field('application_applicant_name', with: applicant) end
+  def assert_no_application_owner(owner) assert_no_field('application_owner_name', with: owner) end
+  def assert_no_application_contact(contact) assert_no_field('application_client_name', with: contact) end
+  def assert_no_application_description(description) assert_no_field('application_description', with: description) end
+  def assert_no_application_administration_notes(administration_notes) assert_no_field('application_administration_notes', with: administration_notes) end
+  def assert_no_application_number_of_storeys(number_of_storeys) assert_no_field('application_number_of_storeys', with: number_of_storeys) end
+  def assert_no_application_construction_value(construction_value) assert_no_field('application_construction_value', with: construction_value) end
+  def assert_no_application_lot_number(lot_number) assert_no_field('application_lot_number', with: lot_number) end
+  def assert_no_application_street_number(street_number) assert_no_field('application_street_number', with: street_number) end
+  def assert_no_application_street_name(street_name) assert_no_field('application_street_name', with: street_name) end
+  def assert_no_application_suburb(suburb) assert_no_field('application_suburb_display_name', with: suburb) end
+  def assert_no_application_fee_amount(fee_amount) assert_no_field('application_fee_amount', with: fee_amount) end
+  def assert_no_application_section_93a(section_93a) assert_no_field('application_section_93A', with: section_93a) end
+  def assert_no_application_electronic_lodgement(electronic_lodgement) electronic_lodgement ? assert_no_checked_field('application_electronic_lodgement') : assert_no_unchecked_field('application_electronic_lodgement') end
+  def assert_no_application_hard_copy(hard_copy) hard_copy ? assert_no_checked_field('application_hard_copy') : assert_no_unchecked_field('application_hard_copy') end
+  def assert_no_application_job_type_administration(job_type_administration) assert_no_select('application_job_type_administration', selected: job_type_administration) end
+  def assert_no_application_quote_accepted_date(quote_accepted_date) assert_no_field('application_quote_accepted_date', with: quote_accepted_date) end
+  def assert_no_application_applicant_email(applicant_email) assert_no_field('application_applicant_email', with: applicant_email) end
+  def assert_no_application_additional_information(date, text, at:) within(all('.additional-information-table .nested-fields').at(at)) { assert_no_field('Info date', with: date); assert_no_field('Info text', with: text) } end
+  def assert_no_application_uploaded(date, text, at:) within(all('.uploaded-table .nested-fields').at(at)) { assert_no_field('Uploaded date', with: date); assert_no_select('Uploaded text', selected: text) } end
+  def assert_no_application_building_surveyor(building_surveyor) assert_no_select('application_building_surveyor', selected: building_surveyor) end
+  def assert_no_application_assessment_assigned(assessment_assigned) assert_no_field('application_assessment_commenced', with: assessment_assigned) end
+  def assert_no_application_structural_engineer(structural_engineer) assert_no_select('application_structural_engineer', selected: structural_engineer) end
+  def assert_no_application_external_engineer_date(external_engineer_date) assert_no_field('application_external_engineer_date', with: external_engineer_date) end
+  def assert_no_application_rfi(date, at:) within(all('.rfis-table .nested-fields').at(at)) { assert_no_field('Request for information date', with: date) } end
+  def assert_no_application_stage(date, text, at:) within(all('.stages-table .nested-fields').at(at)) { assert_no_field('Stage date', with: date); assert_no_select('Stage text', selected: text) } end
+  def assert_no_application_risk_rating(risk_rating) assert_no_select('application_risk_rating', selected: risk_rating) end
+  def assert_no_application_consent_issued(consent_issued) assert_no_field('application_consent_issued', with: consent_issued) end
+  def assert_no_application_variation_issued(variation_issued) assert_no_field('application_variation_issued', with: variation_issued) end
+  def assert_no_application_coo_issued(coo_issued) assert_no_field('application_coo_issued', with: coo_issued) end
+  def assert_no_application_engineer_certificate_received(engineer_certificate_received) assert_no_field('application_engineer_certificate_received', with: engineer_certificate_received) end
+  def assert_no_application_certification_notes(certification_notes) assert_no_field('application_certification_notes', with: certification_notes) end
+  def assert_no_application_invoice_to(invoice_to) assert_no_field('application_invoice_to', with: invoice_to) end
+  def assert_no_application_care_of(care_of) assert_no_field('application_care_of', with: care_of) end
+  def assert_no_application_invoice_email(invoice_email) assert_no_field('application_invoice_email', with: invoice_email) end
+  def assert_no_application_attention(attention) assert_no_field('application_attention', with: attention) end
+  def assert_no_application_purchase_order_number(purchase_order_number) assert_no_field('application_purchase_order_number', with: purchase_order_number) end
+  def assert_no_application_invoice_debtor_notes(invoice_debtor_notes) assert_no_field('application_invoice_debtor_notes', with: invoice_debtor_notes) end
+  def assert_no_application_fully_invoiced(fully_invoiced) fully_invoiced ? assert_no_checked_field('application_fully_invoiced') : assert_no_unchecked_field('application_fully_invoiced') end
+  def assert_no_application_cancelled(cancelled) cancelled ? assert_no_checked_field('application_cancelled') : assert_no_unchecked_field('application_cancelled') end
+  def assert_no_application_invoice(invoice_date, stage, fee, insurance_levy, gst, admin_fee, dac, lodgement, invoice_number, paid, at:)
+    within(all('.invoice-table .nested-fields').at(at)) do
+      assert_no_field('Invoice date', with: invoice_date)
+      assert_no_field('Stage', with: stage)
+      assert_no_field('Fee', with: fee)
+      assert_no_field('Insurance levy', with: insurance_levy)
+      assert_no_field('Gst', with: gst)
+      assert_no_field('Admin fee', with: admin_fee)
+      assert_no_field('Dac', with: dac)
+      assert_no_field('Lodgement', with: lodgement)
+      assert_no_field('Invoice number', with: invoice_number)
+      paid ? assert_no_checked_field('Paid') : assert_no_unchecked_field('Paid')
+    end
   end
-
-  def application_owner
-    find(:field, 'application_owner_name').value
+  def assert_no_application_invoice_total(fee, insurance_levy, gst, admin_fee, dac, lodgement)
+    within('.invoice-table') do
+      assert_no_selector('#fee-total', text: fee)
+      assert_no_selector('#insurance-levy-total', text: insurance_levy)
+      assert_no_selector('#gst-total', text: gst)
+      assert_no_selector('#admin-total', text: admin_fee)
+      assert_no_selector('#dac-total', text: dac)
+      assert_no_selector('#lodgement-total', text: lodgement)
+    end
   end
+  # rubocop:enable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
 
-  def new_application_owner(owner)
-    fill_in 'application_owner_name', with: owner
-  end
-
-  def application_contact
-    find(:field, 'application_client_name').value
-  end
-
-  def application_description
-    find(:field, 'application_description').text
-  end
-
-  def application_number_of_storeys
-    find(:field, 'application_number_of_storeys').value
+  # Used to check datalist options:
+  #     assert_can_select 'the council1 of place1', from: 'councils'
+  def assert_can_select(text, from:)
+    assert_selector("##{from} option[value='#{text}']", visible: :all)
+  rescue MiniTest::Assertion
+    raise
   end
 
   def save_application
@@ -226,12 +295,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     accept_confirm { click_on 'Exit' }
   end
 
-  def assert_can_select(text, from:)
-    assert_selector("##{from} option[value='#{text}']", visible: :all)
-  rescue MiniTest::Assertion
-    raise
-  end
-
   def edit_application(reference_number)
     assert_text reference_number
     find("#row-#{reference_number}").click
@@ -247,14 +310,6 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     assert_text 'Administration'
   rescue MiniTest::Assertion
     raise
-  end
-
-  def homepage_search_type=(type)
-    select type, from: 'type'
-  end
-
-  def homepage_search
-    click_on 'Search'
   end
 
   # Use like
