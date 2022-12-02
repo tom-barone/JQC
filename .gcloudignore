@@ -1,3 +1,6 @@
+# Exclude everything also excluded by the gitignore
+#!include:.gitignore
+
 # Ignore itself
 .gcloudignore
 
@@ -21,8 +24,24 @@ vendor/*
 /storage/*
 !/storage/.keep
 .byebug_history
-/public/packs-test
 /node_modules
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+# Other random files
+.DS_Store
+Session.vim
+.unused-gitlab-ci.yml
+tests.md
+tmp.log
+tags
+README.md
+.solargraph.yml
+package-lock.json
+package.json
+.rubocop.yml
+
+# Include keys
+!/config/**/*.key
+!/public/assets
