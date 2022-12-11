@@ -22,6 +22,10 @@ Rails
 
     get 'crons/last_month_csv_reports', to: 'crons#last_month_csv_reports'
 
+    # Fix the error that occurs when GAE starts up the app
+    # https://cloud.google.com/appengine/docs/standard/how-instances-are-managed
+    get '/_ah/start', to: redirect('/users/sign_in')
+
     authenticated :user do
       root to: 'applications#index', as: :authenticated_root
     end
