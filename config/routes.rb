@@ -24,7 +24,8 @@ Rails
 
     # Fix the error that occurs when GAE starts up the app
     # https://cloud.google.com/appengine/docs/standard/how-instances-are-managed
-    get '/_ah/start', to: redirect('/users/sign_in')
+    get '/_ah/start', to: redirect('/users/sign_in', status: 200)
+    get '/_ah/stop', to: redirect('/users/sign_in', status: 200)
 
     authenticated :user do
       root to: 'applications#index', as: :authenticated_root

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# Settings to make sure bash fails and the script exits when anything goes wrong
+set -Eeuo pipefail
+
+# DEBUGGING: Uncomment to see all the commands printed to the console
+# set -x
+
+echo -e "\nRunning unit tests..."
+npm test
+
+echo -e "\nRunning integration tests..."
+bin/rails db:migrate
+bin/rails db:test:prepare
+RAILS_ENV=test bin/rails assets:precompile
+bin/rails test
+
+echo -e "\nRunning end to end tests..."
+PARALLEL_WORKERS=5 bin/rails test:system
+
+echo -e "\nDeploying new staging site..."
+rails_env=production bin/rails db:migrate
+gcloud app deploy --project=***REMOVED*** --no-promote --no-cache --quiet
+
+echo -e "\nTesting new staging site..."
+google_app_engine_project="***REMOVED***"
+google_app_engine_service="default"
+latest_deployed_version_id="$(
+	gcloud app versions list \
+		--sort-by='~VERSION.ID' \
+		--limit=1 \
+		--project=$google_app_engine_project \
+		--format='value(VERSION.ID)'
+)"
+latest_deployed_version_url="$(
+	gcloud app versions describe $latest_deployed_version_id \
+		--service=$google_app_engine_service \
+		--project=$google_app_engine_project \
+		--format='value(versionUrl)'
+)"
+TEST_HOST="$latest_deployed_version_url" RAILS_ENV="production" ruby production/sign_in_and_check_table_test.rb
+
+echo -e "\n\nDeployment successful."
+echo "Visit https://console.cloud.google.com/appengine/versions?serviceId=default&project=***REMOVED*** to migrate traffic and remove old versions"

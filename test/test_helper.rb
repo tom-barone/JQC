@@ -16,11 +16,4 @@ class ActiveSupport::TestCase
 
   # Sign in - only for integration tests
   include Devise::Test::IntegrationHelpers
-  def sign_in_test_user
-    get '/users/sign_in'
-    sign_in users(:test_user)
-    post user_session_url
-    follow_redirect!
-    assert_response :success
-  end
 end

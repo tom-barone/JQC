@@ -11,7 +11,11 @@ Metrics/ClassLength:
 Metrics/MethodLength:
   Exclude:
     - "test/**/*"
+    - "production/**/*"
 Metrics/AbcSize:
+  Exclude:
+    - "test/**/*"
+ClassVars:
   Exclude:
     - "test/**/*"
 
