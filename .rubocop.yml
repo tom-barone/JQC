@@ -1,6 +1,11 @@
 require:
   - rubocop-rails
 
+# Don't force a comment at the top of every class
+Style/Documentation:
+  Exclude:
+    - "**/*.rb"
+
 # Allow long code blocks in system tests, since we don't want to be constantly logging in and out
 Metrics/BlockLength:
   Exclude:

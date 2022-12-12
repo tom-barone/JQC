@@ -7,14 +7,34 @@
     <% @application_types.each do |application_type| %>
       <%= fields_for "application_type_attributes[]", application_type do |application_type_fields| %>
         <tr>
-          <td><%= application_type_fields.text_field :application_type, disabled: "true" %></td>
-          <td><%= application_type_fields.text_field :last_used %></td>
+          <td class="application_type_cell">
+            <%=
+              application_type_fields.text_field :application_type,
+                                                 disabled: 'true'
+            %>
+          </td>
+          <td class="last_used_cell">
+            <%=
+              application_type_fields.text_field :last_used,
+                                                 type: 'number',
+                                                 step: '1'
+            %>
+          </td>
         </tr>
       <% end %>
     <% end %>
   </table>
   <div class="actions container-fluid my-2">
-    <input type="submit" value="Save" form="application_type_form" class= "btn btn-success"/>
-    <%= link_to 'Exit', session[:search_results], class: "btn btn-outline-secondary" %>
+    <input
+      type="submit"
+      value="Save"
+      form="application_type_form"
+      class="btn btn-success"
+    />
+    <%=
+      link_to 'Exit',
+              session[:search_results],
+              class: 'btn btn-outline-secondary'
+    %>
   </div>
 <% end %>

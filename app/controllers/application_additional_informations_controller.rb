@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class ApplicationAdditionalInformationsController < ApplicationController
-  before_action :set_application_additional_information, only: [:show, :edit, :update, :destroy]
+  before_action :set_application_additional_information, only: %i[show edit update destroy]
 
   # GET /application_additional_informations
   # GET /application_additional_informations.json
@@ -10,8 +11,7 @@ class ApplicationAdditionalInformationsController < ApplicationController
 
   # GET /application_additional_informations/1
   # GET /application_additional_informations/1.json
-  def show
-  end
+  def show; end
 
   # GET /application_additional_informations/new
   def new
@@ -19,8 +19,7 @@ class ApplicationAdditionalInformationsController < ApplicationController
   end
 
   # GET /application_additional_informations/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /application_additional_informations
   # POST /application_additional_informations.json
@@ -29,7 +28,10 @@ class ApplicationAdditionalInformationsController < ApplicationController
 
     respond_to do |format|
       if @application_additional_information.save
-        format.html { redirect_to @application_additional_information, notice: 'Application additional information was successfully created.' }
+        format.html do
+          redirect_to @application_additional_information,
+                      notice: 'Application additional information was successfully created.'
+        end
         format.json { render :show, status: :created, location: @application_additional_information }
       else
         format.html { render :new }
@@ -43,7 +45,10 @@ class ApplicationAdditionalInformationsController < ApplicationController
   def update
     respond_to do |format|
       if @application_additional_information.update(application_additional_information_params)
-        format.html { redirect_to @application_additional_information, notice: 'Application additional information was successfully updated.' }
+        format.html do
+          redirect_to @application_additional_information,
+                      notice: 'Application additional information was successfully updated.'
+        end
         format.json { render :show, status: :ok, location: @application_additional_information }
       else
         format.html { render :edit }
@@ -57,19 +62,23 @@ class ApplicationAdditionalInformationsController < ApplicationController
   def destroy
     @application_additional_information.destroy
     respond_to do |format|
-      format.html { redirect_to application_additional_informations_url, notice: 'Application additional information was successfully destroyed.' }
+      format.html do
+        redirect_to application_additional_informations_url,
+                    notice: 'Application additional information was successfully destroyed.'
+      end
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_application_additional_information
-      @application_additional_information = ApplicationAdditionalInformation.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def application_additional_information_params
-      params.require(:application_additional_information).permit(:info_date, :info_text, :application_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_application_additional_information
+    @application_additional_information = ApplicationAdditionalInformation.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def application_additional_information_params
+    params.require(:application_additional_information).permit(:info_date, :info_text, :application_id)
+  end
 end

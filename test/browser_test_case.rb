@@ -26,6 +26,7 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def new_application() click_on 'New Application'; sleep(4); assert_on_application_new_page end
   def homepage_search() click_on 'Search' end
   def homepage_search_clear() click_on 'clear-search' end
+  def go_to_settings_page() click_on 'Settings' end
 
   # Homepage setters
   def homepage_search_type=(type) select type, from: 'type' end
@@ -48,6 +49,19 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_no_homepage_search_start_date(date) assert_no_selector("#start_date[value='#{date}']") end
   def assert_no_homepage_search_end_date(date) assert_no_selector("#end_date[value='#{date}']") end
   def assert_no_homepage_search_text(text) assert_no_selector("#search_text[value='#{text}']") end
+
+  # Settings page actions
+  def update_settings_last_used(last_used, at:) all('.last_used_cell').at(at).fill_in with: last_used end
+  def save_settings() click_on 'Save'; sleep(2) end
+  def exit_settings() click_on 'Exit' end
+
+  # Settings page positive assertions
+  def assert_on_settings_page() assert_text('Last used number') end
+  def assert_settings_application_type(type, at:) within(all('.application_type_cell').at(at)) { assert_selector("input[value='#{type}']") } end
+  def assert_settings_last_used(last_used, at:) within(all('.last_used_cell').at(at)) { assert_selector("input[value='#{last_used}']") } end
+
+  # Settings page negative assertions
+  def assert_not_on_settings_page() assert_no_text('Last used number') end
 
   # Application actions
   def save_application() click_on 'Save' end
