@@ -19,11 +19,12 @@ echo -e "\nRunning end to end tests..."
 bin/rails test:system
 
 echo -e "\nDeploying new staging site..."
-rails_env=production bin/rails db:migrate
-gcloud app deploy --project=***REMOVED*** --no-promote --no-cache --quiet
+RAILS_ENV=production bin/rails db:migrate
+RAILS_ENV=production bin/rails assets:precompile
+google_app_engine_project="***REMOVED***"
+gcloud app deploy --project=$google_app_engine_project --no-promote --no-cache --quiet
 
 echo -e "\nTesting new staging site..."
-google_app_engine_project="***REMOVED***"
 google_app_engine_service="default"
 latest_deployed_version_id="$(
 	gcloud app versions list \

@@ -14,8 +14,6 @@ vendor/*
 
 # Ignore other local Rails files
 /.bundle
-/log/*
-/tmp/*
 !/log/.keep
 !/tmp/.keep
 /tmp/pids/*
@@ -28,6 +26,12 @@ vendor/*
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+/test
+/log
+/tmp
+/storage
+/production
+/db
 
 # Other random files
 .DS_Store
