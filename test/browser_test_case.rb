@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class BrowserTestCase < ActionDispatch::SystemTestCase
-  driven_by :selenium, using: :headless_chrome, screen_size: [1800, 1000]
+  # rubocop:disable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists, Style/CommentedKeyword
 
+  driven_by :selenium, using: :headless_chrome, screen_size: [1800, 1000]
   # driven_by :selenium, using: :chrome, screen_size: [1800, 1000]
 
   Capybara.default_max_wait_time = 15 # Seconds
@@ -20,34 +21,43 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
     assert_text('Sign out')
   end
 
-  def assert_on_homepage
-    assert_text('New Application')
-  rescue MiniTest::Assertion
-    raise
-  end
+  # Homepage actions
+  def edit_application(reference_number) find("#row-#{reference_number}").click; sleep(4); assert_on_application_edit_page end
+  def new_application() click_on 'New Application'; sleep(4); assert_on_application_new_page end
+  def homepage_search() click_on 'Search' end
+  def homepage_search_clear() click_on 'clear-search' end
 
-  def homepage_search_type=(type)
-    select type, from: 'type'
-  end
+  # Homepage setters
+  def homepage_search_type=(type) select type, from: 'type' end
+  def homepage_search_start_date=(date) fill_in 'start_date', with: date end
+  def homepage_search_end_date=(date) fill_in 'end_date', with: date end
+  def homepage_search_text=(text) fill_in 'search_text', with: text end
 
-  def homepage_search
-    click_on 'Search'
-  end
+  # Homepage positive assertions
+  def assert_on_homepage() assert_text('New Application') end
+  def assert_in_homepage_table(...) within('.applications-table') { assert_text(...) } end
+  def assert_homepage_search_type(type) assert_selector("option[value='#{type}'][selected='selected']") end
+  def assert_homepage_search_start_date(date) assert_selector("#start_date[value='#{date}']") end
+  def assert_homepage_search_end_date(date) assert_selector("#end_date[value='#{date}']") end
+  def assert_homepage_search_text(text) assert_selector("#search_text[value='#{text}']") end
 
-  def assert_in_homepage_table(...)
-    within('.applications-table') { assert_text(...) }
-  rescue MiniTest::Assertion
-    raise
-  end
+  # Homepage negative assertions
+  def assert_not_on_homepage() assert_no_text('New Application') end
+  def assert_not_in_homepage_table(...) within('.applications-table') { assert_no_text(...) } end
+  def assert_no_homepage_search_type(type) assert_no_selector("option[value='#{type}'][selected='selected']") end
+  def assert_no_homepage_search_start_date(date) assert_no_selector("#start_date[value='#{date}']") end
+  def assert_no_homepage_search_end_date(date) assert_no_selector("#end_date[value='#{date}']") end
+  def assert_no_homepage_search_text(text) assert_no_selector("#search_text[value='#{text}']") end
 
-  def assert_not_in_homepage_table(...)
-    within('.applications-table') { assert_no_text(...) }
-  rescue MiniTest::Assertion
-    raise
-  end
+  # Application actions
+  def save_application() click_on 'Save' end
+  def save_new_application() click_on 'Save'; sleep(10) end # Takes ages to save stuff unfortunately
+  def delete_application() accept_confirm { click_on 'Delete' } end
+  def exit_application() accept_confirm { click_on 'Exit' } end
+  def click_on_conversion_warning_link(application) find_link("Click to go to #{application}.").click end
+  def click_on_go_to_conversion_button() find_link('Go to').click end
 
   # Application setters
-  # rubocop:disable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
   def application_type=(application_type) accept_confirm { select application_type, from: 'application_application_type_id' } end
   def application_new_type=(application_type) select application_type, from: 'application_application_type_id' end
   def application_reference_number=(reference_number) fill_in 'application_reference_number', with: reference_number end
@@ -119,10 +129,12 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
       paid ? all('.invoice-paid-cell input[type="checkbox"]').last.check : all('.invoice-paid-cell input[type="checkbox"]').last.uncheck
     end
   end
-  # rubocop:enable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
 
-  # Application positive asserters
-  # rubocop:disable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
+  # Application positive assertions
+  def assert_on_application_edit_page() assert_text('Administration'); assert_text('Delete') end
+  def assert_on_application_new_page() assert_text('Administration'); assert_no_text('Delete') end
+  def assert_go_to_conversion_button() assert_text 'Go to' end
+  def assert_more_recent_conversion_warning(application) assert_text "Warning: The related application #{application} has been updated more recently."; assert_text "Click to go to #{application}." end
   def assert_application_type(type) assert_select('application_application_type_id', selected: type) end
   def assert_application_reference_number(reference_number) assert_field('application_reference_number', with: reference_number) end
   def assert_application_converted_to_from(converted_to_from) assert_field('application_converted_to_from', with: converted_to_from, disabled: :all) end
@@ -193,10 +205,10 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
       assert_selector('#lodgement-total', text: lodgement)
     end
   end
-  # rubocop:enable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
 
-  # Application negative asserters
-  # rubocop:disable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
+  # Application negative assertions
+  def assert_no_go_to_conversion_button() assert_no_text 'Go to' end
+  def assert_no_more_recent_conversion_warning() assert_no_text 'Warning: The related application', exact: false end
   def assert_no_application_type(type) assert_no_select('application_application_type_id', selected: type) end
   def assert_no_application_reference_number(reference_number) assert_no_field('application_reference_number', with: reference_number) end
   def assert_no_application_converted_to_from(converted_to_from) assert_no_field('application_converted_to_from', with: converted_to_from, disabled: :all) end
@@ -267,47 +279,11 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
       assert_no_selector('#lodgement-total', text: lodgement)
     end
   end
-  # rubocop:enable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists
 
   # Used to check datalist options:
   #     assert_can_select 'the council1 of place1', from: 'councils'
   def assert_can_select(text, from:)
     assert_selector("##{from} option[value='#{text}']", visible: :all)
-  rescue MiniTest::Assertion
-    raise
-  end
-
-  def save_application
-    click_on 'Save'
-  end
-
-  def save_new_application
-    click_on 'Save'
-    # Takes ages to save stuff unfortunately
-    sleep(10)
-  end
-
-  def delete_application
-    accept_confirm { click_on 'Delete' }
-  end
-
-  def exit_application
-    accept_confirm { click_on 'Exit' }
-  end
-
-  def edit_application(reference_number)
-    assert_text reference_number
-    find("#row-#{reference_number}").click
-    sleep(4)
-    assert_text 'Administration'
-  rescue MiniTest::Assertion
-    raise
-  end
-
-  def new_application
-    click_on 'New Application'
-    sleep(4)
-    assert_text 'Administration'
   rescue MiniTest::Assertion
     raise
   end
@@ -335,3 +311,5 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
     raise
   end
 end
+
+# rubocop:enable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists, Style/CommentedKeyword

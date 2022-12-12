@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 # rubocop:disable Style/Documentation
-
 class RenameSuburbsColumnsToSnakeCase < ActiveRecord::Migration[6.0]
   def change
     rename_column :suburbs, :SuburbID, :id
@@ -11,3 +10,4 @@ class RenameSuburbsColumnsToSnakeCase < ActiveRecord::Migration[6.0]
     rename_column :suburbs, :Postcode, :postcode
   end
 end
+# rubocop:enable Style/Documentation

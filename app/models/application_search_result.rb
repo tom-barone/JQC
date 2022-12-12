@@ -24,56 +24,65 @@ class ApplicationSearchResult < ApplicationRecord
         lambda { |application_type|
           if application_type.present?
             where(
-              "application_type = '#{application_type}'" # Default to PC's
+              'application_type = ?', application_type # Default to PC's
             )
           end
         }
 
   scope :filter_by_start_date,
         lambda { |start_date|
-          where("created_at >= '#{start_date}'") if start_date.present?
+          where('created_at >= ?', start_date) if start_date.present?
         }
 
   scope :filter_by_end_date,
         lambda { |end_date|
-          where("created_at <= '#{end_date}'") if end_date.present?
+          where('created_at <= ?', end_date) if end_date.present?
         }
 
   scope :filter_by_date,
         lambda { |start_date, end_date|
           if start_date.present? || end_date.present?
             where(
-              "created_at >= '#{start_date}' and created_at <= '#{end_date}'"
+              'created_at >= ? and created_at <= ?', start_date, end_date
             )
           end
         }
 
+  # rubocop:disable Metrics/BlockLength
   scope :filter_by_search_text,
         lambda { |search_text|
           return nil if search_text.blank?
 
           # Chain where calls together using reduce
-          search_text
-            .split
-            .reduce(self) do |chain, unsanitized_word|
-              search_word = sanitize_sql_like(unsanitized_word)
-              chain.where(
-                sanitize_sql(
-                  "
-                  development_application_number LIKE '#{search_word}'
-                  or street_number LIKE '#{search_word}'
-                  or lot_number LIKE '#{search_word}'
-                  or suburb LIKE '%#{search_word}%'
-                  or reference_number LIKE '%#{search_word}%'
-                  or description LIKE '%#{search_word}%'
-                  or street_name LIKE '%#{search_word}%'
-                  or council LIKE '%#{search_word}%'
-                  or contact LIKE '%#{search_word}%'
-                  or owner LIKE '%#{search_word}%'
-                  or applicant LIKE '%#{search_word}%'
-                "
-                )
-              )
-            end
+          search_text.split.reduce(self) do |chain, unsanitized_word|
+            search_word = sanitize_sql_like(unsanitized_word)
+            chain.where(
+              "
+                development_application_number LIKE ?
+                or street_number LIKE ?
+                or lot_number LIKE ?
+                or suburb LIKE ?
+                or reference_number LIKE  ?
+                or description LIKE  ?
+                or street_name LIKE  ?
+                or council LIKE  ?
+                or contact LIKE  ?
+                or owner LIKE  ?
+                or applicant LIKE  ?
+                ",
+              search_word,         # development_application_number
+              search_word,         # street_number
+              search_word,         # lot_number
+              "%#{search_word}%",  # suburb
+              "%#{search_word}%",  # reference_number
+              "%#{search_word}%",  # description
+              "%#{search_word}%",  # street_name
+              "%#{search_word}%",  # council
+              "%#{search_word}%",  # contact
+              "%#{search_word}%",  # owner
+              "%#{search_word}%"   # applicant
+            )
+          end
         }
+  # rubocop:enable Metrics/BlockLength
 end

@@ -16,7 +16,7 @@ RAILS_ENV=test bin/rails assets:precompile
 bin/rails test
 
 echo -e "\nRunning end to end tests..."
-PARALLEL_WORKERS=5 bin/rails test:system
+bin/rails test:system
 
 echo -e "\nDeploying new staging site..."
 rails_env=production bin/rails db:migrate

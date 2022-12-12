@@ -3,31 +3,6 @@
 require 'application_system_test_case'
 
 class ApplicationTypesTest < ApplicationSystemTestCase
-  def assert_no_go_to_conversion_button
-    assert_no_text 'Go to'
-  end
-
-  def assert_go_to_conversion_button
-    assert_text 'Go to'
-  end
-
-  def assert_no_more_recent_conversion_warning
-    assert_no_text 'Warning: The related application', exact: false
-  end
-
-  def assert_more_recent_conversion_warning(application)
-    assert_text "Warning: The related application #{application} has been updated more recently."
-    assert_text "Click to go to #{application}."
-  end
-
-  def click_on_conversion_warning_link(application)
-    find_link("Click to go to #{application}.").click
-  end
-
-  def click_on_go_to_conversion_button
-    find_link('Go to').click
-  end
-
   test 'Applications with no conversions do not show warnings or links' do
     sign_in_test_user
 
