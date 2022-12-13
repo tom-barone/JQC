@@ -7,7 +7,7 @@ class ApplicationsController < ApplicationController
   # include ActionController::Live
 
   before_action :set_application, only: %i[show edit update destroy]
-  before_action :get_association_lists, only: %i[new edit update create]
+  before_action :prepare_association_lists, only: %i[new edit update create]
 
   # GET /applications
   # GET /applications.json
@@ -140,7 +140,7 @@ class ApplicationsController < ApplicationController
   end
 
   # Use callbacks to share common setup or constraints between actions.
-  def get_association_lists
+  def prepare_association_lists
     @suburbs = Suburb.pluck(:display_name)
     @clients = Client.pluck(:client_name)
     @councils = Council.pluck(:name)

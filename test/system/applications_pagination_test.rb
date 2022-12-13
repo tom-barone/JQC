@@ -2,7 +2,7 @@
 
 require 'application_system_test_case'
 
-class ApplicationsTest < ApplicationSystemTestCase
+class ApplicationsPaginationTest < ApplicationSystemTestCase
   test 'The pagination of applications' do
     sign_in_test_user
 
@@ -20,6 +20,5 @@ class ApplicationsTest < ApplicationSystemTestCase
     assert_text 'PC5000'
     assert_text 'PC5001'
     assert_no_text 'PC5002'
-
   end
 end

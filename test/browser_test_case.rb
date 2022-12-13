@@ -23,45 +23,126 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
 
   # Homepage actions
   def edit_application(reference_number) find("#row-#{reference_number}").click; sleep(4); assert_on_application_edit_page end
-  def new_application() click_on 'New Application'; sleep(4); assert_on_application_new_page end
-  def homepage_search() click_on 'Search' end
-  def homepage_search_clear() click_on 'clear-search' end
-  def go_to_settings_page() click_on 'Settings' end
+  def new_application()                  click_on 'New Application'; sleep(4); assert_on_application_new_page end
+  def homepage_search()                  click_on 'Search' end
+  def homepage_search_clear()            click_on 'clear-search' end
+  def go_to_settings_page()              click_on 'Settings' end
 
   # Homepage setters
-  def homepage_search_type=(type) select type, from: 'type' end
+  def homepage_search_type=(type)       select type, from: 'type' end
   def homepage_search_start_date=(date) fill_in 'start_date', with: date end
-  def homepage_search_end_date=(date) fill_in 'end_date', with: date end
-  def homepage_search_text=(text) fill_in 'search_text', with: text end
+  def homepage_search_end_date=(date)   fill_in 'end_date', with: date end
+  def homepage_search_text=(text)       fill_in 'search_text', with: text end
 
   # Homepage positive assertions
-  def assert_on_homepage() assert_text('New Application') end
-  def assert_in_homepage_table(...) within('.applications-table') { assert_text(...) } end
-  def assert_homepage_search_type(type) assert_selector("option[value='#{type}'][selected='selected']") end
+  def assert_on_homepage()                    assert_text('New Application') end
+  def assert_in_homepage_table(...)           within('.applications-table') { assert_text(...) } end
+  def assert_homepage_search_type(type)       assert_selector("option[value='#{type}'][selected='selected']") end
   def assert_homepage_search_start_date(date) assert_selector("#start_date[value='#{date}']") end
-  def assert_homepage_search_end_date(date) assert_selector("#end_date[value='#{date}']") end
-  def assert_homepage_search_text(text) assert_selector("#search_text[value='#{text}']") end
+  def assert_homepage_search_end_date(date)   assert_selector("#end_date[value='#{date}']") end
+  def assert_homepage_search_text(text)       assert_selector("#search_text[value='#{text}']") end
 
   # Homepage negative assertions
-  def assert_not_on_homepage() assert_no_text('New Application') end
-  def assert_not_in_homepage_table(...) within('.applications-table') { assert_no_text(...) } end
-  def assert_no_homepage_search_type(type) assert_no_selector("option[value='#{type}'][selected='selected']") end
+  def assert_not_on_homepage()                   assert_no_text('New Application') end
+  def assert_not_in_homepage_table(...)          within('.applications-table') { assert_no_text(...) } end
+  def assert_no_homepage_search_type(type)       assert_no_selector("option[value='#{type}'][selected='selected']") end
   def assert_no_homepage_search_start_date(date) assert_no_selector("#start_date[value='#{date}']") end
-  def assert_no_homepage_search_end_date(date) assert_no_selector("#end_date[value='#{date}']") end
-  def assert_no_homepage_search_text(text) assert_no_selector("#search_text[value='#{text}']") end
+  def assert_no_homepage_search_end_date(date)   assert_no_selector("#end_date[value='#{date}']") end
+  def assert_no_homepage_search_text(text)       assert_no_selector("#search_text[value='#{text}']") end
 
   # Settings page actions
   def update_settings_last_used(last_used, at:) all('.last_used_cell').at(at).fill_in with: last_used end
-  def save_settings() click_on 'Save'; sleep(2) end
-  def exit_settings() click_on 'Exit' end
+  def save_settings()                           click_on 'Save'; sleep(2) end
+  def exit_settings()                           click_on 'Exit' end
 
   # Settings page positive assertions
-  def assert_on_settings_page() assert_text('Last used number') end
+  def assert_on_settings_page()                   assert_text('Last used number') end
   def assert_settings_application_type(type, at:) within(all('.application_type_cell').at(at)) { assert_selector("input[value='#{type}']") } end
-  def assert_settings_last_used(last_used, at:) within(all('.last_used_cell').at(at)) { assert_selector("input[value='#{last_used}']") } end
+  def assert_settings_last_used(last_used, at:)   within(all('.last_used_cell').at(at)) { assert_selector("input[value='#{last_used}']") } end
 
   # Settings page negative assertions
   def assert_not_on_settings_page() assert_no_text('Last used number') end
+
+  # Clients page actions
+  def edit_applicant() click_on('application_applicant_edit') end
+  def edit_owner()     click_on('application_owner_edit')     end
+  def edit_contact()   click_on('application_contact_edit')   end
+  def save_client()    click_on('Save'); sleep(3)             end
+  def exit_client()    click_on('Exit')                       end
+
+  # Clients page setters
+  def client_name=(name)                      fill_in 'client_client_name', with: name                            end
+  def client_type=(type)                      select type, from: 'client_client_type'                             end
+  def client_bad_payer=(bad_payer)            bad_payer ? check('client_bad_payer') : uncheck('client_bad_payer') end
+  def client_first_name=(first_name)          fill_in 'client_first_name', with: first_name                       end
+  def client_surname=(surname)                fill_in 'client_surname', with: surname                             end
+  def client_initials=(initials)              fill_in 'client_initials', with: initials                           end
+  def client_title=(title)                    fill_in 'client_title', with: title                                 end
+  def client_salutation=(salutation)          fill_in 'client_salutation', with: salutation                       end
+  def client_company_name=(company_name)      fill_in 'client_company_name', with: company_name                   end
+  def client_australian_business_number=(abn) fill_in 'client_australian_business_number', with: abn              end
+  def client_state=(state)                    select state, from: 'client_state'                                  end
+  def client_phone=(phone)                    fill_in 'client_phone', with: phone                                 end
+  def client_fax=(fax)                        fill_in 'client_fax', with: fax                                     end
+  def client_mobile_number=(mobile_number)    fill_in 'client_mobile_number', with: mobile_number                 end
+  def client_email=(email)                    fill_in 'client_email', with: email                                 end
+  def client_street=(street)                  fill_in 'client_street', with: street                               end
+  def client_suburb=(suburb)                  select suburb, from: 'client_suburb_display_name'                   end
+  def client_postal_address=(postal_address)  fill_in 'client_postal_address', with: postal_address               end
+  def client_postal_suburb=(suburb)           select suburb, from: 'client_postal_suburb_display_name'            end
+  def client_notes=(notes)                    fill_in 'client_notes', with: notes                                 end
+
+  # Clients page positive assertions
+  def assert_on_client_edit_page()                  assert_text('Client Details')                                                                     end
+  def assert_edit_applicant_button()                assert_link('application_applicant_edit')                                                         end
+  def assert_edit_owner_button()                    assert_link('application_owner_edit')                                                             end
+  def assert_edit_contact_button()                  assert_link('application_contact_edit')                                                           end
+  def assert_client_name(name)                      assert_field('client_client_name', with: name)                                                    end
+  def assert_client_type(type)                      assert_select('client_client_type', selected: type)                                               end
+  def assert_client_bad_payer(bad_payer)            bad_payer ? assert_checked_field('client_bad_payer') : assert_unchecked_field('client_bad_payer') end
+  def assert_client_first_name(first_name)          assert_field('client_first_name', with: first_name)                                               end
+  def assert_client_surname(surname)                assert_field('client_surname', with: surname)                                                     end
+  def assert_client_initials(initials)              assert_field('client_initials', with: initials)                                                   end
+  def assert_client_title(title)                    assert_field('client_title', with: title)                                                         end
+  def assert_client_salutation(salutation)          assert_field('client_salutation', with: salutation)                                               end
+  def assert_client_company_name(company_name)      assert_field('client_company_name', with: company_name)                                           end
+  def assert_client_australian_business_number(abn) assert_field('client_australian_business_number', with: abn)                                      end
+  def assert_client_state(state)                    assert_select('client_state', selected: state)                                                    end
+  def assert_client_phone(phone)                    assert_field('client_phone', with: phone)                                                         end
+  def assert_client_fax(fax)                        assert_field('client_fax', with: fax)                                                             end
+  def assert_client_mobile_number(mobile_number)    assert_field('client_mobile_number', with: mobile_number)                                         end
+  def assert_client_email(email)                    assert_field('client_email', with: email)                                                         end
+  def assert_client_street(street)                  assert_field('client_street', with: street)                                                       end
+  def assert_client_suburb(suburb)                  assert_field('client_suburb_display_name', with: suburb)                                          end
+  def assert_client_postal_address(postal_address)  assert_field('client_postal_address', with: postal_address)                                       end
+  def assert_client_postal_suburb(postal_suburb)    assert_field('client_postal_suburb_display_name', with: postal_suburb)                            end
+  def assert_client_notes(notes)                    assert_field('client_notes', with: notes)                                                         end
+
+  # Clients page negative assertions
+  def assert_not_on_client_edit_page()  assert_no_text('Client Details')             end
+  def assert_no_edit_applicant_button() assert_no_link('application_applicant_edit') end
+  def assert_no_edit_owner_button()     assert_no_link('application_owner_edit')     end
+  def assert_no_edit_contact_button()   assert_no_link('application_contact_edit')   end
+  def assert_no_client_name(name)                      assert_no_field('client_client_name', with: name)                                                    end
+  def assert_no_client_type(type)                      assert_no_select('client_client_type', selected: type)                                               end
+  def assert_no_client_bad_payer(bad_payer)            bad_payer ? assert_no_checked_field('client_bad_payer') : assert_no_unchecked_field('client_bad_payer') end
+  def assert_no_client_first_name(first_name)          assert_no_field('client_first_name', with: first_name)                                               end
+  def assert_no_client_surname(surname)                assert_no_field('client_surname', with: surname)                                                     end
+  def assert_no_client_initials(initials)              assert_no_field('client_initials', with: initials)                                                   end
+  def assert_no_client_title(title)                    assert_no_field('client_title', with: title)                                                         end
+  def assert_no_client_salutation(salutation)          assert_no_field('client_salutation', with: salutation)                                               end
+  def assert_no_client_company_name(company_name)      assert_no_field('client_company_name', with: company_name)                                           end
+  def assert_no_client_australian_business_number(abn) assert_no_field('client_australian_business_number', with: abn)                                      end
+  def assert_no_client_state(state)                    assert_no_select('client_state', selected: state)                                                    end
+  def assert_no_client_phone(phone)                    assert_no_field('client_phone', with: phone)                                                         end
+  def assert_no_client_fax(fax)                        assert_no_field('client_fax', with: fax)                                                             end
+  def assert_no_client_mobile_number(mobile_number)    assert_no_field('client_mobile_number', with: mobile_number)                                         end
+  def assert_no_client_email(email)                    assert_no_field('client_email', with: email)                                                         end
+  def assert_no_client_street(street)                  assert_no_field('client_street', with: street)                                                       end
+  def assert_no_client_suburb(suburb)                  assert_no_field('client_suburb_display_name', with: suburb)                                          end
+  def assert_no_client_postal_address(postal_address)  assert_no_field('client_postal_address', with: postal_address)                                       end
+  def assert_no_client_postal_suburb(postal_suburb)    assert_no_field('client_postal_suburb_display_name', with: postal_suburb)                            end
+  def assert_no_client_notes(notes)                    assert_no_field('client_notes', with: notes)                                                         end
 
   # Application actions
   def save_application() click_on 'Save' end

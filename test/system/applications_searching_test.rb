@@ -2,7 +2,7 @@
 
 require 'application_system_test_case'
 
-class ApplicationsTest < ApplicationSystemTestCase
+class ApplicationsSearchingTest < ApplicationSystemTestCase
   def text_search_and_assert(str, asserting, assert_str)
     self.homepage_search_text = str
     homepage_search

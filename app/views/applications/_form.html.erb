@@ -158,7 +158,8 @@
                                   edit_client_path(
                                     @application.applicant_id ||= 0,
                                   ),
-                                  class: 'btn btn-sm btn-outline-secondary'
+                                  class: 'btn btn-sm btn-outline-secondary',
+                                  id: 'application_applicant_edit'
                         %>
                       <% end %>
                     </div>
@@ -179,7 +180,8 @@
                         <%=
                           link_to 'Edit',
                                   edit_client_path(@application.owner_id ||= 0),
-                                  class: 'btn btn-sm btn-outline-secondary'
+                                  class: 'btn btn-sm btn-outline-secondary',
+                                  id: 'application_owner_edit'
                         %>
                       <% end %>
                     </div>
@@ -202,7 +204,8 @@
                                   edit_client_path(
                                     @application.client_id ||= 0,
                                   ),
-                                  class: 'btn btn-sm btn-outline-secondary'
+                                  class: 'btn btn-sm btn-outline-secondary',
+                                  id: 'application_contact_edit'
                         %>
                       <% end %>
                     </div>

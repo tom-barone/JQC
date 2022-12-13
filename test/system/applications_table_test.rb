@@ -2,7 +2,7 @@
 
 require 'application_system_test_case'
 
-class ApplicationsTest < ApplicationSystemTestCase
+class ApplicationsTableTest < ApplicationSystemTestCase
   test 'the application table shows correct headings and values' do
     sign_in_test_user
 

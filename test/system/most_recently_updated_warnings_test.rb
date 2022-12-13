@@ -2,7 +2,7 @@
 
 require 'application_system_test_case'
 
-class ApplicationTypesTest < ApplicationSystemTestCase
+class MostRecentlyUpdatedWarningsTest < ApplicationSystemTestCase
   test 'Applications with no conversions do not show warnings or links' do
     sign_in_test_user
 
