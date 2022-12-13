@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  include Pagy::Frontend
   class BootstrapSmallFormBuilder < ActionView::Helpers::FormBuilder
     def collection_select(
       method,
