@@ -94,7 +94,7 @@ View app engine cron jobs in Cloud Scheduler on the Google cloud console.
 To update the cron jobs:
 
 ```bash
-gcloud app deploy cron.yaml --project=***REMOVED***
+gcloud app deploy cron.yaml
 ```
 
 To test and trigger the mail in development:
@@ -148,14 +148,6 @@ Compile rails app and deplyo
 ```
 RAILS_ENV=production rails assets:precompile
 gcloud app deploy
-```
-
-# google cloud proxy
-
-To start:
-
-```
-cloud_sql_proxy -instances=***REMOVED***:australia-southeast1:rails-jqc-instance-v8=tcp:3306
 ```
 
 ## Todo

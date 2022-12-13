@@ -6,6 +6,10 @@ set -Eeuo pipefail
 # DEBUGGING: Uncomment to see all the commands printed to the console
 # set -x
 
+# Check correct ENV variables exist
+: "$GOOGLE_APP_ENGINE_PROJECT"
+: "$GOOGLE_APP_ENGINE_SERVICE"
+
 echo -e "\nRunning unit tests..."
 npm install
 npm test
@@ -20,26 +24,24 @@ COVERAGE=true bin/rails test:all
 echo -e "\nDeploying new staging site..."
 RAILS_ENV=production bin/rails db:migrate
 RAILS_ENV=production bin/rails assets:precompile
-google_app_engine_project="***REMOVED***"
-gcloud app deploy --project=$google_app_engine_project --no-promote --no-cache --quiet
+gcloud app deploy --project=$GOOGLE_APP_ENGINE_PROJECT --no-promote --no-cache --quiet
 
 echo -e "\nTesting new staging site..."
-google_app_engine_service="default"
 latest_deployed_version_id="$(
 	gcloud app versions list \
 		--sort-by='~VERSION.ID' \
 		--limit=1 \
-		--project=$google_app_engine_project \
+		--project=$GOOGLE_APP_ENGINE_PROJECT \
 		--format='value(VERSION.ID)'
 )"
 latest_deployed_version_url="$(
 	gcloud app versions describe $latest_deployed_version_id \
-		--service=$google_app_engine_service \
-		--project=$google_app_engine_project \
+		--service=$GOOGLE_APP_ENGINE_SERVICE \
+		--project=$GOOGLE_APP_ENGINE_PROJECT \
 		--format='value(versionUrl)'
 )"
 TEST_HOST="$latest_deployed_version_url" RAILS_ENV="production" ruby production/sign_in_and_check_table_test.rb
 
 echo -e "\n\nDeployment successful.\n"
-echo "Visit https://console.cloud.google.com/appengine/versions?serviceId=default&project=***REMOVED*** to migrate traffic and remove old versions"
+echo "Visit Google App Engine's version page to migrate traffic to the new version"
 echo "See coverage/index.html for code coverage"
