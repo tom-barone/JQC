@@ -9,15 +9,12 @@ set -Eeuo pipefail
 echo -e "\nRunning unit tests..."
 npm test
 
-echo -e "\nRunning integration tests..."
+echo -e "\nRunning integration and end to end tests..."
 bin/rails db:migrate
 bin/rails db:test:prepare
 rm -f tmp/screenshots/*
 RAILS_ENV=test bin/rails assets:precompile
-bin/rails test
-
-echo -e "\nRunning end to end tests..."
-bin/rails test:system
+COVERAGE=true bin/rails test:all
 
 echo -e "\nDeploying new staging site..."
 RAILS_ENV=production bin/rails db:migrate
@@ -42,5 +39,6 @@ latest_deployed_version_url="$(
 )"
 TEST_HOST="$latest_deployed_version_url" RAILS_ENV="production" ruby production/sign_in_and_check_table_test.rb
 
-echo -e "\n\nDeployment successful."
+echo -e "\n\nDeployment successful.\n"
 echo "Visit https://console.cloud.google.com/appengine/versions?serviceId=default&project=***REMOVED*** to migrate traffic and remove old versions"
+echo "See coverage/index.html for code coverage"
