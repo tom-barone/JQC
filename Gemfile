@@ -46,6 +46,7 @@ gem 'simple_form'
 gem 'net-http', '0.2.2'
 gem 'uri', '0.10.0'
 
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri mingw x64_mingw]
@@ -60,8 +61,11 @@ group :development do
   gem 'rubocop-rails', require: false
   gem 'solargraph'
   gem 'syntax_tree'
-  gem 'syntax_tree-haml'
   gem 'syntax_tree-rbs'
+
+  # Can be removed once this is updated past 2.0.0
+  # https://github.com/ruby-syntax-tree/syntax_tree-haml/issues/58
+  gem 'syntax_tree-haml', github: 'ruby-syntax-tree/syntax_tree-haml', branch: 'main'
 end
 
 group :test do

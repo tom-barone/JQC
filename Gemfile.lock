@@ -1,3 +1,13 @@
+GIT
+  remote: https://github.com/ruby-syntax-tree/syntax_tree-haml.git
+  revision: 7ab0d962a9ab5a8b8f248ab4b157403bca8fa997
+  branch: main
+  specs:
+    syntax_tree-haml (2.0.0)
+      haml (>= 5.2, != 6.0.0)
+      prettier_print (>= 1.0.0)
+      syntax_tree (>= 5.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -175,7 +185,7 @@ GEM
     grpc (1.50.0)
       google-protobuf (~> 3.21)
       googleapis-common-protos-types (~> 1.0)
-    haml (6.0.12)
+    haml (6.1.1)
       temple (>= 0.8.2)
       thor
       tilt
@@ -363,10 +373,6 @@ GEM
       railties (>= 6.0.0)
     syntax_tree (5.0.1)
       prettier_print (>= 1.1.0)
-    syntax_tree-haml (2.0.0)
-      haml (>= 5.2, != 6.0.0)
-      prettier_print (>= 1.0.0)
-      syntax_tree (>= 4.0.0)
     syntax_tree-rbs (0.5.1)
       prettier_print
       rbs
@@ -437,7 +443,7 @@ DEPENDENCIES
   solargraph
   stimulus-rails
   syntax_tree
-  syntax_tree-haml
+  syntax_tree-haml!
   syntax_tree-rbs
   turbo-rails
   tzinfo-data
