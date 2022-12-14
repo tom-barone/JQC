@@ -18,6 +18,10 @@ jobs:
       RAILS_ENV: test
       RAILS_MASTER_KEY: ${{ secrets.RAILS_CREDENTIALS_TEST_KEY }}
     steps:
+      - name: Download locales
+        run: sudo apt-get install language-pack-en-base && sudo dpkg-reconfigure locales
+      - name: Set locale to en-AU so dates are formatted correctly in the tests
+        run: sudo update-locale LANG=en_AU.UTF-8
       - name: Start Google Cloud SQL proxy
         uses: mattes/gce-cloudsql-proxy-action@v1
         with:
