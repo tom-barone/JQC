@@ -13,8 +13,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: test
     env:
       RAILS_ENV: test
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_CREDENTIALS_TEST_KEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,4 +29,4 @@ jobs:
       - name: Compile SCSS and JS assets
         run: bin/rails assets:precompile
       - name: Run tests
-        run: bin/rails test:all
+        run: bin/rails test test/system/applications_create_and_edit_test.rb
