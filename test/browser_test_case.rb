@@ -3,8 +3,9 @@
 class BrowserTestCase < ActionDispatch::SystemTestCase
   # rubocop:disable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists, Style/CommentedKeyword
 
-  driven_by :selenium, using: :headless_chrome, screen_size: [1800, 1000]
-  # driven_by :selenium, using: :chrome, screen_size: [1800, 1000]
+  chrome_options = Selenium::WebDriver::Chrome::Options.new
+  chrome_options.add_argument('--headless')
+  driven_by :selenium, using: :chrome, screen_size: [1800, 1000], options: { options: chrome_options }
 
   Capybara.default_max_wait_time = 15 # Seconds
 
