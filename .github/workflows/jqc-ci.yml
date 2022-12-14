@@ -13,7 +13,7 @@ jobs:
       RAILS_MASTER_KEY: ${{ secrets.RAILS_CREDENTIALS_TEST_KEY }}
     steps:
       - name: Start Google Cloud SQL proxy
-        uses: mattes/gce-cloudsql-proxy-action@v1
+        uses: tom-barone/gce-cloudsql-proxy-action@master
         with:
           creds: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS }}
           instance: ${{ secrets.GOOGLE_CLOUD_SQL_INSTANCE }}
@@ -29,4 +29,4 @@ jobs:
       - name: Compile SCSS and JS assets
         run: bin/rails assets:precompile
       - name: Run tests
-        run: bin/rails test
+        run: bin/rails test:all
