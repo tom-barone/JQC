@@ -12,6 +12,15 @@ jobs:
     steps:
       - name: 'Checkout code'
         uses: 'actions/checkout@v3'
+
+      # Remove me after testing
+      - name: 'Start mysql'
+        run: 'sudo systemctl start mysql.service'
+      - name: 'test mysql'
+        run: 'mysql --version'
+      - name: 'test mysqldump'
+        run: 'mysqldump --version'
+
       #- name: 'Start Google Cloud SQL proxy'
         #uses: 'tom-barone/gce-cloudsql-proxy-action@master'
         #with:
@@ -33,8 +42,12 @@ jobs:
     runs-on: 'ubuntu-latest'
     environment: 'deploy'
     env:
-      RAILS_ENV: 'production'
-      RAILS_MASTER_KEY: ${{ secrets.RAILS_CREDENTIALS_PRODUCTION_KEY }}
+      RAILS_ENV: 'staging'
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_CREDENTIALS_STAGING_KEY }}
+      # Allow us to migrate the staging/production databases
+      RAILS_DATABASE_SOCKET: 'null'
+      RAILS_DATABASE_HOST: '127.0.0.1'
+      RAILS_DATABASE_PORT: 3306
     steps:
       - name: 'Checkout code'
         uses: 'actions/checkout@v3'
@@ -54,10 +67,11 @@ jobs:
         uses: 'ruby/setup-ruby@v1'
         with:
           bundler-cache: true
+      - name: 'Copy the production database to the staging database'
+        run: 'bin/rails db:copy_prod TARGET=STAGING'
       - name: 'Make sure the database is migrated'
         run: 'bin/rails db:migrate'
       - name: 'Compile SCSS and JS assets'
         run: 'bin/rails assets:precompile'
       - name: 'Deploy staging site'
-        run: 'gcloud app deploy --project=$GOOGLE_APP_ENGINE_PROJECT --no-promote --no-cache --quiet'
-
+        run: "gcloud app deploy staging.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --no-promote --no-cache --quiet"
