@@ -6,7 +6,7 @@ on:
   push:
     branches: ['develop']
 jobs:
-  test:
+  run_tests:
     runs-on: 'ubuntu-latest'
     environment: 'test'
     env:
@@ -38,7 +38,7 @@ jobs:
         #run: 'bin/rails test:all'
         
   deploy_staging:
-    needs: ['test']
+    needs: ['run_tests']
     runs-on: 'ubuntu-latest'
     environment: 'deploy'
     env:
@@ -82,4 +82,24 @@ jobs:
         run: 'bin/rails assets:precompile'
 
       - name: 'Deploy staging site'
-        run: "gcloud app deploy staging.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --version=staging --no-promote --no-cache --quiet"
+        run: 'gcloud app deploy staging.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --no-promote --no-cache --quiet'
+
+  test_staging:
+    needs: ['deploy_staging']
+    runs-on: 'ubuntu-latest'
+    environment: 'deploy'
+    env:
+      RAILS_ENV: 'staging'
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_CREDENTIALS_STAGING_KEY }}
+      TEST_HOST: ${{ secrets.STAGING_URL }}
+    steps:
+      - name: 'Checkout code'
+        uses: 'actions/checkout@v3'
+
+      - name: 'Install Ruby and gems'
+        uses: 'ruby/setup-ruby@v1'
+        with:
+          bundler-cache: true
+
+      - name: 'Run tests against the staging site'
+        run: 'ruby production/sign_in_and_check_table_test.rb'

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'selenium-webdriver'
+
 class BrowserTestCase < ActionDispatch::SystemTestCase
   # rubocop:disable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists, Style/CommentedKeyword
 
