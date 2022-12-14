@@ -1,3 +1,6 @@
+# See here for list of installed packages under 'ubuntu-latest'
+# https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
+
 name: 'JQC Continuous Integration'
 on:
   push:
@@ -13,30 +16,27 @@ jobs:
       - name: 'Checkout code'
         uses: 'actions/checkout@v3'
 
-      # Remove me after testing
-      - name: 'Start mysql'
-        run: 'sudo systemctl start mysql.service'
-      - name: 'test mysql'
-        run: 'mysql --version'
-      - name: 'test mysqldump'
-        run: 'mysqldump --version'
-
       #- name: 'Start Google Cloud SQL proxy'
         #uses: 'tom-barone/gce-cloudsql-proxy-action@master'
         #with:
           #creds: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS }}
           #instance: ${{ secrets.GOOGLE_CLOUD_SQL_INSTANCE }}
           #port: 3306
+          
       #- name: 'Install Ruby and gems'
         #uses: 'ruby/setup-ruby@v1'
         #with:
           #bundler-cache: true
+
       #- name: 'Prepare the test database'
         #run: 'bin/rails db:test:prepare'
+
       #- name: 'Compile SCSS and JS assets'
         #run: 'bin/rails assets:precompile'
+
       #- name: 'Run tests'
         #run: 'bin/rails test:all'
+        
   deploy_staging:
     needs: ['test']
     runs-on: 'ubuntu-latest'
@@ -44,34 +44,42 @@ jobs:
     env:
       RAILS_ENV: 'staging'
       RAILS_MASTER_KEY: ${{ secrets.RAILS_CREDENTIALS_STAGING_KEY }}
-      # Allow us to migrate the staging/production databases
+      # Allow us to migrate the staging & production databases
       RAILS_DATABASE_SOCKET: 'null'
       RAILS_DATABASE_HOST: '127.0.0.1'
       RAILS_DATABASE_PORT: 3306
     steps:
       - name: 'Checkout code'
         uses: 'actions/checkout@v3'
+
       - name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
         with:
           credentials_json: '${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS }}'
+
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
+
       - name: 'Start Google Cloud SQL proxy'
         uses: 'tom-barone/gce-cloudsql-proxy-action@master'
         with:
           creds: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS }}
           instance: ${{ secrets.GOOGLE_CLOUD_SQL_INSTANCE }}
           port: 3306
+
       - name: 'Install Ruby and gems'
         uses: 'ruby/setup-ruby@v1'
         with:
           bundler-cache: true
+
       - name: 'Copy the production database to the staging database'
         run: 'bin/rails db:copy_prod TARGET=STAGING'
-      - name: 'Make sure the database is migrated'
+
+      - name: 'Migrate the staging database'
         run: 'bin/rails db:migrate'
+
       - name: 'Compile SCSS and JS assets'
         run: 'bin/rails assets:precompile'
+
       - name: 'Deploy staging site'
-        run: "gcloud app deploy staging.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --no-promote --no-cache --quiet"
+        run: "gcloud app deploy staging.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --version=staging --no-promote --no-cache --quiet"
