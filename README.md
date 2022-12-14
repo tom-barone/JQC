@@ -46,20 +46,6 @@ Things you may want to cover:
 
 - ...
 
-## Seeding the db with the existing AppMaker db
-
-in other folder, from JQC_PROD
-
-```
-./cloneDatabaseToRails.sh
-```
-
-Then migrate and seed the DB
-```
-rails db:migrate
-rails db:seed
-```
-
 
 Dump the existing database (from cloned) into seed file
 
