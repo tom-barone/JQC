@@ -18,6 +18,12 @@ jobs:
       RAILS_ENV: test
       RAILS_MASTER_KEY: ${{ secrets.RAILS_CREDENTIALS_TEST_KEY }}
     steps:
+      - name: Start Google Cloud SQL proxy
+        uses: mattes/gce-cloudsql-proxy-action@v1
+        with:
+          creds: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS }}
+          instance: ${{ secrets.GOOGLE_CLOUD_SQL_INSTANCE }}
+          port: 3306
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Install Ruby and gems
