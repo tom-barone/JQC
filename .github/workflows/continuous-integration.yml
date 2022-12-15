@@ -40,6 +40,12 @@ jobs:
       - name: 'Run tests'
         run: 'COVERAGE=true bundle exec bin/rails test:all'
 
+      - name: 'Save failed test screenshots'
+        uses: 'actions/upload-artifact@v3'
+        with:
+          name: 'failed-test-screenshots'
+          path: 'tmp/screenshots'
+
       - name: 'Save ruby code coverage results'
         uses: 'actions/upload-artifact@v3'
         with:
