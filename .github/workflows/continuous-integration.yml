@@ -16,26 +16,26 @@ jobs:
       - name: 'Checkout code'
         uses: 'actions/checkout@v3'
 
-      #- name: 'Start Google Cloud SQL proxy'
-        #uses: 'tom-barone/gce-cloudsql-proxy-action@master'
-        #with:
-          #creds: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS }}
-          #instance: ${{ secrets.GOOGLE_CLOUD_SQL_INSTANCE }}
-          #port: 3306
+      - name: 'Start Google Cloud SQL proxy'
+        uses: 'tom-barone/gce-cloudsql-proxy-action@master'
+        with:
+          creds: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS }}
+          instance: ${{ secrets.GOOGLE_CLOUD_SQL_INSTANCE }}
+          port: 3306
           
-      #- name: 'Install Ruby and gems'
-        #uses: 'ruby/setup-ruby@v1'
-        #with:
-          #bundler-cache: true
+      - name: 'Install Ruby and gems'
+        uses: 'ruby/setup-ruby@v1'
+        with:
+          bundler-cache: true
 
-      #- name: 'Prepare the test database'
-        #run: 'bin/rails db:test:prepare'
+      - name: 'Prepare the test database'
+        run: 'bin/rails db:test:prepare'
 
-      #- name: 'Compile SCSS and JS assets'
-        #run: 'bin/rails assets:precompile'
+      - name: 'Compile SCSS and JS assets'
+        run: 'bin/rails assets:precompile'
 
-      #- name: 'Run tests'
-        #run: 'bin/rails test:all'
+      - name: 'Run tests'
+        run: 'bin/rails test:all'
         
   deploy_staging:
     needs: ['run_tests']
@@ -84,7 +84,7 @@ jobs:
         run: 'bin/rails assets:precompile'
 
       - name: 'Deploy staging site'
-        run: 'gcloud app deploy staging.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --version=staging --no-promote --no-cache --quiet'
+        run: 'gcloud app deploy GAE_staging.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --version=staging --no-promote --no-cache --quiet'
 
   test_staging:
     needs: ['deploy_staging']
