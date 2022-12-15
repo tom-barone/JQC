@@ -43,7 +43,6 @@ jobs:
     environment: 'deploy'
     env:
       RAILS_ENV: 'staging'
-      RAILS_MASTER_KEY: ${{ secrets.RAILS_CREDENTIALS_STAGING_KEY }}
       # Allow us to migrate the staging & production databases
       RAILS_DATABASE_SOCKET: 'null'
       RAILS_DATABASE_HOST: '127.0.0.1'
@@ -72,6 +71,9 @@ jobs:
         with:
           bundler-cache: true
 
+      - name: 'Add staging key to config dir'
+        run: 'echo "${{ secrets.RAILS_CREDENTIALS_STAGING_KEY }}" > config/credentials/staging.key'
+
       - name: 'Copy the production database to the staging database'
         run: 'bin/rails db:copy_prod TARGET=STAGING'
 
@@ -82,7 +84,7 @@ jobs:
         run: 'bin/rails assets:precompile'
 
       - name: 'Deploy staging site'
-        run: 'gcloud app deploy staging.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --no-promote --no-cache --quiet'
+        run: 'gcloud app deploy staging.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --version=staging --no-promote --no-cache --quiet'
 
   test_staging:
     needs: ['deploy_staging']
