@@ -43,10 +43,10 @@ jobs:
         run: 'echo "${{ secrets.RAILS_CREDENTIALS_PRODUCTION_KEY }}" > config/credentials/production.key'
 
       - name: 'Migrate the production database'
-        run: 'bin/rails db:migrate'
+        run: 'bundle exec bin/rails db:migrate'
 
       - name: 'Compile SCSS and JS assets'
-        run: 'bin/rails assets:precompile'
+        run: 'bundle exec bin/rails assets:precompile'
 
       - name: 'Get date for production version'
         id: 'date'

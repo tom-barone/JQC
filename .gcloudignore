@@ -33,6 +33,7 @@ yarn-debug.log*
 /production
 /db
 /coverage
+/jest_coverage
 
 # Other random files
 .DS_Store

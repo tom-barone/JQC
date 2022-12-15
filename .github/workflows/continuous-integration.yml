@@ -16,6 +16,9 @@ jobs:
       - name: 'Checkout code'
         uses: 'actions/checkout@v3'
 
+      - name: 'Run unit tests'
+        run: 'npm install && npm test'
+
       - name: 'Start Google Cloud SQL proxy'
         uses: 'tom-barone/gce-cloudsql-proxy-action@master'
         with:
@@ -29,13 +32,25 @@ jobs:
           bundler-cache: true
 
       - name: 'Prepare the test database'
-        run: 'bin/rails db:test:prepare'
+        run: 'bundle exec bin/rails db:test:prepare'
 
       - name: 'Compile SCSS and JS assets'
-        run: 'bin/rails assets:precompile'
+        run: 'bundle exec bin/rails assets:precompile'
 
       - name: 'Run tests'
-        run: 'bin/rails test:all'
+        run: 'COVERAGE=true bundle exec bin/rails test:all'
+
+      - name: 'Save ruby code coverage results'
+        uses: 'actions/upload-artifact@v3'
+        with:
+          name: 'ruby-coverage-report'
+          path: 'coverage'
+
+      - name: 'Save jest code coverage results'
+        uses: 'actions/upload-artifact@v3'
+        with:
+          name: 'jest-coverage-report'
+          path: 'jest_coverage'
         
   deploy_staging:
     needs: ['run_tests']
@@ -75,13 +90,13 @@ jobs:
         run: 'echo "${{ secrets.RAILS_CREDENTIALS_STAGING_KEY }}" > config/credentials/staging.key'
 
       - name: 'Copy the production database to the staging database'
-        run: 'bin/rails db:copy_prod TARGET=STAGING'
+        run: 'bundle exec bin/rails db:copy_prod TARGET=STAGING'
 
       - name: 'Migrate the staging database'
-        run: 'bin/rails db:migrate'
+        run: 'bundle exec bin/rails db:migrate'
 
       - name: 'Compile SCSS and JS assets'
-        run: 'bin/rails assets:precompile'
+        run: 'bundle exec bin/rails assets:precompile'
 
       - name: 'Deploy staging site'
         run: 'gcloud app deploy GAE_staging.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --version=staging --no-promote --no-cache --quiet'

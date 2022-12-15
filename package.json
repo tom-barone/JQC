@@ -6,7 +6,7 @@
   },
   "scripts": {
     "_comment": "Use experimental jest ECMA modules: https://jestjs.io/docs/ecmascript-modules",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage --coverageDirectory=jest_coverage"
   },
   "type": "module"
 }
