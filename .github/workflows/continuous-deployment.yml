@@ -53,7 +53,7 @@ jobs:
         run: echo "NOW=$(date '+%Y%m%dt%H%M%S')" >> $GITHUB_OUTPUT
 
       - name: 'Deploy production site and promote'
-        run: gcloud app deploy GAE_production.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --version=production${{ steps.date.outputs.NOW }} ---promote --no-cache --quiet --stop-previous-version
+        run: gcloud app deploy GAE_production.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --version=production${{ steps.date.outputs.NOW }} --promote --no-cache --quiet --stop-previous-version
 
   test_production:
     needs: ['deploy_production']
