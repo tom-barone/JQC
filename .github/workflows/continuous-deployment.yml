@@ -1,4 +1,4 @@
-# See here for list of installed packages under 'ubuntu-latest'
+# See here for list of installed packages under 'ubuntu-22.04'
 # https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
 
 name: 'JQC Continuous Deployment'
@@ -7,7 +7,7 @@ on:
     branches: ['master']
 jobs:
   deploy_production:
-    runs-on: 'ubuntu-latest'
+    runs-on: 'ubuntu-22.04'
     environment: 'deploy'
     env:
       RAILS_ENV: 'production'
@@ -57,7 +57,7 @@ jobs:
 
   test_production:
     needs: ['deploy_production']
-    runs-on: 'ubuntu-latest'
+    runs-on: 'ubuntu-22.04'
     environment: 'deploy'
     env:
       RAILS_ENV: 'production'

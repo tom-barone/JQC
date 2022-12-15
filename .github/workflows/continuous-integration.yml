@@ -1,4 +1,4 @@
-# See here for list of installed packages under 'ubuntu-latest'
+# See here for list of installed packages under 'ubuntu-22.04'
 # https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
 
 name: 'JQC Continuous Integration'
@@ -7,7 +7,7 @@ on:
     branches: ['develop']
 jobs:
   run_tests:
-    runs-on: 'ubuntu-latest'
+    runs-on: 'ubuntu-22.04'
     environment: 'test'
     env:
       RAILS_ENV: 'test'
@@ -41,6 +41,7 @@ jobs:
         run: 'COVERAGE=true bundle exec bin/rails test:all'
 
       - name: 'Save failed test screenshots'
+        if: ${{ failure() }}
         uses: 'actions/upload-artifact@v3'
         with:
           name: 'failed-test-screenshots'
@@ -60,7 +61,7 @@ jobs:
         
   deploy_staging:
     needs: ['run_tests']
-    runs-on: 'ubuntu-latest'
+    runs-on: 'ubuntu-22.04'
     environment: 'deploy'
     env:
       RAILS_ENV: 'staging'
@@ -109,7 +110,7 @@ jobs:
 
   test_staging:
     needs: ['deploy_staging']
-    runs-on: 'ubuntu-latest'
+    runs-on: 'ubuntu-22.04'
     environment: 'deploy'
     env:
       RAILS_ENV: 'staging'
