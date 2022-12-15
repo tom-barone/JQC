@@ -20,29 +20,29 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_street_name = 'Romito Street'
     self.application_suburb = 'SUBURB1, SA XXXX'
     self.application_fee_amount = '3453.0'
-    self.application_section_93a = '02/07/2022'
+    self.application_section_93a = Date.new(2022, 7, 2)
     self.application_electronic_lodgement = true
     self.application_hard_copy = true
     self.application_job_type_administration = 'Residential'
-    self.application_quote_accepted_date = '03/07/2022'
+    self.application_quote_accepted_date = Date.new(2022, 7, 3)
     self.application_applicant_email = 'applicant@email.com'
     self.application_risk_rating = 'High'
-    application_add_additional_information('01/07/2022', 'Extra added info')
-    application_add_additional_information('01/07/2023', 'Even more info')
-    application_add_uploaded('04/10/2022', 'COO')
-    application_add_uploaded('04/10/2023', 'Variation')
+    application_add_additional_information(Date.new(2022, 7, 1), 'Extra added info')
+    application_add_additional_information(Date.new(2023, 7, 1), 'Even more info')
+    application_add_uploaded(Date.new(2022, 10, 4), 'COO')
+    application_add_uploaded(Date.new(2023, 10, 4), 'Variation')
     self.application_building_surveyor = 'Vic'
-    self.application_assessment_assigned = '05/07/2022'
+    self.application_assessment_assigned = Date.new(2022, 7, 5)
     self.application_structural_engineer = 'External'
-    self.application_external_engineer_date = '06/07/2022'
-    application_add_rfi('07/07/2022')
-    application_add_rfi('07/07/2023')
-    application_add_stage('08/07/2022', 'Substructure')
-    application_add_stage('08/07/2023', 'Superstructure')
-    self.application_consent_issued = '09/07/2022'
-    self.application_variation_issued = '10/07/2022'
-    self.application_coo_issued = '11/07/2022'
-    self.application_engineer_certificate_received = '12/07/2022'
+    self.application_external_engineer_date = Date.new(2022, 7, 6)
+    application_add_rfi(Date.new(2022, 7, 7))
+    application_add_rfi(Date.new(2023, 7, 7))
+    application_add_stage(Date.new(2022, 7, 8), 'Substructure')
+    application_add_stage(Date.new(2023, 7, 8), 'Superstructure')
+    self.application_consent_issued = Date.new(2022, 7, 9)
+    self.application_variation_issued = Date.new(2022, 7, 10)
+    self.application_coo_issued = Date.new(2022, 7, 11)
+    self.application_engineer_certificate_received = Date.new(2022, 7, 12)
     self.application_certification_notes = 'certification went well'
     self.application_invoice_to = 'this person'
     self.application_care_of = 'that guy'
@@ -50,8 +50,8 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_attention = 'the bosses'
     self.application_purchase_order_number = '5554'
     self.application_invoice_debtor_notes = 'debtor notes this that other'
-    application_add_invoice('13/11/2022', 'stage1', '12', '44.4', '2', '1.2', '', '55', true)
-    application_add_invoice('13/11/2023', 'stage2', '1.0', '82.4', '2.0', '', '', '99', false)
+    application_add_invoice(Date.new(2022, 11, 13), 'stage1', '12', '44.4', '2', '1.2', '', '55', true)
+    application_add_invoice(Date.new(2023, 11, 13), 'stage2', '1.0', '82.4', '2.0', '', '', '99', false)
     self.application_fully_invoiced = true
     self.application_cancelled = false
     sleep(1)
@@ -74,37 +74,37 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_street_name = 'Rondonelli Street'
     self.application_suburb = 'SUBURB2, SA XXXX'
     self.application_fee_amount = '4453.0'
-    self.application_section_93a = '02/08/2022'
+    self.application_section_93a = Date.new(2022, 8, 2)
     self.application_electronic_lodgement = false
     self.application_hard_copy = false
     self.application_job_type_administration = 'Commercial'
-    self.application_quote_accepted_date = '03/08/2022'
+    self.application_quote_accepted_date = Date.new(2022, 8, 3)
     self.application_applicant_email = 'hello@email.com'
     self.application_risk_rating = 'Low'
     application_remove_additional_information
     application_remove_additional_information
-    application_add_additional_information('01/08/2022', 'No added info')
-    application_add_additional_information('01/08/2023', 'Nothing')
+    application_add_additional_information(Date.new(2022, 8, 1), 'No added info')
+    application_add_additional_information(Date.new(2023, 8, 1), 'Nothing')
     application_remove_uploaded
     application_remove_uploaded
-    application_add_uploaded('04/11/2022', 'Approval')
-    application_add_uploaded('04/11/2023', 'Stage')
+    application_add_uploaded(Date.new(2022, 11, 4), 'Approval')
+    application_add_uploaded(Date.new(2023, 11, 4), 'Stage')
     self.application_building_surveyor = 'Ian'
-    self.application_assessment_assigned = '05/08/2022'
+    self.application_assessment_assigned = Date.new(2022, 8, 5)
     self.application_structural_engineer = 'Internal'
-    self.application_external_engineer_date = '06/08/2022'
+    self.application_external_engineer_date = Date.new(2022, 8, 6)
     application_remove_rfi
     application_remove_rfi
-    application_add_rfi('07/08/2022')
-    application_add_rfi('07/08/2023')
+    application_add_rfi(Date.new(2022, 8, 7))
+    application_add_rfi(Date.new(2023, 8, 7))
     application_remove_stage
     application_remove_stage
-    application_add_stage('08/08/2022', 'Stage 1')
-    application_add_stage('08/08/2023', 'Stage 2')
-    self.application_consent_issued = '09/08/2022'
-    self.application_variation_issued = '10/08/2022'
-    self.application_coo_issued = '11/08/2022'
-    self.application_engineer_certificate_received = '12/08/2022'
+    application_add_stage(Date.new(2022, 8, 8), 'Stage 1')
+    application_add_stage(Date.new(2023, 8, 8), 'Stage 2')
+    self.application_consent_issued = Date.new(2022, 8, 9)
+    self.application_variation_issued = Date.new(2022, 8, 10)
+    self.application_coo_issued = Date.new(2022, 8, 11)
+    self.application_engineer_certificate_received = Date.new(2022, 8, 12)
     self.application_certification_notes = 'certification went poorly'
     self.application_invoice_to = 'Me'
     self.application_care_of = 'You'
@@ -114,8 +114,8 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_invoice_debtor_notes = 'No debtor notes'
     application_remove_invoice
     application_remove_invoice
-    application_add_invoice('13/10/2022', 'stage3', '13', '49.4', '3', '3.2', '9', '66', false)
-    application_add_invoice('13/10/2023', 'stage4', '3.0', '83.4', '3.0', '9', '10', '67', true)
+    application_add_invoice(Date.new(2022, 10, 13), 'stage3', '13', '49.4', '3', '3.2', '9', '66', false)
+    application_add_invoice(Date.new(2023, 10, 13), 'stage4', '3.0', '83.4', '3.0', '9', '10', '67', true)
     self.application_fully_invoiced = false
     self.application_cancelled = true
     sleep(1)

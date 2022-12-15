@@ -62,24 +62,24 @@ class ApplicationsSearchingTest < ApplicationSystemTestCase
     end
 
     # Date between
-    self.homepage_search_start_date = '01/03/2022'
-    self.homepage_search_end_date = '01/05/2022'
+    self.homepage_search_start_date = Date.new(2022, 3, 1)
+    self.homepage_search_end_date = Date.new(2022, 5, 1)
     homepage_search
     assert_in_homepage_table 'Q8001'
 
     clear
 
     # Date == start
-    self.homepage_search_start_date = '05/04/2022'
-    self.homepage_search_end_date = '01/05/2022'
+    self.homepage_search_start_date = Date.new(2022, 4, 5)
+    self.homepage_search_end_date = Date.new(2022, 5, 1)
     homepage_search
     assert_in_homepage_table 'Q8001'
 
     clear
 
     # Date == end
-    self.homepage_search_start_date = '01/03/2022'
-    self.homepage_search_end_date = '05/04/2022'
+    self.homepage_search_start_date = Date.new(2022, 3, 1)
+    self.homepage_search_end_date = Date.new(2022, 4, 5)
     homepage_search
     assert_in_homepage_table 'Q8001'
 
@@ -108,8 +108,8 @@ class ApplicationsSearchingTest < ApplicationSystemTestCase
     test_application.update!(description: 'Something or rather')
 
     select 'LG', from: 'type'
-    self.homepage_search_start_date = '01/01/2022'
-    self.homepage_search_end_date = '22/10/2022'
+    self.homepage_search_start_date = Date.new(2022, 1, 1)
+    self.homepage_search_end_date = Date.new(2022, 10, 22)
     self.homepage_search_text = 'something rather'
 
     # Post the form and check it searched properly

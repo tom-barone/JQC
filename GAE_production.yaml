@@ -1,0 +1,11 @@
+# app.yaml file for the production version of JQC on Google App Engine
+entrypoint: bundle exec rails server -p $PORT
+runtime: ruby27
+
+env_variables:
+  RAILS_ENV: production
+
+instance_class: B2
+basic_scaling:
+  max_instances: 5
+  idle_timeout: 10m

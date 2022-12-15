@@ -1,0 +1,76 @@
+# See here for list of installed packages under 'ubuntu-latest'
+# https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
+
+name: 'JQC Continuous Deployment'
+on:
+  push:
+    branches: ['master']
+jobs:
+  deploy_production:
+    runs-on: 'ubuntu-latest'
+    environment: 'deploy'
+    env:
+      RAILS_ENV: 'production'
+      # Allow us to migrate the production databases
+      RAILS_DATABASE_SOCKET: 'null'
+      RAILS_DATABASE_HOST: '127.0.0.1'
+      RAILS_DATABASE_PORT: 3306
+    steps:
+      - name: 'Checkout code'
+        uses: 'actions/checkout@v3'
+
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          credentials_json: '${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v1'
+
+      - name: 'Start Google Cloud SQL proxy'
+        uses: 'tom-barone/gce-cloudsql-proxy-action@master'
+        with:
+          creds: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_CREDENTIALS }}
+          instance: ${{ secrets.GOOGLE_CLOUD_SQL_INSTANCE }}
+          port: 3306
+
+      - name: 'Install Ruby and gems'
+        uses: 'ruby/setup-ruby@v1'
+        with:
+          bundler-cache: true
+
+      - name: 'Add production key to config dir'
+        run: 'echo "${{ secrets.RAILS_CREDENTIALS_PRODUCTION_KEY }}" > config/credentials/production.key'
+
+      - name: 'Migrate the production database'
+        run: 'bin/rails db:migrate'
+
+      - name: 'Compile SCSS and JS assets'
+        run: 'bin/rails assets:precompile'
+
+      - name: 'Get date for production version'
+        id: 'date'
+        run: echo "NOW=$(date '+%Y%m%dt%H%M%S')" >> $GITHUB_OUTPUT
+
+      - name: 'Deploy production site and promote'
+        run: gcloud app deploy GAE_production.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --version=production${{ steps.date.outputs.NOW }} ---promote --no-cache --quiet --stop-previous-version
+
+  test_production:
+    needs: ['deploy_production']
+    runs-on: 'ubuntu-latest'
+    environment: 'deploy'
+    env:
+      RAILS_ENV: 'production'
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_CREDENTIALS_PRODUCTION_KEY }}
+      TEST_HOST: ${{ secrets.PRODUCTION_URL }}
+    steps:
+      - name: 'Checkout code'
+        uses: 'actions/checkout@v3'
+
+      - name: 'Install Ruby and gems'
+        uses: 'ruby/setup-ruby@v1'
+        with:
+          bundler-cache: true
+
+      - name: 'Run tests against the production site'
+        run: 'ruby production/sign_in_and_check_table_test.rb'

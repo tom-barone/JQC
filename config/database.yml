@@ -13,11 +13,9 @@ default: &default
   adapter: mysql2
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  # The default host and port assume you're using the google cloud_sql_proxy
-  # https://cloud.google.com/sql/docs/mysql/sql-proxy
-  socket: <%= Rails.application.credentials.db_socket! %>
-  host: <%= Rails.application.credentials.db_host! %>
-  port: <%= Rails.application.credentials.db_port! %>
+  socket: <%= ENV.fetch("RAILS_DATABASE_SOCKET") { Rails.application.credentials.db_socket! } %>
+  host: <%=   ENV.fetch("RAILS_DATABASE_HOST") { Rails.application.credentials.db_host! } %>
+  port: <%=   ENV.fetch("RAILS_DATABASE_PORT") { Rails.application.credentials.db_port! } %>
   username: <%= Rails.application.credentials.db_username! %>
   password: <%= Rails.application.credentials.db_password! %>
 
@@ -54,3 +52,7 @@ test:
 production:
   <<: *default
   database: PROD
+
+staging:
+  <<: *default
+  database: STAGING

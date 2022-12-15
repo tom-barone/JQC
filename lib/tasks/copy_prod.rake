@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 namespace :db do
-  desc 'Copy the PROD database to DEV'
-  task copy_prod_to_dev: :environment do
+  desc 'Copy the PROD database to the database specified in ENV[TARGET]'
+  task copy_prod: :environment do
     username = Rails.application.credentials.db_username!
     password = Rails.application.credentials.db_password!
+    target_database = ENV['TARGET'] || 'DEV'
 
     tables =
       `echo 'SELECT table_name FROM information_schema.tables
@@ -22,6 +23,6 @@ namespace :db do
         --user #{username} \
         --password=#{password} \
         -P 3306 \
-        DEV"
+        #{target_database}"
   end
 end
