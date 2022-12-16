@@ -48,6 +48,5 @@ yarn-debug.log*
 # Ignore all credential key files
 /config/**/*.key
 
-# Ignore test coverage
-coverage
-jest_coverage
+# Ignore test output
+ci

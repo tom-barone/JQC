@@ -32,8 +32,9 @@ yarn-debug.log*
 /storage
 /production
 /db
-/coverage
-/jest_coverage
+
+# Ignore test outputs
+ci
 
 # Other random files
 .DS_Store
@@ -47,6 +48,7 @@ README.md
 package-lock.json
 package.json
 .rubocop.yml
+.simplecov
 
 # Include keys
 !/config/**/*.key

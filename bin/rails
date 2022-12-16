@@ -2,10 +2,6 @@
 # Code to make test coverage work
 if ENV['COVERAGE'] == 'true'
   require 'simplecov'
-  SimpleCov.start 'rails'
-  # Ignore rake tasks and bin executables
-  SimpleCov.add_filter ['lib/tasks', 'bin']
-  puts "required simplecov"
 end
 load File.expand_path('spring', __dir__)
 APP_PATH = File.expand_path('../config/application', __dir__)
