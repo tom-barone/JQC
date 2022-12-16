@@ -1,13 +1,13 @@
-# See here for list of installed packages under 'ubuntu-latest'
+# See here for list of installed packages under 'ubuntu-22.04'
 # https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
 
-name: 'JQC Continuous Deployment'
+name: 'Continuous Deployment'
 on:
   push:
     branches: ['master']
 jobs:
   deploy_production:
-    runs-on: 'ubuntu-latest'
+    runs-on: 'ubuntu-22.04'
     environment: 'deploy'
     env:
       RAILS_ENV: 'production'
@@ -43,21 +43,26 @@ jobs:
         run: 'echo "${{ secrets.RAILS_CREDENTIALS_PRODUCTION_KEY }}" > config/credentials/production.key'
 
       - name: 'Migrate the production database'
-        run: 'bin/rails db:migrate'
+        run: 'bundle exec bin/rails db:migrate'
 
       - name: 'Compile SCSS and JS assets'
-        run: 'bin/rails assets:precompile'
+        run: 'bundle exec bin/rails assets:precompile'
 
-      - name: 'Get date for production version'
-        id: 'date'
-        run: echo "NOW=$(date '+%Y%m%dt%H%M%S')" >> $GITHUB_OUTPUT
+      - name: 'Get production version using todays date'
+        id: 'production_version'
+        run: echo "VERSION=production$(date '+%Y%m%dt%H%M%S')" >> $GITHUB_OUTPUT
 
       - name: 'Deploy production site and promote'
-        run: gcloud app deploy GAE_production.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --version=production${{ steps.date.outputs.NOW }} --promote --no-cache --quiet --stop-previous-version
+        run: gcloud app deploy GAE_production.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --version=${{ steps.production_version.outputs.VERSION }} --promote --no-cache --quiet --stop-previous-version
+
+      - name: 'Push release tag'
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ steps.production_version.outputs.VERSION }}
 
   test_production:
     needs: ['deploy_production']
-    runs-on: 'ubuntu-latest'
+    runs-on: 'ubuntu-22.04'
     environment: 'deploy'
     env:
       RAILS_ENV: 'production'

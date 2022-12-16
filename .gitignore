@@ -50,3 +50,4 @@ yarn-debug.log*
 
 # Ignore test coverage
 coverage
+jest_coverage

@@ -9,7 +9,7 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   chrome_options.add_argument('--headless')
   driven_by :selenium, using: :chrome, screen_size: [1800, 1000], options: { options: chrome_options }
 
-  Capybara.default_max_wait_time = 15 # Seconds
+  Capybara.default_max_wait_time = 20 # Seconds
 
   @@username = Rails.application.credentials.jqc_username!
   @@password = Rails.application.credentials.jqc_password!
@@ -26,10 +26,10 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
 
   # Homepage actions
   def edit_application(reference_number) find("#row-#{reference_number}").click; sleep(4); assert_on_application_edit_page end
-  def new_application()                  click_on 'New Application'; sleep(4); assert_on_application_new_page end
-  def homepage_search()                  click_on 'Search' end
-  def homepage_search_clear()            click_on 'clear-search' end
-  def go_to_settings_page()              click_on 'Settings' end
+  def new_application()                  click_on 'New Application';             sleep(4); assert_on_application_new_page end
+  def homepage_search()                  click_on 'Search';                      sleep(4) end
+  def go_to_settings_page()              click_on 'Settings';                    sleep(4) end
+  def homepage_search_clear()            click_on 'clear-search'                          end
 
   # Homepage setters
   def homepage_search_type=(type)       select type, from: 'type' end
