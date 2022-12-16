@@ -1,8 +1,8 @@
 # JQC
 
 [![License](https://img.shields.io/github/license/tom-barone/JQC?color=silver)](https://github.com/tom-barone/JQC/blob/master/LICENSE.txt)
-[![Continuous Integration](https://img.shields.io/github/actions/workflow/status/tom-barone/JQC/continuous-integration.yml?branch=develop&label=CI)](https://github.com/tom-barone/JQC/actions?query=branch:develop)
-[![Continuous Deployment](https://img.shields.io/github/actions/workflow/status/tom-barone/JQC/continuous-deployment.yml?branch=master&label=CD)](https://github.com/tom-barone/JQC/actions?query=branch:master)
+[![Continuous Integration](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml/badge.svg?branch=develop)](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml)
+[![Continuous Deployment](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml/badge.svg?branch=master)](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml)
 
 Real world Rails 7 app deployed on Google App Engine.
 
