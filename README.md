@@ -22,9 +22,9 @@ See the [/production](https://github.com/tom-barone/JQC/tree/master/production) 
 
 To deploy a new production version:
 
+1. It is a good idea to do a quick manual check of the most recent staging site
 1. Create a pull request to merge `develop` -> `master`.
-1. All checks must pass, and it is a good idea to manually look over the staging site as well.
-1. Merge the pull request.
+1. Once all the checks have passed, the pull request will automatically merge.
 1. The [CD Github Action](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml) will deploy a new production version to Google App Engine and migrate traffic to that version.
 1. The action will then run the production safe tests against the new production site.
 
