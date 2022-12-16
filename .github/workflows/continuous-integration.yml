@@ -1,7 +1,7 @@
 # See here for list of installed packages under 'ubuntu-22.04'
 # https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
 
-name: 'Continuous Integration'
+name: 'continuous integration'
 on:
   push:
     branches: ['develop']
@@ -40,8 +40,7 @@ jobs:
         run: 'bundle exec bin/rails assets:precompile'
 
       - name: 'Run tests'
-        run: 'COVERAGE=true bundle exec bin/rails test test/system/applications_table_test.rb'
-        #run: 'COVERAGE=true bundle exec bin/rails test:all'
+        run: 'COVERAGE=true bundle exec bin/rails test:all'
 
       - name: 'Save failed test screenshots'
         if: ${{ failure() }}
@@ -55,6 +54,11 @@ jobs:
         with:
           name: 'test-reports'
           path: 'ci'
+
+      # https://community.sonarsource.com/t/code-coverage-doesnt-work-with-github-action/16747/7
+      - name: 'Fix code coverage paths'
+        run: |
+          find ci -name '*.info' -o -name '*.json' -o -name '*.xml' | xargs sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g'
 
       - name: 'Scan with SonarCloud'
         if: ${{ always() }}
