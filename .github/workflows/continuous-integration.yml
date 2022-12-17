@@ -66,6 +66,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: 'Check SonarCloud results and fail pipeline if failed'
+        if: ${{ always() }}
+        run: |
+          GATE_STATUS=$(curl https://sonarcloud.io/api/qualitygates/project_status\?projectKey\=tom-barone_JQC --silent | jq .projectStatus.status)
+          [[ $GATE_STATUS == "ERROR" ]] && bash -c 'exit 1'
         
   deploy_staging:
     needs: ['run_tests']
