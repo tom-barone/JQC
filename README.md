@@ -1,18 +1,18 @@
 # JQC
 
 [![License](https://img.shields.io/github/license/tom-barone/JQC?color=969696)](https://github.com/tom-barone/JQC/blob/master/LICENSE.txt)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=tom-barone_JQC)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=ncloc)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
 
 [![Continuous Integration](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml/badge.svg?branch=develop)](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml)
 [![Continuous Deployment](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml/badge.svg?branch=master)](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=tom-barone_JQC)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=alert_status)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
 
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=tom-barone_JQC)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=tom-barone_JQC)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=tom-barone_JQC)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=bugs)](https://sonarcloud.io/summary/new_code?id=tom-barone_JQC)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=security_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=vulnerabilities)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
 
-![Sonar Coverage](https://img.shields.io/sonar/coverage/tom-barone_JQC?label=test%20coverage&server=https%3A%2F%2Fsonarcloud.io)
+[![Sonar Coverage](https://img.shields.io/sonar/coverage/tom-barone_JQC?label=test%20coverage&server=https%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/component_measures?metric=coverage&view=list&id=tom-barone_JQC)
 
 Real world Rails 7 app deployed on Google App Engine.
 
