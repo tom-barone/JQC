@@ -27,7 +27,7 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   # Homepage actions
   def edit_application(reference_number) find("#row-#{reference_number}").click; sleep(4); assert_on_application_edit_page end
   def new_application()                  click_on 'New Application';             sleep(4); assert_on_application_new_page end
-  def homepage_search()                  click_on 'Search';                      sleep(4) end
+  def homepage_search()                  click_on 'Search';                      sleep(8) end
   def go_to_settings_page()              click_on 'Settings';                    sleep(4) end
   def homepage_search_clear()            click_on 'clear-search'                          end
 
@@ -150,8 +150,8 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   # Application actions
   def save_application() click_on 'Save' end
   def save_new_application() click_on 'Save'; sleep(10) end # Takes ages to save stuff unfortunately
-  def delete_application() accept_confirm { click_on 'Delete' } end
-  def exit_application() accept_confirm { click_on 'Exit' } end
+  def delete_application() accept_confirm { click_on 'Delete'; sleep(10) } end
+  def exit_application() accept_confirm { click_on 'Exit'; sleep(10) } end
   def click_on_conversion_warning_link(application) find_link("Click to go to #{application}.").click end
   def click_on_go_to_conversion_button() find_link('Go to').click end
 

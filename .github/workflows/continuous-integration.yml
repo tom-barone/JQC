@@ -70,8 +70,10 @@ jobs:
       - name: 'Check SonarCloud results and fail pipeline if failed'
         if: ${{ always() }}
         run: |
-          GATE_STATUS=$(curl https://sonarcloud.io/api/qualitygates/project_status\?projectKey\=tom-barone_JQC --silent | jq .projectStatus.status)
-          [[ $GATE_STATUS == "ERROR" ]] && bash -c 'exit 1'
+          sleep 30s # Wait for results to be uploaded
+          GATE_STATUS=$(curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=tom-barone_JQC --silent | jq .projectStatus.status)
+          echo "Gate status: $GATE_STATUS"
+          [[ $GATE_STATUS != "ERROR" ]] # Will fail if equal to ERROR
         
   deploy_staging:
     needs: ['run_tests']
