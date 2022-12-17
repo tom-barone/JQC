@@ -17,6 +17,7 @@ class MostRecentlyUpdatedWarningsTest < ApplicationSystemTestCase
     assert_no_go_to_conversion_button
     assert_no_more_recent_conversion_warning
     save_application
+    assert_on_homepage
 
     # Get the newly created PC
     self.homepage_search_type = 'PC'
@@ -25,6 +26,7 @@ class MostRecentlyUpdatedWarningsTest < ApplicationSystemTestCase
     assert_go_to_conversion_button
     assert_no_more_recent_conversion_warning
     exit_application
+    assert_on_homepage
 
     self.homepage_search_type = 'Q'
     homepage_search

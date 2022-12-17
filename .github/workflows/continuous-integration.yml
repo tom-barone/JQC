@@ -1,7 +1,7 @@
 # See here for list of installed packages under 'ubuntu-22.04'
 # https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
 
-name: 'Continuous Integration'
+name: 'continuous integration'
 on:
   push:
     branches: ['develop']
@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: 'Checkout code'
         uses: 'actions/checkout@v3'
+        with:
+          fetch-depth: 0  # Deep clone for use with SonarCloud
 
       - name: 'Run unit tests'
         run: 'npm install && npm test'
@@ -47,17 +49,31 @@ jobs:
           name: 'failed-test-screenshots'
           path: 'tmp/screenshots'
 
-      - name: 'Save ruby code coverage results'
+      - name: 'Save test and code coverage results'
         uses: 'actions/upload-artifact@v3'
         with:
-          name: 'ruby-coverage-report'
-          path: 'coverage'
+          name: 'test-reports'
+          path: 'ci'
 
-      - name: 'Save jest code coverage results'
-        uses: 'actions/upload-artifact@v3'
-        with:
-          name: 'jest-coverage-report'
-          path: 'jest_coverage'
+      # https://community.sonarsource.com/t/code-coverage-doesnt-work-with-github-action/16747/7
+      - name: 'Fix code coverage paths'
+        run: |
+          find ci -name '*.info' -o -name '*.json' -o -name '*.xml' | xargs sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g'
+
+      - name: 'Scan with SonarCloud'
+        if: ${{ always() }}
+        uses: 'SonarSource/sonarcloud-github-action@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: 'Check SonarCloud results and fail pipeline if failed'
+        if: ${{ always() }}
+        run: |
+          sleep 30s # Wait for results to be uploaded
+          GATE_STATUS=$(curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=tom-barone_JQC --silent | jq .projectStatus.status)
+          echo "Gate status: $GATE_STATUS"
+          [[ $GATE_STATUS != "ERROR" ]] # Will fail if equal to ERROR
         
   deploy_staging:
     needs: ['run_tests']

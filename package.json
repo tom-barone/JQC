@@ -2,11 +2,12 @@
   "devDependencies": {
     "@hotwired/stimulus": "^3.1.1",
     "jest": "^29.3.1",
+    "jest-junit": "^15.0.0",
     "prettier-plugin-erb": "^0.4.0"
   },
   "scripts": {
     "_comment": "Use experimental jest ECMA modules: https://jestjs.io/docs/ecmascript-modules",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage --coverageDirectory=jest_coverage"
+    "test": "NODE_OPTIONS=--experimental-vm-modules JEST_JUNIT_OUTPUT_DIR=ci/js/tests jest --coverage --coverageDirectory=ci/js/coverage --reporters=jest-junit --reporters=default"
   },
   "type": "module"
 }
