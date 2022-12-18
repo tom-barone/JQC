@@ -118,6 +118,9 @@ jobs:
       - name: 'Migrate the staging database'
         run: 'bundle exec bin/rails db:migrate'
 
+      - name: 'Add the staging user to the database'
+        run: 'bundle exec bin/rails db:add_staging_user'
+
       - name: 'Compile SCSS and JS assets'
         run: 'bundle exec bin/rails assets:precompile'
 
