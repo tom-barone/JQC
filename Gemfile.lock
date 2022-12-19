@@ -118,6 +118,8 @@ GEM
     docile (1.4.0)
     e2mmap (0.1.0)
     erubi (1.11.0)
+    faker (3.0.0)
+      i18n (>= 1.8.11, < 2)
     faraday (2.7.1)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -429,6 +431,7 @@ DEPENDENCIES
   cocoon
   debug
   devise (~> 4.8.1)
+  faker
   highline (~> 1.7, >= 1.7.8)
   importmap-rails
   jbuilder
