@@ -74,13 +74,13 @@
 .uploaded-table-body-container,
 .additional-information-body-container {
   max-height: 115px;
-  overflow: overlay;
+  overflow: auto;
 }
 
 .stages-body-container,
 .request-for-informations-body-container {
   max-height: 100px;
-  overflow: overlay;
+  overflow: auto;
 }
 .stages-title,
 .rfis-title {
