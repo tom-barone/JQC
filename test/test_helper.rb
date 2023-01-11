@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
-if ENV['COVERAGE'] == 'true'
-  require 'simplecov'
-  require 'minitest/reporters'
-  Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new,
-                            Minitest::Reporters::JUnitReporter.new('ci/ruby/tests', true, { single_file: true })]
-end
+require 'simplecov'
+require 'minitest/reporters'
+Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new,
+                          Minitest::Reporters::JUnitReporter.new('ci/ruby/tests', true, { single_file: true })]
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 require 'rails/test_help'
