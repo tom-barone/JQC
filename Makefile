@@ -13,7 +13,7 @@ install:
 	npm install
 	bundle install
 
-test: assert-cloud-sql-proxy clean install
+test: clean install
 	@echo 'Running javascript unit tests'
 	npm test
 	RAILS_ENV=test bundle exec bin/rails db:test:prepare
@@ -44,9 +44,6 @@ collect-javascript-coverage:
 	npx nyc report --reporter=lcov
 
 # Safety targets
-
-assert-cloud-sql-proxy:
-	@if [ -z '$(shell lsof -Pi :3306 -sTCP:LISTEN | grep cloud_sql)' ]; then echo 'ERROR: cloud_sql_proxy is not running' && exit 1; fi
 
 guard-%:
 	@if [ -z '${${*}}' ]; then echo 'ERROR: ENV variable $* is not set' && exit 1; fi
