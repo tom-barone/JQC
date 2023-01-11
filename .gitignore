@@ -47,6 +47,8 @@ yarn-debug.log*
 
 # Ignore all credential key files
 /config/**/*.key
+.env
 
 # Ignore test output
 ci
+.nyc_output

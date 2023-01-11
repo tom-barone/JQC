@@ -40,7 +40,7 @@ jobs:
         run: 'bundle exec bin/rails assets:precompile'
 
       - name: 'Run tests'
-        run: 'COVERAGE=true bundle exec bin/rails test:all'
+        run: 'bundle exec bin/rails test:all'
 
       - name: 'Save failed test screenshots'
         if: ${{ failure() }}
