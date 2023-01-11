@@ -9,10 +9,6 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   chrome_options.add_argument('--headless')
   driven_by :selenium, using: :chrome, screen_size: [1800, 1000], options: { options: chrome_options }
 
-  def before_teardown
-    dump_js_coverage
-  end
-
   Capybara.default_max_wait_time = 20 # Seconds
 
   @@username = Rails.application.credentials.jqc_username!
