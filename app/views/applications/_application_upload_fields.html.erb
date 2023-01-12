@@ -6,7 +6,7 @@
     <%= f.label :uploaded_text, class: 'd-none' %>
     <%= f.select :uploaded_text, ApplicationUpload::STAGE, prompt: true %>
   </td>
-  <td class="uploaded-text uploaded-text-disabled d-none">
+  <td class="uploaded-text uploaded-text-disabled">
     <%= f.label :uploaded_text, class: 'd-none' %>
     <%=
       f.select :uploaded_text,

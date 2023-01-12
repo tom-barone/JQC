@@ -25,6 +25,9 @@ test: clean install
 build:
 	bundle exec bin/rails assets:precompile
 
+dev: install
+	RAILS_ENV=development bundle exec bin/rails server
+
 # Secondary targets
 
 run-cloud-sql-proxy: guard-GOOGLE_CLOUD_SQL_INSTANCE
