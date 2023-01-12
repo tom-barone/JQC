@@ -1,10 +1,22 @@
 # frozen_string_literal: true
-require "active_support/core_ext/integer/time"
+
+require 'active_support/core_ext/integer/time'
 
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
 # your test database is "scratch space" for the test suite and is wiped
 # and recreated between test runs. Don't rely on the data there!
+
+# This function should be executed when we want to store the current `window.__coverage__` info in a file
+def dump_js_coverage
+  page_coverage = page.evaluate_script('JSON.stringify(window.__coverage__);')
+  return if page_coverage.blank?
+
+  # we will store one `js-....json` file for each system test, and we save all of them in the .nyc_output dir
+  File.open(Rails.root.join('.nyc_output/tests', "js-#{Random.rand(10_000_000_000)}.json"), 'w') do |report|
+    report.puts page_coverage
+  end
+end
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.

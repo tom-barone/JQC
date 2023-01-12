@@ -8,10 +8,10 @@ export default class extends Controller {
     this.setApplicationUploadsState();
   }
 
-	onFormChange() {
+  onFormChange() {
     this.updateCancelledState();
     this.setApplicationUploadsState();
-	}
+  }
 
   updateCancelledState() {
     if (this.cancelledCheckboxTarget.checked)
@@ -20,25 +20,15 @@ export default class extends Controller {
   }
 
   setApplicationUploadsState() {
-		// TODO: tidy this mess up
     const risk_rating = document.getElementById("application_risk_rating");
-    if (!risk_rating) return;
+    const uploaded_table = document.getElementById("uploaded-table");
 
-    if (risk_rating.value !== "") {
-      // Risk rating is set
-      Array.from(
-        this.element.getElementsByClassName("uploaded-text-enabled")
-      ).forEach((el) => el.classList.remove("d-none"));
-      Array.from(
-        this.element.getElementsByClassName("uploaded-text-disabled")
-      ).forEach((el) => el.classList.add("d-none"));
+    if (risk_rating.value == "") {
+      // If risk rating has no value, disallow entry on uploaded fields
+      uploaded_table.classList.add("risk-rating-not-set");
     } else {
-      Array.from(
-        this.element.getElementsByClassName("uploaded-text-enabled")
-      ).forEach((el) => el.classList.add("d-none"));
-      Array.from(
-        this.element.getElementsByClassName("uploaded-text-disabled")
-      ).forEach((el) => el.classList.remove("d-none"));
+      // Allow entry on uploaded fields
+      uploaded_table.classList.remove("risk-rating-not-set");
     }
   }
 }

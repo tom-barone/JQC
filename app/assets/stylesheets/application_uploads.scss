@@ -1,3 +1,21 @@
-// Place all the styles related to the ApplicationUploads controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
+// If risk rating is set, display normally
+#uploaded-table .uploaded-text {
+  &-enabled {
+    display: table-cell;
+  }
+
+  &-disabled {
+    display: none;
+  }
+}
+
+// If risk rating is not set, display disabled text
+#uploaded-table.risk-rating-not-set .uploaded-text {
+  &-enabled {
+    display: none;
+  }
+
+  &-disabled {
+    display: table-cell;
+  }
+}

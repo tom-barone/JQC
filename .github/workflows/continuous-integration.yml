@@ -18,9 +18,6 @@ jobs:
         with:
           fetch-depth: 0  # Deep clone for use with SonarCloud
 
-      - name: 'Run unit tests'
-        run: 'npm install && npm test'
-
       - name: 'Start Google Cloud SQL proxy'
         uses: 'tom-barone/gce-cloudsql-proxy-action@master'
         with:
@@ -33,14 +30,8 @@ jobs:
         with:
           bundler-cache: true
 
-      - name: 'Prepare the test database'
-        run: 'bundle exec bin/rails db:test:prepare'
-
-      - name: 'Compile SCSS and JS assets'
-        run: 'bundle exec bin/rails assets:precompile'
-
       - name: 'Run tests'
-        run: 'COVERAGE=true bundle exec bin/rails test:all'
+        run: 'make test'
 
       - name: 'Save failed test screenshots'
         if: ${{ failure() }}
@@ -61,14 +52,12 @@ jobs:
           find ci -name '*.info' -o -name '*.json' -o -name '*.xml' | xargs sed -i 's@'$GITHUB_WORKSPACE'@/github/workspace/@g'
 
       - name: 'Scan with SonarCloud'
-        if: ${{ always() }}
         uses: 'SonarSource/sonarcloud-github-action@master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: 'Check SonarCloud results and fail pipeline if failed'
-        if: ${{ always() }}
         run: |
           sleep 30s # Wait for results to be uploaded
           GATE_STATUS=$(curl https://sonarcloud.io/api/qualitygates/project_status?projectKey=tom-barone_JQC --silent | jq .projectStatus.status)
@@ -117,6 +106,9 @@ jobs:
 
       - name: 'Migrate the staging database'
         run: 'bundle exec bin/rails db:migrate'
+
+      - name: 'Add the staging user to the database'
+        run: 'bundle exec bin/rails db:add_staging_user'
 
       - name: 'Compile SCSS and JS assets'
         run: 'bundle exec bin/rails assets:precompile'

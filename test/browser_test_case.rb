@@ -187,8 +187,9 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def application_applicant_email=(applicant_email) fill_in 'application_applicant_email', with: applicant_email end
   def application_add_additional_information(date, text) within('.additional-information-table') { click_on 'Add'; all('input[type="date"]').last.fill_in with: date; all('input[type="text"]').last.fill_in with: text } end
   def application_remove_additional_information() within('.additional-information-table') { all('.remove_fields').last.click } end
-  def application_add_uploaded(date, text) within('.uploaded-table') { click_on 'Add'; all('input[type="date"]').last.fill_in with: date; all('select').last.select text } end
-  def application_remove_uploaded() within('.uploaded-table') { all('.remove_fields').last.click } end
+  def application_uploaded_click_add() within('#uploaded-table') { click_on 'Add' } end
+  def application_add_uploaded(date, text) application_uploaded_click_add; within('#uploaded-table') { all('input[type="date"]').last.fill_in with: date; all('select').last.select text } end
+  def application_remove_uploaded() within('#uploaded-table') { all('.remove_fields').last.click } end
   def application_building_surveyor=(building_surveyor) select building_surveyor, from: 'application_building_surveyor' end
   def application_assessment_assigned=(assessment_assigned) fill_in 'application_assessment_commenced', with: assessment_assigned end
   def application_structural_engineer=(structural_engineer) select structural_engineer, from: 'application_structural_engineer' end
@@ -258,7 +259,8 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_application_quote_accepted_date(quote_accepted_date) assert_field('application_quote_accepted_date', with: quote_accepted_date) end
   def assert_application_applicant_email(applicant_email) assert_field('application_applicant_email', with: applicant_email) end
   def assert_application_additional_information(date, text, at:) within(all('.additional-information-table .nested-fields').at(at)) { assert_field('Info date', with: date); assert_field('Info text', with: text) } end
-  def assert_application_uploaded(date, text, at:) within(all('.uploaded-table .nested-fields').at(at)) { assert_field('Uploaded date', with: date); assert_select('Uploaded text', selected: text) } end
+  def assert_application_uploaded(date, text, at:, disabled: false) within(all('#uploaded-table .nested-fields').at(at)) { assert_field('Uploaded date', with: date); assert_select('Uploaded text', selected: text, disabled: disabled) } end
+  def assert_application_uploaded_disabled(...) within('#uploaded-table') { assert_text('Please add a risk rating first', ...) } end
   def assert_application_building_surveyor(building_surveyor) assert_select('application_building_surveyor', selected: building_surveyor) end
   def assert_application_assessment_assigned(assessment_assigned) assert_field('application_assessment_commenced', with: assessment_assigned) end
   def assert_application_structural_engineer(structural_engineer) assert_select('application_structural_engineer', selected: structural_engineer) end
@@ -332,7 +334,8 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_no_application_quote_accepted_date(quote_accepted_date) assert_no_field('application_quote_accepted_date', with: quote_accepted_date) end
   def assert_no_application_applicant_email(applicant_email) assert_no_field('application_applicant_email', with: applicant_email) end
   def assert_no_application_additional_information(date, text, at:) within(all('.additional-information-table .nested-fields').at(at)) { assert_no_field('Info date', with: date); assert_no_field('Info text', with: text) } end
-  def assert_no_application_uploaded(date, text, at:) within(all('.uploaded-table .nested-fields').at(at)) { assert_no_field('Uploaded date', with: date); assert_no_select('Uploaded text', selected: text) } end
+  def assert_no_application_uploaded(date, text, at:) within(all('#uploaded-table .nested-fields').at(at)) { assert_no_field('Uploaded date', with: date); assert_no_select('Uploaded text', selected: text) } end
+  def assert_no_application_uploaded_disabled() within('#uploaded-table') { assert_no_text('Please add a risk rating first') } end
   def assert_no_application_building_surveyor(building_surveyor) assert_no_select('application_building_surveyor', selected: building_surveyor) end
   def assert_no_application_assessment_assigned(assessment_assigned) assert_no_field('application_assessment_commenced', with: assessment_assigned) end
   def assert_no_application_structural_engineer(structural_engineer) assert_no_select('application_structural_engineer', selected: structural_engineer) end
@@ -409,5 +412,4 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
     raise
   end
 end
-
 # rubocop:enable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists, Style/CommentedKeyword
