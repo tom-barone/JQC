@@ -40,12 +40,13 @@ To deploy a new production version:
 
 ## Testing
 
+Simple as running:
+
 ```bash
-npm test
-rails test:all
+make test
 ```
 
-See the [CI Github Action](https://github.com/AccessToTheCloud/JQC/actions/workflows/continuous-integration.yml) for more details.
+Test and coverage results will be saved to the `ci` folder. Screenshots of failed tests will be in `tmp/screenshots`.
 
 ## Security
 
