@@ -7,7 +7,7 @@ endif
 # Primary targets
 
 clean:
-	rm -rf ci .nyc_output public/assets tmp/_javascript
+	rm -rf ci .nyc_output public/assets tmp/_javascript tmp/downloads tmp/screenshots
 
 install:
 	npm install
