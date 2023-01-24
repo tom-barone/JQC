@@ -89,7 +89,7 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     application_remove_uploaded
     application_add_uploaded(Date.new(2022, 11, 4), 'Approval')
     application_add_uploaded(Date.new(2023, 11, 4), 'Stage')
-    self.application_building_surveyor = 'Ian'
+    self.application_building_surveyor = 'Darryl'
     self.application_assessment_assigned = Date.new(2022, 8, 5)
     self.application_structural_engineer = 'Internal'
     self.application_external_engineer_date = Date.new(2022, 8, 6)
