@@ -41,47 +41,51 @@
   }
 
   &-reference-number {
-    width: 5%;
+		flex: 2;
   }
 
   &-location {
-    width: 10%;
+		flex: 4;
   }
 
   &-suburb {
-    width: 10%;
+		flex: 4;
   }
 
   &-description {
-    width: 20%;
+		flex: 8;
   }
 
   &-contact {
-    width: 10%;
+		flex: 4;
   }
 
   &-owner {
-    width: 10%;
+		flex: 4;
   }
 
   &-applicant {
-    width: 10%;
+		flex: 4;
   }
 
   &-council {
-    width: 10%;
+		flex: 4;
   }
 
   &-date-created {
-    width: 7.5%;
+		flex: 3;
+  }
+
+  &-building-surveyor {
+		flex: 2;
   }
 
   &-da-number {
-    width: 7.5%;
+		flex: 3;
   }
 
   &-edit-button {
-    width: 5%;
+		flex: 2;
 
     & button {
       min-width: 4em;

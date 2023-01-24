@@ -52,6 +52,9 @@ test-report-mailers:
 	@echo 'Hitting the last_month_csv_report endpoint'
 	curl --header "X-Appengine-Cron: true" http://localhost:3000/crons/last_month_csv_reports
 
+copy-production-database-to-development:
+	bundle exec bin/rails db:copy_prod TARGET=DEV
+
 # Safety targets
 
 guard-%:

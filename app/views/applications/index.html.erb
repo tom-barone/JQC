@@ -110,7 +110,10 @@
       </div>
     </div>
   </div>
-  <table class="table table-hover applications-table">
+  <table
+    class="table table-hover applications-table"
+    aria-label="Table containing all the applications"
+  >
     <thead>
       <tr>
         <th class="applications-table-reference-number">Reference Number</th>
@@ -122,6 +125,7 @@
         <th class="applications-table-applicant">Applicant</th>
         <th class="applications-table-council">Council</th>
         <th class="applications-table-date-created">Date Created</th>
+        <th class="applications-table-building-surveyor">Building Surveyor</th>
         <th class="applications-table-da-number">DA No.</th>
         <th class="applications-table-edit-button"></th>
       </tr>
@@ -161,6 +165,9 @@
           </td>
           <td class="applications-table-date-created" role="button">
             <%= application.created_at.strftime('%-d %b %Y') %>
+          </td>
+          <td class="applications-table-building-surveyor" role="button">
+            <%= application.building_surveyor %>
           </td>
           <td class="applications-table-da-number" role="button">
             <%= application.development_application_number %>
