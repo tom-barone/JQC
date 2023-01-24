@@ -1,41 +1,3 @@
-// Place all the styles related to the Applications controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: https://sass-lang.com/
-
-.app-reference-number {
-  width: 5%;
-}
-.app-location {
-  width: 10%;
-}
-.app-suburb {
-  width: 10%;
-}
-.app-description {
-  width: 20%;
-}
-.app-contact {
-  width: 10%;
-}
-.app-owner {
-  width: 10%;
-}
-.app-applicant {
-  width: 10%;
-}
-.app-council {
-  width: 10%;
-}
-.app-date {
-  width: 7.5%;
-}
-.app-da {
-  width: 7.5%;
-}
-.app-buttons {
-  width: 5%;
-}
-
 .app-pagination {
   .pagination {
     justify-content: flex-end;
@@ -106,25 +68,6 @@
 .application-cancelled {
   opacity: 0.6;
   pointer-events: none;
-}
-
-.applications-table {
-  tbody td {
-    padding: 0;
-  }
-  .app-buttons .btn.btn-sm {
-    font-size: 0.65rem;
-  }
-  & button {
-    min-width: 4em;
-
-    & span.spinner-border {
-      width: 0.5rem;
-      height: 0.5rem;
-      vertical-align: middle;
-      border-width: 0.1em;
-    }
-  }
 }
 
 #application_form .application-actions {

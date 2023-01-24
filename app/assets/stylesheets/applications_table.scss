@@ -1,0 +1,98 @@
+.applications-table {
+  display: block;
+  padding-top: 0.5em;
+
+  // Place text on the bottom of the header row
+  th {
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+
+  tr {
+    display: flex;
+    flex-direction: row;
+  }
+
+  td {
+    padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  th {
+    padding: 0 0 0.5em 0;
+  }
+
+  thead {
+    padding: 0;
+  }
+
+  // Set height and make scrollbars always visible
+  tbody {
+    max-height: 76vh;
+  }
+
+  thead,
+  tbody {
+    display: block;
+    overflow-y: scroll;
+  }
+
+  &-reference-number {
+    width: 5%;
+  }
+
+  &-location {
+    width: 10%;
+  }
+
+  &-suburb {
+    width: 10%;
+  }
+
+  &-description {
+    width: 20%;
+  }
+
+  &-contact {
+    width: 10%;
+  }
+
+  &-owner {
+    width: 10%;
+  }
+
+  &-applicant {
+    width: 10%;
+  }
+
+  &-council {
+    width: 10%;
+  }
+
+  &-date-created {
+    width: 7.5%;
+  }
+
+  &-da-number {
+    width: 7.5%;
+  }
+
+  &-edit-button {
+    width: 5%;
+
+    & button {
+      min-width: 4em;
+      font-size: 0.65rem;
+
+      & span.spinner-border {
+        width: 0.5rem;
+        height: 0.5rem;
+        vertical-align: middle;
+        border-width: 0.1em;
+      }
+    }
+  }
+}

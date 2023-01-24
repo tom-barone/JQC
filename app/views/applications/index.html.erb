@@ -104,34 +104,29 @@
                   data: {
                     controller: 'loading-button',
                     action: 'loading-button#onClick',
-                    'turbo-cache': false
+                    'turbo-cache': false,
                   }
         %>
       </div>
     </div>
   </div>
-  <table class="table table-sm mb-0" style="table-layout:fixed">
+  <table class="table table-hover applications-table">
     <thead>
       <tr>
-        <th class="app-reference-number">Reference Number</th>
-        <th class="app-location">Location</th>
-        <th class="app-suburb">Suburb</th>
-        <th class="app-description">Description</th>
-        <th class="app-contact">Contact</th>
-        <th class="app-owner">Owner</th>
-        <th class="app-applicant">Applicant</th>
-        <th class="app-council">Council</th>
-        <th class="app-date">Date Created</th>
-        <th class="app-da">DA No.</th>
-        <th class="app-buttons"></th>
+        <th class="applications-table-reference-number">Reference Number</th>
+        <th class="applications-table-location">Location</th>
+        <th class="applications-table-suburb">Suburb</th>
+        <th class="applications-table-description">Description</th>
+        <th class="applications-table-contact">Contact</th>
+        <th class="applications-table-owner">Owner</th>
+        <th class="applications-table-applicant">Applicant</th>
+        <th class="applications-table-council">Council</th>
+        <th class="applications-table-date-created">Date Created</th>
+        <th class="applications-table-da-number">DA No.</th>
+        <th class="applications-table-edit-button"></th>
       </tr>
     </thead>
-  </table>
-  <div class="border-bottom" style="max-height: 76vh; overflow: auto">
-    <table
-      class="applications-table table table-hover table-sm mb-0"
-      style="table-layout: fixed"
-    >
+    <tbody>
       <% @applications.each do |application| %>
         <tr
           data-controller="applications-table-row"
@@ -140,40 +135,37 @@
           class="bg-white"
           id="row-<%= application.reference_number %>"
         >
-          <td
-            class="app-reference-number align-top text-truncate"
-            role="button"
-          >
+          <td class="applications-table-reference-number" role="button">
             <%= application.reference_number %>
           </td>
-          <td class="app-location align-top text-truncate" role="button">
+          <td class="applications-table-location" role="button">
             <%= application.location %>
           </td>
-          <td class="app-suburb align-top text-truncate" role="button">
+          <td class="applications-table-suburb" role="button">
             <%= application.suburb %>
           </td>
-          <td class="app-description align-top text-truncate" role="button">
+          <td class="applications-table-description" role="button">
             <%= application.description %>
           </td>
-          <td class="app-contact align-top text-truncate" role="button">
+          <td class="applications-table-contact" role="button">
             <%= application.contact %>
           </td>
-          <td class="app-owner align-top text-truncate" role="button">
+          <td class="applications-table-owner" role="button">
             <%= application.owner %>
           </td>
-          <td class="app-applicant align-top text-truncate" role="button">
+          <td class="applications-table-applicant" role="button">
             <%= application.applicant %>
           </td>
-          <td class="app-council align-top text-truncate" role="button">
+          <td class="applications-table-council" role="button">
             <%= application.council %>
           </td>
-          <td class="app-date align-top text-truncate" role="button">
+          <td class="applications-table-date-created" role="button">
             <%= application.created_at.strftime('%-d %b %Y') %>
           </td>
-          <td class="app-da align-top text-truncate" role="button">
+          <td class="applications-table-da-number" role="button">
             <%= application.development_application_number %>
           </td>
-          <td class="app-buttons align-top text-truncate">
+          <td class="applications-table-edit-button">
             <button
               class="btn btn-sm btn-outline-secondary py-0"
               data-applications-table-row-target="editButton"
@@ -186,8 +178,8 @@
           </td>
         </tr>
       <% end %>
-    </table>
-  </div>
+    </tbody>
+  </table>
   <div class="app-pagination mt-2">
     <div class="row">
       <div class="col">
