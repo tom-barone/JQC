@@ -111,7 +111,7 @@ class ApplicationsController < ApplicationController
   private
 
   def send_csv_export
-    file_name = "JQC_Applications_Export_#{Time.now.strftime('%d/%m/%Y')}.csv"
+    file_name = "JQC_Applications_Export_#{Time.zone.now.strftime('%d/%m/%Y')}.csv"
     response.headers['Content-Type'] = 'text/csv'
     response.headers['Content-disposition'] =
       "attachment; filename=\"#{file_name}\""
