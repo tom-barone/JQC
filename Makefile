@@ -7,7 +7,7 @@ endif
 # Primary targets
 
 clean:
-	rm -rf ci .nyc_output public/assets tmp/_javascript
+	rm -rf ci .nyc_output public/assets tmp/_javascript tmp/downloads tmp/screenshots
 
 install:
 	npm install
@@ -47,6 +47,13 @@ collect-javascript-coverage:
 	npx nyc report --reporter=lcov
 	@echo 'Point the coverage results back to the clean app/javascript folder'
 	find ci -name '*.info' -o -name '*.json' -o -name '*.xml' | xargs sed -i 's@tmp/_javascript@app/javascript@g'
+
+test-report-mailers:
+	@echo 'Hitting the last_month_csv_report endpoint'
+	curl --header "X-Appengine-Cron: true" http://localhost:3000/crons/last_month_csv_reports
+
+copy-production-database-to-development:
+	bundle exec bin/rails db:copy_prod TARGET=DEV
 
 # Safety targets
 

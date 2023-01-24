@@ -17,6 +17,7 @@ class ApplicationsTableTest < ApplicationSystemTestCase
       'Applicant',
       'Council',
       'Date Created',
+      'Building Surveyor',
       'DA No.'
     ].each { |header| assert_text header }
 
@@ -35,6 +36,7 @@ class ApplicationsTableTest < ApplicationSystemTestCase
     assert_text 'applicant1 from firm1'
     assert_text 'the council1 of place1'
     assert_text '10 Jul 2022'
+    assert_text 'Vic'
     assert_text '123487423'
     assert_text 'Edit'
   end

@@ -11,6 +11,7 @@ application_PC1:
   lot_number: "3"
   street_name: "Romito street"
   description: "Some demolition happened here"
+  building_surveyor: "Vic"
   development_application_number: "123487423"
   suburb: suburb1
   council: council1
