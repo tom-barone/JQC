@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 namespace :db do
   desc 'Download the PROD database to your local machine'
   # Needs to be run with "RAILS_ENV=production rails db:download_prod"
@@ -6,7 +7,7 @@ namespace :db do
     username = Rails.application.credentials.db_username!
     password = Rails.application.credentials.db_password!
 
-    tables = `echo 'SELECT table_name FROM information_schema.tables 
+    tables = `echo 'SELECT table_name FROM information_schema.tables
     where table_schema="PROD"' | rails db | tail -n +2 | tr '\r\n' ' '`
 
     system "mysqldump \

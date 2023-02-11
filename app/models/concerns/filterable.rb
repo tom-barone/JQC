@@ -12,7 +12,6 @@ module Filterable
               .filter_by_end_date(params[:end_date])
               .filter_by_search_text(params[:search_text])
               # Filter out outliers
-              # TODO: These outliers should be removed from the DB
               .where("created_at >= '1900-01-01'")
               # Show PC's first, then Q's
               .order(
