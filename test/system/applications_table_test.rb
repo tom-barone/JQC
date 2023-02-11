@@ -21,12 +21,6 @@ class ApplicationsTableTest < ApplicationSystemTestCase
       'DA No.'
     ].each { |header| assert_text header }
 
-    # Request Support button shows my email
-    click_on 'Request Support'
-    assert_text 'mail@tombarone.net'
-    click_on 'Request Support'
-    assert_no_text 'mail@tombarone.net'
-
     # Table values
     assert_text 'PC9001'
     assert_text '3 12 Romito street'
@@ -39,5 +33,24 @@ class ApplicationsTableTest < ApplicationSystemTestCase
     assert_text 'Vic'
     assert_text '123487423'
     assert_text 'Edit'
+  end
+
+  test 'the popovers persist when changing page' do
+    sign_in_test_user
+
+    # Request Support button shows my email
+    click_on 'Request Support'
+    assert_text 'mail@tombarone.net'
+    click_on 'Request Support'
+    assert_no_text 'mail@tombarone.net'
+
+    # Go to an application page
+    edit_application 'PC9001'
+
+    # Request Support button shows my email
+    click_on 'Request Support'
+    assert_text 'mail@tombarone.net'
+    click_on 'Request Support'
+    assert_no_text 'mail@tombarone.net'
   end
 end
