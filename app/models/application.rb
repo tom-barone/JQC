@@ -3,11 +3,8 @@
 class Application < ApplicationRecord
   belongs_to :council, class_name: 'Council', optional: true
   belongs_to :applicant, class_name: 'Client', optional: true
-  belongs_to :applicant_council, class_name: 'Council', optional: true
   belongs_to :owner, class_name: 'Client', optional: true
-  belongs_to :owner_council, class_name: 'Council', optional: true
-  belongs_to :client, class_name: 'Client', optional: true
-  belongs_to :client_council, class_name: 'Council', optional: true
+  belongs_to :contact, class_name: 'Client', optional: true
   belongs_to :suburb, optional: true
   belongs_to :application_type
 
@@ -121,56 +118,17 @@ class Application < ApplicationRecord
     owner ? owner.client_name : nil
   end
 
-  def client_name=(name)
+  def contact_name=(name)
     stripped = name.strip
     if stripped == ''
-      self.client = nil
+      self.contact = nil
       return
     end
-    self.client = Client.find_or_create_by(client_name: stripped)
+    self.contact = Client.find_or_create_by(client_name: stripped)
   end
 
-  def client_name
-    client ? client.client_name : nil
-  end
-
-  def applicant_council_name=(name)
-    stripped = name.strip
-    if stripped == ''
-      self.applicant_council = nil
-      return
-    end
-    self.applicant_council = Council.find_or_create_by(name: stripped)
-  end
-
-  def applicant_council_name
-    applicant_council ? applicant_council.name : nil
-  end
-
-  def owner_council_name=(name)
-    stripped = name.strip
-    if stripped == ''
-      self.owner_council = nil
-      return
-    end
-    self.owner_council = Council.find_or_create_by(name: stripped)
-  end
-
-  def owner_council_name
-    owner_council ? owner_council.name : nil
-  end
-
-  def client_council_name=(name)
-    stripped = name.strip
-    if stripped == ''
-      self.client_council = nil
-      return
-    end
-    self.client_council = Council.find_or_create_by(name: stripped)
-  end
-
-  def client_council_name
-    client_council ? client_council.name : nil
+  def contact_name
+    contact ? contact.client_name : nil
   end
 
   # Emailed reports
@@ -225,7 +183,7 @@ class Application < ApplicationRecord
           a.consent_issued,
           a.created_at as date_entered,
           a.risk_rating,
-          c.client_name,
+          c.contact_name,
           a.building_surveyor,
           a.structural_engineer,
           a.job_type_administration as job_type,
@@ -258,7 +216,7 @@ class Application < ApplicationRecord
           a.consent_issued,
           a.created_at as date_entered,
           a.risk_rating,
-          c.client_name,
+          c.contact_name,
           a.building_surveyor,
           a.structural_engineer,
           a.job_type_administration as job_type,
@@ -279,7 +237,7 @@ class Application < ApplicationRecord
         "select
           i.invoice_date,
           a.reference_number,
-          c.client_name as applicant,
+          c.contact_name as applicant,
           a.invoice_email,
           c.email as applicant_email,
           concat(a.lot_number, ' ', a.street_number, ' ', a.street_name, ' ', s.display_name) as street_address,

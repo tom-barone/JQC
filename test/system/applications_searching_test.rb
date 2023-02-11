@@ -193,7 +193,7 @@ class ApplicationsSearchingTest < ApplicationSystemTestCase
     # Contact
     app = applications(:application_PC5906)
     contact2 = clients(:contact2)
-    app.update!(client: contact2)
+    app.update!(contact: contact2)
     text_search_and_assert('contact2', 'assert', 'PC5906')
     text_search_and_assert('contactzzzz', 'assert_no', 'PC5906')
     text_search_and_assert('contact2 of group2', 'assert', 'PC5906')

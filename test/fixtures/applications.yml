@@ -15,7 +15,7 @@ application_PC1:
   development_application_number: "123487423"
   suburb: suburb1
   council: council1
-  client: contact1
+  contact: contact1
   owner: owner1
   applicant: applicant1
 
@@ -25,7 +25,7 @@ application_PC2:
   reference_number: PC9002
   suburb: suburb1
   council: council1
-  client: contact1
+  contact: contact1
   owner: owner1
   applicant: applicant1
 

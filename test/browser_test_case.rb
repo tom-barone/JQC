@@ -173,8 +173,8 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def application_new_applicant=(applicant) fill_in 'application_applicant_name', with: applicant end
   def application_owner=(owner) select owner, from: 'application_owner_name' end
   def application_new_owner=(owner) fill_in 'application_owner_name', with: owner end
-  def application_contact=(contact) select contact, from: 'application_client_name' end
-  def application_new_contact=(contact) fill_in 'application_client_name', with: contact end
+  def application_contact=(contact) select contact, from: 'application_contact_name' end
+  def application_new_contact=(contact) fill_in 'application_contact_name', with: contact end
   def application_description=(description) fill_in 'application_description', with: description end
   def application_administration_notes=(administration_notes) fill_in 'application_administration_notes', with: administration_notes end
   def application_number_of_storeys=(number_of_storeys) fill_in 'application_number_of_storeys', with: number_of_storeys end
@@ -247,7 +247,7 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_application_development_application_number(development_application_number) assert_field('application_development_application_number', with: development_application_number) end
   def assert_application_applicant(applicant) assert_field('application_applicant_name', with: applicant) end
   def assert_application_owner(owner) assert_field('application_owner_name', with: owner) end
-  def assert_application_contact(contact) assert_field('application_client_name', with: contact) end
+  def assert_application_contact(contact) assert_field('application_contact_name', with: contact) end
   def assert_application_description(description) assert_field('application_description', with: description) end
   def assert_application_administration_notes(administration_notes) assert_field('application_administration_notes', with: administration_notes) end
   def assert_application_number_of_storeys(number_of_storeys) assert_field('application_number_of_storeys', with: number_of_storeys) end
@@ -322,7 +322,7 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_no_application_development_application_number(development_application_number) assert_no_field('application_development_application_number', with: development_application_number) end
   def assert_no_application_applicant(applicant) assert_no_field('application_applicant_name', with: applicant) end
   def assert_no_application_owner(owner) assert_no_field('application_owner_name', with: owner) end
-  def assert_no_application_contact(contact) assert_no_field('application_client_name', with: contact) end
+  def assert_no_application_contact(contact) assert_no_field('application_contact_name', with: contact) end
   def assert_no_application_description(description) assert_no_field('application_description', with: description) end
   def assert_no_application_administration_notes(administration_notes) assert_no_field('application_administration_notes', with: administration_notes) end
   def assert_no_application_number_of_storeys(number_of_storeys) assert_no_field('application_number_of_storeys', with: number_of_storeys) end

@@ -191,18 +191,18 @@
               <div class="row">
                 <div class="col">
                   <div class="field">
-                    <%= form.label :client_name, 'Contact' %>
+                    <%= form.label :contact_name, 'Contact' %>
                     <div class="input-group">
                       <%=
-                        form.text_field :client_name,
+                        form.text_field :contact_name,
                                         list: 'clients',
                                         class: 'editable-association'
                       %>
-                      <% if @application.client_id %>
+                      <% if @application.contact_id %>
                         <%=
                           link_to 'Edit',
                                   edit_client_path(
-                                    @application.client_id ||= 0,
+                                    @application.contact_id ||= 0,
                                   ),
                                   class: 'btn btn-sm btn-outline-secondary',
                                   id: 'application_contact_edit'
