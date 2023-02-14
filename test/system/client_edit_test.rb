@@ -120,7 +120,7 @@ class ClientEditTest < ApplicationSystemTestCase
 
     # Test with an application with no applicant, owner, contact
     app.update!(applicant: nil)
-    app.update!(client: nil)
+    app.update!(contact: nil)
     sleep(1)
     edit_application 'PC9001'
     assert_on_application_edit_page

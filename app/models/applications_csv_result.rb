@@ -12,11 +12,8 @@ class ApplicationsCsvResult < ApplicationRecord
     council
     development_application_number
     applicant
-    applicant_council
     owner
-    owner_council
     contact
-    contact_council
     description
     cancelled
     street_number
@@ -41,9 +38,6 @@ class ApplicationsCsvResult < ApplicationRecord
     consent_issued
     variation_issued
     coo_issued
-    job_type
-    consent
-    certifier
     engineer_certificate_received
     certification_notes
     invoice_to
@@ -56,7 +50,7 @@ class ApplicationsCsvResult < ApplicationRecord
     applicant_email
     created_at
     updated_at
-  ]
+  ].freeze
 
   def self.csv_header
     CSV::Row.new(HEADERS, HEADERS, true)

@@ -30,7 +30,7 @@ class CreateShowcaseScreenshotTest < ApplicationSystemTestCase
           description: Faker::Lorem.sentence(word_count: 4, random_words_to_add: 10),
           applicant_id: Faker::Number.within(range: 1..number_of_applications_to_create),
           owner_id: Faker::Number.within(range: 1..number_of_applications_to_create),
-          client_id: Faker::Number.within(range: 1..number_of_applications_to_create),
+          contact_id: Faker::Number.within(range: 1..number_of_applications_to_create),
           council_id: Faker::Number.within(range: 1..number_of_applications_to_create),
           development_application_number: Faker::Number.number(digits: 10).to_s,
           created_at: Faker::Date.between(from: '2022-09-23', to: '2022-12-20')
