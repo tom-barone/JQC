@@ -3,16 +3,18 @@
 require 'application_system_test_case'
 
 class ExportToCsvTest < ApplicationSystemTestCase
+  def setup_applications_with_data
+    q1 = applications(:application_Q1)
+
+    # Fields that should be included in the export
+    q1.update!(consultancies_review_inspection: Date.new(2021, 4, 28))
+    q1.update!(consultancies_report_sent: Date.new(2021, 4, 29))
+  end
+
   test 'exporting to spreadsheet' do
     sign_in_test_user
 
-    # Setup applications with export data
-    q2 = applications(:application_Q2)
-    q1 = applications(:application_Q1)
-    q2.update!(consultancies_review_inspection: Date.new(2021, 3, 28))
-    q2.update!(consultancies_report_sent: Date.new(2021, 3, 29))
-    q1.update!(consultancies_review_inspection: Date.new(2021, 4, 28))
-    q1.update!(consultancies_report_sent: Date.new(2021, 4, 29))
+    setup_applications_with_data
 
     # Filter the page for all Q's
     self.homepage_search_type = 'Q'
@@ -34,9 +36,13 @@ class ExportToCsvTest < ApplicationSystemTestCase
     assert_equal(export.length, 2)
 
     # Check that the correct values are exported
-    assert_equal(export[0]['consultancies_review_inspection'], '2021-03-28')
-    assert_equal(export[0]['consultancies_report_sent'], '2021-03-29')
     assert_equal(export[1]['consultancies_review_inspection'], '2021-04-28')
     assert_equal(export[1]['consultancies_report_sent'], '2021-04-29')
+
+    # Check that the correct values are excluded
+    assert_not(export[0].key?('care_of'))
+    assert_not(export[0].key?('attention'))
+    assert_not(export[0].key?('purchase_order_number'))
+    assert_not(export[0].key?('invoice_debtor_notes'))
   end
 end

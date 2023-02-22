@@ -43,12 +43,8 @@ class ApplicationsCsvResult < ApplicationRecord
     engineer_certificate_received
     certification_notes
     invoice_to
-    care_of
     invoice_email
-    attention
-    purchase_order_number
     fully_invoiced
-    invoice_debtor_notes
     applicant_email
     created_at
     updated_at

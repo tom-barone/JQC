@@ -33,7 +33,7 @@ trigger-report-mailers:
 	curl --header "X-Appengine-Cron: true" http://localhost:3000/crons/last_month_csv_reports
 
 deploy-staging: guard-GOOGLE_APP_ENGINE_PROJECT
-	$(MAKE) copy-production-database TARGET=STAGING
+	RAILS_ENV=staging TARGET=STAGING $(MAKE) copy-production-database
 	RAILS_ENV=staging bundle exec bin/rails db:migrate
 	RAILS_ENV=staging bundle exec bin/rails db:add_staging_user
 	RAILS_ENV=staging bundle exec bin/rails assets:precompile
@@ -59,7 +59,7 @@ collect-javascript-coverage:
 	@echo 'Point the coverage results back to the clean app/javascript folder'
 	find ci -name '*.info' -o -name '*.json' -o -name '*.xml' | xargs sed -i 's@tmp/_javascript@app/javascript@g'
 
-copy-production-database: guard-TARGET
+copy-production-database: guard-RAILS_ENV guard-TARGET
 	@echo 'Copying the PROD database to $(TARGET)'
 	bundle exec bin/rails db:copy_prod
 
