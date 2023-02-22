@@ -204,6 +204,8 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def application_add_stage(date, text) within('.stages-table') { click_on 'Add'; all('input[type="date"]').last.fill_in with: date; all('select').last.select text } end
   def application_remove_stage() within('.stages-table') { all('.remove_fields').last.click } end
   def application_risk_rating=(risk_rating) select risk_rating, from: 'application_risk_rating' end
+  def application_consultancies_review_inspection=(consultancies_review_inspection) fill_in 'application_consultancies_review_inspection', with: consultancies_review_inspection end
+  def application_consultancies_report_sent=(consultancies_report_sent) fill_in 'application_consultancies_report_sent', with: consultancies_report_sent end
   def application_consent_issued=(consent_issued) fill_in 'application_consent_issued', with: consent_issued end
   def application_variation_issued=(variation_issued) fill_in 'application_variation_issued', with: variation_issued end
   def application_coo_issued=(coo_issued) fill_in 'application_coo_issued', with: coo_issued end
@@ -273,6 +275,8 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_application_rfi(date, at:) within(all('.rfis-table .nested-fields').at(at)) { assert_field('Request for information date', with: date) } end
   def assert_application_stage(date, text, at:) within(all('.stages-table .nested-fields').at(at)) { assert_field('Stage date', with: date); assert_select('Stage text', selected: text) } end
   def assert_application_risk_rating(risk_rating) assert_select('application_risk_rating', selected: risk_rating) end
+  def assert_application_consultancies_review_inspection(consultancies_review_inspection) assert_field('application_consultancies_review_inspection', with: consultancies_review_inspection) end
+  def assert_application_consultancies_report_sent(consultancies_report_sent) assert_field('application_consultancies_report_sent', with: consultancies_report_sent) end
   def assert_application_consent_issued(consent_issued) assert_field('application_consent_issued', with: consent_issued) end
   def assert_application_variation_issued(variation_issued) assert_field('application_variation_issued', with: variation_issued) end
   def assert_application_coo_issued(coo_issued) assert_field('application_coo_issued', with: coo_issued) end
@@ -348,6 +352,8 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_no_application_rfi(date, at:) within(all('.rfis-table .nested-fields').at(at)) { assert_no_field('Request for information date', with: date) } end
   def assert_no_application_stage(date, text, at:) within(all('.stages-table .nested-fields').at(at)) { assert_no_field('Stage date', with: date); assert_no_select('Stage text', selected: text) } end
   def assert_no_application_risk_rating(risk_rating) assert_no_select('application_risk_rating', selected: risk_rating) end
+  def assert_no_application_consultancies_review_inspection(consultancies_review_inspection) assert_no_field('application_consultancies_review_inspection', with: consultancies_review_inspection) end
+  def assert_no_application_consultancies_report_sent(consultancies_report_sent) assert_no_field('application_consultancies_report_sent', with: consultancies_report_sent) end
   def assert_no_application_consent_issued(consent_issued) assert_no_field('application_consent_issued', with: consent_issued) end
   def assert_no_application_variation_issued(variation_issued) assert_no_field('application_variation_issued', with: variation_issued) end
   def assert_no_application_coo_issued(coo_issued) assert_no_field('application_coo_issued', with: coo_issued) end

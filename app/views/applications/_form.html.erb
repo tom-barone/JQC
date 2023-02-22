@@ -311,7 +311,7 @@
                 <%= form.date_field :section_93A %>
               </div>
             </div>
-            <div class="col-1">
+            <div class="col-2">
               <div class="field">
                 <%= form.label :electronic_lodgement %>
                 <%= form.check_box :electronic_lodgement %>
@@ -384,7 +384,10 @@
               </table>
             </div>
           </div>
-          <div id="uploaded-table" class="row h-50 flex-column risk-rating-not-set">
+          <div
+            id="uploaded-table"
+            class="row h-50 flex-column risk-rating-not-set"
+          >
             <div>
               <table class="table table-sm mb-0" style="table-layout: fixed">
                 <thead>
@@ -430,7 +433,7 @@
         <div class="row">
           <div class="col">
             <div class="field">
-              <%= form.label :building_surveyor %>
+              <%= form.label :building_surveyor, style: 'font-size:smaller' %>
               <%=
                 form.select :building_surveyor, Application::BUILDING_SURVEYOR
               %>
@@ -438,13 +441,17 @@
           </div>
           <div class="col">
             <div class="field">
-              <%= form.label :assessment_commenced, 'Assessment Assigned' %>
+              <%=
+                form.label :assessment_commenced,
+                           'Assessment Assigned',
+                           style: 'font-size:smaller'
+              %>
               <%= form.date_field :assessment_commenced %>
             </div>
           </div>
           <div class="col">
             <div class="field">
-              <%= form.label :structural_engineer %>
+              <%= form.label :structural_engineer, style: 'font-size:smaller' %>
               <%=
                 form.select :structural_engineer,
                             Application::STRUCTURAL_ENGINEER
@@ -453,8 +460,14 @@
           </div>
           <div class="col">
             <div class="field">
-              <%= form.label :external_engineer_date, 'External engineer' %>
+              <%= form.label :external_engineer_date, 'External engineer', style: 'font-size:smaller'%>
               <%= form.date_field :external_engineer_date %>
+            </div>
+          </div>
+          <div class="col">
+            <div class="field">
+              <%= form.label :risk_rating, style: 'font-size:smaller' %>
+              <%= form.select :risk_rating, Application::RISK_RATING %>
             </div>
           </div>
         </div>
@@ -538,30 +551,36 @@
         <div class="row">
           <div class="col">
             <div class="field">
-              <%= form.label :risk_rating %>
-              <%= form.select :risk_rating, Application::RISK_RATING %>
+              <%= form.label :consultancies_review_inspection, "C Review/Inspection", style: 'font-size:smaller' %>
+              <%= form.date_field :consultancies_review_inspection %>
             </div>
           </div>
           <div class="col">
             <div class="field">
-              <%= form.label :consent_issued %>
+              <%= form.label :consultancies_report_sent, "C Report Sent", style: 'font-size:smaller' %>
+              <%= form.date_field :consultancies_report_sent %>
+            </div>
+          </div>
+          <div class="col">
+            <div class="field">
+              <%= form.label :consent_issued, style: 'font-size:smaller' %>
               <%= form.date_field :consent_issued %>
             </div>
           </div>
           <div class="col">
             <div class="field">
-              <%= form.label :variation_issued %>
+              <%= form.label :variation_issued, style: 'font-size:smaller' %>
               <%= form.date_field :variation_issued %>
-            </div>
-          </div>
-          <div class="col">
-            <div class="field">
-              <%= form.label :coo_issued %>
-              <%= form.date_field :coo_issued %>
             </div>
           </div>
         </div>
         <div class="row">
+          <div class="col-3">
+            <div class="field">
+              <%= form.label :coo_issued, style: 'font-size:smaller' %>
+              <%= form.date_field :coo_issued %>
+            </div>
+          </div>
           <div class="col-3">
             <div class="field">
               <%=
