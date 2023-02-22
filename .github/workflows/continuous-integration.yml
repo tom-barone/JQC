@@ -74,6 +74,7 @@ jobs:
       RAILS_DATABASE_SOCKET: 'null'
       RAILS_DATABASE_HOST: '127.0.0.1'
       RAILS_DATABASE_PORT: 3306
+      GOOGLE_APP_ENGINE_PROJECT: ${{ secrets.GOOGLE_APP_ENGINE_PROJECT }}
     steps:
       - name: 'Checkout code'
         uses: 'actions/checkout@v3'
@@ -101,20 +102,8 @@ jobs:
       - name: 'Add staging key to config dir'
         run: 'echo "${{ secrets.RAILS_CREDENTIALS_STAGING_KEY }}" > config/credentials/staging.key'
 
-      - name: 'Copy the production database to the staging database'
-        run: 'bundle exec bin/rails db:copy_prod TARGET=STAGING'
-
-      - name: 'Migrate the staging database'
-        run: 'bundle exec bin/rails db:migrate'
-
-      - name: 'Add the staging user to the database'
-        run: 'bundle exec bin/rails db:add_staging_user'
-
-      - name: 'Compile SCSS and JS assets'
-        run: 'bundle exec bin/rails assets:precompile'
-
-      - name: 'Deploy staging site'
-        run: 'gcloud app deploy GAE_staging.yaml --project=${{ secrets.GOOGLE_APP_ENGINE_PROJECT }} --version=staging --no-promote --no-cache --quiet'
+      - name: 'Deploy the staging site'
+        run: 'make deploy-staging'
 
   test_staging:
     needs: ['deploy_staging']
@@ -123,7 +112,6 @@ jobs:
     env:
       RAILS_ENV: 'staging'
       RAILS_MASTER_KEY: ${{ secrets.RAILS_CREDENTIALS_STAGING_KEY }}
-      TEST_HOST: ${{ secrets.STAGING_URL }}
     steps:
       - name: 'Checkout code'
         uses: 'actions/checkout@v3'
@@ -134,4 +122,4 @@ jobs:
           bundler-cache: true
 
       - name: 'Run tests against the staging site'
-        run: 'ruby production/sign_in_and_check_table_test.rb'
+        run: 'TEST_HOST=${{ secrets.STAGING_URL }} make test-live-site'
