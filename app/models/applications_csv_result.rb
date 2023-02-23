@@ -44,6 +44,7 @@ class ApplicationsCsvResult < ApplicationRecord
     certification_notes
     invoice_to
     invoice_email
+    invoice_numbers
     fully_invoiced
     applicant_email
     created_at
