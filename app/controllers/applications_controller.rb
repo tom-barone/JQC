@@ -180,6 +180,8 @@ class ApplicationsController < ApplicationController
         :structural_engineer,
         :external_engineer_date,
         :risk_rating,
+        :consultancies_review_inspection,
+        :consultancies_report_sent,
         :assessment_commenced,
         :request_for_information_issued,
         :consent_issued,

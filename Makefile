@@ -22,16 +22,27 @@ test: clean install
 	RAILS_ENV=test COVERAGE=true bundle exec bin/rails test:all
 	$(MAKE) collect-javascript-coverage
 
-build:
-	bundle exec bin/rails assets:precompile
+test-live-site: guard-TEST_HOST install
+	ruby production/sign_in_and_check_table_test.rb
 
 dev: install
 	RAILS_ENV=development bundle exec bin/rails server
 
-# Secondary targets
+trigger-report-mailers:
+	@echo 'Hitting the last_month_csv_report endpoint'
+	curl --header "X-Appengine-Cron: true" http://localhost:3000/crons/last_month_csv_reports
+
+deploy-staging: guard-GOOGLE_APP_ENGINE_PROJECT
+	RAILS_ENV=staging TARGET=STAGING $(MAKE) copy-production-database
+	RAILS_ENV=staging bundle exec bin/rails db:migrate
+	RAILS_ENV=staging bundle exec bin/rails db:add_staging_user
+	RAILS_ENV=staging bundle exec bin/rails assets:precompile
+	gcloud app deploy GAE_staging.yaml --project=$(GOOGLE_APP_ENGINE_PROJECT) --version=staging --no-promote --no-cache --quiet
 
 run-cloud-sql-proxy: guard-GOOGLE_CLOUD_SQL_INSTANCE
 	cloud_sql_proxy -instances=$(GOOGLE_CLOUD_SQL_INSTANCE)=tcp:3306
+
+# Secondary targets
 
 instrument-javascript-code:
 	@echo 'Instrumenting the javascript to allow for coverage reporting'
@@ -48,12 +59,9 @@ collect-javascript-coverage:
 	@echo 'Point the coverage results back to the clean app/javascript folder'
 	find ci -name '*.info' -o -name '*.json' -o -name '*.xml' | xargs sed -i 's@tmp/_javascript@app/javascript@g'
 
-test-report-mailers:
-	@echo 'Hitting the last_month_csv_report endpoint'
-	curl --header "X-Appengine-Cron: true" http://localhost:3000/crons/last_month_csv_reports
-
-copy-production-database-to-development:
-	bundle exec bin/rails db:copy_prod TARGET=DEV
+copy-production-database: guard-RAILS_ENV guard-TARGET
+	@echo 'Copying the PROD database to $(TARGET)'
+	bundle exec bin/rails db:copy_prod
 
 # Safety targets
 

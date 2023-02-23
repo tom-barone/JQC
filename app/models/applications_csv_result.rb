@@ -33,6 +33,8 @@ class ApplicationsCsvResult < ApplicationRecord
     structural_engineer
     external_engineer_date
     risk_rating
+    consultancies_review_inspection
+    consultancies_report_sent
     assessment_commenced
     request_for_information_dates
     consent_issued
@@ -41,12 +43,9 @@ class ApplicationsCsvResult < ApplicationRecord
     engineer_certificate_received
     certification_notes
     invoice_to
-    care_of
     invoice_email
-    attention
-    purchase_order_number
+    invoice_numbers
     fully_invoiced
-    invoice_debtor_notes
     applicant_email
     created_at
     updated_at
