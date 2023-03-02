@@ -176,32 +176,35 @@ class Application < ApplicationRecord
     three_months_ago = (this_month << 3).to_s
     convert_to_csv(
       ActiveRecord::Base.connection.exec_query(
-        "select
-          a.reference_number,
-          a.assessment_commenced as assessment_started,
-          a.request_for_information_issued,
-          a.consent_issued,
-          a.created_at as date_entered,
-          a.risk_rating,
-          c.contact_name,
-          a.building_surveyor,
-          a.structural_engineer,
-          a.job_type_administration as job_type,
-          a.description
-      from applications a
-      left join clients c on c.id = a.applicant_id
-      where
-          a.reference_number like 'PC%' and
-          a.consent_issued is null and
-          a.assessment_commenced is not null and
-          (
-              -- 3 months have passed since assesment and no RFI date
-              a.request_for_information_issued is null and a.assessment_commenced <= '#{three_months_ago}' or
-              -- 3 months have passed since the RFI date
-              a.request_for_information_issued is not null and
-              a.request_for_information_issued <= '#{three_months_ago}'
-          ) and cancelled is not true
-      order by date_entered asc"
+        "select a.reference_number,
+               a.assessment_commenced as assessment_started,
+               rfi.latest_request_for_information_date,
+               a.consent_issued,
+               a.created_at as date_entered,
+               a.risk_rating,
+               c.client_name,
+               a.building_surveyor,
+               a.structural_engineer,
+               a.job_type_administration as job_type,
+               a.description
+        from applications a
+        left join clients c on c.id = a.applicant_id
+        left join
+          (select application_id,
+                  MAX(request_for_information_date) as latest_request_for_information_date
+           from request_for_informations
+           group by application_id) as rfi on a.id = rfi.application_id
+        where a.reference_number like 'PC%'
+          and a.consent_issued is null
+          and a.assessment_commenced is not null
+          and (-- 3 months have passed since assesment and no RFI date
+         rfi.latest_request_for_information_date is null
+               and a.assessment_commenced <= '#{three_months_ago}'
+               or -- 3 months have passed since the RFI date
+         rfi.latest_request_for_information_date is not null
+               and rfi.latest_request_for_information_date <= '#{three_months_ago}')
+          and cancelled is not true
+        order by date_entered asc"
       )
     )
   end
@@ -216,12 +219,11 @@ class Application < ApplicationRecord
           a.consent_issued,
           a.created_at as date_entered,
           a.risk_rating,
-          c.contact_name,
+          c.client_name,
           a.building_surveyor,
           a.structural_engineer,
           a.job_type_administration as job_type,
-          a.assessment_commenced as assessment_started,
-          a.consent
+          a.assessment_commenced as assessment_started
       from applications a
       left join clients c on c.id = a.applicant_id
       where a.reference_number like 'PC%' and
@@ -237,7 +239,7 @@ class Application < ApplicationRecord
         "select
           i.invoice_date,
           a.reference_number,
-          c.contact_name as applicant,
+          c.client_name as applicant,
           a.invoice_email,
           c.email as applicant_email,
           concat(a.lot_number, ' ', a.street_number, ' ', a.street_name, ' ', s.display_name) as street_address,

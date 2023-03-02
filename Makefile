@@ -28,9 +28,9 @@ test-live-site: guard-TEST_HOST install
 dev: install
 	RAILS_ENV=development bundle exec bin/rails server
 
-trigger-report-mailers:
+test-report-mailers: guard-REPORT_MAILER_ENDPOINT
 	@echo 'Hitting the last_month_csv_report endpoint'
-	curl --header "X-Appengine-Cron: true" http://localhost:3000/crons/last_month_csv_reports
+	curl --fail --header "X-Appengine-Cron: true" $(REPORT_MAILER_ENDPOINT)
 
 deploy-staging: guard-GOOGLE_APP_ENGINE_PROJECT
 	RAILS_ENV=staging TARGET=STAGING $(MAKE) copy-production-database
