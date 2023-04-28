@@ -120,7 +120,7 @@ GEM
     erubi (1.11.0)
     faker (3.0.0)
       i18n (>= 1.8.11, < 2)
-    faraday (2.7.1)
+    faraday (2.7.4)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
     faraday-net_http (3.0.2)
@@ -231,8 +231,6 @@ GEM
     msgpack (1.6.0)
     multi_json (1.15.0)
     mysql2 (0.5.4)
-    net-http (0.2.2)
-      uri
     net-imap (0.3.1)
       net-protocol
     net-pop (0.1.2)
@@ -396,7 +394,6 @@ GEM
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.3.0)
-    uri (0.10.0)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (4.2.0)
@@ -437,7 +434,6 @@ DEPENDENCIES
   jbuilder
   minitest-reporters
   mysql2 (~> 0.5)
-  net-http (= 0.2.2)
   pagy (~> 3.10)
   prettier_print
   puma (~> 4.1)
@@ -457,7 +453,6 @@ DEPENDENCIES
   syntax_tree-rbs
   turbo-rails
   tzinfo-data
-  uri (= 0.10.0)
   web-console
   webdrivers
 
