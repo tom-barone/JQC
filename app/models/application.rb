@@ -34,7 +34,7 @@ class Application < ApplicationRecord
   accepts_nested_attributes_for :invoices, allow_destroy: true
 
   JOB_TYPE_ADMINISTRATION = ['Residential', 'Commercial', 'Section 49'].freeze
-  BUILDING_SURVEYOR = %w[Vic Darryl Kanchanie Simon Sam Matt Frank].freeze
+  BUILDING_SURVEYOR = %w[Vic Darryl Kanchanie Simon Matt Frank].freeze
   STRUCTURAL_ENGINEER = [
     'Jack Adcock',
     'Triaxial',
