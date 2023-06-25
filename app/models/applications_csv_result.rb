@@ -20,7 +20,6 @@ class ApplicationsCsvResult < ApplicationRecord
     lot_number
     street_name
     suburb
-    section_93A
     electronic_lodgement
     hard_copy
     job_type_administration

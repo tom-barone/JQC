@@ -42,6 +42,10 @@ deploy-staging: guard-GOOGLE_APP_ENGINE_PROJECT
 run-cloud-sql-proxy: guard-GOOGLE_CLOUD_SQL_INSTANCE
 	cloud_sql_proxy -instances=$(GOOGLE_CLOUD_SQL_INSTANCE)=tcp:3306
 
+backup: guard-BACKUP_LOCATION
+	RAILS_ENV=production rails db:download_prod
+	mv *.sql $(BACKUP_LOCATION)
+
 # Secondary targets
 
 instrument-javascript-code:

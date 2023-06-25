@@ -20,7 +20,6 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_street_name = 'Romito Street'
     self.application_suburb = 'SUBURB1, SA XXXX'
     self.application_fee_amount = '3453.0'
-    self.application_section_93a = Date.new(2022, 7, 2)
     self.application_electronic_lodgement = true
     self.application_hard_copy = true
     self.application_job_type_administration = 'Residential'
@@ -52,8 +51,8 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_attention = 'the bosses'
     self.application_purchase_order_number = '5554'
     self.application_invoice_debtor_notes = 'debtor notes this that other'
-    application_add_invoice(Date.new(2022, 11, 13), 'stage1', '12', '44.4', '2', '1.2', '', '55', true)
-    application_add_invoice(Date.new(2023, 11, 13), 'stage2', '1.0', '82.4', '2.0', '', '', '99', false)
+    application_add_invoice(Date.new(2022, 11, 13), 'stage1', '12', '', '55', true)
+    application_add_invoice(Date.new(2023, 11, 13), 'stage2', '1.0', '2.0', '99', false)
     self.application_fully_invoiced = true
     self.application_cancelled = false
     sleep(1)
@@ -76,7 +75,6 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_street_name = 'Rondonelli Street'
     self.application_suburb = 'SUBURB2, SA XXXX'
     self.application_fee_amount = '4453.0'
-    self.application_section_93a = Date.new(2022, 8, 2)
     self.application_electronic_lodgement = false
     self.application_hard_copy = false
     self.application_job_type_administration = 'Commercial'
@@ -118,8 +116,8 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_invoice_debtor_notes = 'No debtor notes'
     application_remove_invoice
     application_remove_invoice
-    application_add_invoice(Date.new(2022, 10, 13), 'stage3', '13', '49.4', '3', '3.2', '9', '66', false)
-    application_add_invoice(Date.new(2023, 10, 13), 'stage4', '3.0', '83.4', '3.0', '9', '10', '67', true)
+    application_add_invoice(Date.new(2022, 10, 13), 'stage3', '43.2', '3', '66', false)
+    application_add_invoice(Date.new(2023, 10, 13), 'stage4', '', '3.0', '67', true)
     self.application_fully_invoiced = false
     self.application_cancelled = true
     sleep(1)
@@ -144,7 +142,6 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     assert_application_street_name('Romito Street')
     assert_application_suburb('SUBURB1, SA XXXX')
     assert_application_fee_amount('3453.0')
-    assert_application_section_93a('2022-07-02')
     assert_application_electronic_lodgement(true)
     assert_application_hard_copy(true)
     assert_application_job_type_administration('Residential')
@@ -176,9 +173,9 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     assert_application_attention('the bosses')
     assert_application_purchase_order_number('5554')
     assert_application_invoice_debtor_notes('debtor notes this that other')
-    assert_application_invoice('2022-11-13', 'stage1', '12', '44.4', '5.64', '2', '1.2', '', '55', true, at: 0)
-    assert_application_invoice('2023-11-13', 'stage2', '1', '82.4', '8.34', '2', '', '', '99', false, at: 1)
-    assert_application_invoice_total('$ 13.00', '$ 126.80', '$ 13.98', '$ 4.00', '$ 1.20', '$ 0.00')
+    assert_application_invoice('2022-11-13', 'stage1', '12', '1.2', '', '55', true, at: 0)
+    assert_application_invoice('2023-11-13', 'stage2', '1', '0.1', '2', '99', false, at: 1)
+    assert_application_invoice_total('$ 13.00', '$ 1.30', '$ 2.00')
     assert_application_fully_invoiced(true)
     assert_application_cancelled(false)
   end
@@ -201,7 +198,6 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     assert_no_application_street_name('Romito Street')
     assert_no_application_suburb('SUBURB1, SA XXXX')
     assert_no_application_fee_amount('3453.0')
-    assert_no_application_section_93a('2022-07-02')
     assert_no_application_electronic_lodgement(true)
     assert_no_application_hard_copy(true)
     assert_no_application_job_type_administration('Residential')
@@ -233,9 +229,9 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     assert_no_application_attention('the bosses')
     assert_no_application_purchase_order_number('5554')
     assert_no_application_invoice_debtor_notes('debtor notes this that other')
-    assert_no_application_invoice('2022-11-13', 'stage1', '12', '44.4', '5.64', '2', '1.2', '', '55', true, at: 0)
-    assert_no_application_invoice('2023-11-13', 'stage2', '1', '82.4', '8.34', '2', '', '', '99', false, at: 1)
-    assert_no_application_invoice_total('$ 13.00', '$ 126.80', '$ 13.98', '$ 4.00', '$ 1.20', '$ 0.00')
+    assert_no_application_invoice('2022-11-13', 'stage1', '12', '1.2', '', '55', true, at: 0)
+    assert_no_application_invoice('2023-11-13', 'stage2', '1', '0.1', '2', '99', false, at: 1)
+    assert_no_application_invoice_total('$ 13.00', '$ 1.30', '$ 2.00')
     assert_no_application_fully_invoiced(true)
     assert_no_application_cancelled(false)
   end

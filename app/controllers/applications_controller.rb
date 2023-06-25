@@ -167,7 +167,6 @@ class ApplicationsController < ApplicationController
         :lot_number,
         :street_name,
         :suburb_display_name,
-        :section_93A,
         :electronic_lodgement,
         :hard_copy,
         :job_type_administration,
