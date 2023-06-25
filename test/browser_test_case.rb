@@ -184,7 +184,6 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def application_street_name=(street_name) fill_in 'application_street_name', with: street_name end
   def application_suburb=(suburb) select suburb, from: 'application_suburb_display_name' end
   def application_fee_amount=(fee_amount) fill_in 'application_fee_amount', with: fee_amount end
-  def application_section_93a=(section_93a) fill_in 'application_section_93A', with: section_93a end
   def application_electronic_lodgement=(electronic_lodgement) electronic_lodgement ? check('application_electronic_lodgement') : uncheck('application_electronic_lodgement') end
   def application_hard_copy=(hard_copy) hard_copy ? check('application_hard_copy') : uncheck('application_hard_copy')  end
   def application_job_type_administration=(job_type_administration) select job_type_administration, from: 'application_job_type_administration' end
@@ -256,7 +255,6 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_application_street_name(street_name) assert_field('application_street_name', with: street_name) end
   def assert_application_suburb(suburb) assert_field('application_suburb_display_name', with: suburb) end
   def assert_application_fee_amount(fee_amount) assert_field('application_fee_amount', with: fee_amount) end
-  def assert_application_section_93a(section_93a) assert_field('application_section_93A', with: section_93a) end
   def assert_application_electronic_lodgement(electronic_lodgement) electronic_lodgement ? assert_checked_field('application_electronic_lodgement') : assert_unchecked_field('application_electronic_lodgement') end
   def assert_application_hard_copy(hard_copy) hard_copy ? assert_checked_field('application_hard_copy') : assert_unchecked_field('application_hard_copy') end
   def assert_application_job_type_administration(job_type_administration) assert_select('application_job_type_administration', selected: job_type_administration) end
@@ -327,7 +325,6 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_no_application_street_name(street_name) assert_no_field('application_street_name', with: street_name) end
   def assert_no_application_suburb(suburb) assert_no_field('application_suburb_display_name', with: suburb) end
   def assert_no_application_fee_amount(fee_amount) assert_no_field('application_fee_amount', with: fee_amount) end
-  def assert_no_application_section_93a(section_93a) assert_no_field('application_section_93A', with: section_93a) end
   def assert_no_application_electronic_lodgement(electronic_lodgement) electronic_lodgement ? assert_no_checked_field('application_electronic_lodgement') : assert_no_unchecked_field('application_electronic_lodgement') end
   def assert_no_application_hard_copy(hard_copy) hard_copy ? assert_no_checked_field('application_hard_copy') : assert_no_unchecked_field('application_hard_copy') end
   def assert_no_application_job_type_administration(job_type_administration) assert_no_select('application_job_type_administration', selected: job_type_administration) end

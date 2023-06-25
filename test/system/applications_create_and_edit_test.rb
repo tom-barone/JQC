@@ -20,7 +20,6 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_street_name = 'Romito Street'
     self.application_suburb = 'SUBURB1, SA XXXX'
     self.application_fee_amount = '3453.0'
-    self.application_section_93a = Date.new(2022, 7, 2)
     self.application_electronic_lodgement = true
     self.application_hard_copy = true
     self.application_job_type_administration = 'Residential'
@@ -76,7 +75,6 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_street_name = 'Rondonelli Street'
     self.application_suburb = 'SUBURB2, SA XXXX'
     self.application_fee_amount = '4453.0'
-    self.application_section_93a = Date.new(2022, 8, 2)
     self.application_electronic_lodgement = false
     self.application_hard_copy = false
     self.application_job_type_administration = 'Commercial'
@@ -144,7 +142,6 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     assert_application_street_name('Romito Street')
     assert_application_suburb('SUBURB1, SA XXXX')
     assert_application_fee_amount('3453.0')
-    assert_application_section_93a('2022-07-02')
     assert_application_electronic_lodgement(true)
     assert_application_hard_copy(true)
     assert_application_job_type_administration('Residential')
@@ -201,7 +198,6 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     assert_no_application_street_name('Romito Street')
     assert_no_application_suburb('SUBURB1, SA XXXX')
     assert_no_application_fee_amount('3453.0')
-    assert_no_application_section_93a('2022-07-02')
     assert_no_application_electronic_lodgement(true)
     assert_no_application_hard_copy(true)
     assert_no_application_job_type_administration('Residential')
