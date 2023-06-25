@@ -19,18 +19,6 @@
                    }
     %>
   </td>
-  <td class="invoice-table-insurance-levy invoice-insurance-levy-cell">
-    <%= f.label :insurance_levy, class: 'd-none' %>
-    <%=
-      f.text_field :insurance_levy,
-                   type: 'number',
-                   min: '0',
-                   step: 'any',
-                   data: {
-                     action: 'change->invoice-table#updateGstAndTotals',
-                   }
-    %>
-  </td>
   <td class="invoice-table-gst invoice-gst-cell">
     <%= f.label :gst, class: 'd-none' %>
     <%=
@@ -39,6 +27,7 @@
                    min: '0',
                    step: 'any',
                    readonly: true,
+                   disabled: true,
                    data: {
                      action: 'change->invoice-table#updateGstAndTotals',
                    }
@@ -48,30 +37,6 @@
     <%= f.label :admin_fee, class: 'd-none' %>
     <%=
       f.text_field :admin_fee,
-                   type: 'number',
-                   min: '0',
-                   step: 'any',
-                   data: {
-                     action: 'change->invoice-table#updateGstAndTotals',
-                   }
-    %>
-  </td>
-  <td class="invoice-table-dac invoice-dac-cell">
-    <%= f.label :dac, class: 'd-none' %>
-    <%=
-      f.text_field :dac,
-                   type: 'number',
-                   min: '0',
-                   step: 'any',
-                   data: {
-                     action: 'change->invoice-table#updateGstAndTotals',
-                   }
-    %>
-  </td>
-  <td class="invoice-table-lodgement invoice-lodgement-cell">
-    <%= f.label :lodgement, class: 'd-none' %>
-    <%=
-      f.text_field :lodgement,
                    type: 'number',
                    min: '0',
                    step: 'any',

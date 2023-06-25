@@ -460,7 +460,11 @@
           </div>
           <div class="col">
             <div class="field">
-              <%= form.label :external_engineer_date, 'External engineer', style: 'font-size:smaller'%>
+              <%=
+                form.label :external_engineer_date,
+                           'External engineer',
+                           style: 'font-size:smaller'
+              %>
               <%= form.date_field :external_engineer_date %>
             </div>
           </div>
@@ -551,13 +555,21 @@
         <div class="row">
           <div class="col">
             <div class="field">
-              <%= form.label :consultancies_review_inspection, "C Review/Inspection", style: 'font-size:smaller' %>
+              <%=
+                form.label :consultancies_review_inspection,
+                           'C Review/Inspection',
+                           style: 'font-size:smaller'
+              %>
               <%= form.date_field :consultancies_review_inspection %>
             </div>
           </div>
           <div class="col">
             <div class="field">
-              <%= form.label :consultancies_report_sent, "C Report Sent", style: 'font-size:smaller' %>
+              <%=
+                form.label :consultancies_report_sent,
+                           'C Report Sent',
+                           style: 'font-size:smaller'
+              %>
               <%= form.date_field :consultancies_report_sent %>
             </div>
           </div>
@@ -655,11 +667,8 @@
                   <td class="invoice-table-date">Date</td>
                   <td class="invoice-table-stage">Stage</td>
                   <td class="invoice-table-fee">KD Fee</td>
-                  <td class="invoice-table-insurance-levy">Ins. levy</td>
                   <td class="invoice-table-gst">GST</td>
-                  <td class="invoice-table-admin-fee">Admin</td>
-                  <td class="invoice-table-dac">DAC</td>
-                  <td class="invoice-table-lodgement">Ldgmt.</td>
+                  <td class="invoice-table-admin-fee">Admin Fee</td>
                   <td class="invoice-table-invoice-number">Invoice no.</td>
                   <td class="invoice-table-paid">Paid</td>
                   <td class="invoice-table-buttons"></td>
@@ -684,14 +693,8 @@
                   <td class="invoice-table-date">Totals</td>
                   <td></td>
                   <td class="invoice-table-fee" id="fee-total"></td>
-                  <td
-                    class="invoice-table-insurance-levy"
-                    id="insurance-levy-total"
-                  ></td>
                   <td class="invoice-table-gst" id="gst-total"></td>
                   <td class="invoice-table-admin-fee" id="admin-total"></td>
-                  <td class="invoice-table-dac" id="dac-total"></td>
-                  <td class="invoice-table-lodgement" id="lodgement-total"></td>
                   <td class="invoice-table-invoice-number">
                     <%= form.label :fully_invoiced, 'Fully invoiced' %>
                   </td>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_23_100016) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_25_071946) do
   create_table "application_additional_informations", id: :integer, charset: "utf8", force: :cascade do |t|
     t.date "info_date"
     t.text "info_text"
@@ -146,9 +146,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_23_100016) do
     t.decimal "fee", precision: 13, scale: 2
     t.decimal "gst", precision: 13, scale: 2
     t.decimal "admin_fee", precision: 13, scale: 2
-    t.decimal "dac", precision: 13, scale: 2
-    t.decimal "lodgement", precision: 13, scale: 2
-    t.decimal "insurance_levy", precision: 13, scale: 2
     t.date "invoice_date"
     t.boolean "paid"
     t.integer "application_id"

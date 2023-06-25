@@ -220,17 +220,14 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def application_remove_invoice() within('.invoice-table') { all('.remove_fields').last.click } end
   def application_fully_invoiced=(fully_invoiced) fully_invoiced ? check('application_fully_invoiced') : uncheck('application_fully_invoiced') end
   def application_cancelled=(cancelled) cancelled ? check('application_cancelled') : uncheck('application_cancelled') end
-  def application_add_invoice(invoice_date, stage, fee, insurance_levy, admin_fee, dac, lodgement, invoice_number, paid)
+  def application_add_invoice(invoice_date, stage, fee, admin_fee, invoice_number, paid)
     within('.invoice-table') { click_on 'Add' }
     within('.invoice-fields') do
       all('.invoice-date-cell input').last.fill_in with: invoice_date
       all('.invoice-stage-cell input').last.fill_in with: stage
       all('.invoice-fee-cell input').last.fill_in with: fee
-      all('.invoice-insurance-levy-cell input').last.fill_in with: insurance_levy
       # all('.invoice-gst-cell input').last.fill_in with: gst
       all('.invoice-admin-cell input').last.fill_in with: admin_fee
-      all('.invoice-dac-cell input').last.fill_in with: dac
-      all('.invoice-lodgement-cell input').last.fill_in with: lodgement
       all('.invoice-invoice-number-cell input').last.fill_in with: invoice_number
       paid ? all('.invoice-paid-cell input[type="checkbox"]').last.check : all('.invoice-paid-cell input[type="checkbox"]').last.uncheck
     end
@@ -290,28 +287,22 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_application_invoice_debtor_notes(invoice_debtor_notes) assert_field('application_invoice_debtor_notes', with: invoice_debtor_notes) end
   def assert_application_fully_invoiced(fully_invoiced) fully_invoiced ? assert_checked_field('application_fully_invoiced') : assert_unchecked_field('application_fully_invoiced') end
   def assert_application_cancelled(cancelled) cancelled ? assert_checked_field('application_cancelled') : assert_unchecked_field('application_cancelled') end
-  def assert_application_invoice(invoice_date, stage, fee, insurance_levy, gst, admin_fee, dac, lodgement, invoice_number, paid, at:)
+  def assert_application_invoice(invoice_date, stage, fee, gst, admin_fee, invoice_number, paid, at:)
     within(all('.invoice-table .nested-fields').at(at)) do
       assert_field('Invoice date', with: invoice_date)
       assert_field('Stage', with: stage)
       assert_field('Fee', with: fee)
-      assert_field('Insurance levy', with: insurance_levy)
       assert_field('Gst', with: gst)
       assert_field('Admin fee', with: admin_fee)
-      assert_field('Dac', with: dac)
-      assert_field('Lodgement', with: lodgement)
       assert_field('Invoice number', with: invoice_number)
       paid ? assert_checked_field('Paid') : assert_unchecked_field('Paid')
     end
   end
-  def assert_application_invoice_total(fee, insurance_levy, gst, admin_fee, dac, lodgement)
+  def assert_application_invoice_total(fee, gst, admin_fee)
     within('.invoice-table') do
       assert_selector('#fee-total', text: fee)
-      assert_selector('#insurance-levy-total', text: insurance_levy)
       assert_selector('#gst-total', text: gst)
       assert_selector('#admin-total', text: admin_fee)
-      assert_selector('#dac-total', text: dac)
-      assert_selector('#lodgement-total', text: lodgement)
     end
   end
 
@@ -367,28 +358,22 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_no_application_invoice_debtor_notes(invoice_debtor_notes) assert_no_field('application_invoice_debtor_notes', with: invoice_debtor_notes) end
   def assert_no_application_fully_invoiced(fully_invoiced) fully_invoiced ? assert_no_checked_field('application_fully_invoiced') : assert_no_unchecked_field('application_fully_invoiced') end
   def assert_no_application_cancelled(cancelled) cancelled ? assert_no_checked_field('application_cancelled') : assert_no_unchecked_field('application_cancelled') end
-  def assert_no_application_invoice(invoice_date, stage, fee, insurance_levy, gst, admin_fee, dac, lodgement, invoice_number, paid, at:)
+  def assert_no_application_invoice(invoice_date, stage, fee, gst, admin_fee, invoice_number, paid, at:)
     within(all('.invoice-table .nested-fields').at(at)) do
       assert_no_field('Invoice date', with: invoice_date)
       assert_no_field('Stage', with: stage)
       assert_no_field('Fee', with: fee)
-      assert_no_field('Insurance levy', with: insurance_levy)
       assert_no_field('Gst', with: gst)
       assert_no_field('Admin fee', with: admin_fee)
-      assert_no_field('Dac', with: dac)
-      assert_no_field('Lodgement', with: lodgement)
       assert_no_field('Invoice number', with: invoice_number)
       paid ? assert_no_checked_field('Paid') : assert_no_unchecked_field('Paid')
     end
   end
-  def assert_no_application_invoice_total(fee, insurance_levy, gst, admin_fee, dac, lodgement)
+  def assert_no_application_invoice_total(fee, gst, admin_fee)
     within('.invoice-table') do
       assert_no_selector('#fee-total', text: fee)
-      assert_no_selector('#insurance-levy-total', text: insurance_levy)
       assert_no_selector('#gst-total', text: gst)
       assert_no_selector('#admin-total', text: admin_fee)
-      assert_no_selector('#dac-total', text: dac)
-      assert_no_selector('#lodgement-total', text: lodgement)
     end
   end
 

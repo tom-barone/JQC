@@ -52,8 +52,8 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_attention = 'the bosses'
     self.application_purchase_order_number = '5554'
     self.application_invoice_debtor_notes = 'debtor notes this that other'
-    application_add_invoice(Date.new(2022, 11, 13), 'stage1', '12', '44.4', '2', '1.2', '', '55', true)
-    application_add_invoice(Date.new(2023, 11, 13), 'stage2', '1.0', '82.4', '2.0', '', '', '99', false)
+    application_add_invoice(Date.new(2022, 11, 13), 'stage1', '12', '', '55', true)
+    application_add_invoice(Date.new(2023, 11, 13), 'stage2', '1.0', '2.0', '99', false)
     self.application_fully_invoiced = true
     self.application_cancelled = false
     sleep(1)
@@ -118,8 +118,8 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_invoice_debtor_notes = 'No debtor notes'
     application_remove_invoice
     application_remove_invoice
-    application_add_invoice(Date.new(2022, 10, 13), 'stage3', '13', '49.4', '3', '3.2', '9', '66', false)
-    application_add_invoice(Date.new(2023, 10, 13), 'stage4', '3.0', '83.4', '3.0', '9', '10', '67', true)
+    application_add_invoice(Date.new(2022, 10, 13), 'stage3', '43.2', '3', '66', false)
+    application_add_invoice(Date.new(2023, 10, 13), 'stage4', '', '3.0', '67', true)
     self.application_fully_invoiced = false
     self.application_cancelled = true
     sleep(1)
@@ -176,9 +176,9 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     assert_application_attention('the bosses')
     assert_application_purchase_order_number('5554')
     assert_application_invoice_debtor_notes('debtor notes this that other')
-    assert_application_invoice('2022-11-13', 'stage1', '12', '44.4', '5.64', '2', '1.2', '', '55', true, at: 0)
-    assert_application_invoice('2023-11-13', 'stage2', '1', '82.4', '8.34', '2', '', '', '99', false, at: 1)
-    assert_application_invoice_total('$ 13.00', '$ 126.80', '$ 13.98', '$ 4.00', '$ 1.20', '$ 0.00')
+    assert_application_invoice('2022-11-13', 'stage1', '12', '1.2', '', '55', true, at: 0)
+    assert_application_invoice('2023-11-13', 'stage2', '1', '0.1', '2', '99', false, at: 1)
+    assert_application_invoice_total('$ 13.00', '$ 1.30', '$ 2.00')
     assert_application_fully_invoiced(true)
     assert_application_cancelled(false)
   end
@@ -233,9 +233,9 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     assert_no_application_attention('the bosses')
     assert_no_application_purchase_order_number('5554')
     assert_no_application_invoice_debtor_notes('debtor notes this that other')
-    assert_no_application_invoice('2022-11-13', 'stage1', '12', '44.4', '5.64', '2', '1.2', '', '55', true, at: 0)
-    assert_no_application_invoice('2023-11-13', 'stage2', '1', '82.4', '8.34', '2', '', '', '99', false, at: 1)
-    assert_no_application_invoice_total('$ 13.00', '$ 126.80', '$ 13.98', '$ 4.00', '$ 1.20', '$ 0.00')
+    assert_no_application_invoice('2022-11-13', 'stage1', '12', '1.2', '', '55', true, at: 0)
+    assert_no_application_invoice('2023-11-13', 'stage2', '1', '0.1', '2', '99', false, at: 1)
+    assert_no_application_invoice_total('$ 13.00', '$ 1.30', '$ 2.00')
     assert_no_application_fully_invoiced(true)
     assert_no_application_cancelled(false)
   end

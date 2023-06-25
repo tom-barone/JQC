@@ -23,8 +23,7 @@ export default class extends Controller {
     // Update GST
     rows.forEach((row) => {
       const fee = _getFloat(row.fee);
-      const insurance_levy = _getFloat(row.insurance_levy);
-      const gst = ((fee + insurance_levy) / 10).toFixed(2);
+      const gst = (fee / 10).toFixed(2);
       row.gst.value = gst;
     });
 
@@ -42,11 +41,8 @@ export default class extends Controller {
   _getTotals() {
     return {
       fee: this.footerTarget.querySelector("#fee-total"),
-      insurance_levy: this.footerTarget.querySelector("#insurance-levy-total"),
       gst: this.footerTarget.querySelector("#gst-total"),
       admin: this.footerTarget.querySelector("#admin-total"),
-      dac: this.footerTarget.querySelector("#dac-total"),
-      lodgement: this.footerTarget.querySelector("#lodgement-total"),
     };
   }
 
@@ -57,11 +53,8 @@ export default class extends Controller {
 
     return rows.map((row) => ({
       fee: row.querySelector(".invoice-fee-cell input"),
-      insurance_levy: row.querySelector(".invoice-insurance-levy-cell input"),
       gst: row.querySelector(".invoice-gst-cell input"),
       admin: row.querySelector(".invoice-admin-cell input"),
-      dac: row.querySelector(".invoice-dac-cell input"),
-      lodgement: row.querySelector(".invoice-lodgement-cell input"),
     }));
   }
 }
