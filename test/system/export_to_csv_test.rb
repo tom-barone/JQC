@@ -13,12 +13,12 @@ class ExportToCsvTest < ApplicationSystemTestCase
     # Add invoices
     assert_on_homepage
     edit_application 'Q8001' # 2 for Q8001 (will be ordered by number ASC)
-    application_add_invoice('', '', '', '', '', '', '', 'KD123', false)
-    application_add_invoice('', '', '', '', '', '', '', 'KD543', false)
+    application_add_invoice('', '', '', '', 'KD123', false)
+    application_add_invoice('', '', '', '', 'KD543', false)
     save_application
     assert_on_homepage
     edit_application 'Q8002' # 1 for Q8002
-    application_add_invoice('', '', '', '', '', '', '', 'KD789', false)
+    application_add_invoice('', '', '', '', 'KD789', false)
     save_application
     assert_on_homepage
   end
