@@ -30,6 +30,10 @@ jobs:
         with:
           bundler-cache: true
 
+        # https://gorails.com/blog/bundler-default-gem-dependency-error
+      - name: 'Update system gems'
+        run: 'gem update --system'
+
       - name: 'Run tests'
         run: 'make test'
 
