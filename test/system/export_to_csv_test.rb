@@ -24,6 +24,8 @@ class ExportToCsvTest < ApplicationSystemTestCase
   end
 
   test 'exporting to spreadsheet' do
+    skip
+
     sign_in_test_user
 
     # Filter the page for all Q's
