@@ -37,13 +37,11 @@ gem 'appengine', '~> 0.5.0'
 gem 'cocoon'
 gem 'devise', '~> 4.8.1'
 gem 'highline', '~> 1.7', '>= 1.7.8'
-gem 'net-http'
 gem 'pagy', '~> 3.10'
 gem 'scenic'
 gem 'scenic-mysql_adapter'
 gem 'simple_form'
 
-gem 'uri', '~> 0.13.0'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
