@@ -1,18 +1,21 @@
 # frozen_string_literal: true
 
-#require 'selenium-webdriver'
+require 'selenium-webdriver'
 
 class BrowserTestCase < ActionDispatch::SystemTestCase
   # rubocop:disable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists, Style/CommentedKeyword
 
   ## This is where selenium will put the exported spreadsheets
-  #DOWNLOAD_PATH = Rails.root.join('tmp/downloads').to_s
+  DOWNLOAD_PATH = Rails.root.join('tmp/downloads').to_s
 
-  #chrome_options = Selenium::WebDriver::Chrome::Options.new
-  #chrome_options.add_argument('--headless')
-  #chrome_options.add_preference('download.default_directory', DOWNLOAD_PATH)
-  #chrome_options.add_preference(:download, default_directory: DOWNLOAD_PATH)
-  driven_by :selenium, using: :headless_chrome, screen_size: [1800, 1000] #, options: { options: chrome_options }
+  driven_by :selenium, using: :chrome, screen_size: [1800, 1000] do |options|
+    options.add_argument('--headless=new')
+    prefs = {
+      prompt_for_download: false,
+      default_directory: DOWNLOAD_PATH
+    }
+    options.add_preference(:download, prefs)
+  end
 
   Capybara.default_max_wait_time = 20 # Seconds
 
