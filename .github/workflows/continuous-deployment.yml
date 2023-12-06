@@ -39,6 +39,10 @@ jobs:
         with:
           bundler-cache: true
 
+        # https://gorails.com/blog/bundler-default-gem-dependency-error
+      - name: 'Update system gems'
+        run: 'gem update --system'
+
       - name: 'Add production key to config dir'
         run: 'echo "${{ secrets.RAILS_CREDENTIALS_PRODUCTION_KEY }}" > config/credentials/production.key'
 
@@ -76,6 +80,10 @@ jobs:
         uses: 'ruby/setup-ruby@v1'
         with:
           bundler-cache: true
+
+        # https://gorails.com/blog/bundler-default-gem-dependency-error
+      - name: 'Update system gems'
+        run: 'gem update --system'
 
       - name: 'Run tests against the production site'
         run: 'ruby production/sign_in_and_check_table_test.rb'
