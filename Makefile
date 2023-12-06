@@ -40,7 +40,7 @@ deploy-staging: guard-GOOGLE_APP_ENGINE_PROJECT
 	gcloud app deploy GAE_staging.yaml --project=$(GOOGLE_APP_ENGINE_PROJECT) --version=staging --no-promote --no-cache --quiet
 
 run-cloud-sql-proxy: guard-GOOGLE_CLOUD_SQL_INSTANCE
-	cloud_sql_proxy -instances=$(GOOGLE_CLOUD_SQL_INSTANCE)=tcp:3306
+	cloud_sql_proxy $(GOOGLE_CLOUD_SQL_INSTANCE)
 
 backup: guard-BACKUP_LOCATION
 	RAILS_ENV=production rails db:download_prod

@@ -21,7 +21,7 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_suburb = 'SUBURB1, SA XXXX'
     self.application_fee_amount = '3453.0'
     self.application_electronic_lodgement = true
-    self.application_hard_copy = true
+    self.application_engagement_form = true
     self.application_job_type_administration = 'Residential'
     self.application_quote_accepted_date = Date.new(2022, 7, 3)
     self.application_applicant_email = 'applicant@email.com'
@@ -76,7 +76,7 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_suburb = 'SUBURB2, SA XXXX'
     self.application_fee_amount = '4453.0'
     self.application_electronic_lodgement = false
-    self.application_hard_copy = false
+    self.application_engagement_form = false
     self.application_job_type_administration = 'Commercial'
     self.application_quote_accepted_date = Date.new(2022, 8, 3)
     self.application_applicant_email = 'hello@email.com'
@@ -143,7 +143,7 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     assert_application_suburb('SUBURB1, SA XXXX')
     assert_application_fee_amount('3453.0')
     assert_application_electronic_lodgement(true)
-    assert_application_hard_copy(true)
+    assert_application_engagement_form(true)
     assert_application_job_type_administration('Residential')
     assert_application_quote_accepted_date('2022-07-03')
     assert_application_applicant_email('applicant@email.com')
@@ -199,7 +199,7 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     assert_no_application_suburb('SUBURB1, SA XXXX')
     assert_no_application_fee_amount('3453.0')
     assert_no_application_electronic_lodgement(true)
-    assert_no_application_hard_copy(true)
+    assert_no_application_engagement_form(true)
     assert_no_application_job_type_administration('Residential')
     assert_no_application_quote_accepted_date('2022-07-03')
     assert_no_application_applicant_email('applicant@email.com')

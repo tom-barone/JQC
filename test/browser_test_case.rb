@@ -5,14 +5,17 @@ require 'selenium-webdriver'
 class BrowserTestCase < ActionDispatch::SystemTestCase
   # rubocop:disable Style/SingleLineMethods, Layout/LineLength, Style/Semicolon, Layout/EmptyLineBetweenDefs, Metrics/ParameterLists, Style/CommentedKeyword
 
-  # This is where selenium will put the exported spreadsheets
+  ## This is where selenium will put the exported spreadsheets
   DOWNLOAD_PATH = Rails.root.join('tmp/downloads').to_s
 
-  chrome_options = Selenium::WebDriver::Chrome::Options.new
-  chrome_options.add_argument('--headless')
-  chrome_options.add_preference('download.default_directory', DOWNLOAD_PATH)
-  chrome_options.add_preference(:download, default_directory: DOWNLOAD_PATH)
-  driven_by :selenium, using: :chrome, screen_size: [1800, 1000], options: { options: chrome_options }
+  driven_by :selenium, using: :chrome, screen_size: [1800, 1000] do |options|
+    options.add_argument('--headless=new')
+    prefs = {
+      prompt_for_download: false,
+      default_directory: DOWNLOAD_PATH
+    }
+    options.add_preference(:download, prefs)
+  end
 
   Capybara.default_max_wait_time = 20 # Seconds
 
@@ -185,7 +188,7 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def application_suburb=(suburb) select suburb, from: 'application_suburb_display_name' end
   def application_fee_amount=(fee_amount) fill_in 'application_fee_amount', with: fee_amount end
   def application_electronic_lodgement=(electronic_lodgement) electronic_lodgement ? check('application_electronic_lodgement') : uncheck('application_electronic_lodgement') end
-  def application_hard_copy=(hard_copy) hard_copy ? check('application_hard_copy') : uncheck('application_hard_copy')  end
+  def application_engagement_form=(engagement_form) engagement_form ? check('application_engagement_form') : uncheck('application_engagement_form')  end
   def application_job_type_administration=(job_type_administration) select job_type_administration, from: 'application_job_type_administration' end
   def application_quote_accepted_date=(quote_accepted_date) fill_in 'application_quote_accepted_date', with: quote_accepted_date end
   def application_applicant_email=(applicant_email) fill_in 'application_applicant_email', with: applicant_email end
@@ -256,7 +259,7 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_application_suburb(suburb) assert_field('application_suburb_display_name', with: suburb) end
   def assert_application_fee_amount(fee_amount) assert_field('application_fee_amount', with: fee_amount) end
   def assert_application_electronic_lodgement(electronic_lodgement) electronic_lodgement ? assert_checked_field('application_electronic_lodgement') : assert_unchecked_field('application_electronic_lodgement') end
-  def assert_application_hard_copy(hard_copy) hard_copy ? assert_checked_field('application_hard_copy') : assert_unchecked_field('application_hard_copy') end
+  def assert_application_engagement_form(engagement_form) engagement_form ? assert_checked_field('application_engagement_form') : assert_unchecked_field('application_engagement_form') end
   def assert_application_job_type_administration(job_type_administration) assert_select('application_job_type_administration', selected: job_type_administration) end
   def assert_application_quote_accepted_date(quote_accepted_date) assert_field('application_quote_accepted_date', with: quote_accepted_date) end
   def assert_application_applicant_email(applicant_email) assert_field('application_applicant_email', with: applicant_email) end
@@ -326,7 +329,7 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_no_application_suburb(suburb) assert_no_field('application_suburb_display_name', with: suburb) end
   def assert_no_application_fee_amount(fee_amount) assert_no_field('application_fee_amount', with: fee_amount) end
   def assert_no_application_electronic_lodgement(electronic_lodgement) electronic_lodgement ? assert_no_checked_field('application_electronic_lodgement') : assert_no_unchecked_field('application_electronic_lodgement') end
-  def assert_no_application_hard_copy(hard_copy) hard_copy ? assert_no_checked_field('application_hard_copy') : assert_no_unchecked_field('application_hard_copy') end
+  def assert_no_application_engagement_form(engagement_form) engagement_form ? assert_no_checked_field('application_engagement_form') : assert_no_unchecked_field('application_engagement_form') end
   def assert_no_application_job_type_administration(job_type_administration) assert_no_select('application_job_type_administration', selected: job_type_administration) end
   def assert_no_application_quote_accepted_date(quote_accepted_date) assert_no_field('application_quote_accepted_date', with: quote_accepted_date) end
   def assert_no_application_applicant_email(applicant_email) assert_no_field('application_applicant_email', with: applicant_email) end

@@ -168,7 +168,7 @@ class ApplicationsController < ApplicationController
         :street_name,
         :suburb_display_name,
         :electronic_lodgement,
-        :hard_copy,
+        :engagement_form,
         :job_type_administration,
         :quote_accepted_date,
         :administration_notes,
