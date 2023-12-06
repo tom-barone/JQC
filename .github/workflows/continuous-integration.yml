@@ -30,10 +30,6 @@ jobs:
         with:
           bundler-cache: true
 
-        # https://gorails.com/blog/bundler-default-gem-dependency-error
-      - name: 'Update system gems'
-        run: 'gem update --system'
-
       - name: 'Run tests'
         run: 'make test'
 
@@ -103,10 +99,6 @@ jobs:
         with:
           bundler-cache: true
 
-        # https://gorails.com/blog/bundler-default-gem-dependency-error
-      - name: 'Update system gems'
-        run: 'gem update --system'
-
       - name: 'Add staging key to config dir'
         run: 'echo "${{ secrets.RAILS_CREDENTIALS_STAGING_KEY }}" > config/credentials/staging.key'
 
@@ -128,10 +120,6 @@ jobs:
         uses: 'ruby/setup-ruby@v1'
         with:
           bundler-cache: true
-
-        # https://gorails.com/blog/bundler-default-gem-dependency-error
-      - name: 'Update system gems'
-        run: 'gem update --system'
 
       - name: 'Run tests against the staging site'
         run: 'TEST_HOST=${{ secrets.STAGING_URL }} make test-live-site'

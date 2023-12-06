@@ -455,6 +455,7 @@ DEPENDENCIES
   syntax_tree-rbs
   turbo-rails
   tzinfo-data
+  uri (~> 0.13.0)
   web-console
   webdrivers
 
