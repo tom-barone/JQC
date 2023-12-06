@@ -21,7 +21,7 @@ class ApplicationsCsvResult < ApplicationRecord
     street_name
     suburb
     electronic_lodgement
-    hard_copy
+    engagement_form
     job_type_administration
     quote_accepted_date
     administration_notes
