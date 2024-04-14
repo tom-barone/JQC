@@ -1,6 +1,6 @@
 # app.yaml file for the staging version of JQC on Google App Engine
 entrypoint: bundle exec rails server -p $PORT
-runtime: ruby27
+runtime: ruby32
 
 env_variables:
   RAILS_ENV: staging

@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '~> 2.7.3'
+ruby '~> 3.2.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 7.0.4'
@@ -37,7 +37,7 @@ gem 'appengine', '~> 0.5.0'
 gem 'cocoon'
 gem 'devise', '~> 4.8.1'
 gem 'highline', '~> 1.7', '>= 1.7.8'
-gem 'pagy', '~> 3.10'
+gem 'pagy', '~> 4.11'
 gem 'scenic'
 gem 'scenic-mysql_adapter'
 gem 'simple_form'
