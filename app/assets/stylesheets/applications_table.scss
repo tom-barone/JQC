@@ -28,7 +28,7 @@
 
   // Set height and make scrollbars always visible
   tbody {
-    max-height: 76vh;
+    max-height: 75vh;
   }
 
   thead,
@@ -38,51 +38,51 @@
   }
 
   &-reference-number {
-		flex: 2;
+    flex: 2;
   }
 
   &-location {
-		flex: 4;
+    flex: 4;
   }
 
   &-suburb {
-		flex: 4;
+    flex: 4;
   }
 
   &-description {
-		flex: 8;
+    flex: 8;
   }
 
   &-contact {
-		flex: 4;
+    flex: 4;
   }
 
   &-owner {
-		flex: 4;
+    flex: 4;
   }
 
   &-applicant {
-		flex: 4;
+    flex: 4;
   }
 
   &-council {
-		flex: 4;
+    flex: 4;
   }
 
   &-date-created {
-		flex: 3;
+    flex: 3;
   }
 
   &-building-surveyor {
-		flex: 2;
+    flex: 2;
   }
 
   &-da-number {
-		flex: 3;
+    flex: 3;
   }
 
   &-edit-button {
-		flex: 2;
+    flex: 2;
 
     & button {
       min-width: 4em;
