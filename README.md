@@ -54,7 +54,7 @@ There's some issues with the mysql2 gem on M1 Macs, you can get around them by
 installing the mysql2 gem with:
 
 ```bash
-gem install mysql2 -v '0.5.4' -- --with-mysql-lib=$(brew --prefix mysql)/lib --with-mysql-dir=$(brew --prefix mysql) --with-mysql-config=$(brew --prefix mysql)/bin/mysql_config --with-mysql-include=$(brew --prefix mysql)/include --with-ldflags="-L$(brew --prefix zstd)/lib -L$(brew --prefix openssl)/lib -L$(brew --prefix zlib)/lib" --with-cppflags="-I$(brew --prefix openssl)/include -I$(brew --prefix zlib)/include"
+gem install mysql2 -v '0.5.6' -- --with-mysql-lib=$(brew --prefix mysql)/lib --with-mysql-dir=$(brew --prefix mysql) --with-mysql-config=$(brew --prefix mysql)/bin/mysql_config --with-mysql-include=$(brew --prefix mysql)/include --with-ldflags="-L$(brew --prefix zstd)/lib -L$(brew --prefix openssl)/lib -L$(brew --prefix zlib)/lib" --with-cppflags="-I$(brew --prefix openssl)/include -I$(brew --prefix zlib)/include"
 ```
 
 After running this command, `bundle install` should now work. Thanks goes to
