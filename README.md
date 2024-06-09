@@ -14,8 +14,8 @@
 
 [![Sonar Coverage](https://img.shields.io/sonar/coverage/tom-barone_JQC?label=test%20coverage&server=https%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/component_measures?metric=coverage&view=list&id=tom-barone_JQC)
 
-Real world Rails 7 app deployed on Google App Engine, backed by MySQL and
-designed with Bootstrap 5.
+Rails 7 app deployed on Google App Engine, backed by MySQL and styled with
+Bootstrap 5.
 
 Currently used as an in-house record keeping system for a company of ~30 users.
 

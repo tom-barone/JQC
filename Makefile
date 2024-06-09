@@ -63,6 +63,7 @@ collect-javascript-coverage:
 	@echo 'Point the coverage results back to the clean app/javascript folder'
 	find ci -name '*.info' -o -name '*.json' -o -name '*.xml' | xargs sed -i 's@tmp/_javascript@app/javascript@g'
 
+## Run like this: RAILS_ENV=development TARGET=DEV make copy-production-database
 copy-production-database: guard-RAILS_ENV guard-TARGET
 	@echo 'Copying the PROD database to $(TARGET)'
 	bundle exec bin/rails db:copy_prod
