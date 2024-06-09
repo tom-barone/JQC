@@ -275,25 +275,29 @@
         <div class="col">
           <div class="row additional-information-table h-50 flex-column">
             <div>
-              <table class="table table-sm mb-0" style="table-layout: fixed">
+              <table class="table no-bold-headers table-sm mb-0" style="table-layout: fixed">
                 <thead>
                   <tr>
-                    <td>Additional Information</td>
-                    <td class="additional-information-text"></td>
-                    <td class="additional-information-buttons">
+                    <th>Additional Information</th>
+                    <th class="additional-information-text"></th>
+                    <th class="additional-information-buttons">
                       <%= link_to_add_association "Add",
                       form,
                       :application_additional_informations,
                       "data-association-insertion-node": ".additional-information-fields",
                       "data-association-insertion-method": "append",
                       class: "btn btn-sm btn-outline-primary" %>
-                    </td>
+                    </th>
                   </tr>
                 </thead>
               </table>
             </div>
             <div class="additional-information-body-container">
-              <table class="table table-sm mb-0" style="table-layout: fixed">
+              <table
+                class="table table-sm mb-0"
+                style="table-layout: fixed"
+                role="presentation"
+              >
                 <tbody class="additional-information-fields">
                   <%= form.fields_for :application_additional_informations do |additional_information_form| %>
                     <%= render "application_additional_information_fields",
@@ -305,12 +309,12 @@
           </div>
           <div id="uploaded-table" class="row h-50 flex-column risk-rating-not-set">
             <div>
-              <table class="table table-sm mb-0" style="table-layout: fixed">
+              <table class="table no-bold-headers table-sm mb-0" style="table-layout: fixed">
                 <thead>
                   <tr>
-                    <td>Uploaded</td>
-                    <td class="uploaded-text"></td>
-                    <td class="uploaded-buttons">
+                    <th>Uploaded</th>
+                    <th class="uploaded-text"></th>
+                    <th class="uploaded-buttons">
                       <%= link_to_add_association "Add",
                       form,
                       :application_uploads,
@@ -318,13 +322,17 @@
                       "data-association-insertion-method": "append",
                       class: "btn btn-sm btn-outline-primary",
                       id: "application-add-uploaded" %>
-                    </td>
+                    </th>
                   </tr>
                 </thead>
               </table>
             </div>
             <div class="uploaded-table-body-container">
-              <table class="table table-sm mb-0" style="table-layout: fixed">
+              <table
+                class="table table-sm mb-0"
+                style="table-layout: fixed"
+                role="presentation"
+              >
                 <tbody class="uploaded-fields">
                   <%= form.fields_for :application_uploads do |uploads_form| %>
                     <%= render "application_upload_fields", f: uploads_form %>
@@ -387,11 +395,11 @@
             "
           >
             <div>
-              <table class="table table-sm mb-0" style="table-layout: fixed">
+              <table class="table no-bold-headers table-sm mb-0" style="table-layout: fixed">
                 <thead>
                   <tr style="vertical-align: top;">
-                    <td class="rfis-title">RFIs Issued</td>
-                    <td class="rfis-buttons">
+                    <th class="rfis-title">RFIs Issued</th>
+                    <th class="rfis-buttons">
                       <%= link_to_add_association "Add",
                       form,
                       :request_for_informations,
@@ -399,13 +407,17 @@
                       "data-association-insertion-method": "append",
                       class: "btn btn-sm btn-outline-primary py-0",
                       id: "rfis-button-add" %>
-                    </td>
+                    </th>
                   </tr>
                 </thead>
               </table>
             </div>
             <div class="request-for-informations-body-container">
-              <table class="table table-sm mb-0" style="table-layout: fixed">
+              <table
+                class="table table-sm mb-0"
+                style="table-layout: fixed"
+                role="presentation"
+              >
                 <tbody class="request-for-informations-fields">
                   <%= form.fields_for :request_for_informations do |request_for_informations_form| %>
                     <%= render "request_for_information_fields", f: request_for_informations_form %>
@@ -416,25 +428,29 @@
           </div>
           <div class="col-7 stages-table">
             <div>
-              <table class="table table-sm mb-0" style="table-layout: fixed">
+              <table class="table no-bold-headers table-sm mb-0" style="table-layout: fixed">
                 <thead>
                   <tr style="vertical-align: top;">
-                    <td class="stages-title">Stages</td>
-                    <td class="stages-text"></td>
-                    <td class="stages-buttons">
+                    <th class="stages-title">Stages</th>
+                    <th class="stages-text"></th>
+                    <th class="stages-buttons">
                       <%= link_to_add_association "Add",
                       form,
                       :stages,
                       "data-association-insertion-node": ".stages-fields",
                       "data-association-insertion-method": "append",
                       class: "btn btn-sm btn-outline-primary py-0" %>
-                    </td>
+                    </th>
                   </tr>
                 </thead>
               </table>
             </div>
             <div class="stages-body-container">
-              <table class="table table-sm mb-0" style="table-layout: fixed">
+              <table
+                class="table table-sm mb-0"
+                style="table-layout: fixed"
+                role="presentation"
+              >
                 <tbody class="stages-fields">
                   <%= form.fields_for :stages do |stages_form| %>
                     <%= render "stage_fields", f: stages_form %>
@@ -546,22 +562,26 @@
             data-action="cocoon:after-remove->invoice-table#updateGstAndTotals"
             data-action="cocoon:after-insert->invoice-table#updateGstAndTotals"
           >
-            <table class="table table-sm mb-0" style="table-layout: fixed">
+            <table class="table no-bold-headers table-sm mb-0" style="table-layout: fixed">
               <thead>
                 <tr>
-                  <td class="invoice-table-date">Date</td>
-                  <td class="invoice-table-stage">Stage</td>
-                  <td class="invoice-table-fee">KD Fee</td>
-                  <td class="invoice-table-gst">GST</td>
-                  <td class="invoice-table-admin-fee">Admin Fee</td>
-                  <td class="invoice-table-invoice-number">Invoice no.</td>
-                  <td class="invoice-table-paid">Paid</td>
-                  <td class="invoice-table-buttons"></td>
+                  <th class="invoice-table-date">Date</th>
+                  <th class="invoice-table-stage">Stage</th>
+                  <th class="invoice-table-fee">KD Fee</th>
+                  <th class="invoice-table-gst">GST</th>
+                  <th class="invoice-table-admin-fee">Admin Fee</th>
+                  <th class="invoice-table-invoice-number">Invoice no.</th>
+                  <th class="invoice-table-paid">Paid</th>
+                  <th class="invoice-table-buttons"></th>
                 </tr>
               </thead>
             </table>
             <div style="max-height: 256px; overflow:auto">
-              <table class="table table-sm mb-0" style="table-layout: fixed">
+              <table
+                class="table table-sm mb-0"
+                style="table-layout: fixed"
+                role="presentation"
+              >
                 <tbody class="invoice-fields" data-invoice-table-target="fields">
                   <%= form.fields_for :invoices do |invoices_form| %>
                     <%= render "invoice_fields", f: invoices_form %>
@@ -569,7 +589,11 @@
                 </tbody>
               </table>
             </div>
-            <table class="table table-sm mb-0" style="table-layout: fixed">
+            <table
+              class="table table-sm mb-0"
+              style="table-layout: fixed"
+              role="presentation"
+            >
               <tfoot class="invoice-footer" data-invoice-table-target="footer">
                 <tr>
                   <td class="invoice-table-date">Totals</td>

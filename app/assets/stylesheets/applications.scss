@@ -75,3 +75,9 @@
 .new-application-button {
 	min-width: 10em;
 }
+
+// Some tables we don't want bold headers
+table.no-bold-headers th {
+  font-weight: normal;
+}
+
