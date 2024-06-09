@@ -1,2 +1,3 @@
 # frozen_string_literal: true
-json.partial! "suburbs/suburb", suburb: @suburb
+
+json.partial! 'suburbs/suburb', suburb: @suburb

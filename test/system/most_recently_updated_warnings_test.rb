@@ -52,8 +52,8 @@ class MostRecentlyUpdatedWarningsTest < ApplicationSystemTestCase
     sign_in_test_user
     new_app = applications(:application_PC1)
     old_app = applications(:application_PC2)
-    new_app.update!(converted_to_from: old_app.reference_number, updated_at: Time.zone.now - 10.minutes)
-    old_app.update!(converted_to_from: new_app.reference_number, updated_at: Time.zone.now - 20.minutes)
+    new_app.update!(converted_to_from: old_app.reference_number, updated_at: 10.minutes.ago)
+    old_app.update!(converted_to_from: new_app.reference_number, updated_at: 20.minutes.ago)
 
     edit_application new_app.reference_number
     assert_no_more_recent_conversion_warning

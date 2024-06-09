@@ -144,7 +144,7 @@ class ApplicationsController < ApplicationController
     @suburbs = Suburb.pluck(:display_name)
     @clients = Client.pluck(:client_name)
     @councils = Council.pluck(:name)
-    @types = ApplicationType.all.order(:application_type)
+    @types = ApplicationType.order(:application_type)
   end
 
   # Only allow a list of trusted parameters through.

@@ -12,7 +12,7 @@ class ApplicationTypesController < ApplicationController
   end
 
   def index
-    @application_types = ApplicationType.all.order(:application_type)
+    @application_types = ApplicationType.order(:application_type)
   end
 
   private

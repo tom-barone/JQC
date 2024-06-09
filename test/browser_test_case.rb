@@ -188,7 +188,7 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def application_suburb=(suburb) select suburb, from: 'application_suburb_display_name' end
   def application_fee_amount=(fee_amount) fill_in 'application_fee_amount', with: fee_amount end
   def application_electronic_lodgement=(electronic_lodgement) electronic_lodgement ? check('application_electronic_lodgement') : uncheck('application_electronic_lodgement') end
-  def application_engagement_form=(engagement_form) engagement_form ? check('application_engagement_form') : uncheck('application_engagement_form')  end
+  def application_engagement_form=(engagement_form) engagement_form ? check('application_engagement_form') : uncheck('application_engagement_form') end
   def application_job_type_administration=(job_type_administration) select job_type_administration, from: 'application_job_type_administration' end
   def application_quote_accepted_date=(quote_accepted_date) fill_in 'application_quote_accepted_date', with: quote_accepted_date end
   def application_applicant_email=(applicant_email) fill_in 'application_applicant_email', with: applicant_email end
@@ -264,7 +264,7 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_application_quote_accepted_date(quote_accepted_date) assert_field('application_quote_accepted_date', with: quote_accepted_date) end
   def assert_application_applicant_email(applicant_email) assert_field('application_applicant_email', with: applicant_email) end
   def assert_application_additional_information(date, text, at:) within(all('.additional-information-table .nested-fields').at(at)) { assert_field('Info date', with: date); assert_field('Info text', with: text) } end
-  def assert_application_uploaded(date, text, at:, disabled: false) within(all('#uploaded-table .nested-fields').at(at)) { assert_field('Uploaded date', with: date); assert_select('Uploaded text', selected: text, disabled: disabled) } end
+  def assert_application_uploaded(date, text, at:, disabled: false) within(all('#uploaded-table .nested-fields').at(at)) { assert_field('Uploaded date', with: date); assert_select('Uploaded text', selected: text, disabled:) } end
   def assert_application_uploaded_disabled(...) within('#uploaded-table') { assert_text('Please add a risk rating first', ...) } end
   def assert_application_building_surveyor(building_surveyor) assert_select('application_building_surveyor', selected: building_surveyor) end
   def assert_application_assessment_assigned(assessment_assigned) assert_field('application_assessment_commenced', with: assessment_assigned) end

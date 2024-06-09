@@ -14,6 +14,5 @@ class RenameCouncilsColumnsToSnakeCase < ActiveRecord::Migration[6.0]
     rename_column :councils, :Fax, :fax
     rename_column :councils, :Email, :email
     rename_column :councils, :Notes, :notes
-
   end
 end
