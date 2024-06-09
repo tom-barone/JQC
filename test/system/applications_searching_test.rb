@@ -36,9 +36,9 @@ class ApplicationsSearchingTest < ApplicationSystemTestCase
     # NOTE: Accept a range of 3 days, because it's too hard to try matching timezones between
     # the headless browser and ruby, and could even fail anyway if the browser loads
     # at 11:59:59pm and this test runs at 12:00:01am
-    yesterday = (Time.zone.now - 1.day).strftime('%Y-%m-%d')
+    yesterday = 1.day.ago.strftime('%Y-%m-%d')
     today = Time.zone.now.strftime('%Y-%m-%d')
-    tomorrow = (Time.zone.now + 1.day).strftime('%Y-%m-%d')
+    tomorrow = 1.day.from_now.strftime('%Y-%m-%d')
     assert_any_of_selectors(
       "#start_date[max=\"#{yesterday}\"]",
       "#start_date[max=\"#{today}\"]",
@@ -147,7 +147,7 @@ class ApplicationsSearchingTest < ApplicationSystemTestCase
 
     # Hitting the enter key also works
     self.homepage_search_text = 'SC4'
-    find('#search_text').send_keys(:enter)
+    find_by_id('search_text').send_keys(:enter)
     assert_in_homepage_table('SC4001')
     assert_in_homepage_table('SC4002')
 

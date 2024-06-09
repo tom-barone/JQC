@@ -23,6 +23,5 @@ class RenameClientsColumnsToSnakeCase < ActiveRecord::Migration[6.0]
     rename_column :clients, :Email, :email
     rename_column :clients, :Notes, :notes
     rename_column :clients, :BadPayer, :bad_payer
-
   end
 end

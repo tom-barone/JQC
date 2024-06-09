@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationsController < ApplicationController
+  before_action :authenticate_user!
   include Pagy::Backend
 
   # TODO: Maybe needed for csv exports
@@ -144,7 +145,7 @@ class ApplicationsController < ApplicationController
     @suburbs = Suburb.pluck(:display_name)
     @clients = Client.pluck(:client_name)
     @councils = Council.pluck(:name)
-    @types = ApplicationType.all.order(:application_type)
+    @types = ApplicationType.order(:application_type)
   end
 
   # Only allow a list of trusted parameters through.

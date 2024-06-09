@@ -22,7 +22,8 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
 
-  config.wrappers :sign_in_checkbox, tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :sign_in_checkbox, tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid',
+                                     valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.wrapper :form_check_wrapper, tag: 'div', class: 'form-check' do |bb|

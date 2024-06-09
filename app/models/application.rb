@@ -8,7 +8,6 @@ class Application < ApplicationRecord
   belongs_to :suburb, optional: true
   belongs_to :application_type
 
-  validates :application_type_id, presence: true
   validates :reference_number, presence: true
 
   amoeba { enable }
@@ -50,7 +49,7 @@ class Application < ApplicationRecord
   before_update :convert_to_new_application
 
   def update_last_used_reference_number
-    new_type = ApplicationType.find_by!(id: application_type_id)
+    new_type = ApplicationType.find(application_type_id)
     new_type.update_column('last_used', new_type.last_used + 1)
   end
 
@@ -71,11 +70,11 @@ class Application < ApplicationRecord
   end
 
   def suburb_display_name=(display_name)
-    self.suburb = Suburb.find_by(display_name: display_name)
+    self.suburb = Suburb.find_by(display_name:)
   end
 
   def suburb_display_name
-    suburb ? suburb.display_name : nil
+    suburb&.display_name
   end
 
   # TODO: refactor this into a function
@@ -89,7 +88,7 @@ class Application < ApplicationRecord
   end
 
   def council_name
-    council ? council.name : nil
+    council&.name
   end
 
   def applicant_name=(name)
@@ -102,7 +101,7 @@ class Application < ApplicationRecord
   end
 
   def applicant_name
-    applicant ? applicant.client_name : nil
+    applicant&.client_name
   end
 
   def owner_name=(name)
@@ -115,7 +114,7 @@ class Application < ApplicationRecord
   end
 
   def owner_name
-    owner ? owner.client_name : nil
+    owner&.client_name
   end
 
   def contact_name=(name)
@@ -128,7 +127,7 @@ class Application < ApplicationRecord
   end
 
   def contact_name
-    contact ? contact.client_name : nil
+    contact&.client_name
   end
 
   # Emailed reports

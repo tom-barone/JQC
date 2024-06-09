@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class RemoveNewlineCharactersFromSuburbDisplayNames < ActiveRecord::Migration[
   6.0
 ]

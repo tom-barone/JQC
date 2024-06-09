@@ -1,5 +1,9 @@
 require:
   - rubocop-rails
+  - rubocop-capybara
+
+AllCops:
+  NewCops: enable
 
 # Don't force a comment at the top of every class
 Style/Documentation:
@@ -22,7 +26,7 @@ Metrics/MethodLength:
 Metrics/AbcSize:
   Exclude:
     - "test/**/*"
-ClassVars:
+Style/ClassVars:
   Exclude:
     - "test/**/*"
 

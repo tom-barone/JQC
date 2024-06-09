@@ -6,21 +6,21 @@ class Client < ApplicationRecord
 
   has_many :applications, dependent: :nullify
 
-  TYPE = %w[Business Individual]
+  TYPE = %w[Business Individual].freeze
 
   def suburb_display_name=(display_name)
-    self.suburb = Suburb.find_by(display_name: display_name)
+    self.suburb = Suburb.find_by(display_name:)
   end
 
   def suburb_display_name
-    suburb ? suburb.display_name : nil
+    suburb&.display_name
   end
 
   def postal_suburb_display_name=(display_name)
-    self.postal_suburb = Suburb.find_by(display_name: display_name)
+    self.postal_suburb = Suburb.find_by(display_name:)
   end
 
   def postal_suburb_display_name
-    postal_suburb ? postal_suburb.display_name : nil
+    postal_suburb&.display_name
   end
 end

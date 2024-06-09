@@ -12,38 +12,29 @@
   <div class="row justify-content-start">
     <div class="col-10">
       <%= form_with url: applications_path, class: "search-form input-group", html: {"data-controller": "search"}, method: :get do |search_form| %>
-        <%=
-          search_form.select :type,
-                             @types,
-                             {
-                               include_blank: 'Select Type:',
-                               selected: params.dig(:type),
-                             },
-                             {
-                               class: 'form-select',
-                               'data-search-target': 'type',
-                             }
-        %>
+        <%= search_form.select :type,
+                           @types,
+                           {
+                             include_blank: "Select Type:",
+                             selected: params.dig(:type)
+                           },
+                           { class: "form-select", "data-search-target": "type" } %>
         <span class="input-group-text">From</span>
-        <%=
-          search_form.date_field :start_date,
-                                 {
-                                   value: params.dig(:start_date),
-                                   class: 'form-control',
-                                   'data-search-target': 'startDate',
-                                   min: '1970-01-01',
-                                 }
-        %>
+        <%= search_form.date_field :start_date,
+                               {
+                                 value: params.dig(:start_date),
+                                 class: "form-control",
+                                 "data-search-target": "startDate",
+                                 min: "1970-01-01"
+                               } %>
         <span class="input-group-text">To</span>
-        <%=
-          search_form.date_field :end_date,
-                                 {
-                                   value: params.dig(:end_date),
-                                   class: 'form-control',
-                                   'data-search-target': 'endDate',
-                                   min: '1970-01-01',
-                                 }
-        %>
+        <%= search_form.date_field :end_date,
+                               {
+                                 value: params.dig(:end_date),
+                                 class: "form-control",
+                                 "data-search-target": "endDate",
+                                 min: "1970-01-01"
+                               } %>
         <span class="input-group-text">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -58,22 +49,18 @@
             />
           </svg>
         </span>
-        <%=
-          search_form.text_field :search_text,
-                                 value: params.dig(:search_text),
-                                 class: 'form-control w-25',
-                                 'data-search-target': 'searchText'
-        %>
-        <%=
-          search_form.button 'Search',
-                             type: 'submit',
-                             class: 'btn btn-primary',
-                             data: {
-                               controller: 'loading-button',
-                               action: 'loading-button#onSubmit',
-                               'loading-button-loading-text-param': '',
-                             }
-        %>
+        <%= search_form.text_field :search_text,
+                               value: params.dig(:search_text),
+                               class: "form-control w-25",
+                               "data-search-target": "searchText" %>
+        <%= search_form.button "Search",
+                           type: "submit",
+                           class: "btn btn-primary",
+                           data: {
+                             controller: "loading-button",
+                             action: "loading-button#onSubmit",
+                             "loading-button-loading-text-param": ""
+                           } %>
         <button
           type="button"
           id="clear-search"
@@ -97,16 +84,14 @@
     </div>
     <div class="col-2">
       <div class="d-flex justify-content-end">
-        <%=
-          link_to 'New Application',
-                  new_application_path,
-                  class: 'btn btn-primary text-nowrap new-application-button',
-                  data: {
-                    controller: 'loading-button',
-                    action: 'loading-button#onClick',
-                    'turbo-cache': false,
-                  }
-        %>
+        <%= link_to "New Application",
+        new_application_path,
+        class: "btn btn-primary text-nowrap new-application-button",
+        data: {
+          controller: "loading-button",
+          action: "loading-button#onClick",
+          "turbo-cache": false
+        } %>
       </div>
     </div>
   </div>
@@ -164,7 +149,7 @@
             <%= application.council %>
           </td>
           <td class="applications-table-date-created" role="button">
-            <%= application.created_at.strftime('%-d %b %Y') %>
+            <%= application.created_at.strftime("%-d %b %Y") %>
           </td>
           <td class="applications-table-building-surveyor" role="button">
             <%= application.building_surveyor %>
@@ -190,7 +175,8 @@
   <div class="app-pagination mt-2">
     <div class="row">
       <div class="col">
-        <%= @total_count %> results available. Showing
+        <%= @total_count %>
+        results available. Showing
         <%= @number_results_per_page %>
         results per page.
       </div>
@@ -199,5 +185,5 @@
       </div>
     </div>
   </div>
-  <br />
+  <br/>
 </div>

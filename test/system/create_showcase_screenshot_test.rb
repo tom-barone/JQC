@@ -15,7 +15,7 @@ class CreateShowcaseScreenshotTest < ApplicationSystemTestCase
     suburbs = []
     clients = []
     councils = []
-    type = ApplicationType.where(application_type: 'PC').take
+    type = ApplicationType.find_by(application_type: 'PC')
     1.upto(number_of_applications_to_create) do |n|
       print "\rGenerating random data... #{(n.to_f / number_of_applications_to_create * 100).floor}%"
       $stdout.flush

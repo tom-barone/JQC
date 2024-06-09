@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UpdateApplicationReferenceNumbersWithPaddedZeros < ActiveRecord::Migration[
   6.0
 ]
@@ -16,7 +17,7 @@ class UpdateApplicationReferenceNumbersWithPaddedZeros < ActiveRecord::Migration
                         'Q ', 'Q'),
                             'LG ', 'LG'),
                 UCASE(CONCAT(
-                    REGEXP_SUBSTR(a2.reference_number, '^C|^LG|^PC|^Q|^RC|^SC'), 
+                    REGEXP_SUBSTR(a2.reference_number, '^C|^LG|^PC|^Q|^RC|^SC'),
                     REGEXP_SUBSTR(a2.reference_number, '[:digit:]+')
                 )),
                 ''

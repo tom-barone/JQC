@@ -1,31 +1,27 @@
 <% content_for :application_submit_actions do %>
   <div class="application-actions d-flex flex-row justify-content-between">
     <div></div>
-    <%=
-      button_tag 'Save',
-                 type: 'submit',
-                 class: 'btn btn-success btn-block',
-                 form: 'application_form',
-                 data: {
-                   controller: 'loading-button',
-                   action: 'loading-button#onSaveButton',
-                   'loading-button-loading-text-param': 'Saving...',
-                 }
-    %>
-    <%=
-      link_to 'Exit',
-              session[:search_results],
-              class: 'btn btn-outline-secondary btn-block',
-              data: {
-                controller: 'loading-button',
-                action: 'loading-button#onClick',
-                'loading-button-loading-text-param': 'Exiting...',
-                'loading-button-confirm-param': 'All changes will be discarded',
-              }
-    %>
+    <%= button_tag "Save",
+    type: "submit",
+    class: "btn btn-success btn-block",
+    form: "application_form",
+    data: {
+      controller: "loading-button",
+      action: "loading-button#onSaveButton",
+      "loading-button-loading-text-param": "Saving..."
+    } %>
+    <%= link_to "Exit",
+    session[:search_results],
+    class: "btn btn-outline-secondary btn-block",
+    data: {
+      controller: "loading-button",
+      action: "loading-button#onClick",
+      "loading-button-loading-text-param": "Exiting...",
+      "loading-button-confirm-param": "All changes will be discarded"
+    } %>
   </div>
 <% end %>
-<%= render 'form', application: @application %>
+<%= render "form", application: @application %>
 <script>
   function formatDate(date) {
     var d = new Date(date),

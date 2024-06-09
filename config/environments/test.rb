@@ -13,7 +13,7 @@ def dump_js_coverage
   return if page_coverage.blank?
 
   # we will store one `js-....json` file for each system test, and we save all of them in the .nyc_output dir
-  File.open(Rails.root.join('.nyc_output/tests', "js-#{Random.rand(10_000_000_000)}.json"), 'w') do |report|
+  Rails.root.join('.nyc_output/tests', "js-#{Random.rand(10_000_000_000)}.json").open('w') do |report|
     report.puts page_coverage
   end
 end
@@ -75,4 +75,7 @@ Rails.application.configure do
   config.google_cloud.use_logging = false
   config.google_cloud.use_error_reporting = false
   config.google_cloud.use_debugger = false
+
+  # Mail setup
+  config.action_mailer.delivery_method = :test
 end

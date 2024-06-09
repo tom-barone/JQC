@@ -54,8 +54,8 @@ class ApplicationsCsvResult < ApplicationRecord
     CSV::Row.new(HEADERS, HEADERS, true)
   end
 
-  def self.find_in_batches(params, &block)
+  def self.find_in_batches(params, &)
     filter_all(params)
-      .find_each(batch_size: 1000, &block)
+      .find_each(batch_size: 1000, &)
   end
 end

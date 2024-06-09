@@ -52,6 +52,5 @@ class RenameApplicationsColumnsToSnakeCase < ActiveRecord::Migration[6.0]
     rename_column :applications, :InvoiceDebtorNotes, :invoice_debtor_notes
     rename_column :applications, :ApplicantEmail, :applicant_email
     rename_column :applications, :SortPriorityGen, :sort_priority_gen
-
   end
 end

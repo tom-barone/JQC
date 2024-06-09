@@ -15,5 +15,9 @@
   <%= @application_additional_information.application_id %>
 </p>
 
-<%= link_to 'Edit', edit_application_additional_information_path(@application_additional_information) %> |
-<%= link_to 'Back', application_additional_informations_path %>
+<%= link_to "Edit",
+edit_application_additional_information_path(
+  @application_additional_information
+) %>
+|
+<%= link_to "Back", application_additional_informations_path %>

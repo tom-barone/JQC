@@ -1,61 +1,54 @@
 <tr class="invoice-table-row nested-fields">
   <td class="invoice-table-date invoice-date-cell">
-    <%= f.label :invoice_date, class: 'd-none' %>
+    <%= f.label :invoice_date, class: "d-none" %>
     <%= f.date_field :invoice_date %>
   </td>
   <td class="invoice-table-stage invoice-stage-cell">
-    <%= f.label :stage, class: 'd-none' %>
+    <%= f.label :stage, class: "d-none" %>
     <%= f.text_field :stage %>
   </td>
   <td class="invoice-table-fee invoice-fee-cell">
-    <%= f.label :fee, class: 'd-none' %>
-    <%=
-      f.text_field :fee,
-                   type: 'number',
-                   min: '0',
-                   step: 'any',
-                   data: {
-                     action: 'change->invoice-table#updateGstAndTotals',
-                   }
-    %>
+    <%= f.label :fee, class: "d-none" %>
+    <%= f.text_field :fee,
+                 type: "number",
+                 min: "0",
+                 step: "any",
+                 data: {
+                   action: "change->invoice-table#updateGstAndTotals"
+                 } %>
   </td>
   <td class="invoice-table-gst invoice-gst-cell">
-    <%= f.label :gst, class: 'd-none' %>
+    <%= f.label :gst, class: "d-none" %>
     <%# We can't add "disabled: true" to this field here because it breaks the tests :( %>
-    <%=
-      f.text_field :gst,
-                   type: 'number',
-                   min: '0',
-                   step: 'any',
-                   readonly: true,
-                   data: {
-                     action: 'change->invoice-table#updateGstAndTotals',
-                   }
-    %>
+    <%= f.text_field :gst,
+                 type: "number",
+                 min: "0",
+                 step: "any",
+                 readonly: true,
+                 style: "background-color: #f0f0f0",
+                 data: {
+                   action: "change->invoice-table#updateGstAndTotals"
+                 } %>
   </td>
   <td class="invoice-table-admin invoice-admin-cell">
-    <%= f.label :admin_fee, class: 'd-none' %>
-    <%=
-      f.text_field :admin_fee,
-                   type: 'number',
-                   min: '0',
-                   step: 'any',
-                   data: {
-                     action: 'change->invoice-table#updateGstAndTotals',
-                   }
-    %>
+    <%= f.label :admin_fee, class: "d-none" %>
+    <%= f.text_field :admin_fee,
+                 type: "number",
+                 min: "0",
+                 step: "any",
+                 data: {
+                   action: "change->invoice-table#updateGstAndTotals"
+                 } %>
   </td>
   <td class="invoice-table-invoice-number invoice-invoice-number-cell">
-    <%= f.label :invoice_number, class: 'd-none' %>
+    <%= f.label :invoice_number, class: "d-none" %>
     <%= f.text_field :invoice_number %>
   </td>
   <td class="invoice-table-paid invoice-paid-cell">
-    <%= f.label :paid, class: 'd-none' %>
+    <%= f.label :paid, class: "d-none" %>
     <%= f.check_box :paid %>
   </td>
   <td class="invoice-table-buttons invoice-buttons-cell">
-    <%=
-      link_to_remove_association '⌫', f, class: 'btn btn-sm btn-outline-danger'
-    %>
+    <%= link_to_remove_association "⌫", f, class: "btn btn-sm btn-outline-danger" %>
   </td>
 </tr>

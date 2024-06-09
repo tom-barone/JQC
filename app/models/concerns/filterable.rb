@@ -23,11 +23,7 @@ module Filterable
 
     scope :filter_by_type,
           lambda { |application_type|
-            if application_type.present?
-              where(
-                'application_type = ?', application_type # Default to PC's
-              )
-            end
+            where(application_type:) if application_type.present?
           }
 
     scope :filter_by_start_date,
