@@ -116,6 +116,8 @@ GEM
     diff-lcs (1.5.1)
     docile (1.4.0)
     e2mmap (0.1.0)
+    erb-formatter (0.4.2)
+      syntax_tree (~> 5.0)
     erubi (1.12.0)
     faker (3.0.0)
       i18n (>= 1.8.11, < 2)
@@ -192,6 +194,7 @@ GEM
       thor
       tilt
     highline (1.7.10)
+    htmlbeautifier (1.4.3)
     i18n (1.14.4)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.1.5)
@@ -311,6 +314,8 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.31.2)
       parser (>= 3.3.0.4)
+    rubocop-capybara (2.21.0)
+      rubocop (~> 1.41)
     rubocop-rails (2.17.3)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
@@ -430,8 +435,10 @@ DEPENDENCIES
   cocoon
   debug
   devise (~> 4.8.1)
+  erb-formatter
   faker
   highline (~> 1.7, >= 1.7.8)
+  htmlbeautifier
   importmap-rails
   jbuilder
   minitest-reporters
@@ -441,6 +448,7 @@ DEPENDENCIES
   puma (~> 4.1)
   rails (~> 7.0.4)
   rubocop
+  rubocop-capybara
   rubocop-rails
   sassc-rails
   scenic

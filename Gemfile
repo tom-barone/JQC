@@ -51,8 +51,11 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 
+  gem 'erb-formatter'
+  gem 'htmlbeautifier'
   gem 'prettier_print'
   gem 'rubocop'
+  gem 'rubocop-capybara', require: false
   gem 'rubocop-rails', require: false
   gem 'solargraph'
   gem 'syntax_tree'
