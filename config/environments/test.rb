@@ -75,4 +75,7 @@ Rails.application.configure do
   config.google_cloud.use_logging = false
   config.google_cloud.use_error_reporting = false
   config.google_cloud.use_debugger = false
+
+  # Mail setup
+  config.action_mailer.delivery_method = :test
 end
