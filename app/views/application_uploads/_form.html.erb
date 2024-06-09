@@ -1,8 +1,8 @@
 <%= form_with(model: application_upload, local: true) do |form| %>
   <% if application_upload.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(application_upload.errors.count, "error") %> prohibited this application_upload from being saved:</h2>
-
+      <h2><%= pluralize(application_upload.errors.count, "error") %>
+        prohibited this application_upload from being saved:</h2>
       <ul>
         <% application_upload.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,22 +10,18 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= form.label :uploaded_date %>
     <%= form.date_select :uploaded_date %>
   </div>
-
   <div class="field">
     <%= form.label :uploaded_text %>
     <%= form.text_area :uploaded_text %>
   </div>
-
   <div class="field">
     <%= form.label :application_id %>
     <%= form.text_field :application_id %>
   </div>
-
   <div class="actions">
     <%= form.submit %>
   </div>

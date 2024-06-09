@@ -1,19 +1,16 @@
 <p id="notice"><%= notice %></p>
-
 <p>
   <strong>Uploaded date:</strong>
   <%= @application_upload.uploaded_date %>
 </p>
-
 <p>
   <strong>Uploaded text:</strong>
   <%= @application_upload.uploaded_text %>
 </p>
-
 <p>
   <strong>Application:</strong>
   <%= @application_upload.application_id %>
 </p>
-
-<%= link_to 'Edit', edit_application_upload_path(@application_upload) %> |
-<%= link_to 'Back', application_uploads_path %>
+<%= link_to "Edit", edit_application_upload_path(@application_upload) %>
+|
+<%= link_to "Back", application_uploads_path %>

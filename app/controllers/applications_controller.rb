@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationsController < ApplicationController
+  before_action :authenticate_user!
   include Pagy::Backend
 
   # TODO: Maybe needed for csv exports

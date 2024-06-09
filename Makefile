@@ -5,6 +5,7 @@ ifneq (,$(wildcard ./.env))
 endif
 
 # Primary targets
+all: install
 
 clean:
 	rm -rf ci .nyc_output public/assets tmp/_javascript tmp/downloads tmp/screenshots
@@ -12,6 +13,17 @@ clean:
 install:
 	npm install
 	bundle install
+
+# TODO: Add this to the CICD pipeline and put in javascript stuff
+lint:
+	bundle exec rubocop
+
+# TODO: Add javascript formatting
+format:
+	# Ruby files (use true to ignore linting errors)
+	bundle exec rubocop --fix-layout --auto-correct-all || true
+	# ERB files
+	find app -name '*.html.erb' -exec bundle exec erb-formatter --write {} \;
 
 test: clean install
 	@echo 'Running javascript unit tests'
@@ -72,3 +84,5 @@ copy-production-database: guard-RAILS_ENV guard-TARGET
 
 guard-%:
 	@if [ -z '${${*}}' ]; then echo 'ERROR: ENV variable $* is not set' && exit 1; fi
+
+

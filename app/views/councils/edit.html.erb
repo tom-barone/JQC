@@ -1,14 +1,25 @@
 <% content_for :council_submit_actions do %>
   <div class="col">
-    <input type="submit" value="Save" form="council_form" class= "btn btn-success"/>
+    <input type="submit" value="Save" form="council_form" class="btn btn-success"/>
   </div>
   <!--
   <div class="col">
-    <%= link_to 'Delete', @council, method: :delete, data: { confirm: 'Are you sure you want to to delete?'}, class: "btn btn-danger" %>
+    <%= link_to "Delete",
+    @council,
+    method: :delete,
+    data: {
+      confirm: "Are you sure you want to to delete?"
+    },
+    class: "btn btn-danger" %>
   </div>
-    -->
+  -->
   <div class="col">
-    <%= link_to 'Exit', session[:application_page], class: "btn btn-outline-secondary", data: { confirm: 'All changes will be discarded'} %>
+    <%= link_to "Exit",
+    session[:application_page],
+    class: "btn btn-outline-secondary",
+    data: {
+      confirm: "All changes will be discarded"
+    } %>
   </div>
 <% end %>
-<%= render 'form', council: @council %>
+<%= render "form", council: @council %>

@@ -1,7 +1,8 @@
 <%= form_with(model: suburb, local: true) do |form| %>
   <% if suburb.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(suburb.errors.count, "error") %> prohibited this suburb from being saved:</h2>
+      <h2><%= pluralize(suburb.errors.count, "error") %>
+        prohibited this suburb from being saved:</h2>
 
       <ul>
         <% suburb.errors.full_messages.each do |message| %>

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ClientsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_client, only: %i[edit update]
   before_action :prepare_association_lists, only: %i[edit update]
 

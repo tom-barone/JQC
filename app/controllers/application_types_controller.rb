@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationTypesController < ApplicationController
+  before_action :authenticate_user!
   def update_all
     application_type_params.each_key do |id|
       @application_type = ApplicationType.find(id.to_i)

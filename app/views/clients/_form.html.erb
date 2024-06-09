@@ -1,6 +1,12 @@
 <%= form_with model: client, local: true, builder: ApplicationHelper::BootstrapSmallFormBuilder, html: { autocomplete: "off", id: "client_form", class: "container" } do |form| %>
   <% if client.errors.any? %>
-    <div class="modal fade" id="errorsModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="errorsModal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -144,7 +150,9 @@
         <div class="row">
           <div class="field">
             <%= form.label :suburb_display_name, "Suburb" %>
-            <%= form.text_field :suburb_display_name, list: "suburbs", class: "list-option-required" %>
+            <%= form.text_field :suburb_display_name,
+                            list: "suburbs",
+                            class: "list-option-required" %>
           </div>
         </div>
       </div>
@@ -161,7 +169,9 @@
         <div class="row">
           <div class="field">
             <%= form.label :postal_suburb_display_name, "Postal Suburb" %>
-            <%= form.text_field :postal_suburb_display_name, list: "suburbs", class: "list-option-required" %>
+            <%= form.text_field :postal_suburb_display_name,
+                            list: "suburbs",
+                            class: "list-option-required" %>
           </div>
         </div>
       </div>
