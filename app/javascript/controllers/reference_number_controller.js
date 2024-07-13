@@ -5,7 +5,7 @@ export default class extends Controller {
 
   onApplicationTypeChange(event) {
     // If changing to the blank option
-		if (event.srcElement.value === '') return;
+    if (event.srcElement.value === "") return;
 
     if (window.location.pathname.includes("/edit")) {
       // Currently editing an application

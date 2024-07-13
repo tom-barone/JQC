@@ -23,9 +23,9 @@ export default class extends Controller {
   }
 
   resetForm() {
-      this.typeTarget.value = "";
-      this.startDateTarget.value = "";
-      this.endDateTarget.value = "";
-      this.searchTextTarget.value = "";
+    this.typeTarget.value = "";
+    this.startDateTarget.value = "";
+    this.endDateTarget.value = "";
+    this.searchTextTarget.value = "";
   }
 }

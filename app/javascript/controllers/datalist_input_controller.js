@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   onChange() {
-		const el = this.element
+    const el = this.element;
     const datalist = el.list;
 
     // Determine whether an option exists with the current value of the input.

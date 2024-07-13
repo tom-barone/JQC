@@ -18,13 +18,6 @@ install:
 lint:
 	bundle exec rubocop
 
-# TODO: Add javascript formatting
-format:
-	# Ruby files (use true to ignore linting errors)
-	bundle exec rubocop --fix-layout --auto-correct-all || true
-	# ERB files
-	find app -name '*.html.erb' -exec bundle exec erb-formatter --write {} \;
-
 test: clean install
 	@echo 'Running javascript unit tests'
 	npm test

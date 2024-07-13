@@ -66,10 +66,10 @@ export default class extends Controller {
     this._setSpin(event);
   }
 
-	onDownload(event) {
-		// TODO: Fix how this works
+  onDownload(event) {
+    // TODO: Fix how this works
     if (!this._checkConfirm(event)) {
       return false;
     }
-	}
+  }
 }
