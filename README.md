@@ -50,7 +50,7 @@ To deploy a new production version:
 
 ## Installing on M1 Mac
 
-There's still some issues with the mysql2 gem on M1 Macs, you can get around them by
+There's still some issues with the `mysql2` gem on M1 Macs, you can get around them by
 setting some bundler config:
 
 ```bash
