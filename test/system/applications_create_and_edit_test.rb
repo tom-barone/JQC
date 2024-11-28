@@ -43,6 +43,7 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_consent_issued = Date.new(2022, 7, 9)
     self.application_variation_issued = Date.new(2022, 7, 10)
     self.application_coo_issued = Date.new(2022, 7, 11)
+    self.application_certifier = 'Vic'
     self.application_engineer_certificate_received = Date.new(2022, 7, 12)
     self.application_certification_notes = 'certification went well'
     self.application_invoice_to = 'this person'
@@ -106,6 +107,7 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     self.application_consent_issued = Date.new(2022, 8, 9)
     self.application_variation_issued = Date.new(2022, 8, 10)
     self.application_coo_issued = Date.new(2022, 8, 11)
+    self.application_certifier = 'Jeff'
     self.application_engineer_certificate_received = Date.new(2022, 8, 12)
     self.application_certification_notes = 'certification went poorly'
     self.application_invoice_to = 'Me'
@@ -165,6 +167,7 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     assert_application_consent_issued('2022-07-09')
     assert_application_variation_issued('2022-07-10')
     assert_application_coo_issued('2022-07-11')
+    assert_application_certifier('Vic')
     assert_application_engineer_certificate_received('2022-07-12')
     assert_application_certification_notes('certification went well')
     assert_application_invoice_to('this person')
@@ -221,6 +224,7 @@ class ApplicationCreateAndEditTest < ApplicationSystemTestCase
     assert_no_application_consent_issued('2022-07-09')
     assert_no_application_variation_issued('2022-07-10')
     assert_no_application_coo_issued('2022-07-11')
+    assert_no_application_certifier('Vic')
     assert_no_application_engineer_certificate_received('2022-07-12')
     assert_no_application_certification_notes('certification went well')
     assert_no_application_invoice_to('this person')

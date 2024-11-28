@@ -463,6 +463,18 @@
         <div class="row">
           <div class="col">
             <div class="field">
+              <%= form.label :certifier %>
+              <%= form.select :certifier,
+                          # Allows old certifiers to be selected
+                          if Application::CERTIFIER.include?(application.certifier)
+                            Application::CERTIFIER
+                          else
+                            [application.certifier] + Application::CERTIFIER
+                          end %>
+            </div>
+          </div>
+          <div class="col">
+            <div class="field">
               <%= form.label :consultancies_review_inspection,
                          "C Review/Inspection",
                          style: "font-size:smaller" %>

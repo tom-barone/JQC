@@ -39,6 +39,7 @@ class ApplicationsCsvResult < ApplicationRecord
     consent_issued
     variation_issued
     coo_issued
+    certifier
     engineer_certificate_received
     certification_notes
     invoice_to
