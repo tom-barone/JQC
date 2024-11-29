@@ -466,7 +466,7 @@
               <%= form.label :certifier %>
               <%= form.select :certifier,
                           # Allows old certifiers to be selected
-                          if Application::CERTIFIER.include?(application.certifier)
+                          if Application::CERTIFIER.include?(application.certifier) || application.certifier.blank?
                             Application::CERTIFIER
                           else
                             [application.certifier] + Application::CERTIFIER
