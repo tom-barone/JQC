@@ -77,4 +77,4 @@ failed tests will be in `tmp/screenshots`.
 ## Security
 
 The rails credential keys are stored seperately and provided to the test &
-deploy actions as environment secrets.
+deploy actions as environment secrets
