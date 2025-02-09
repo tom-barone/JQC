@@ -18,6 +18,12 @@ install:
 lint:
 	bundle exec rubocop
 
+format:
+	bundle exec rubocop --autocorrect-all --fail-level F
+	bundle exec rubocop --fix-layout --autocorrect-all --fail-level F
+	find app -name "*.html.erb" -exec bundle exec erb-formatter --write {} \;
+	npx prettier --write app/javascript/**/*.js
+
 test: clean install
 	@echo 'Running javascript unit tests'
 	npm test
