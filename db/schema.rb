@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_28_225045) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_09_104124) do
   create_table "application_additional_informations", id: :integer, charset: "utf8", force: :cascade do |t|
     t.date "info_date"
     t.text "info_text"
