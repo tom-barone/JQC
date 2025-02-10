@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 class Application < ApplicationRecord
   belongs_to :council, class_name: 'Council', optional: true
   belongs_to :applicant, class_name: 'Client', optional: true
