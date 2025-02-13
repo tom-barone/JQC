@@ -1,7 +1,0 @@
-# # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-council1:
-  name: "the council1 of place1"
-
-council2:
-  name: "the council2 of place2"

@@ -1,3 +1,0 @@
-# Block crawlers
-User-agent: *
-Disallow: /
