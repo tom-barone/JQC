@@ -1,0 +1,10 @@
+<%# TODO: This is just a stub page, remove me when there is a proper applications home page %>
+
+<h1>Home</h1>
+
+<%= button_to destroy_user_session_path, 
+                      method: :delete, 
+                      class: "button is-link", 
+                      data: { 'turbo-submits-with': '...'} do %>
+  <strong>Sign out</strong>
+<% end %>
