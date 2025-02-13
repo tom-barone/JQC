@@ -24,7 +24,9 @@ jobs:
           cache: "npm"
 
       - name: Lint code for consistent style
-        run: bundle exec rake lint
+        run: |
+          npm ci 
+          bundle exec rake lint
 
   test:
     runs-on: ubuntu-latest
