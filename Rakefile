@@ -13,7 +13,7 @@ end
 task lint: :environment do
   sh 'bundle exec bin/rubocop' # Run with --autocorrect-all to fix offenses
   sh 'bundle exec bin/brakeman --no-pager'
-  sh 'npx eslint .'
+  sh 'npx eslint app'
   sh 'bundle exec bin/importmap audit'
 end
 
