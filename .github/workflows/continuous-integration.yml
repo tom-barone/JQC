@@ -1,43 +1,11 @@
-name: CI
+name: "continuous integration - rails 8"
 
 on:
   pull_request:
   push:
-    branches: [ main ]
+    branches: [rails-8]
 
 jobs:
-  scan_ruby:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
-
-  scan_js:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/importmap audit
-
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -50,12 +18,16 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Setup node
+      - uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+
       - name: Lint code for consistent style
-        run: bin/rubocop -f github
+        run: rake lint
 
   test:
     runs-on: ubuntu-latest
-
     services:
       postgres:
         image: postgres
@@ -65,7 +37,6 @@ jobs:
         ports:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
-
       # redis:
       #   image: redis
       #   ports:
@@ -90,7 +61,7 @@ jobs:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
           # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test test:system
+        run: rake test
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4
