@@ -3,5 +3,5 @@
 class ApplicationUpload < ApplicationRecord
   belongs_to :application
 
-  STAGE = ['Approval', 'Stage', 'Variation', 'Regulation 83', 'COO'].freeze
+  STAGE = %w[Approval Stage Variation COO].freeze
 end
