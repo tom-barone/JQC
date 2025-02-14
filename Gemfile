@@ -42,6 +42,9 @@ gem 'thruster', require: false
 # User management [https://github.com/heartcombo/devise]
 gem 'devise'
 
+# Quickly cloning a parent record with all of it's children [https://github.com/amoeba-rb/amoeba]
+gem 'amoeba'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows], require: 'debug/prelude'
