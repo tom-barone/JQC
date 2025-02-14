@@ -1,0 +1,65 @@
+<div class="mx-3" style="max-height: 800px; overflow: auto; position: relative">
+  <table
+    class="table table-hover applications-table m-0"
+    aria-label="Table containing all the applications"
+  >
+    <thead style="position: sticky; top: 0; z-index: 1;">
+      <tr>
+        <th style="max-width: 9ch">Reference number</th>
+        <th>Location</th>
+        <th>Suburb</th>
+        <th>Description</th>
+        <th>Admin notes</th>
+        <th>Applicant</th>
+        <th>Council</th>
+        <th style="max-width: 11ch">Date created</th>
+        <th
+          style="max-width: <%= Application::BUILDING_SURVEYOR.map(&:length).max %>ch"
+        >Building surveyor</th>
+        <th>DA no.</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @applications.each do |application| %>
+        <tr>
+          <td role="button" class="text-truncate">
+            <%= application.reference_number %>
+          </td>
+          <td role="button" class="text-truncate" style="max-width: 8vw">
+            <%= application.location %>
+          </td>
+          <td role="button" class="text-truncate" style="max-width: 8vw">
+            <%= application.suburb&.display_name %>
+          </td>
+          <td role="button" class="text-truncate" style="max-width: 18vw">
+            <%= application.description %>
+          </td>
+          <td role="button" class="text-truncate" style="max-width: 12vw">
+            <%= application.administration_notes %>
+          </td>
+          <td role="button" class="text-truncate" style="max-width: 8vw">
+            <%= application.applicant&.client_name %>
+          </td>
+          <td role="button" class="text-truncate" style="max-width: 8vw">
+            <%= application.council&.name %>
+          </td>
+          <td role="button" class="text-truncate">
+            <%= application.created_at.strftime("%-d %b %Y") %>
+          </td>
+          <td role="button" class="text-truncate">
+            <%= application.building_surveyor %>
+          </td>
+          <td role="button" class="text-truncate" style="max-width: 5vw">
+            <%= application.development_application_number %>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-outline-secondary py-0 mx-2">
+              Edit
+            </button>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

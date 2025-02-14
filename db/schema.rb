@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_13_133630) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_14_044701) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -85,6 +85,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_13_133630) do
     t.date "external_engineer_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.virtual "location", type: :string, as: "((COALESCE((lot_number || ' '::text), ''::text) || COALESCE((street_number || ' '::text), ''::text)) || street_name)", stored: true
     t.index ["applicant_id"], name: "index_applications_on_applicant_id"
     t.index ["application_type_id"], name: "index_applications_on_application_type_id"
     t.index ["contact_id"], name: "index_applications_on_contact_id"
@@ -175,6 +176,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_13_133630) do
     t.text "postcode", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.virtual "display_name", type: :string, as: "((((suburb || ', '::text) || state) || ' '::text) || postcode)", stored: true
   end
 
   create_table "users", force: :cascade do |t|

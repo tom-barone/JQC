@@ -181,6 +181,15 @@ def transfer_data(
 
         print("Data transfer completed successfully!")
 
+        # Reset primary key sequences for the table
+        with postgres_engine.connect() as conn:
+            conn.execute(
+                text(
+                    f"SELECT setval(pg_get_serial_sequence('{table_name}', 'id'), coalesce(max(id)+1, 1), false) FROM {table_name}"
+                )
+            )
+            conn.commit()
+
     except MySQLError as mysql_err:
         print(f"MySQL Error: {mysql_err}")
         sys.exit(1)

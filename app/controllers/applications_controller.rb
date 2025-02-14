@@ -5,9 +5,9 @@ class ApplicationsController < ApplicationController
 
   # GET /applications or /applications.json
   def index
-    #@applications = Application.all
-    # Get first 3 applications
-    @applications = Application.first(3)
+    @applications = Application.eager_load(:suburb, :council, :applicant,
+                                           :application_type).where.not(building_surveyor: nil)
+                               .where.not(building_surveyor: '').first(1000)
   end
 
   # GET /applications/1 or /applications/1.json
