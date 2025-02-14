@@ -2,7 +2,10 @@
 
 <%= render "table" %>
 
-
-
+<%= button_to destroy_user_session_path, 
+                      method: :delete, 
+                      class: "button is-link" do %>
+  <strong>Sign out</strong>
+<% end %>
 
 <%= link_to "New application", new_application_path %>

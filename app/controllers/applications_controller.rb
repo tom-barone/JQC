@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
 class ApplicationsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_application, only: %i[show edit update destroy]
+  include Pagy::Backend
 
   # GET /applications or /applications.json
   def index
-    @applications = Application.eager_load(:suburb, :council, :applicant,
-                                           :application_type).where.not(building_surveyor: nil)
-                               .where.not(building_surveyor: '').first(1000)
+    @number_results_per_page = 1000
+    @applications_not_paged = Application.eager_load(:suburb, :council, :applicant, :application_type)
+    @total_count = @applications_not_paged.count
+    @pagy, @applications =
+      pagy(@applications_not_paged, limit: @number_results_per_page)
   end
 
   # GET /applications/1 or /applications/1.json
