@@ -67,6 +67,9 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
+
+  # Handy for generating scaffold commands [https://github.com/frenesim/schema_to_scaffold]
+  gem 'schema_to_scaffold'
 end
 
 group :test do

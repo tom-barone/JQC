@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :applications
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -12,9 +13,11 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
+  resources :applications
+
   authenticated :user do
     # Define authenticated routes here
-    root to: 'home#index', as: :authenticated_root
+    root to: 'applications#index', as: :authenticated_root
   end
 
   # Defines the root path route ("/")

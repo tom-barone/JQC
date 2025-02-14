@@ -40,7 +40,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_13_133630) do
   end
 
   create_table "applications", id: :serial, force: :cascade do |t|
-    t.text "reference_number"
+    t.text "reference_number", null: false
     t.text "converted_to_from"
     t.bigint "council_id"
     t.text "development_application_number"
