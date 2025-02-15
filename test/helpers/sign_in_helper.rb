@@ -11,8 +11,8 @@ module SignInHelper
   def sign_in_test_user
     visit root_path
     assert_text 'Remember me'
-    fill_in 'Username', with: 'test'
-    fill_in 'Password', with: 'test_password'
+    fill_in 'Username', with: 'test_user'
+    fill_in 'Password', with: 'h2&BUa0qvxoqTM^K'
     click_on 'Sign in'
     assert_text 'Sign out'
   end

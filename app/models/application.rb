@@ -51,20 +51,19 @@ class Application < ApplicationRecord
   }
 
   scope :order_by_type_and_reference_number, lambda {
+    # Use the NATURAL_ORDER constant from the ApplicationType model
+    # to order the applications by type
+    when_clauses = ApplicationType::NATURAL_ORDER.each_with_index.map do |type, index|
+      "WHEN '#{type}' THEN #{index}"
+    end.join(' ')
+
     joins(:application_type)
-      .order(Arel.sql(
-               "CASE application_types.application_type
-         WHEN 'PC' THEN 1
-         WHEN 'Q' THEN 2
-         WHEN 'C' THEN 3
-         WHEN 'RC' THEN 4
-         WHEN 'LG' THEN 5
-         WHEN 'SC' THEN 6
-         ELSE 7 END"
-             ))
+      .order(Arel.sql("CASE application_types.application_type #{when_clauses} ELSE 9 END"))
       .order(reference_number: :desc)
   }
 
+  # See db/migrate/20250215120712_add_text_search_to_applications.rb for the triggers and search functions
+  # behind the searchable_tsvector column
   scope :filter_by_search_text, lambda { |query|
     return all if query.blank?
 

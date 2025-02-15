@@ -17,7 +17,6 @@ class ApplicationsController < ApplicationController
     @total_count = @applications_not_paged.count
     @pagy, @applications =
       pagy(@applications_not_paged, limit: @number_results_per_page)
-    @types = ApplicationType.pluck(:application_type)
   end
 
   # GET /applications/1 or /applications/1.json

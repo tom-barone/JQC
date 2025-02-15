@@ -1,0 +1,15 @@
+# Fixture set to test pagination of applications
+
+_fixture:
+  model_class: Application
+
+DEFAULTS: &DEFAULTS
+  created_at: <%= Date.new(2022,7,10) %>
+
+# Use LGs so we don't step on the PCs toes in other fixture sets
+<% 5000.upto(8000) do |n| %>
+application_PC<%=n%>:
+  <<: *DEFAULTS
+  application_type: LG
+  reference_number: LG<%=n%>
+<% end %>

@@ -3,6 +3,7 @@
 # Test user for development
 if Rails.env.local? && User.find_by(username: 'test_user').nil?
   User.create!(
+    email: 'test@email.com',
     username: 'test_user',
     password: 'h2&BUa0qvxoqTM^K', # use a password manager fools
     password_confirmation: 'h2&BUa0qvxoqTM^K'
