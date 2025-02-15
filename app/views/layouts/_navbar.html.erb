@@ -1,0 +1,60 @@
+<% if user_signed_in? %>
+  <nav
+    class="
+      navbar navbar-default navbar-static-top navbar-expand-md navbar-light pt-0
+    "
+    style="height: 5vh; overflow: hidden"
+  >
+    <div class="container-fluid">
+      <div class="navbar-brand">
+        <%= image_tag "logo_with_name.png",
+        class: "mt-1",
+        style: "height: 4vh; width: auto;" %>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <%= link_to "Applications",
+            applications_path,
+            class:
+              "nav-link" +
+                (
+                  if params[:controller] == "applications"
+                    " active"
+                  else
+                    ""
+                  end
+                ) %>
+          </li>
+        </ul>
+      </div>
+      <div class="d-flex justify-content-end">
+        <%= yield :nav_buttons %>
+        <button
+          type="button"
+          class="btn btn-sm btn-outline-secondary mx-1 text-nowrap"
+          data-bs-container="body"
+          data-bs-html="true"
+          data-bs-toggle="popover"
+          data-bs-placement="bottom"
+          data-bs-content="<%= """If you have any issues, please contact #{Rails.application.credentials.support_name!} 
+            at <a href='#{Rails.application.credentials.support_email!}'>#{Rails.application.credentials.support_email!}</a> 
+            or call #{Rails.application.credentials.support_phone!}.<br/>
+            <br/>
+            - Something isn't working properly and you need it fixed.<br/>
+            - A specific report or summary (e.g. a list of all PC's for 2014 to 2019).<br/>
+            - General feedback about what could be improved.<br/>
+            <br/>"""%>"
+        >
+          Request Support
+        </button>
+        <%= button_to destroy_user_session_path, 
+          method: :delete, 
+          class: "btn btn-sm btn-danger mx-1 text-nowrap" do %>
+          Sign out
+        <% end %>
+      </div>
+    </div>
+  </nav>
+
+<% end %>

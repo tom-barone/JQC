@@ -1,5 +1,5 @@
 <div class="mx-3">
-  <div style="max-height: 80vh; overflow: auto; position: relative">
+  <div style="max-height: 88vh; overflow: auto; position: relative">
     <table
       class="table table-hover applications-table m-0"
       aria-label="Table containing all the applications"
@@ -68,14 +68,17 @@
       </tbody>
     </table>
   </div>
-  <div class="d-flex justify-content-between mt-2">
-    <span class="">
+  <div
+    class="d-flex justify-content-between align-items-start pt-2"
+    style="height: 7vh; overflow: hidden"
+  >
+    <span>
       <%= @total_count %>
       results available. Showing
       <%= @number_results_per_page %>
       results per page.
     </span>
-    <span class="">
+    <span>
       <%== pagy_bootstrap_nav(@pagy) %>
     </span>
   </div>
