@@ -1,4 +1,14 @@
 #!/usr/bin/env ruby
-APP_PATH = File.expand_path("../config/application", __dir__)
-require_relative "../config/boot"
-require "rails/commands"
+# frozen_string_literal: true
+
+if ENV['COVERAGE'] == 'true'
+  require 'simplecov'
+  SimpleCov.start 'rails'
+  SimpleCov.coverage_dir('ci/ruby/coverage')
+  SimpleCov.add_filter ['lib/tasks', 'bin', 'Rakefile']
+  puts 'Required simplecov'
+end
+
+APP_PATH = File.expand_path('../config/application', __dir__)
+require_relative '../config/boot'
+require 'rails/commands'

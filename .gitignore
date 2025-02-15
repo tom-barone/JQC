@@ -33,4 +33,8 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+# Local npm tools
 /node_modules
+
+# Test and coverage reports
+/ci

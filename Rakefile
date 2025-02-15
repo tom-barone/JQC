@@ -30,11 +30,18 @@ task dev: %i[environment install] do
   sh 'PORT=3008 bundle exec bin/dev'
 end
 
-task test: :environment do
+# I can't call this 'test' otherwise it'll conflict with Rails' test task
+task test_all: :environment do
+  if ENV['COVERAGE'] == 'true'
+    FileUtils.rm_rf('ci') if File.directory?('ci')
+    puts 'Running tests with coverage reports' if ENV['COVERAGE'] == 'true'
+  end
+
   sh 'npm run test'
-  sh 'bundle exec bin/rails db:test:prepare test:all'
+  sh 'bundle exec bin/rails db:test:prepare'
+  sh 'bundle exec bin/rails test:all'
 end
 
-task precommit: %i[environment install format lint test]
+task precommit: %i[environment install format lint test_all]
 
 Rails.application.load_tasks
