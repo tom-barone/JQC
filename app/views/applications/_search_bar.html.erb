@@ -1,6 +1,6 @@
 <div class="row justify-content-start align-items-center pb-1">
   <div class="col-10">
-    <%= form_with url: applications_path, class: "search-form input-group", html: {"data-controller": "search"}, method: :get do |search_form| %>
+    <%= form_with url: applications_path, class: "input-group", html: {"data-controller": "search"}, method: :get do |search_form| %>
       <%= search_form.select :type,
                          @types,
                          {
@@ -51,6 +51,7 @@
                              "data-search-target": "searchText" %>
       <%= search_form.button "Search",
                          type: "submit",
+                         name: nil,
                          class: "btn btn-primary",
                          data: {
                            controller: "loading-button",
@@ -86,7 +87,6 @@
       data: {
         controller: "loading-button",
         action: "loading-button#onClick",
-        "turbo-cache": false,
       } %>
     </div>
   </div>

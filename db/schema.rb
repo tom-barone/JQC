@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_14_044701) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_15_120712) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -86,11 +86,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_14_044701) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.virtual "location", type: :string, as: "((COALESCE((lot_number || ' '::text), ''::text) || COALESCE((street_number || ' '::text), ''::text)) || street_name)", stored: true
+    t.tsvector "searchable_tsvector"
     t.index ["applicant_id"], name: "index_applications_on_applicant_id"
     t.index ["application_type_id"], name: "index_applications_on_application_type_id"
     t.index ["contact_id"], name: "index_applications_on_contact_id"
     t.index ["council_id"], name: "index_applications_on_council_id"
     t.index ["owner_id"], name: "index_applications_on_owner_id"
+    t.index ["searchable_tsvector"], name: "applications_searchable_idx", using: :gin
     t.index ["suburb_id"], name: "index_applications_on_suburb_id"
   end
 

@@ -6,7 +6,9 @@
   >
     <div class="container-fluid p-0">
       <div class="navbar-brand">
-        <%= image_tag "logo_with_name.png", style: "width: 150px; height: auto" %>
+        <%= link_to root_path do %>
+          <%= image_tag "logo_with_name.png", style: "width: 150px; height: auto" %>
+        <% end %>
       </div>
       <div class="d-flex flex-grow-1">
         <ul class="navbar-nav">
