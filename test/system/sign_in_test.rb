@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 require 'application_system_test_case'
-require 'helpers/sign_in_helper'
 
 class SignInsTest < ApplicationSystemTestCase
-  include SignInHelper
-
   test 'Unauthenticated users are redirected to the sign in page' do
     visit root_path
     assert_sign_in_page

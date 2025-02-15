@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 require 'application_system_test_case'
-require 'helpers/sign_in_helper'
 
 class RequestSupportTest < ApplicationSystemTestCase
-  include SignInHelper
-
   test 'Request Support button shows the correct details' do
     sign_in_test_user
 
