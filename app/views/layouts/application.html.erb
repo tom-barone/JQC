@@ -52,8 +52,10 @@
   </head>
 
   <body>
-    <%= render "layouts/navbar" %>
-    <%= yield %>
+    <div class="mx-3 d-flex flex-column" style="height: 100vh; overflow: hidden">
+      <%= render "layouts/navbar" %>
+      <%= yield %>
+    </div>
   </body>
   <script>
     // Initialise the bootstrap popovers

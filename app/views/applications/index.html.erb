@@ -1,1 +1,13 @@
+<%= render "search_bar" %>
 <%= render "table" %>
+<div class="d-flex justify-content-between align-items-start pt-2">
+  <span>
+    <%= @total_count %>
+    results available. Showing
+    <%= @number_results_per_page %>
+    results per page.
+  </span>
+  <span>
+    <%== pagy_bootstrap_nav(@pagy) %>
+  </span>
+</div>
