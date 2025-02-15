@@ -5,6 +5,9 @@ on:
   push:
     branches: [rails-8]
 
+env:
+  RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
 jobs:
   lint:
     runs-on: ubuntu-latest
