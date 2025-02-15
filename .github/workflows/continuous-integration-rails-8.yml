@@ -61,12 +61,19 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          cache: "npm"
+
       - name: Run tests
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
           # REDIS_URL: redis://localhost:6379/0
-        run: bundle exec rake test
+        run: |
+          npm ci
+          bundle exec rake test
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4

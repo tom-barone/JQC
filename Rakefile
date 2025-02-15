@@ -31,6 +31,7 @@ task dev: %i[environment install] do
 end
 
 task test: :environment do
+  sh 'npm run test'
   sh 'bundle exec bin/rails db:test:prepare test:all'
 end
 

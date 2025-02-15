@@ -9,7 +9,7 @@
                          },
                          {
                            class: "form-select",
-                           style: "max-width: 16ch",
+                           style: "max-width: 16ch; min-width: 8ch;",
                            "data-search-target": "type",
                          } %>
       <span class="input-group-text">From</span>
@@ -17,6 +17,7 @@
                              {
                                value: params.dig(:start_date),
                                class: "form-control",
+                               style: "max-width: 18ch; min-width: 18ch;",
                                "data-search-target": "startDate",
                                min: "1970-01-01",
                              } %>
@@ -25,6 +26,7 @@
                              {
                                value: params.dig(:end_date),
                                class: "form-control",
+                               style: "max-width: 18ch; min-width: 18ch;",
                                "data-search-target": "endDate",
                                min: "1970-01-01",
                              } %>
@@ -45,6 +47,7 @@
       <%= search_form.text_field :search_text,
                              value: params.dig(:search_text),
                              class: "form-control w-25",
+                             style: "max-width: 60ch; min-width: 20ch;",
                              "data-search-target": "searchText" %>
       <%= search_form.button "Search",
                          type: "submit",
