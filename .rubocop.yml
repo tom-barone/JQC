@@ -18,6 +18,11 @@ AllCops:
 Style/Documentation:
   Exclude:
     - "**/*.rb"
+
 Metrics/MethodLength:
   Exclude:
     - "db/**/*"
+
+# We're almost certainly never going to need localisation in this app
+Rails/I18nLocaleTexts:
+  Enabled: false
