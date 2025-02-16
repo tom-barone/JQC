@@ -4,11 +4,17 @@
     class="btn btn-sm btn-primary mx-1 text-nowrap"
     data-bs-container="body"
     data-bs-html="true"
+    data-bs-custom-class="wider-popover"
+    data-bs-trigger="focus"
     data-bs-toggle="popover"
     data-bs-placement="bottom"
     data-bs-content='
       <strong><%= @total_count %></strong> records to download.<br/>
-      This may take up to 30 seconds.<br/>
+      <% if @total_count > 10000 %>
+        <div class="alert alert-warning my-1 p-1" role="alert">
+          <strong>⚠ Warning!</strong> This many records may take a while.
+        </div>
+      <% end %>
       <div class="d-flex justify-content-center">
         <%= button_to applications_path({format: :csv}), 
           class:"btn btn-sm btn-success mt-2 text-nowrap", 

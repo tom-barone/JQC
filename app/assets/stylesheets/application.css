@@ -27,3 +27,8 @@ body {
 	/* Set the font family to verdana, arial, helvetica, sans-serif */
 	font-family: verdana, arial, helvetica, sans-serif;
 }
+
+/* Make the max width of popovers a bit wider */
+.wider-popover {
+	--bs-popover-max-width: 600px;
+}
