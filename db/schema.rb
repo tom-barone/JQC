@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_15_120712) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_16_124147) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -87,6 +87,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_15_120712) do
     t.datetime "updated_at", null: false
     t.virtual "location", type: :string, as: "((COALESCE((lot_number || ' '::text), ''::text) || COALESCE((street_number || ' '::text), ''::text)) || street_name)", stored: true
     t.tsvector "searchable_tsvector"
+    t.boolean "staged_consent", default: false, null: false
+    t.decimal "structural_engineer_fee", precision: 13, scale: 2
+    t.integer "documented_performance_solutions"
+    t.text "certificate_reference"
     t.index ["applicant_id"], name: "index_applications_on_applicant_id"
     t.index ["application_type_id"], name: "index_applications_on_application_type_id"
     t.index ["contact_id"], name: "index_applications_on_contact_id"
