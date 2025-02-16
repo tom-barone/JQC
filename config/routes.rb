@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
+  # Test routes to check emails are sent on exceptions
+  get 'fail' => 'testing#fail' unless Rails.env.production?
+
   resources :applications
 
   authenticated :user do

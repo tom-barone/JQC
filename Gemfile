@@ -48,6 +48,9 @@ gem 'amoeba'
 # Pagination [https://github.com/ddnexus/pagy]
 gem 'pagy'
 
+# For reporting exceptions [https://github.com/smartinez87/exception_notification]
+gem 'exception_notification'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows], require: 'debug/prelude'
@@ -73,6 +76,9 @@ group :development do
 
   # Handy for generating scaffold commands [https://github.com/frenesim/schema_to_scaffold]
   gem 'schema_to_scaffold'
+
+  # For viewing emails in development [https://github.com/ryanb/letter_opener]
+  gem 'letter_opener'
 end
 
 group :test do

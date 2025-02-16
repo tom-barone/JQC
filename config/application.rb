@@ -25,5 +25,11 @@ module Jqc
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    # Used for whenever we need to know what our host / scheme is
+    # Stuff like swagger UI etc.
+    config.port = ENV.fetch('PORT', 3008)
+    config.domain = ENV.fetch('DOMAIN', "http://localhost:#{config.port}")
+    config.host = config.domain.split('://').last.split(':').first
   end
 end
