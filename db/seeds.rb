@@ -11,10 +11,12 @@ if Rails.env.local? && User.find_by(username: 'test_user').nil?
 end
 
 # Main user for production
+email = Rails.application.credentials.jqc_email!
+username = Rails.application.credentials.jqc_username!
 if Rails.env.production? && User.find_by(username: username).nil?
-  username = Rails.application.credentials.jqc_username!
   password = Rails.application.credentials.jqc_password!
   User.create!(
+    email: email,
     username: username,
     password: password,
     password_confirmation: password
