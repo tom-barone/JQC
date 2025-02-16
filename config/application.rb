@@ -26,6 +26,9 @@ module Jqc
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Exclude jest tests from being loaded by the asset pipeline
+    config.assets.excluded_paths = [Rails.root.join('app/assets/javascript/tests')]
+
     # Used for whenever we need to know what our host / scheme is
     # Stuff like swagger UI etc.
     config.port = ENV.fetch('PORT', 3008)

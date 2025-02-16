@@ -82,4 +82,39 @@ class Application < ApplicationRecord
 
     order(Arel.sql(safe_rank))
   }
+
+  def self.search(params)
+    Application.eager_load(:suburb, :council, :applicant, :application_type)
+               .filter_by_type(params[:type])
+               .filter_by_date(params[:start_date], params[:end_date])
+               .filter_by_search_text(params[:search_text])
+               .order_by_type_and_reference_number
+  end
+
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def self.write_csv_response(applications, response)
+    attributes = %w[reference_number description]
+    filename = "JQC_Applications_Export_#{Time.zone.now.strftime('%Y-%m-%d')}.csv"
+
+    response.headers.merge!(
+      'Content-Type' => 'text/csv',
+      'Content-Disposition' => "attachment; filename=\"#{filename}\"",
+      'X-Accel-Buffering' => 'no',
+      'Cache-Control' => 'no-cache',
+      'Last-Modified' => Time.current.httpdate
+    )
+    response.headers.delete('Content-Length')
+    response.stream.write CSV.generate_line(attributes)
+
+    applications.find_in_batches(batch_size: 1000) do |batch|
+      batch.each do |application|
+        response.stream.write CSV.generate_line(
+          attributes.map { |attr| application.send(attr) }
+        )
+      end
+    end
+  ensure
+    response.stream.close
+  end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

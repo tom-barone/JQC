@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'csv'
+
 class ApplicationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_application, only: %i[show edit update destroy]
@@ -7,16 +9,15 @@ class ApplicationsController < ApplicationController
 
   # GET /applications or /applications.json
   def index
-    params = index_search_params
+    @params = search_params
     @number_results_per_page = 1000
-    @applications_not_paged = Application.eager_load(:suburb, :council, :applicant, :application_type)
-                                         .filter_by_type(params[:type])
-                                         .filter_by_date(params[:start_date], params[:end_date])
-                                         .filter_by_search_text(params[:search_text])
-                                         .order_by_type_and_reference_number
-    @total_count = @applications_not_paged.count
-    @pagy, @applications =
-      pagy(@applications_not_paged, limit: @number_results_per_page)
+    @all_applications = Application.search(@params)
+    @total_count = @all_applications.count
+    @pagy, @applications = pagy(@all_applications, limit: @number_results_per_page)
+    respond_to do |format|
+      format.csv { Application.write_csv_response(@all_applications, response) }
+      format.html
+    end
   end
 
   # GET /applications/1 or /applications/1.json
@@ -77,13 +78,14 @@ class ApplicationsController < ApplicationController
     @application = Application.find(params.expect(:id))
   end
 
-  def index_search_params
+  def search_params
     params.permit(
       :type,
       :start_date,
       :end_date,
       :search_text,
-      :page
+      :page,  # What page of results
+      :format # Whether we're asking for HTML or CSV
     )
   end
 

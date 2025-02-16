@@ -1,4 +1,4 @@
-import { _getFormattedDateString } from "./search_controller";
+import { _getFormattedDateString } from "../controllers/search_controller";
 
 test("_getFormattedDateString", () => {
   const day1 = new Date(2022, 0, 1);

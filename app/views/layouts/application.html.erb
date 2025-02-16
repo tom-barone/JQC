@@ -62,9 +62,15 @@
     window.popoverTriggerList = document.querySelectorAll(
       '[data-bs-toggle="popover"]',
     );
+    // Allow buttons and forms inside popovers
+    window.allowList = bootstrap.Tooltip.Default.allowList
+    window.allowList.input = ['type', 'name', 'value', 'autocomplete'];
+    window.allowList.form = ['class', 'method', 'action'];
+    window.allowList.button = ['class', 'type', 'data-controller', 'data-action', 'data-download-button-target'];
+    window.allowList.div = ['class', 'data-controller', 'data-action'];
     [...window.popoverTriggerList].forEach(
       // eslint-disable-next-line no-undef
-      (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl),
+      (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl, { allowList: window.allowList }),
     );
   </script>
 </html>
