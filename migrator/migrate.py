@@ -3,6 +3,7 @@ import sys
 import mysql.connector
 import pandas as pd
 import psycopg2
+import sshtunnel
 from dotenv import dotenv_values
 from mysql.connector import Error as MySQLError
 from psycopg2 import Error as PostgresError
@@ -217,10 +218,31 @@ if __name__ == "__main__":
     }
     postgres_config = {
         "host": config["POSTGRES_HOST"],
+        "port": config["POSTGRES_PORT"],
         "user": config["POSTGRES_USER"],
         "password": config["POSTGRES_PASSWORD"],
         "database": config["POSTGRES_DATABASE"],
     }
+
+    # Run through a SSH tunnel if required
+    tunnel = None
+    if "SSH_TUNNEL_HOST" in config:
+        print("Using SSH tunnel")
+        ssh_tunnel_config = {
+            "host": config["SSH_TUNNEL_HOST"],
+            "username": config["SSH_TUNNEL_USERNAME"],
+            "private_key_path": config["SSH_TUNNEL_PRIVATE_KEY_PATH"],
+        }
+        tunnel = sshtunnel.SSHTunnelForwarder(
+            (ssh_tunnel_config["host"], 22),
+            ssh_username=ssh_tunnel_config["username"],
+            ssh_pkey=ssh_tunnel_config["private_key_path"],
+            remote_bind_address=("0.0.0.0", 5432),
+            local_bind_address=("localhost", 10022),
+        )
+        tunnel.start()
+        postgres_config["host"] = tunnel.local_bind_host
+        postgres_config["port"] = tunnel.local_bind_port
 
     # Start the transfer
     transfer_data(mysql_config, postgres_config, "suburbs")
@@ -243,3 +265,6 @@ if __name__ == "__main__":
     transfer_data(mysql_config, postgres_config, "invoices", dtype={"paid": bool})
     transfer_data(mysql_config, postgres_config, "request_for_informations")
     transfer_data(mysql_config, postgres_config, "stages")
+
+    if tunnel:
+        tunnel.stop()
