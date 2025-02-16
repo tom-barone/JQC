@@ -16,7 +16,8 @@ class RequestSupportTest < ApplicationSystemTestCase
     assert_text support_name, exact: false
 
     # Dismiss and check that the details are gone
-    click_on 'Request Support'
+    # Click anywhere on the page to dismiss the modal
+    find('body').click
     assert_no_text support_email, exact: false
     assert_no_text support_phone, exact: false
     assert_no_text support_name, exact: false
