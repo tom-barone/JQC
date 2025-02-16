@@ -78,21 +78,24 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  url: <%= ENV["DATABASE_URL"] %>
   primary: &primary_production
     <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
     database: jqc_production
     username: jqc
     password: <%= ENV["JQC_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
+    url: <%= ENV["DATABASE_URL"]&.+('_cache') %>
     database: jqc_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
+    url: <%= ENV["DATABASE_URL"]&.+('_queue') %>
     database: jqc_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
+    url: <%= ENV["DATABASE_URL"]&.+('_cable') %>
     database: jqc_production_cable
     migrations_paths: db/cable_migrate
