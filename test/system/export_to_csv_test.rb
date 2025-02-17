@@ -9,7 +9,6 @@ class ExportToCsvTest < ApplicationSystemTestCase
     # Fields that should be included in the export
     q1.update!(consultancies_review_inspection: Date.new(2021, 4, 28))
     q1.update!(consultancies_report_sent: Date.new(2021, 4, 29))
-    q1.update!(certifier: 'Vic')
 
     # Add invoices
     assert_on_homepage
@@ -53,7 +52,6 @@ class ExportToCsvTest < ApplicationSystemTestCase
     assert_equal(export[1]['consultancies_report_sent'], '2021-04-29')
     assert_equal(export[1]['invoice_numbers'], 'KD123,KD543')
     assert_equal(export[0]['invoice_numbers'], 'KD789')
-    assert_equal(export[1]['certifier'], 'Vic')
 
     # Check that the correct values are excluded
     assert_not(export[0].key?('care_of'))

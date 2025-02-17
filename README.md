@@ -50,18 +50,15 @@ To deploy a new production version:
 
 ## Installing on M1 Mac
 
-There's still some issues with the `mysql2` gem on M1 Macs, you can get around them by
-setting some bundler config:
+There's some issues with the mysql2 gem on M1 Macs, you can get around them by
+installing the mysql2 gem with:
 
 ```bash
-bundle config build.mysql2 "--with-ldflags='-L$(brew --prefix zstd)/lib'"
+gem install mysql2 -v '0.5.6' -- --with-mysql-lib=$(brew --prefix mysql)/lib --with-mysql-dir=$(brew --prefix mysql) --with-mysql-config=$(brew --prefix mysql)/bin/mysql_config --with-mysql-include=$(brew --prefix mysql)/include --with-ldflags="-L$(brew --prefix zstd)/lib -L$(brew --prefix openssl)/lib -L$(brew --prefix zlib)/lib" --with-cppflags="-I$(brew --prefix openssl)/include -I$(brew --prefix zlib)/include"
 ```
 
-Also `mysql@9` does not include the `mysql_native_password` plugin anymore, so best to install `mysql@8.4` for now.
-
-```bash
-brew install mysql@8.4
-```
+After running this command, `bundle install` should now work. Thanks goes to
+[this thread](https://gist.github.com/fernandoaleman/385aad12a18fe50cf5fd1e988e76fd63).
 
 ## Testing
 
@@ -77,4 +74,4 @@ failed tests will be in `tmp/screenshots`.
 ## Security
 
 The rails credential keys are stored seperately and provided to the test &
-deploy actions as environment secrets
+deploy actions as environment secrets.

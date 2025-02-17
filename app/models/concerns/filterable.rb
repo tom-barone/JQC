@@ -16,7 +16,7 @@ module Filterable
               # Show PC's first, then Q's
               .order(
                 Arel.sql(
-                  'field (application_type, "PC", "Q", "PW", "C", "RC", "LG", "SC") asc, reference_number desc'
+                  'field (application_type, "PC", "Q", "C", "RC", "LG", "SC") asc, reference_number desc'
                 )
               )
           }

@@ -7,17 +7,15 @@ class ApplicationTypesEditTest < ApplicationSystemTestCase
     assert_settings_application_type('C',  at: 0)
     assert_settings_application_type('LG', at: 1)
     assert_settings_application_type('PC', at: 2)
-    assert_settings_application_type('PW', at: 3)
-    assert_settings_application_type('Q',  at: 4)
-    assert_settings_application_type('RC', at: 5)
-    assert_settings_application_type('SC', at: 6)
+    assert_settings_application_type('Q',  at: 3)
+    assert_settings_application_type('RC', at: 4)
+    assert_settings_application_type('SC', at: 5)
     assert_settings_last_used('7002', at: 0)
     assert_settings_last_used('6002', at: 1)
     assert_settings_last_used('9002', at: 2)
-    assert_settings_last_used('5',    at: 3)
-    assert_settings_last_used('8002', at: 4)
-    assert_settings_last_used('2090', at: 5)
-    assert_settings_last_used('428',  at: 6)
+    assert_settings_last_used('8002', at: 3)
+    assert_settings_last_used('2090', at: 4)
+    assert_settings_last_used('428',  at: 5)
   end
 
   test 'editing and saving last used numbers' do
@@ -58,7 +56,6 @@ class ApplicationTypesEditTest < ApplicationSystemTestCase
     update_settings_last_used('9999',   at: 3)
     update_settings_last_used('2090',   at: 4)
     update_settings_last_used('0',      at: 5)
-    update_settings_last_used('1',      at: 6)
     save_settings
 
     # Check saved changes
@@ -70,6 +67,5 @@ class ApplicationTypesEditTest < ApplicationSystemTestCase
     assert_settings_last_used('9999', at: 3)
     assert_settings_last_used('2090', at: 4)
     assert_settings_last_used('0',    at: 5)
-    update_settings_last_used('1',    at: 6)
   end
 end

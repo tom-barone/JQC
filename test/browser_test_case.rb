@@ -211,7 +211,6 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def application_consent_issued=(consent_issued) fill_in 'application_consent_issued', with: consent_issued end
   def application_variation_issued=(variation_issued) fill_in 'application_variation_issued', with: variation_issued end
   def application_coo_issued=(coo_issued) fill_in 'application_coo_issued', with: coo_issued end
-  def application_certifier=(certifier) select certifier, from: 'application_certifier' end
   def application_engineer_certificate_received=(engineer_certificate_received) fill_in 'application_engineer_certificate_received', with: engineer_certificate_received end
   def application_certification_notes=(certification_notes) fill_in 'application_certification_notes', with: certification_notes end
   def application_invoice_to=(invoice_to) fill_in 'application_invoice_to', with: invoice_to end
@@ -279,7 +278,6 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_application_consent_issued(consent_issued) assert_field('application_consent_issued', with: consent_issued) end
   def assert_application_variation_issued(variation_issued) assert_field('application_variation_issued', with: variation_issued) end
   def assert_application_coo_issued(coo_issued) assert_field('application_coo_issued', with: coo_issued) end
-  def assert_application_certifier(certifier) assert_select('application_certifier', selected: certifier) end
   def assert_application_engineer_certificate_received(engineer_certificate_received) assert_field('application_engineer_certificate_received', with: engineer_certificate_received) end
   def assert_application_certification_notes(certification_notes) assert_field('application_certification_notes', with: certification_notes) end
   def assert_application_invoice_to(invoice_to) assert_field('application_invoice_to', with: invoice_to) end
@@ -350,7 +348,6 @@ class BrowserTestCase < ActionDispatch::SystemTestCase
   def assert_no_application_consent_issued(consent_issued) assert_no_field('application_consent_issued', with: consent_issued) end
   def assert_no_application_variation_issued(variation_issued) assert_no_field('application_variation_issued', with: variation_issued) end
   def assert_no_application_coo_issued(coo_issued) assert_no_field('application_coo_issued', with: coo_issued) end
-  def assert_no_application_certifier(certifier) assert_no_select('application_certifier', selected: certifier) end
   def assert_no_application_engineer_certificate_received(engineer_certificate_received) assert_no_field('application_engineer_certificate_received', with: engineer_certificate_received) end
   def assert_no_application_certification_notes(certification_notes) assert_no_field('application_certification_notes', with: certification_notes) end
   def assert_no_application_invoice_to(invoice_to) assert_no_field('application_invoice_to', with: invoice_to) end
