@@ -103,5 +103,5 @@ jobs:
         uses: dokku/github-action@master
         with:
           branch: "develop"
-          git_remote_url: ${{ secrets.STAGING_DOKKU_GIT_REMOTE }}
+          git_remote_url: "ssh://dokku@${{ secrets.STAGING_DOMAIN }}:22/${{ secrets.STAGING_DOMAIN }}"
           ssh_private_key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
