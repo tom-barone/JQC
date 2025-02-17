@@ -22,7 +22,11 @@
     </thead>
     <tbody>
       <% @applications.each do |application| %>
-        <tr>
+        <tr
+          data-controller="navigatable"
+          data-navigatable-path-param="<%= edit_application_path(application) %>"
+          data-action="click->navigatable#navigate"
+        >
           <td role="button" class="text-truncate" style="max-width: 9ch">
             <%= application.reference_number %>
           </td>

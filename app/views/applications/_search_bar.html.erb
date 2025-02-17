@@ -2,7 +2,7 @@
   <div class="col-10">
     <%= form_with url: applications_path, class: "input-group", html: {"data-controller": "search"}, method: :get do |search_form| %>
       <%= search_form.select :type,
-                         ApplicationType::NATURAL_ORDER,
+                         ApplicationType.ordered_values,
                          {
                            include_blank: "Select Type:",
                            selected: params.dig(:type),

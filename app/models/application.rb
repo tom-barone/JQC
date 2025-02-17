@@ -40,6 +40,44 @@ class Application < ApplicationRecord
   JOB_TYPE = %w[BRC Other].freeze
   CONSENT = %w[Approved Refused].freeze
 
+  # Define the getter and setter methods for the client name & suburb fields
+  # This is so we can use the client name in the new/edit form
+  def suburb_display_name=(display_name)
+    self.suburb = Suburb.find_by(display_name:)
+  end
+
+  def suburb_display_name
+    suburb&.display_name
+  end
+
+  def council_name=(name)
+    stripped = name.strip
+    if stripped == ''
+      self.council = nil
+      return
+    end
+    self.council = Council.find_or_create_by(name: stripped)
+  end
+
+  def council_name
+    council&.name
+  end
+
+  %i[applicant owner contact].each do |attribute|
+    define_method("#{attribute}_name=") do |name|
+      stripped = name.strip
+      if stripped.empty?
+        send("#{attribute}=", nil)
+        return
+      end
+      send("#{attribute}=", Client.find_or_create_by(client_name: stripped))
+    end
+
+    define_method("#{attribute}_name") do
+      send(attribute)&.client_name
+    end
+  end
+
   scope :filter_by_type, lambda { |type|
     joins(:application_type).where(application_types: { application_type: type }) if type.present?
   }
@@ -52,14 +90,8 @@ class Application < ApplicationRecord
   }
 
   scope :order_by_type_and_reference_number, lambda {
-    # Use the NATURAL_ORDER constant from the ApplicationType model
-    # to order the applications by type
-    when_clauses = ApplicationType::NATURAL_ORDER.each_with_index.map do |type, index|
-      "WHEN '#{type}' THEN #{index}"
-    end.join(' ')
-
     joins(:application_type)
-      .order(Arel.sql("CASE application_types.application_type #{when_clauses} ELSE 9 END"))
+      .order(Arel.sql('application_types.display_priority'))
       .order(reference_number: :desc)
   }
 

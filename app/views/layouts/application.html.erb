@@ -45,6 +45,10 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
@@ -58,19 +62,23 @@
     </div>
   </body>
   <script>
-    // Initialise the bootstrap popovers
-    window.popoverTriggerList = document.querySelectorAll(
-      '[data-bs-toggle="popover"]',
-    );
-    // Allow buttons and forms inside popovers
-    window.allowList = bootstrap.Tooltip.Default.allowList
-    window.allowList.input = ['type', 'name', 'value', 'autocomplete'];
-    window.allowList.form = ['class', 'method', 'action'];
-    window.allowList.button = ['class', 'type', 'data-controller', 'data-action', 'data-download-button-target'];
-    window.allowList.div = ['class', 'data-controller', 'data-action'];
-    [...window.popoverTriggerList].forEach(
-      // eslint-disable-next-line no-undef
-      (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl, { allowList: window.allowList }),
-    );
+    document.addEventListener("turbo:load", () => {
+      // Initialise the bootstrap popovers
+      window.popoverTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="popover"]',
+      );
+      // Allow buttons and forms inside popovers
+      window.allowList = bootstrap.Tooltip.Default.allowList
+      window.allowList.input = ['type', 'name', 'value', 'autocomplete'];
+      window.allowList.form = ['class', 'method', 'action'];
+      window.allowList.button = ['class', 'type', 'data-controller', 'data-action', 'data-download-button-target'];
+      window.allowList.div = ['class', 'data-controller', 'data-action'];
+      [...window.popoverTriggerList].forEach(
+        // eslint-disable-next-line no-undef
+        (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl, { allowList: window.allowList }),
+      );
+      // We want to show the progress bar for almost everything
+      Turbo.config.drive.progressBarDelay = 10;
+    });
   </script>
 </html>

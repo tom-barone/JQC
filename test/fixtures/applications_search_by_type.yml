@@ -6,7 +6,7 @@ _fixture:
 DEFAULTS: &DEFAULTS
   created_at: <%= Date.new(2022,7,10) %>
 
-<% ApplicationType::NATURAL_ORDER.each.with_index do |type, index| %>
+<% ApplicationType.ordered_values.each.with_index do |type, index| %>
 search_application_by_type_<%=type%>:
   <<: *DEFAULTS
   application_type: <%=type%>

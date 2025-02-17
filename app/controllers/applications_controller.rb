@@ -10,13 +10,13 @@ class ApplicationsController < ApplicationController
   # GET /applications or /applications.json
   def index
     @params = search_params
-    @number_results_per_page = 1000
+    @number_results_per_page = 500
     @all_applications = Application.search(@params)
-    @total_count = @all_applications.count
     @pagy, @applications = pagy(@all_applications, limit: @number_results_per_page)
+    @total_count = @pagy.count
     respond_to do |format|
       format.csv { Application.write_csv_response(@all_applications, response) }
-      format.html
+      format.html { session[:search_results] = request.url } # Save the search results for later
     end
   end
 
@@ -29,7 +29,12 @@ class ApplicationsController < ApplicationController
   end
 
   # GET /applications/1/edit
-  def edit; end
+  def edit
+    @converted_application =
+      Application.where(reference_number: @application[:converted_to_from])
+                 .first
+    prepare_association_lists
+  end
 
   # POST /applications or /applications.json
   def create
@@ -50,7 +55,7 @@ class ApplicationsController < ApplicationController
   def update
     respond_to do |format|
       if @application.update(application_params)
-        format.html { redirect_to @application, notice: 'Application was successfully updated.' }
+        format.html { redirect_to session[:search_results] }
         format.json { render :show, status: :ok, location: @application }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -64,14 +69,22 @@ class ApplicationsController < ApplicationController
     @application.destroy!
 
     respond_to do |format|
-      format.html do
-        redirect_to applications_path, status: :see_other, notice: 'Application was successfully destroyed.'
-      end
+      format.html { redirect_to session[:search_results] }
       format.json { head :no_content }
     end
   end
 
   private
+
+  def prepare_association_lists
+    # Cache the lists of suburbs, since they'll never change really
+    @suburbs = Rails.cache.fetch('association_lists_suburbs', expires_in: 1.day) do
+      Suburb.pluck(:display_name)
+    end
+    # These may change more frequently, there's not much else we can do here
+    @clients = Client.pluck(:client_name)
+    @councils = Council.pluck(:name)
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_application
@@ -91,9 +104,9 @@ class ApplicationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def application_params
-    params.expect(application: %i[reference_number converted_to_from council_id development_application_number
-                                  applicant_id owner_id contact_id description cancelled street_number lot_number
-                                  street_name suburb_id electronic_lodgement engagement_form job_type_administration
+    params.expect(application: %i[reference_number converted_to_from council_name development_application_number
+                                  applicant_name owner_name contact_name description cancelled street_number lot_number
+                                  street_name suburb_display_name electronic_lodgement engagement_form job_type_administration
                                   quote_accepted_date administration_notes number_of_storeys construction_value
                                   fee_amount building_surveyor structural_engineer risk_rating
                                   consultancies_review_inspection consultancies_report_sent assessment_commenced

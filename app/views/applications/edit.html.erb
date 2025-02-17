@@ -1,13 +1,70 @@
-<% content_for :title, "Editing application" %>
+<% content_for :title, @application.reference_number %>
+<%= bootstrap_form_with model: @application, local:true, 
+  html: { autocomplete: "off", class: "h-100 d-flex flex-column" },
+  data: {
+    controller: "unsaved-changes",
+    action: "change->unsaved-changes#onFormChange"
+  } do |form| %>
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="admin-invoicing-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#admin-invoicing-tab-pane"
+        type="button"
+        role="tab"
+        aria-controls="admin-invoicing-tab-pane"
+        aria-selected="true"
+      >Administration & Invoicing</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="certification-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#certification-tab-pane"
+        type="button"
+        role="tab"
+        aria-controls="certification-tab-pane"
+        aria-selected="false"
+      >Certification</button>
+    </li>
+  </ul>
+  <div
+    class="
+      tab-content mb-3 bg-white border border-1 rounded-bottom-1 p-3 flex-grow-1
+      d-flex flex-column
+    "
+    style="border-top: none !important"
+  >
+    <div
+      class="tab-pane show active h-100"
+      id="admin-invoicing-tab-pane"
+      role="tabpanel"
+      aria-labelledby="admin-invoicing-tab"
+      tabindex="0"
+    >
+      <div class="h-100 d-flex flex-column flex-grow-1">
+        <div class="flex-grow-1">
+          <%= render "administration_fields", application: @application, form: form %>
+        </div>
+      </div>
+    </div>
+    <div
+      class="tab-pane h-100"
+      id="certification-tab-pane"
+      role="tabpanel"
+      aria-labelledby="certification-tab"
+      tabindex="0"
+    >
 
-<h1>Editing application</h1>
-
-<%= render "form", application: @application %>
-
-<br>
-
-<div>
-  <%= link_to "Show this application", @application %>
-  |
-  <%= link_to "Back to applications", applications_path %>
-</div>
+      <div class="h-100 d-flex flex-column flex-grow-1">
+        <div class="flex-grow-1">
+          <h1>Certification</h1>
+        </div>
+      </div>
+    </div>
+    <%= render "form_submission_bar", form: form %>
+  </div>
+<% end %>

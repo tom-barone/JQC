@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-between align-items-center border-top pt-3">
+  <div class="fs-5 text-primary-emphasis">
+    <i class="bi bi-folder-fill"></i>
+    <%= @application.reference_number %>
+  </div>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="mx-4">
+      <%= form.check_box :cancelled %>
+      <%= form.label :cancelled, "Mark as cancelled", style: 'margin-top: 0px !important' %>
+    </div>
+    <div class="mx-2">
+      <%= button_tag "Save", type: "submit", class: "btn btn-success" %>
+    </div>
+    <div class="mx-2">
+      <%= link_to "Delete",
+      @application,
+      method: :delete,
+      data: {
+        turbo_method: "delete",
+        turbo_confirm: "Are you sure you want to delete?",
+        confirm_details: "This cannot be undone.",
+      },
+      class: "btn btn-danger" %>
+    </div>
+    <div class="ms-2">
+      <%= link_to "Exit",
+      session[:search_results],
+      class: "btn btn-outline-secondary",
+      data: {
+        "unsaved-changes-target": "exitButton",
+        turbo_method: "get",
+        turbo_confirm: "Are you sure?",
+        confirm_details: "All unsaved changes will be discarded.",
+      } %>
+    </div>
+  </div>
+</div>
+<dialog id="confirm" style="border:none; background: none">
+  <div class="modal position-static d-block">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirm-title">Replaced by `data-turbo-confirm` attribute</h5>
+          <button type="button" class="btn-close ms-3 confirm-cancel" aria-label="Cancel"></button>
+        </div>
+        <div id="confirm-body" class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button id="confirm-accept" type="button" class="btn btn-primary">OK</button>
+          <button autofocus="true" type="button" class="btn btn-secondary confirm-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</dialog>

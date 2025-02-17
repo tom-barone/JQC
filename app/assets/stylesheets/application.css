@@ -32,3 +32,13 @@ body {
 .wider-popover {
 	--bs-popover-max-width: 600px;
 }
+
+/* Give non active tabs a nice looking style */
+.nav-tabs .nav-link:not(.active) {
+	/* Set the text colour to a faded grey */
+	color: var(--bs-secondary-color);
+	/* Show the border always on non active tabs */
+	border-width: 1px !important;
+	/* Keep the border style and colour the same as the rest of the tabs */
+	border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+}
