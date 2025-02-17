@@ -2,6 +2,7 @@
 
 require 'csv'
 
+# rubocop:disable Metrics/ClassLength
 class ApplicationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_application, only: %i[show edit update destroy]
@@ -101,6 +102,7 @@ class ApplicationsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def application_params
     params.expect(application: [
                     :reference_number, :converted_to_from, :council_name, :development_application_number,
@@ -133,3 +135,4 @@ class ApplicationsController < ApplicationController
                   ])
   end
 end
+# rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/ClassLength
