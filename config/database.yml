@@ -86,16 +86,16 @@ production:
     password: <%= ENV["JQC_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
-    url: <%= ENV["DATABASE_URL"]&.+('_cache') %>
+    url: <%= ENV["DATABASE_URL"]&.+('_cache') if Rails.env.production? %>
     database: jqc_production_cache
     migrations_paths: db/cache_migrate
   queue:
     <<: *primary_production
-    url: <%= ENV["DATABASE_URL"]&.+('_queue') %>
+    url: <%= ENV["DATABASE_URL"]&.+('_queue') if Rails.env.production? %>
     database: jqc_production_queue
     migrations_paths: db/queue_migrate
   cable:
     <<: *primary_production
-    url: <%= ENV["DATABASE_URL"]&.+('_cable') %>
+    url: <%= ENV["DATABASE_URL"]&.+('_cable') if Rails.env.production? %>
     database: jqc_production_cable
     migrations_paths: db/cable_migrate
