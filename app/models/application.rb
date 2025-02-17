@@ -91,7 +91,7 @@ class Application < ApplicationRecord
 
   scope :order_by_type_and_reference_number, lambda {
     joins(:application_type)
-      .order(Arel.sql('application_types.display_priority'))
+      .order(Arel.sql('application_types.display_priority ASC'))
       .order(reference_number: :desc)
   }
 

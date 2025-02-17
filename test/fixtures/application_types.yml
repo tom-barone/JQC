@@ -1,23 +1,29 @@
 PC:
   last_used: 9002
   application_type: "PC"
+  display_priority: 1
 
 Q:
   last_used: 8002
   application_type: "Q"
+  display_priority: 2
 
 C:
   last_used: 7002
   application_type: "C"
+  display_priority: 3
 
 LG:
-  last_used: 8000
+  last_used: 7000
   application_type: "LG"
+  display_priority: 4
 
 RC:
   last_used: 2090
   application_type: "RC"
+  display_priority: 5
 
 SC:
   last_used: 428
   application_type: "SC"
+  display_priority: 6

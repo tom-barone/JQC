@@ -52,10 +52,3 @@ end
 task precommit: %i[environment install format lint test_all]
 
 Rails.application.load_tasks
-
-task format: :environment do
-  sh 'bundle exec rubocop --autocorrect-all --fail-level F'
-  sh 'bundle exec rubocop --fix-layout --autocorrect-all --fail-level F'
-  sh 'find app -name "*.html.erb" -exec bundle exec erb-formatter --write {} \;'
-  sh 'npx prettier --write **/*.{js,html}'
-end

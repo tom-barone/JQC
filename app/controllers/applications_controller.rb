@@ -106,9 +106,9 @@ class ApplicationsController < ApplicationController
   def application_params
     params.expect(application: %i[reference_number converted_to_from council_name development_application_number
                                   applicant_name owner_name contact_name description cancelled street_number lot_number
-                                  street_name suburb_display_name electronic_lodgement engagement_form job_type_administration
-                                  quote_accepted_date administration_notes number_of_storeys construction_value
-                                  fee_amount building_surveyor structural_engineer risk_rating
+                                  street_name suburb_display_name electronic_lodgement engagement_form
+                                  job_type_administration quote_accepted_date administration_notes number_of_storeys
+                                  construction_value fee_amount building_surveyor structural_engineer risk_rating
                                   consultancies_review_inspection consultancies_report_sent assessment_commenced
                                   consent_issued variation_issued coo_issued engineer_certificate_received certifier
                                   certification_notes invoice_to care_of invoice_email attention purchase_order_number

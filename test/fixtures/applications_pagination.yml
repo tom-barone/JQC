@@ -8,7 +8,7 @@ DEFAULTS: &DEFAULTS
 
 # Use SCs so we don't step on all the other applications
 # SC is last in the natural order
-<% 5000.upto(8000) do |n| %>
+<% 5000.upto(7000) do |n| %>
 pagination_application_<%=n%>:
   <<: *DEFAULTS
   application_type: SC

@@ -11,10 +11,12 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
     super
   end
 
+  # rubocop:disable Metrics/ParameterLists
   def collection_select(method, collection, value_method, text_method, options = {}, html_options = {})
     html_options[:class] = merge_classes(html_options[:class], 'form-select form-select-sm')
     super
   end
+  # rubocop:enable Metrics/ParameterLists
 
   def label(method, text = nil, options = {})
     options[:class] = merge_classes(options[:class], 'form-label small mb-0 mt-2')
@@ -28,6 +30,7 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
 
   def select(method, choices = nil, options = {}, html_options = {}, &)
     html_options[:class] = merge_classes(html_options[:class], 'form-select form-select-sm')
+    options[:include_blank] = true if options[:include_blank].nil?
     super
   end
 
