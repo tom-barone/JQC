@@ -116,8 +116,19 @@ class Application < ApplicationRecord
     order(Arel.sql(safe_rank))
   }
 
+  def self.eager_load_associations
+    eager_load(:application_type, :applicant, :owner, :contact, :council, :suburb)
+  end
+
+  def converted_application
+    return if converted_to_from.blank?
+
+    Application.eager_load_associations.where(reference_number: converted_to_from)
+               .first
+  end
+
   def self.search(params)
-    Application.eager_load(:application_type, :applicant, :owner, :contact, :council, :suburb)
+    Application.eager_load_associations
                .filter_by_type(params[:type])
                .filter_by_date(params[:start_date], params[:end_date])
                .filter_by_search_text(params[:search_text])

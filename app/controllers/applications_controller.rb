@@ -30,9 +30,7 @@ class ApplicationsController < ApplicationController
 
   # GET /applications/1/edit
   def edit
-    @converted_application =
-      Application.where(reference_number: @application[:converted_to_from])
-                 .first
+    @converted_application = @application.converted_application
     prepare_association_lists
   end
 
@@ -88,7 +86,7 @@ class ApplicationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_application
-    @application = Application.find(params.expect(:id))
+    @application = Application.eager_load_associations.find(params.expect(:id))
   end
 
   def search_params
@@ -104,15 +102,34 @@ class ApplicationsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def application_params
-    params.expect(application: %i[reference_number converted_to_from council_name development_application_number
-                                  applicant_name owner_name contact_name description cancelled street_number lot_number
-                                  street_name suburb_display_name electronic_lodgement engagement_form
-                                  job_type_administration quote_accepted_date administration_notes number_of_storeys
-                                  construction_value fee_amount building_surveyor structural_engineer risk_rating
-                                  consultancies_review_inspection consultancies_report_sent assessment_commenced
-                                  consent_issued variation_issued coo_issued engineer_certificate_received certifier
-                                  certification_notes invoice_to care_of invoice_email attention purchase_order_number
-                                  fully_invoiced invoice_debtor_notes applicant_email application_type_id
-                                  external_engineer_date])
+    params.expect(application: [
+                    :reference_number, :converted_to_from, :council_name, :development_application_number,
+                    :applicant_name, :owner_name, :contact_name, :description, :cancelled, :street_number, :lot_number,
+                    :street_name, :suburb_display_name, :staged_consent, :engagement_form, :job_type_administration,
+                    :quote_accepted_date, :administration_notes, :number_of_storeys, :construction_value, :fee_amount,
+                    :building_surveyor, :structural_engineer, :risk_rating, :consultancies_review_inspection,
+                    :consultancies_report_sent, :assessment_commenced, :consent_issued, :variation_issued, :coo_issued,
+                    :engineer_certificate_received, :certifier, :certification_notes, :invoice_to, :care_of,
+                    :invoice_email, :attention, :purchase_order_number, :fully_invoiced, :invoice_debtor_notes,
+                    :applicant_email, :application_type_id, :external_engineer_date,
+                    { invoices_attributes: [
+                        Invoice.attribute_names.map(&:to_sym).push(:_destroy)
+                      ],
+                      application_additional_informations_attributes: [
+                        ApplicationAdditionalInformation
+                          .attribute_names
+                          .map(&:to_sym)
+                          .push(:_destroy)
+                      ],
+                      application_uploads_attributes: [
+                        ApplicationUpload.attribute_names.map(&:to_sym).push(:_destroy)
+                      ],
+                      stages_attributes: [
+                        Stage.attribute_names.map(&:to_sym).push(:_destroy)
+                      ],
+                      request_for_informations_attributes: [
+                        RequestForInformation.attribute_names.map(&:to_sym).push(:_destroy)
+                      ] }
+                  ])
   end
 end

@@ -160,16 +160,38 @@
 
     </div>
   </div>
-  <div class="col-6 d-flex flex-column">
-
-    <div class="flex-grow-1">
+  <div class="col-6 d-flex flex-column" style="max-height: 23em">
+    <div class="h-50 mb-3 card" style="overflow: auto">
       <!-- Additional information -->
-      <h4>Additional information</h4>
+      <table class="table nested-table">
+        <thead style="position: sticky; top: 0; z-index: 1;">
+          <tr>
+            <th class="fw-normal small">
+              <div class="ps-2 pb-2">Additional information</div>
+            </th>
+            <th></th>
+            <th class="text-center" style="max-width:3em">
+              <%= link_to_add_association "Add",
+              form,
+              :application_additional_informations,
+              "data-association-insertion-node": ".additional-information-fields",
+              "data-association-insertion-method": "append",
+              class: "btn btn-sm btn-outline-primary m-2" %>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="additional-information-fields">
+          <%= form.fields_for :application_additional_informations do |additional_information_form| %>
+            <%= render "application_additional_information_fields",
+            f: additional_information_form %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
 
-    <div class="flex-grow-1">
+    <div class="h-50 card" style="overflow: auto">
       <!-- Uploaded -->
-      <h4>Uploaded</h4>
+      <h2 class="fw-normal form-label small">Uploaded</h2>
     </div>
   </div>
 </div>
