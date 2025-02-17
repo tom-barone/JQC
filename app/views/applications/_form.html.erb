@@ -1,670 +1,233 @@
-<%= form_with model: application, local: true, builder: ApplicationHelper::BootstrapSmallFormBuilder, html: { autocomplete: "off", id: "application_form", 'data-controller':"application-form", 'data-action': 'change->application-form#onFormChange  cocoon:after-insert->application-form#onFormChange cocoon:after-remove->application-form#onFormChange' } do |form| %>
+<%= form_with(model: application) do |form| %>
   <% if application.errors.any? %>
-    <div
-      class="modal fade"
-      id="errorsModal"
-      tabindex="-1"
-      role="dialog"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">The application couldn't be saved</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="alert alert-danger" role="alert">
-              <ul>
-                <% application.errors.full_messages.each do |message| %>
-                  <li><%= message %></li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-              Ok
-            </button>
-          </div>
-        </div>
-      </div>
+    <div style="color: red">
+      <h2><%= pluralize(application.errors.count, "error") %>
+        prohibited this application from being saved:</h2>
+
+      <ul>
+        <% application.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
-  <div
-    class="container-fluid"
-    id="application_form_container"
-    data-application-form-target="fieldsContainer"
-  >
-    <div class="row border">
-      <div class="row text-center">
-        <h4>Administration</h4>
-      </div>
-      <div class="row">
-        <div class="col-8">
-          <div class="row" data-controller="reference-number">
-            <div class="col-1">
-              <div class="field">
-                <%= form.label :application_type_id, "Type" %>
-                <%= form.collection_select :application_type_id,
-                                       @types,
-                                       :id,
-                                       :application_type,
-                                       { prompt: "Select" },
-                                       {
-                                         required: true,
-                                         "data-action":
-                                           "reference-number#onApplicationTypeChange",
-                                         "data-reference-number-type-details-param":
-                                           @types.to_json
-                                       } %>
-              </div>
-            </div>
-            <div class="col">
-              <div class="field">
-                <%= form.label :reference_number, "Reference no." %>
-                <%= form.text_field :reference_number,
-                                { "data-reference-number-target": "referenceNumber" } %>
-              </div>
-            </div>
-            <div class="col">
-              <div class="field">
-                <%= form.label :converted_to_from, "Converted to/from" %>
-                <div class="input-group">
-                  <%= form.text_field :converted_to_from,
-                                  { "data-reference-number-target": "convertedToFrom" } %>
-                  <% if @converted_application.present? %>
-                    <%= link_to "Go to",
-                    edit_application_path(@converted_application),
-                    class: "btn btn-sm btn-outline-secondary" %>
-                  <% end %>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="field">
-                <%= form.label :created_at, "Date Entered" %>
-                <%= form.date_field :created_at %>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="field">
-                <%= form.label :council %>
-                <div class="input-group">
-                  <%= form.text_field :council_name, list: "councils", class: "editable-association" %>
-                  <!-- Removed the edit button as requested
-                  <% if @application.council_id %>
-                    <%= link_to "Details",
-                    edit_council_path(@application.council_id ||= 0),
-                    class: "btn btn-sm btn-outline-secondary" %>
-                  <% end %>
-                  -->
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="field">
-                <%= form.label :development_application_number, "DA No." %>
-                <%= form.text_field :development_application_number %>
-              </div>
-            </div>
-          </div>
-          <div class="row h-50">
-            <div class="col-3">
-              <div class="row">
-                <div class="col">
-                  <div class="field">
-                    <%= form.label :applicant_name, "Applicant" %>
-                    <div class="input-group">
-                      <%= form.text_field :applicant_name, list: "clients", class: "editable-association" %>
-                      <% if @application.applicant_id %>
-                        <%= link_to "Edit",
-                        edit_client_path(@application.applicant_id ||= 0),
-                        class: "btn btn-sm btn-outline-secondary",
-                        id: "application_applicant_edit" %>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <div class="field">
-                    <%= form.label :owner_name, "Owner" %>
-                    <div class="input-group">
-                      <%= form.text_field :owner_name, list: "clients", class: "editable-association" %>
-                      <% if @application.owner_id %>
-                        <%= link_to "Edit",
-                        edit_client_path(@application.owner_id ||= 0),
-                        class: "btn btn-sm btn-outline-secondary",
-                        id: "application_owner_edit" %>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <div class="field">
-                    <%= form.label :contact_name, "Contact" %>
-                    <div class="input-group">
-                      <%= form.text_field :contact_name, list: "clients", class: "editable-association" %>
-                      <% if @application.contact_id %>
-                        <%= link_to "Edit",
-                        edit_client_path(@application.contact_id ||= 0),
-                        class: "btn btn-sm btn-outline-secondary",
-                        id: "application_contact_edit" %>
-                      <% end %>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="row">
-                <div class="col-9">
-                  <div class="field">
-                    <%= form.label :description %>
-                    <%= form.text_area :description, rows: 3 %>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="field">
-                    <%= form.label :number_of_storeys %>
-                    <%= form.text_field :number_of_storeys,
-                                    type: "number",
-                                    min: "0",
-                                    max: "99",
-                                    step: "1" %>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-9">
-                  <div class="field">
-                    <%= form.label :administration_notes %>
-                    <%= form.text_area :administration_notes %>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="field">
-                    <%= form.label :construction_value, "Construction value ($)" %>
-                    <%= form.text_field :construction_value,
-                                    type: "number",
-                                    min: "0",
-                                    max: "1000000000",
-                                    step: "any" %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-1">
-              <div class="field">
-                <%= form.label :lot_number %>
-                <%= form.text_field :lot_number %>
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="field">
-                <%= form.label :street_number %>
-                <%= form.text_field :street_number %>
-              </div>
-            </div>
-            <div class="col-4">
-              <div class="field">
-                <%= form.label :street_name %>
-                <%= form.text_field :street_name %>
-              </div>
-            </div>
-            <div class="col">
-              <div class="field">
-                <%= form.label :suburb_display_name, "Suburb" %>
-                <%= form.text_field :suburb_display_name,
-                                list: "suburbs",
-                                class: "form-control form-control-sm list-option-required",
-                                data: {
-                                  controller: "datalist-input",
-                                  action: "change->datalist-input#onChange"
-                                } %>
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="field">
-                <%= form.label :fee_amount, "Fee amount ($)" %>
-                <%= form.text_field :fee_amount, type: "number", min: "1", step: "any" %>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-2">
-              <div class="field">
-                <%= form.label :electronic_lodgement %>
-                <%= form.check_box :electronic_lodgement %>
-              </div>
-            </div>
-            <div class="col-1">
-              <div class="field">
-                <%= form.label :engagement_form, style: "font-size:smaller" %>
-                <%= form.check_box :engagement_form %>
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="field">
-                <%= form.label :job_type_administration %>
-                <%= form.select :job_type_administration, Application::JOB_TYPE_ADMINISTRATION %>
-              </div>
-            </div>
-            <div class="col-2">
-              <div class="field">
-                <%= form.label :quote_accepted_date %>
-                <%= form.date_field :quote_accepted_date %>
-              </div>
-            </div>
-            <div class="col">
-              <div class="field">
-                <%= form.label :applicant_email %>
-                <%= form.text_field :applicant_email %>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row additional-information-table h-50 flex-column">
-            <div>
-              <table class="table no-bold-headers table-sm mb-0" style="table-layout: fixed">
-                <thead>
-                  <tr>
-                    <th>Additional Information</th>
-                    <th class="additional-information-text"></th>
-                    <th class="additional-information-buttons">
-                      <%= link_to_add_association "Add",
-                      form,
-                      :application_additional_informations,
-                      "data-association-insertion-node": ".additional-information-fields",
-                      "data-association-insertion-method": "append",
-                      class: "btn btn-sm btn-outline-primary" %>
-                    </th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-            <div class="additional-information-body-container">
-              <table
-                class="table table-sm mb-0"
-                style="table-layout: fixed"
-                role="presentation"
-              >
-                <tbody class="additional-information-fields">
-                  <%= form.fields_for :application_additional_informations do |additional_information_form| %>
-                    <%= render "application_additional_information_fields",
-                    f: additional_information_form %>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div id="uploaded-table" class="row h-50 flex-column risk-rating-not-set">
-            <div>
-              <table class="table no-bold-headers table-sm mb-0" style="table-layout: fixed">
-                <thead>
-                  <tr>
-                    <th>Uploaded</th>
-                    <th class="uploaded-text"></th>
-                    <th class="uploaded-buttons">
-                      <%= link_to_add_association "Add",
-                      form,
-                      :application_uploads,
-                      "data-association-insertion-node": ".uploaded-fields",
-                      "data-association-insertion-method": "append",
-                      class: "btn btn-sm btn-outline-primary",
-                      id: "application-add-uploaded" %>
-                    </th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-            <div class="uploaded-table-body-container">
-              <table
-                class="table table-sm mb-0"
-                style="table-layout: fixed"
-                role="presentation"
-              >
-                <tbody class="uploaded-fields">
-                  <%= form.fields_for :application_uploads do |uploads_form| %>
-                    <%= render "application_upload_fields", f: uploads_form %>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-5 border">
-        <div class="row text-center">
-          <h4>Certification</h4>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="field">
-              <%= form.label :building_surveyor, style: "font-size:smaller" %>
-              <%= form.select :building_surveyor, Application::BUILDING_SURVEYOR %>
-            </div>
-          </div>
-          <div class="col">
-            <div class="field">
-              <%= form.label :assessment_commenced,
-                         "Assessment Assigned",
-                         style: "font-size:smaller" %>
-              <%= form.date_field :assessment_commenced %>
-            </div>
-          </div>
-          <div class="col">
-            <div class="field">
-              <%= form.label :structural_engineer, style: "font-size:smaller" %>
-              <%= form.select :structural_engineer, Application::STRUCTURAL_ENGINEER %>
-            </div>
-          </div>
-          <div class="col">
-            <div class="field">
-              <%= form.label :external_engineer_date,
-                         "External engineer",
-                         style: "font-size:smaller" %>
-              <%= form.date_field :external_engineer_date %>
-            </div>
-          </div>
-          <div class="col">
-            <div class="field">
-              <%= form.label :risk_rating, style: "font-size:smaller" %>
-              <%= form.select :risk_rating, Application::RISK_RATING %>
-            </div>
-          </div>
-        </div>
-        <div class="row" style="height: 40%">
-          <div
-            class="col-5 rfis-table"
-            data-controller="rfis-table"
-            data-action="
-              cocoon:after-remove->rfis-table#updateRfiNumbers
-              cocoon:after-insert->rfis-table#updateRfiNumbers
-            "
-          >
-            <div>
-              <table class="table no-bold-headers table-sm mb-0" style="table-layout: fixed">
-                <thead>
-                  <tr style="vertical-align: top;">
-                    <th class="rfis-title">RFIs Issued</th>
-                    <th class="rfis-buttons">
-                      <%= link_to_add_association "Add",
-                      form,
-                      :request_for_informations,
-                      "data-association-insertion-node": ".request-for-informations-fields",
-                      "data-association-insertion-method": "append",
-                      class: "btn btn-sm btn-outline-primary py-0",
-                      id: "rfis-button-add" %>
-                    </th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-            <div class="request-for-informations-body-container">
-              <table
-                class="table table-sm mb-0"
-                style="table-layout: fixed"
-                role="presentation"
-              >
-                <tbody class="request-for-informations-fields">
-                  <%= form.fields_for :request_for_informations do |request_for_informations_form| %>
-                    <%= render "request_for_information_fields", f: request_for_informations_form %>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="col-7 stages-table">
-            <div>
-              <table class="table no-bold-headers table-sm mb-0" style="table-layout: fixed">
-                <thead>
-                  <tr style="vertical-align: top;">
-                    <th class="stages-title">Stages</th>
-                    <th class="stages-text"></th>
-                    <th class="stages-buttons">
-                      <%= link_to_add_association "Add",
-                      form,
-                      :stages,
-                      "data-association-insertion-node": ".stages-fields",
-                      "data-association-insertion-method": "append",
-                      class: "btn btn-sm btn-outline-primary py-0" %>
-                    </th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-            <div class="stages-body-container">
-              <table
-                class="table table-sm mb-0"
-                style="table-layout: fixed"
-                role="presentation"
-              >
-                <tbody class="stages-fields">
-                  <%= form.fields_for :stages do |stages_form| %>
-                    <%= render "stage_fields", f: stages_form %>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="field">
-              <%= form.label :consultancies_review_inspection,
-                         "C Review/Inspection",
-                         style: "font-size:smaller" %>
-              <%= form.date_field :consultancies_review_inspection %>
-            </div>
-          </div>
-          <div class="col">
-            <div class="field">
-              <%= form.label :consultancies_report_sent,
-                         "C Report Sent",
-                         style: "font-size:smaller" %>
-              <%= form.date_field :consultancies_report_sent %>
-            </div>
-          </div>
-          <div class="col">
-            <div class="field">
-              <%= form.label :consent_issued, style: "font-size:smaller" %>
-              <%= form.date_field :consent_issued %>
-            </div>
-          </div>
-          <div class="col">
-            <div class="field">
-              <%= form.label :variation_issued, style: "font-size:smaller" %>
-              <%= form.date_field :variation_issued %>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-3">
-            <div class="field">
-              <%= form.label :coo_issued, style: "font-size:smaller" %>
-              <%= form.date_field :coo_issued %>
-            </div>
-          </div>
-          <div class="col-3">
-            <div class="field">
-              <%= form.label :engineer_certificate_received, style: "font-size:smaller" %>
-              <%= form.date_field :engineer_certificate_received %>
-            </div>
-          </div>
-          <div class="col">
-            <div class="field">
-              <%= form.label :certification_notes %>
-              <%= form.text_area :certification_notes, rows: 2 %>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col border">
-        <div class="row text-center">
-          <h4>Invoicing</h4>
-        </div>
-        <div class="row">
-          <div class="col">
-            <div class="row">
-              <div class="field">
-                <%= form.label :invoice_to %>
-                <%= form.text_field :invoice_to %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="field">
-                <%= form.label :care_of %>
-                <%= form.text_field :care_of %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="field">
-                <%= form.label :invoice_email %>
-                <%= form.text_field :invoice_email %>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <div class="field">
-                  <%= form.label :attention %>
-                  <%= form.text_field :attention %>
-                </div>
-              </div>
-              <div class="col">
-                <div class="field">
-                  <%= form.label :purchase_order_number, "Purchase No." %>
-                  <%= form.text_field :purchase_order_number %>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="field">
-                <%= form.label :invoice_debtor_notes %>
-                <%= form.text_area :invoice_debtor_notes, rows: 4 %>
-              </div>
-            </div>
-          </div>
-          <div
-            class="col-9 invoice-table h-100"
-            data-controller="invoice-table"
-            data-action="cocoon:after-remove->invoice-table#updateGstAndTotals"
-            data-action="cocoon:after-insert->invoice-table#updateGstAndTotals"
-          >
-            <table class="table no-bold-headers table-sm mb-0" style="table-layout: fixed">
-              <thead>
-                <tr>
-                  <th class="invoice-table-date">Date</th>
-                  <th class="invoice-table-stage">Stage</th>
-                  <th class="invoice-table-fee">KD Fee</th>
-                  <th class="invoice-table-gst">GST</th>
-                  <th class="invoice-table-admin-fee">Admin Fee</th>
-                  <th class="invoice-table-invoice-number">Invoice no.</th>
-                  <th class="invoice-table-paid">Paid</th>
-                  <th class="invoice-table-buttons"></th>
-                </tr>
-              </thead>
-            </table>
-            <div style="max-height: 256px; overflow:auto">
-              <table
-                class="table table-sm mb-0"
-                style="table-layout: fixed"
-                role="presentation"
-              >
-                <tbody class="invoice-fields" data-invoice-table-target="fields">
-                  <%= form.fields_for :invoices do |invoices_form| %>
-                    <%= render "invoice_fields", f: invoices_form %>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
-            <table
-              class="table table-sm mb-0"
-              style="table-layout: fixed"
-              role="presentation"
-            >
-              <tfoot class="invoice-footer" data-invoice-table-target="footer">
-                <tr>
-                  <td class="invoice-table-date">Totals</td>
-                  <td></td>
-                  <td class="invoice-table-fee" id="fee-total"></td>
-                  <td class="invoice-table-gst" id="gst-total"></td>
-                  <td class="invoice-table-admin-fee" id="admin-total"></td>
-                  <td class="invoice-table-invoice-number">
-                    <%= form.label :fully_invoiced, "Fully invoiced" %>
-                  </td>
-                  <td class="invoice-table-paid">
-                    <%= form.check_box :fully_invoiced %>
-                  </td>
-                  <td class="invoice-table-buttons">
-                    <%= link_to_add_association "Add",
-                    form,
-                    :invoices,
-                    "data-association-insertion-node": ".invoice-fields",
-                    "data-association-insertion-method": "append",
-                    class: "btn btn-sm btn-outline-primary" %>
-                  </td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+
+  <div>
+    <%= form.label :reference_number, style: "display: block" %>
+    <%= form.textarea :reference_number %>
   </div>
-  <div class="actions container-fluid my-2">
-    <div class="row">
-      <div class="col"></div>
-      <div class="col-auto d-flex align-items-center">
-        <div class="row">
-          <div class="col-auto">
-            <%= form.check_box :cancelled,
-                           {
-                             data: {
-                               "application-form-target": "cancelledCheckbox",
-                               action: "change->application-form#updateCancelledState"
-                             }
-                           } %>
-          </div>
-          <div class="col">
-            <%= form.label :cancelled, "Mark as cancelled" %>
-          </div>
-        </div>
-      </div>
-      <div class="col-3">
-        <div class="row align-items-center">
-          <%= yield :application_submit_actions %>
-        </div>
-      </div>
-    </div>
+
+  <div>
+    <%= form.label :converted_to_from, style: "display: block" %>
+    <%= form.textarea :converted_to_from %>
+  </div>
+
+  <div>
+    <%= form.label :council_id, style: "display: block" %>
+    <%= form.text_field :council_id %>
+  </div>
+
+  <div>
+    <%= form.label :development_application_number, style: "display: block" %>
+    <%= form.textarea :development_application_number %>
+  </div>
+
+  <div>
+    <%= form.label :applicant_id, style: "display: block" %>
+    <%= form.text_field :applicant_id %>
+  </div>
+
+  <div>
+    <%= form.label :owner_id, style: "display: block" %>
+    <%= form.text_field :owner_id %>
+  </div>
+
+  <div>
+    <%= form.label :contact_id, style: "display: block" %>
+    <%= form.text_field :contact_id %>
+  </div>
+
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.textarea :description %>
+  </div>
+
+  <div>
+    <%= form.label :cancelled, style: "display: block" %>
+    <%= form.checkbox :cancelled %>
+  </div>
+
+  <div>
+    <%= form.label :street_number, style: "display: block" %>
+    <%= form.textarea :street_number %>
+  </div>
+
+  <div>
+    <%= form.label :lot_number, style: "display: block" %>
+    <%= form.textarea :lot_number %>
+  </div>
+
+  <div>
+    <%= form.label :street_name, style: "display: block" %>
+    <%= form.textarea :street_name %>
+  </div>
+
+  <div>
+    <%= form.label :suburb_id, style: "display: block" %>
+    <%= form.text_field :suburb_id %>
+  </div>
+
+  <div>
+    <%= form.label :electronic_lodgement, style: "display: block" %>
+    <%= form.checkbox :electronic_lodgement %>
+  </div>
+
+  <div>
+    <%= form.label :engagement_form, style: "display: block" %>
+    <%= form.checkbox :engagement_form %>
+  </div>
+
+  <div>
+    <%= form.label :job_type_administration, style: "display: block" %>
+    <%= form.textarea :job_type_administration %>
+  </div>
+
+  <div>
+    <%= form.label :quote_accepted_date, style: "display: block" %>
+    <%= form.date_field :quote_accepted_date %>
+  </div>
+
+  <div>
+    <%= form.label :administration_notes, style: "display: block" %>
+    <%= form.textarea :administration_notes %>
+  </div>
+
+  <div>
+    <%= form.label :number_of_storeys, style: "display: block" %>
+    <%= form.number_field :number_of_storeys %>
+  </div>
+
+  <div>
+    <%= form.label :construction_value, style: "display: block" %>
+    <%= form.text_field :construction_value %>
+  </div>
+
+  <div>
+    <%= form.label :fee_amount, style: "display: block" %>
+    <%= form.text_field :fee_amount %>
+  </div>
+
+  <div>
+    <%= form.label :building_surveyor, style: "display: block" %>
+    <%= form.textarea :building_surveyor %>
+  </div>
+
+  <div>
+    <%= form.label :structural_engineer, style: "display: block" %>
+    <%= form.textarea :structural_engineer %>
+  </div>
+
+  <div>
+    <%= form.label :risk_rating, style: "display: block" %>
+    <%= form.textarea :risk_rating %>
+  </div>
+
+  <div>
+    <%= form.label :consultancies_review_inspection, style: "display: block" %>
+    <%= form.date_field :consultancies_review_inspection %>
+  </div>
+
+  <div>
+    <%= form.label :consultancies_report_sent, style: "display: block" %>
+    <%= form.date_field :consultancies_report_sent %>
+  </div>
+
+  <div>
+    <%= form.label :assessment_commenced, style: "display: block" %>
+    <%= form.date_field :assessment_commenced %>
+  </div>
+
+  <div>
+    <%= form.label :consent_issued, style: "display: block" %>
+    <%= form.date_field :consent_issued %>
+  </div>
+
+  <div>
+    <%= form.label :variation_issued, style: "display: block" %>
+    <%= form.date_field :variation_issued %>
+  </div>
+
+  <div>
+    <%= form.label :coo_issued, style: "display: block" %>
+    <%= form.date_field :coo_issued %>
+  </div>
+
+  <div>
+    <%= form.label :engineer_certificate_received, style: "display: block" %>
+    <%= form.date_field :engineer_certificate_received %>
+  </div>
+
+  <div>
+    <%= form.label :certifier, style: "display: block" %>
+    <%= form.textarea :certifier %>
+  </div>
+
+  <div>
+    <%= form.label :certification_notes, style: "display: block" %>
+    <%= form.textarea :certification_notes %>
+  </div>
+
+  <div>
+    <%= form.label :invoice_to, style: "display: block" %>
+    <%= form.textarea :invoice_to %>
+  </div>
+
+  <div>
+    <%= form.label :care_of, style: "display: block" %>
+    <%= form.textarea :care_of %>
+  </div>
+
+  <div>
+    <%= form.label :invoice_email, style: "display: block" %>
+    <%= form.textarea :invoice_email %>
+  </div>
+
+  <div>
+    <%= form.label :attention, style: "display: block" %>
+    <%= form.textarea :attention %>
+  </div>
+
+  <div>
+    <%= form.label :purchase_order_number, style: "display: block" %>
+    <%= form.textarea :purchase_order_number %>
+  </div>
+
+  <div>
+    <%= form.label :fully_invoiced, style: "display: block" %>
+    <%= form.checkbox :fully_invoiced %>
+  </div>
+
+  <div>
+    <%= form.label :invoice_debtor_notes, style: "display: block" %>
+    <%= form.textarea :invoice_debtor_notes %>
+  </div>
+
+  <div>
+    <%= form.label :applicant_email, style: "display: block" %>
+    <%= form.textarea :applicant_email %>
+  </div>
+
+  <div>
+    <%= form.label :application_type_id, style: "display: block" %>
+    <%= form.text_field :application_type_id %>
+  </div>
+
+  <div>
+    <%= form.label :external_engineer_date, style: "display: block" %>
+    <%= form.date_field :external_engineer_date %>
+  </div>
+
+  <div>
+    <%= form.submit %>
   </div>
 <% end %>
-<datalist id="suburbs">
-  <% @suburbs.each do |suburb| %>
-    <option value="<%= suburb %>"/>
-  <% end %>
-  <option value=""/>
-</datalist>
-<datalist id="clients">
-  <% @clients.each do |client| %>
-    <option value="<%= client %>"/>
-    <option value=""/>
-  <% end %>
-</datalist>
-<datalist id="councils">
-  <% @councils.each do |council| %>
-    <option value="<%= council %>"/>
-    <option value=""/>
-  <% end %>
-</datalist>

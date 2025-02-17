@@ -1,14 +1,24 @@
 # frozen_string_literal: true
 
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# Test user for development
+if Rails.env.local? && User.find_by(username: 'test_user').nil?
+  User.create!(
+    email: 'test@email.com',
+    username: 'test_user',
+    password: 'h2&BUa0qvxoqTM^K', # use a password manager fools
+    password_confirmation: 'h2&BUa0qvxoqTM^K'
+  )
+end
 
-# Add default jqc user
-User.create(username: Rails.application.credentials.jqc_username!,
-            password: Rails.application.credentials.jqc_password!,
-            password_confirmation: Rails.application.credentials.jqc_password!)
+# Main user for production
+email = Rails.application.credentials.jqc_email!
+username = Rails.application.credentials.jqc_username!
+if Rails.env.production? && User.find_by(username: username).nil?
+  password = Rails.application.credentials.jqc_password!
+  User.create!(
+    email: email,
+    username: username,
+    password: password,
+    password_confirmation: password
+  )
+end

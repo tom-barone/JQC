@@ -1,0 +1,24 @@
+/* Main application search table */
+
+.applications-table td {
+	padding: 0;
+	font-size: 0.8em;
+	background-color: white;
+}
+
+.applications-table th {
+	padding: 0;
+	font-size: 0.8em;
+	background-color: #f5f5f5;
+}
+
+/* Add a border to the bottom of the table header */
+.applications-table thead th::after {
+	content: '';
+	display: block;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.applications-table button {
+	font-size: 0.8em;
+}

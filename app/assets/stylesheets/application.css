@@ -1,15 +1,34 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
+ * This is a manifest file that'll be compiled into application.css.
  *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ * With Propshaft, assets are served efficiently without preprocessing steps. You can still include
+ * application-wide styles in this file, but keep in mind that CSS precedence will follow the standard
+ * cascading order, meaning styles declared later in the document or manifest will override earlier ones,
+ * depending on specificity.
  *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
+ * Consider organizing styles into separate files for maintainability.
  */
+
+
+/* Remove the bootstrap blue outline focus box */
+.form-control:focus,
+.btn:focus,
+.form-check-input:focus,
+.form-select:focus,
+.page-link {
+	box-shadow: none !important;
+}
+
+body {
+	/* Set the body background color to a light gray */
+	background-color: #f5f5f5;
+	/* Set the text to a dark gray */
+	color: #333;
+	/* Set the font family to verdana, arial, helvetica, sans-serif */
+	font-family: verdana, arial, helvetica, sans-serif;
+}
+
+/* Make the max width of popovers a bit wider */
+.wider-popover {
+	--bs-popover-max-width: 600px;
+}

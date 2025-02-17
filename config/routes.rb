@@ -1,35 +1,28 @@
 # frozen_string_literal: true
 
-Rails
-  .application
-  .routes
-  .draw do
-    devise_for :users, controllers: { registrations: 'registrations' }
-    put 'application_types/all',
-        to: 'application_types#update_all',
-        as: 'update_all'
+Rails.application.routes.draw do
+  resources :applications
+  devise_for :users
+  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-    resources :suburbs
-    resources :stages
-    resources :request_for_informations
-    resources :invoices
-    resources :councils
-    resources :clients
-    resources :applications
-    resources :application_uploads
-    resources :application_types
-    resources :application_additional_informations
+  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+  # Can be used by load balancers and uptime monitors to verify that the app is live.
+  get 'up' => 'rails/health#show', as: :rails_health_check
 
-    get 'crons/last_month_csv_reports', to: 'crons#last_month_csv_reports'
+  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
+  # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+  # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-    # Fix the error that occurs when GAE starts up the app
-    # https://cloud.google.com/appengine/docs/standard/how-instances-are-managed
-    get '/_ah/start', to: redirect('/users/sign_in', status: 200)
-    get '/_ah/stop', to: redirect('/users/sign_in', status: 200)
+  # Test routes to check emails are sent on exceptions
+  get 'fail' => 'testing#fail' unless Rails.env.production?
 
-    authenticated :user do
-      root to: 'applications#index', as: :authenticated_root
-    end
-    root to: redirect('/users/sign_in')
-    # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :applications
+
+  authenticated :user do
+    # Define authenticated routes here
+    root to: 'applications#index', as: :authenticated_root
   end
+
+  # Defines the root path route ("/")
+  root to: redirect('/users/sign_in')
+end

@@ -1,3 +1,12 @@
+# Omakase Ruby styling for Rails
+#inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+
+# Overwrite or add rules to create your own house style
+#
+# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
+# Layout/SpaceInsideArrayLiteralBrackets:
+#   Enabled: false
+
 require:
   - rubocop-rails
   - rubocop-capybara
@@ -10,27 +19,10 @@ Style/Documentation:
   Exclude:
     - "**/*.rb"
 
-# Allow long code blocks in system tests, since we don't want to be constantly logging in and out
-# Also allow in controllers because parameter permit lists can be long
-Metrics/BlockLength:
-  Exclude:
-    - "test/**/*"
-Metrics/ClassLength:
-  Exclude:
-    - "test/**/*"
 Metrics/MethodLength:
   Exclude:
-    - "test/**/*"
-    - "production/**/*"
-    - "app/controllers/**/*"
-Metrics/AbcSize:
-  Exclude:
-    - "test/**/*"
-Style/ClassVars:
-  Exclude:
-    - "test/**/*"
+    - "db/**/*"
 
-# Rubocop complains about "task :download_prod => :environment do", but its necessary for rails
-Style/HashSyntax:
-  Exclude:
-    - "lib/tasks/**/*"
+# We're almost certainly never going to need localisation in this app
+Rails/I18nLocaleTexts:
+  Enabled: false

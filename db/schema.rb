@@ -10,48 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_06_065053) do
-  create_table "application_additional_informations", id: :integer, charset: "utf8", force: :cascade do |t|
+ActiveRecord::Schema[8.0].define(version: 2025_02_16_124147) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
+  create_table "application_additional_informations", id: :serial, force: :cascade do |t|
     t.date "info_date"
     t.text "info_text"
-    t.integer "application_id"
+    t.bigint "application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["application_id"], name: "fk_application"
+    t.index ["application_id"], name: "index_application_additional_informations_on_application_id"
   end
 
-  create_table "application_types", charset: "utf8", force: :cascade do |t|
-    t.string "application_type", limit: 10, null: false
+  create_table "application_types", id: :serial, force: :cascade do |t|
+    t.text "application_type", null: false
     t.integer "last_used", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "application_uploads", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "application_uploads", id: :serial, force: :cascade do |t|
     t.date "uploaded_date"
     t.text "uploaded_text"
-    t.integer "application_id"
+    t.bigint "application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["application_id"], name: "fk_application"
+    t.index ["application_id"], name: "index_application_uploads_on_application_id"
   end
 
-  create_table "applications", id: :integer, charset: "utf8", force: :cascade do |t|
-    t.text "reference_number"
+  create_table "applications", id: :serial, force: :cascade do |t|
+    t.text "reference_number", null: false
     t.text "converted_to_from"
-    t.integer "council_id"
+    t.bigint "council_id"
     t.text "development_application_number"
-    t.integer "applicant_id"
-    t.integer "owner_id"
-    t.integer "contact_id"
+    t.bigint "applicant_id"
+    t.bigint "owner_id"
+    t.bigint "contact_id"
     t.text "description"
-    t.boolean "cancelled", default: false
+    t.boolean "cancelled", default: false, null: false
     t.text "street_number"
     t.text "lot_number"
     t.text "street_name"
-    t.integer "suburb_id"
-    t.boolean "electronic_lodgement", default: false
-    t.boolean "engagement_form", default: false
+    t.bigint "suburb_id"
+    t.boolean "electronic_lodgement", default: false, null: false
+    t.boolean "engagement_form", default: false, null: false
     t.text "job_type_administration"
     t.date "quote_accepted_date"
     t.text "administration_notes"
@@ -68,31 +71,36 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_065053) do
     t.date "variation_issued"
     t.date "coo_issued"
     t.date "engineer_certificate_received"
+    t.text "certifier"
     t.text "certification_notes"
     t.text "invoice_to"
     t.text "care_of"
     t.text "invoice_email"
     t.text "attention"
     t.text "purchase_order_number"
-    t.boolean "fully_invoiced", default: false
+    t.boolean "fully_invoiced", default: false, null: false
     t.text "invoice_debtor_notes"
     t.text "applicant_email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
     t.bigint "application_type_id"
     t.date "external_engineer_date"
-    t.index ["applicant_id"], name: "fk_applicant"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.virtual "location", type: :string, as: "((COALESCE((lot_number || ' '::text), ''::text) || COALESCE((street_number || ' '::text), ''::text)) || street_name)", stored: true
+    t.tsvector "searchable_tsvector"
+    t.boolean "staged_consent", default: false, null: false
+    t.decimal "structural_engineer_fee", precision: 13, scale: 2
+    t.integer "documented_performance_solutions"
+    t.text "certificate_reference"
+    t.index ["applicant_id"], name: "index_applications_on_applicant_id"
     t.index ["application_type_id"], name: "index_applications_on_application_type_id"
-    t.index ["contact_id"], name: "fk_client"
-    t.index ["converted_to_from"], name: "index_applications_on_converted_to_from", type: :fulltext
-    t.index ["council_id"], name: "fk_council"
-    t.index ["description", "development_application_number", "street_name", "street_number", "lot_number"], name: "application_search_fulltext_index", type: :fulltext
-    t.index ["owner_id"], name: "fk_owner"
-    t.index ["reference_number"], name: "index_applications_on_reference_number", type: :fulltext
-    t.index ["suburb_id"], name: "fk_suburb"
+    t.index ["contact_id"], name: "index_applications_on_contact_id"
+    t.index ["council_id"], name: "index_applications_on_council_id"
+    t.index ["owner_id"], name: "index_applications_on_owner_id"
+    t.index ["searchable_tsvector"], name: "applications_searchable_idx", using: :gin
+    t.index ["suburb_id"], name: "index_applications_on_suburb_id"
   end
 
-  create_table "clients", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "clients", id: :serial, force: :cascade do |t|
     t.text "client_type"
     t.text "client_name"
     t.text "first_name"
@@ -102,90 +110,87 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_065053) do
     t.text "salutation"
     t.text "company_name"
     t.text "street"
-    t.integer "suburb_id"
     t.text "postal_address"
-    t.integer "postal_suburb_id"
     t.text "australian_business_number"
-    t.string "state", limit: 10
+    t.text "state"
     t.text "phone"
     t.text "mobile_number"
     t.text "fax"
     t.text "email"
     t.text "notes"
-    t.boolean "bad_payer", default: false
+    t.boolean "bad_payer", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["client_name"], name: "index_clients_on_client_name", type: :fulltext
-    t.index ["postal_suburb_id"], name: "fk_postalsuburb"
-    t.index ["suburb_id"], name: "fk_suburb"
+    t.bigint "suburb_id"
+    t.bigint "postal_suburb_id"
+    t.index ["postal_suburb_id"], name: "index_clients_on_postal_suburb_id"
+    t.index ["suburb_id"], name: "index_clients_on_suburb_id"
   end
 
-  create_table "councils", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "councils", id: :serial, force: :cascade do |t|
     t.text "name"
     t.text "city"
     t.text "street"
-    t.string "state", limit: 10
-    t.integer "suburb_id"
+    t.text "state"
+    t.bigint "suburb_id"
     t.text "postal_address"
-    t.integer "postal_suburb_id"
+    t.bigint "postal_suburb_id"
     t.text "phone"
     t.text "fax"
     t.text "email"
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_councils_on_name", type: :fulltext
-    t.index ["postal_suburb_id"], name: "fk_postalsuburb"
-    t.index ["suburb_id"], name: "fk_suburb"
+    t.index ["postal_suburb_id"], name: "index_councils_on_postal_suburb_id"
+    t.index ["suburb_id"], name: "index_councils_on_suburb_id"
   end
 
-  create_table "invoices", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "invoices", id: :serial, force: :cascade do |t|
     t.text "invoice_number"
     t.text "stage"
     t.decimal "fee", precision: 13, scale: 2
     t.decimal "gst", precision: 13, scale: 2
     t.decimal "admin_fee", precision: 13, scale: 2
     t.date "invoice_date"
-    t.boolean "paid"
-    t.integer "application_id"
+    t.boolean "paid", default: false, null: false
+    t.bigint "application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["application_id"], name: "fk_application"
+    t.index ["application_id"], name: "index_invoices_on_application_id"
   end
 
-  create_table "request_for_informations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "request_for_informations", id: :serial, force: :cascade do |t|
     t.date "request_for_information_date"
-    t.integer "application_id", null: false
+    t.bigint "application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["application_id"], name: "fk_rails_dde47abfd9"
+    t.index ["application_id"], name: "index_request_for_informations_on_application_id"
   end
 
-  create_table "stages", id: :integer, charset: "utf8", force: :cascade do |t|
+  create_table "stages", id: :serial, force: :cascade do |t|
     t.date "stage_date"
     t.text "stage_text"
-    t.integer "application_id"
+    t.bigint "application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["application_id"], name: "fk_application"
+    t.index ["application_id"], name: "index_stages_on_application_id"
   end
 
-  create_table "suburbs", id: :integer, charset: "utf8", force: :cascade do |t|
-    t.text "display_name", null: false
+  create_table "suburbs", id: :serial, force: :cascade do |t|
     t.text "suburb", null: false
     t.text "state", null: false
     t.text "postcode", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["display_name"], name: "index_suburbs_on_display_name", type: :fulltext
+    t.virtual "display_name", type: :string, as: "((((suburb || ', '::text) || state) || ' '::text) || postcode)", stored: true
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at", precision: nil
-    t.datetime "remember_created_at", precision: nil
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "username"
@@ -194,26 +199,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_06_065053) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "application_additional_informations", "applications", name: "application_additional_informations_ibfk_1", on_delete: :cascade
-  add_foreign_key "application_uploads", "applications", name: "application_uploads_ibfk_1", on_delete: :cascade
+  add_foreign_key "application_additional_informations", "applications"
+  add_foreign_key "application_uploads", "applications"
   add_foreign_key "applications", "application_types"
-  add_foreign_key "applications", "clients", column: "applicant_id", name: "fk_applicant", on_delete: :nullify
-  add_foreign_key "applications", "clients", column: "contact_id", name: "fk_client", on_delete: :nullify
-  add_foreign_key "applications", "clients", column: "owner_id", name: "fk_owner", on_delete: :nullify
-  add_foreign_key "applications", "councils", name: "fk_council", on_delete: :nullify
-  add_foreign_key "applications", "suburbs", name: "applications_ibfk_1"
-  add_foreign_key "clients", "suburbs", column: "postal_suburb_id", name: "clients_ibfk_2"
-  add_foreign_key "clients", "suburbs", name: "clients_ibfk_1"
-  add_foreign_key "councils", "suburbs", column: "postal_suburb_id", name: "councils_ibfk_2"
-  add_foreign_key "councils", "suburbs", name: "councils_ibfk_1"
-  add_foreign_key "invoices", "applications", name: "invoices_ibfk_1", on_delete: :cascade
-  add_foreign_key "request_for_informations", "applications", on_delete: :cascade
-  add_foreign_key "stages", "applications", name: "stages_ibfk_1", on_delete: :cascade
-
-  create_view "application_search_results", sql_definition: <<-SQL
-      select `a`.`id` AS `id`,`t`.`application_type` AS `application_type`,`a`.`reference_number` AS `reference_number`,`a`.`converted_to_from` AS `converted_to_from`,`a`.`street_number` AS `street_number`,`a`.`lot_number` AS `lot_number`,`a`.`street_name` AS `street_name`,concat(if((`a`.`lot_number` is null),'',concat(`a`.`lot_number`,' ')),if((`a`.`street_number` is null),'',concat(`a`.`street_number`,' ')),`a`.`street_name`) AS `location`,`s`.`display_name` AS `suburb`,`a`.`description` AS `description`,`contact`.`client_name` AS `contact`,`owner`.`client_name` AS `owner`,`applicant`.`client_name` AS `applicant`,`council`.`name` AS `council`,`a`.`created_at` AS `created_at`,`a`.`building_surveyor` AS `building_surveyor`,`a`.`development_application_number` AS `development_application_number` from ((((((`applications` `a` left join `clients` `contact` on((`a`.`contact_id` = `contact`.`id`))) left join `clients` `owner` on((`a`.`owner_id` = `owner`.`id`))) left join `clients` `applicant` on((`a`.`applicant_id` = `applicant`.`id`))) left join `councils` `council` on((`a`.`council_id` = `council`.`id`))) left join `application_types` `t` on((`a`.`application_type_id` = `t`.`id`))) left join `suburbs` `s` on((`a`.`suburb_id` = `s`.`id`)))
-  SQL
-  create_view "applications_csv_results", sql_definition: <<-SQL
-      select `a`.`id` AS `id`,`t`.`application_type` AS `application_type`,`a`.`reference_number` AS `reference_number`,`a`.`converted_to_from` AS `converted_to_from`,`council`.`name` AS `council`,`a`.`development_application_number` AS `development_application_number`,`applicant`.`client_name` AS `applicant`,`owner`.`client_name` AS `owner`,`contact`.`client_name` AS `contact`,`a`.`description` AS `description`,`a`.`cancelled` AS `cancelled`,`a`.`street_number` AS `street_number`,`a`.`lot_number` AS `lot_number`,`a`.`street_name` AS `street_name`,`s`.`display_name` AS `suburb`,`a`.`electronic_lodgement` AS `electronic_lodgement`,`a`.`engagement_form` AS `engagement_form`,`a`.`job_type_administration` AS `job_type_administration`,`a`.`quote_accepted_date` AS `quote_accepted_date`,`a`.`administration_notes` AS `administration_notes`,`a`.`number_of_storeys` AS `number_of_storeys`,`a`.`construction_value` AS `construction_value`,`a`.`fee_amount` AS `fee_amount`,`a`.`building_surveyor` AS `building_surveyor`,`a`.`structural_engineer` AS `structural_engineer`,`a`.`external_engineer_date` AS `external_engineer_date`,`a`.`risk_rating` AS `risk_rating`,`a`.`consultancies_review_inspection` AS `consultancies_review_inspection`,`a`.`consultancies_report_sent` AS `consultancies_report_sent`,`a`.`assessment_commenced` AS `assessment_commenced`,`rfi`.`request_for_information_dates` AS `request_for_information_dates`,`a`.`consent_issued` AS `consent_issued`,`a`.`variation_issued` AS `variation_issued`,`a`.`coo_issued` AS `coo_issued`,`a`.`engineer_certificate_received` AS `engineer_certificate_received`,`a`.`certification_notes` AS `certification_notes`,`a`.`invoice_to` AS `invoice_to`,`a`.`invoice_email` AS `invoice_email`,`invoices`.`invoice_numbers` AS `invoice_numbers`,`a`.`fully_invoiced` AS `fully_invoiced`,`a`.`applicant_email` AS `applicant_email`,`a`.`created_at` AS `created_at`,`a`.`updated_at` AS `updated_at` from ((((((((`applications` `a` left join `application_types` `t` on((`a`.`application_type_id` = `t`.`id`))) left join `suburbs` `s` on((`a`.`suburb_id` = `s`.`id`))) left join `councils` `council` on((`a`.`council_id` = `council`.`id`))) left join `clients` `contact` on((`a`.`contact_id` = `contact`.`id`))) left join `clients` `applicant` on((`a`.`applicant_id` = `applicant`.`id`))) left join `clients` `owner` on((`a`.`owner_id` = `owner`.`id`))) left join (select `request_for_informations`.`application_id` AS `application_id`,group_concat(`request_for_informations`.`request_for_information_date` order by `request_for_informations`.`request_for_information_date` ASC separator ',') AS `request_for_information_dates` from `request_for_informations` group by `request_for_informations`.`application_id`) `rfi` on((`a`.`id` = `rfi`.`application_id`))) left join (select `invoices`.`application_id` AS `application_id`,group_concat(`invoices`.`invoice_number` order by `invoices`.`invoice_number` ASC separator ',') AS `invoice_numbers` from `invoices` group by `invoices`.`application_id`) `invoices` on((`a`.`id` = `invoices`.`application_id`)))
-  SQL
+  add_foreign_key "applications", "clients", column: "applicant_id"
+  add_foreign_key "applications", "clients", column: "contact_id"
+  add_foreign_key "applications", "clients", column: "owner_id"
+  add_foreign_key "applications", "councils"
+  add_foreign_key "applications", "suburbs"
+  add_foreign_key "clients", "suburbs"
+  add_foreign_key "clients", "suburbs", column: "postal_suburb_id"
+  add_foreign_key "councils", "suburbs"
+  add_foreign_key "councils", "suburbs", column: "postal_suburb_id"
+  add_foreign_key "invoices", "applications"
+  add_foreign_key "request_for_informations", "applications"
+  add_foreign_key "stages", "applications"
 end

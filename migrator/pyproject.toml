@@ -1,0 +1,23 @@
+[project]
+name = "migrator"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Tom Barone",email = "mail@tombarone.net"}
+]
+requires-python = ">=3.11"
+dependencies = [
+    "sqlalchemy (>=2.0.38,<3.0.0)",
+    "pandas (>=2.2.3,<3.0.0)",
+    "mysql-connector-python (>=9.2.0,<10.0.0)",
+    "psycopg2 (>=2.9.10,<3.0.0)",
+    "python-dotenv (>=1.0.1,<2.0.0)",
+    "sshtunnel (>=0.4.0,<0.5.0)"
+]
+
+[tool.poetry]
+package-mode = false
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

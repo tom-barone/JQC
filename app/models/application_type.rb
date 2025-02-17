@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 class ApplicationType < ApplicationRecord
-  ALLOWED_TYPES = %w[C LG PC Q RC SC].freeze
+  has_many :applications, dependent: :nullify
 
-  validates :last_used, numericality: { only_integer: true }
+  # The rough order of importance that these types take. Used in spots like:
+  # - Ordering in the applications table
+  # - Order in the application type dropdown
+  # etc.
+  # TODO: This should probably live in the database itself
+  NATURAL_ORDER = %w[PC Q C RC LG SC].freeze
 end

@@ -1,7 +1,14 @@
 #!/usr/bin/env ruby
-# Code to make test coverage work
-require 'simplecov' if ENV['COVERAGE'] == 'true'
-load File.expand_path('spring', __dir__)
+# frozen_string_literal: true
+
+if ENV['COVERAGE'] == 'true'
+  require 'simplecov'
+  SimpleCov.start 'rails'
+  SimpleCov.coverage_dir('ci/ruby/coverage')
+  SimpleCov.add_filter ['lib/tasks', 'bin', 'Rakefile']
+  puts 'Required simplecov'
+end
+
 APP_PATH = File.expand_path('../config/application', __dir__)
 require_relative '../config/boot'
 require 'rails/commands'

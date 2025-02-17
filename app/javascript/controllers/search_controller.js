@@ -1,5 +1,11 @@
 import { Controller } from "@hotwired/stimulus";
 
+/**
+ * Converts a date object to a formatted string
+ *
+ * @param {Date} date - The date object
+ * @returns {string} - The formatted date string
+ */
 export function _getFormattedDateString(date) {
   var dd = date.getDate();
   var mm = date.getMonth() + 1; //January is 0!

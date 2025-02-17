@@ -1,77 +1,96 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '~> 3.2.2'
+ruby '3.3.7'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.4'
-# Use mysql as the database for Active Record
-gem 'mysql2', '~> 0.5'
-# Use Puma as the app server
-gem 'puma', '~> 4.1'
+# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+gem 'rails', '~> 8.0.1'
+# The modern asset pipeline for Rails [https://github.com/rails/propshaft]
+gem 'propshaft'
+# Use postgresql as the database for Active Record
+gem 'pg', '~> 1.1'
+# Use the Puma web server [https://github.com/puma/puma]
+gem 'puma', '>= 5.0'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'turbo-rails'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'stimulus-rails'
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+# Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder'
-# Use Redis adapter to run Action Cable in production
-# gem "redis", "~> 4.0"
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
+
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-gem 'bcrypt', '~> 3.1.16'
+# gem "bcrypt", "~> 3.1.7"
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+gem 'tzinfo-data', platforms: %i[windows jruby]
+
+# Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+gem 'solid_cable'
+gem 'solid_cache'
+gem 'solid_queue'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
-# Use Sass to process CSS
-gem 'sassc-rails'
 
+# Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
+gem 'thruster', require: false
+
+# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+# gem "image_processing", "~> 1.2"
+
+# User management [https://github.com/heartcombo/devise]
+gem 'devise'
+
+# Quickly cloning a parent record with all of it's children [https://github.com/amoeba-rb/amoeba]
 gem 'amoeba'
-gem 'appengine', '~> 0.5.0'
-gem 'cocoon'
-gem 'devise', '~> 4.8.1'
-gem 'highline', '~> 1.7', '>= 1.7.8'
-gem 'pagy', '~> 4.11'
-gem 'scenic'
-gem 'scenic-mysql_adapter'
-gem 'simple_form'
+
+# Pagination [https://github.com/ddnexus/pagy]
+gem 'pagy'
+
+# For reporting exceptions [https://github.com/smartinez87/exception_notification]
+gem 'exception_notification'
+
+# Won't be included by default in the future
+gem 'csv'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'debug', platforms: %i[mri mingw x64_mingw]
+  gem 'debug', platforms: %i[mri windows], require: 'debug/prelude'
+
+  # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  gem 'brakeman', require: false
+
+  # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
+  # gem "rubocop-rails-omakase", require: false
+
+  # For linting and formatting [https://github.com/rubocop/rubocop]
+  gem 'rubocop'
+  gem 'rubocop-capybara', require: false
+  gem 'rubocop-rails', require: false
+
+  # For formatting ERB code [https://github.com/nebulab/erb-formatter]
+  gem 'erb-formatter'
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
 
-  gem 'erb-formatter'
-  gem 'htmlbeautifier'
-  gem 'prettier_print'
-  gem 'rubocop'
-  gem 'rubocop-capybara', require: false
-  gem 'rubocop-rails', require: false
-  gem 'solargraph'
-  gem 'syntax_tree'
-  gem 'syntax_tree-rbs'
+  # Handy for generating scaffold commands [https://github.com/frenesim/schema_to_scaffold]
+  gem 'schema_to_scaffold'
 
-  # Can be removed once this is updated past 2.0.0
-  # https://github.com/ruby-syntax-tree/syntax_tree-haml/issues/58
-  gem 'syntax_tree-haml', github: 'ruby-syntax-tree/syntax_tree-haml', branch: 'main'
+  # For viewing emails in development [https://github.com/ryanb/letter_opener]
+  gem 'letter_opener'
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
-  gem 'faker'
-  gem 'minitest-reporters'
   gem 'selenium-webdriver'
-  gem 'simplecov'
-  gem 'webdrivers'
+
+  # Use SimpleCov for code coverage [https://github.com/simplecov-ruby/simplecov]
+  gem 'simplecov', require: false
 end
