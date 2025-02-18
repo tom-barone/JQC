@@ -6,28 +6,40 @@
         <!-- Application Type -->
         <%= form.label :application_type_id, "Type" %>
         <%= form.collection_select :application_type_id,
-                               ApplicationType.ordered,
+                               @application_types,
                                :id,
                                :application_type,
                                { prompt: "Select" },
-                               { required: true } %>
+                               {
+                                 required: true,
+                                 "data-action":
+                                   "reference-number#onApplicationTypeChange",
+                                 "data-reference-number-target": "applicationType",
+                                 "data-reference-number-type-details-param":
+                                   @application_types.to_json,
+                               } %>
       </div>
 
       <div class="col">
         <!-- Reference Number -->
         <%= form.label :reference_number, "Reference no." %>
-        <%= form.text_field :reference_number, { required: true } %>
+        <%= form.text_field :reference_number,
+                        {
+                          required: true,
+                          "data-reference-number-target": "referenceNumber",
+                        } %>
       </div>
 
       <div class="col">
         <!-- Converted to/from -->
         <%= form.label :converted_to_from, "Converted to/from" %>
         <div class="input-group">
-          <%= form.text_field :converted_to_from %>
+          <%= form.text_field :converted_to_from,
+                          { "data-reference-number-target": "convertedToFrom" } %>
           <% if @converted_application.present? %>
             <%= link_to "Go to",
             edit_application_path(@converted_application),
-            class: "btn btn-sm btn-outline-secondary" %>
+            class: "btn btn-sm btn-outline-primary" %>
           <% end %>
         </div>
       </div>
@@ -160,7 +172,7 @@
 
     </div>
   </div>
-  <div class="col-5 d-flex flex-column" style="max-height: 40vh">
+  <div class="col-5 d-flex flex-column" style="max-height: 23em">
 
     <div class="h-50 mb-3 card" style="overflow: auto">
       <!-- Additional information -->
@@ -291,7 +303,7 @@
 
   <div class="col-6">
     <!-- Invoices -->
-    <div class="card" style="max-height: 30vh; overflow: auto">
+    <div class="card" style="max-height: 17em; overflow: auto">
       <table
         class="table nested-table mb-0"
         data-controller="invoice-table"

@@ -58,6 +58,23 @@
   <body>
     <div class="mx-3 d-flex flex-column" style="height: 100vh; overflow: auto">
       <%= render "layouts/navbar" %>
+      <% flash.each do |key, value| %>
+        <div
+          class="
+            alert <%= flash_class(key) %> alert-dismissible fade show
+            text-center text-nowrap position-fixed translate-middle-x start-50 mt-2 z-3
+          "
+          role="alert"
+        >
+          <%= raw(value) %>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+      <% end %>
       <%= yield %>
     </div>
   </body>

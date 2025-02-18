@@ -15,6 +15,7 @@ class ApplicationsController < ApplicationController
     @all_applications = Application.search(@params)
     @pagy, @applications = pagy(@all_applications, limit: @number_results_per_page)
     @total_count = @pagy.count
+    flash.clear
     respond_to do |format|
       format.csv { Application.write_csv_response(@all_applications, response) }
       format.html { session[:search_results] = request.url } # Save the search results for later
@@ -29,6 +30,14 @@ class ApplicationsController < ApplicationController
   # GET /applications/1/edit
   def edit
     @converted_application = @application.converted_application
+    if @converted_application.present? &&
+       @converted_application[:updated_at] > @application[:updated_at]
+      flash.now[:warning] = %(
+        The related application
+        <a href="#{edit_application_path(@converted_application)}">#{@converted_application[:reference_number]}</a>
+        has been updated more recently.
+      ).squish
+    end
   end
 
   # POST /applications
@@ -67,6 +76,7 @@ class ApplicationsController < ApplicationController
   private
 
   def prepare_association_lists
+    @application_types = ApplicationType.ordered
     # Cache the lists of suburbs, since they'll never change really
     @suburbs = Rails.cache.fetch('association_lists_suburbs', expires_in: 1.day) do
       Suburb.pluck(:display_name)

@@ -33,7 +33,6 @@ export default class extends Controller {
     });
 
     // Update totals
-    console.log(this.kdFeeTargets);
     const totals = [
       [this.kdFeeTotalTarget, this._visible(this.kdFeeTargets)],
       [this.gstTotalTarget, this._visible(this.gstTargets)],

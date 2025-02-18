@@ -13,6 +13,10 @@ class Application < ApplicationRecord
 
   amoeba { enable }
 
+  # Do the conversions between records and update the last used reference number
+  before_create :update_last_used_reference_number
+  before_update :convert_to_new_application
+
   has_many :application_uploads, inverse_of: :application, dependent: :destroy
   accepts_nested_attributes_for :application_uploads, allow_destroy: true
 
@@ -119,6 +123,28 @@ class Application < ApplicationRecord
   def self.eager_load_associations
     eager_load(:application_type, :applicant, :owner, :contact, :council, :suburb)
   end
+
+  # We need to use `update_column` and skip ActiveRecord validations
+  # because otherwise we get into an infinite validation loop
+  # rubocop:disable Rails/SkipsModelValidations
+  def update_last_used_reference_number
+    new_type = ApplicationType.find(application_type_id)
+    new_type.update_column('last_used', new_type.last_used + 1)
+  end
+
+  def convert_to_new_application
+    return unless application_type_id_changed?
+
+    # Create the fields for the old record
+    old_record = amoeba_dup
+    old_record.save!
+    old_record.update_columns(application_type_id: application_type_id_was, reference_number: reference_number_was,
+                              converted_to_from: reference_number)
+
+    # Update the fields for the new record
+    update_columns(converted_to_from: reference_number_was, updated_at: old_record[:updated_at] + 1.minute)
+  end
+  # rubocop:enable Rails/SkipsModelValidations
 
   def converted_application
     return if converted_to_from.blank?

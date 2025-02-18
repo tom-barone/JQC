@@ -7,4 +7,14 @@ module ApplicationsHelper
     options[:builder] = BootstrapFormBuilder
     form_with(**options, &)
   end
+
+  def flash_class(level)
+    {
+      'notice' => 'alert-secondary',
+      'success' => 'alert-success',
+      'warning' => 'alert-warning',
+      'error' => 'alert-danger',
+      'alert' => 'alert-danger'
+    }[level]
+  end
 end
