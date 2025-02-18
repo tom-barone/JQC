@@ -2,13 +2,13 @@
 
 require 'csv'
 
-# rubocop:disable Metrics/ClassLength
 class ApplicationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_application, only: %i[show edit update destroy]
+  before_action :set_application, only: %i[edit update destroy]
+  before_action :prepare_association_lists, only: %i[new edit]
   include Pagy::Backend
 
-  # GET /applications or /applications.json
+  # GET /applications
   def index
     @params = search_params
     @number_results_per_page = 500
@@ -21,9 +21,6 @@ class ApplicationsController < ApplicationController
     end
   end
 
-  # GET /applications/1 or /applications/1.json
-  def show; end
-
   # GET /applications/new
   def new
     @application = Application.new
@@ -32,44 +29,38 @@ class ApplicationsController < ApplicationController
   # GET /applications/1/edit
   def edit
     @converted_application = @application.converted_application
-    prepare_association_lists
   end
 
-  # POST /applications or /applications.json
+  # POST /applications
   def create
     @application = Application.new(application_params)
 
     respond_to do |format|
       if @application.save
         format.html { redirect_to @application, notice: 'Application was successfully created.' }
-        format.json { render :show, status: :created, location: @application }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @application.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PATCH/PUT /applications/1 or /applications/1.json
+  # PATCH/PUT /applications/1
   def update
     respond_to do |format|
       if @application.update(application_params)
         format.html { redirect_to session[:search_results] }
-        format.json { render :show, status: :ok, location: @application }
       else
         format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @application.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /applications/1 or /applications/1.json
+  # DELETE /applications/1
   def destroy
     @application.destroy!
 
     respond_to do |format|
       format.html { redirect_to session[:search_results] }
-      format.json { head :no_content }
     end
   end
 
@@ -134,5 +125,5 @@ class ApplicationsController < ApplicationController
                       ] }
                   ])
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 end
-# rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/ClassLength

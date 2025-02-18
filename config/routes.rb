@@ -14,9 +14,10 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Test routes to check emails are sent on exceptions
+  # TODO add this to a /health endpoint
   get 'fail' => 'testing#fail' unless Rails.env.production?
 
-  resources :applications
+  resources :applications, only: %i[index new create edit update destroy]
 
   authenticated :user do
     # Define authenticated routes here
