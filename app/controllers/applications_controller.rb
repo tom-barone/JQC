@@ -15,7 +15,6 @@ class ApplicationsController < ApplicationController
     @all_applications = Application.search(@params)
     @pagy, @applications = pagy(@all_applications, limit: @number_results_per_page)
     @total_count = @pagy.count
-    flash.clear
     respond_to do |format|
       format.csv { Application.write_csv_response(@all_applications, response) }
       format.html { session[:search_results] = request.url } # Save the search results for later
@@ -41,17 +40,24 @@ class ApplicationsController < ApplicationController
   end
 
   # POST /applications
+  # rubocop:disable Metrics/MethodLength
   def create
     @application = Application.new(application_params)
-
     respond_to do |format|
       if @application.save
-        format.html { redirect_to @application, notice: 'Application was successfully created.' }
+        format.html do
+          redirect_to session[:search_results]
+          flash[:success] = %(
+            <a href="#{edit_application_path(@application)}">#{@application[:reference_number]}</a>
+            was successfully created.
+          ).squish
+        end
       else
         format.html { render :new, status: :unprocessable_entity }
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   # PATCH/PUT /applications/1
   def update

@@ -19,6 +19,9 @@ Rails.application.routes.draw do
 
   resources :applications, only: %i[index new create edit update destroy]
 
+  get 'application_types/edit', to: 'application_types#edit'
+  put 'application_types/update_all', to: 'application_types#update_all'
+
   authenticated :user do
     # Define authenticated routes here
     root to: 'applications#index', as: :authenticated_root
