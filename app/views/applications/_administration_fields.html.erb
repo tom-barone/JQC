@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-8">
+  <div class="col-7">
     <div class="row">
 
       <div class="col-2">
@@ -160,7 +160,7 @@
 
     </div>
   </div>
-  <div class="col-4 d-flex flex-column" style="max-height: 40vh">
+  <div class="col-5 d-flex flex-column" style="max-height: 40vh">
 
     <div class="h-50 mb-3 card" style="overflow: auto">
       <!-- Additional information -->
@@ -347,8 +347,14 @@
               <div class="ps-2" data-invoice-table-target="adminFeeTotal">
               </div>
             </td>
-            <td></td>
-            <td></td>
+            <td class="fw-normal small">
+              <%= form.label :fully_invoiced,
+                         "Fully invoiced",
+                         style: "margin-top: 0px !important" %>
+            </td>
+            <td class="fw-normal small">
+              <%= form.check_box :fully_invoiced %>
+            </td>
             <td>
               <%= link_to_add_association "Add",
               form,
