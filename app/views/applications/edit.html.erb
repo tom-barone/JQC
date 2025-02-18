@@ -2,7 +2,7 @@
 <%= bootstrap_form_with model: @application, local:true, 
   html: { autocomplete: "off", class: "h-100 d-flex flex-column" },
   data: {
-    controller: "unsaved-changes",
+    controller: "unsaved-changes uploaded-risk-rating",
     action: "change->unsaved-changes#onFormChange"
   } do |form| %>
   <ul class="nav nav-tabs" role="tablist">

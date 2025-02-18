@@ -1,0 +1,17 @@
+/* Hide or show the disabled fields depending on the risk rating */
+table.uploaded-table .uploaded-text-enabled {
+	display: none;
+}
+
+table.uploaded-table.risk-rating-set .uploaded-text-enabled {
+	display: table-cell;
+}
+
+
+table.uploaded-table .uploaded-text-disabled {
+	display: table-cell;
+}
+
+table.uploaded-table.risk-rating-set .uploaded-text-disabled {
+	display: none;
+}

@@ -161,29 +161,30 @@
     </div>
   </div>
   <div class="col-4 d-flex flex-column" style="max-height: 23em">
+
     <div class="h-50 mb-3 card" style="overflow: auto">
       <!-- Additional information -->
       <table class="table nested-table">
         <thead style="position: sticky; top: 0; z-index: 1;">
           <tr>
-            <th class="fw-normal small">
+            <th class="fw-normal small" style="width: 14em">
               <div class="ps-2 pb-2">Additional information</div>
             </th>
             <th></th>
-            <th class="text-center" style="max-width:3em">
+            <th class="text-center" style="width:3em">
               <%= link_to_add_association "Add",
               form,
               :application_additional_informations,
               "data-association-insertion-node": ".additional-information-fields",
               "data-association-insertion-method": "append",
+              partial: "applications/tables/additional_information_fields",
               class: "btn btn-sm btn-outline-primary m-2" %>
             </th>
           </tr>
         </thead>
         <tbody class="additional-information-fields">
-          <%= form.fields_for :application_additional_informations do |additional_information_form| %>
-            <%= render "application_additional_information_fields",
-            f: additional_information_form %>
+          <%= form.fields_for :application_additional_informations do |subform| %>
+            <%= render "applications/tables/additional_information_fields", f: subform %>
           <% end %>
         </tbody>
       </table>
@@ -191,8 +192,49 @@
 
     <div class="h-50 card" style="overflow: auto">
       <!-- Uploaded -->
-      <h2 class="fw-normal form-label small">Uploaded</h2>
+      <table
+        class="table nested-table uploaded-table"
+        data-uploaded-risk-rating-target="uploadedTable"
+      >
+        <thead style="position: sticky; top: 0; z-index: 1;">
+          <tr>
+            <th class="fw-normal small" style="width: 14em">
+              <div class="ps-2 pb-2">Uploaded</div>
+            </th>
+            <th></th>
+            <th class="text-center" style="width:3em">
+              <%= link_to_add_association "Add",
+              form,
+              :application_uploads,
+              "data-association-insertion-node": ".uploaded-fields",
+              "data-association-insertion-method": "append",
+              partial: "applications/tables/uploaded_fields",
+              class: "btn btn-sm btn-outline-primary m-2",
+              "data-action": "change->uploaded-risk-rating#setUploadedText" %>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="uploaded-fields">
+          <%= form.fields_for :application_uploads do |subform| %>
+            <%= render "applications/tables/uploaded_fields", f: subform %>
+          <% end %>
+        </tbody>
+      </table>
     </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <!-- Risk Rating -->
+    <%= form.label :risk_rating %>
+    <%= form.select :risk_rating,
+                Application::RISK_RATING,
+                {},
+                data: {
+                  "uploaded-risk-rating-target": "riskRating",
+                  action: "change->uploaded-risk-rating#onRiskRatingChange",
+                } %>
   </div>
 </div>
 

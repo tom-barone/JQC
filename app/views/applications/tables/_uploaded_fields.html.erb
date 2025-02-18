@@ -1,0 +1,21 @@
+<tr class="nested-fields">
+  <td class="border-0 py-1">
+    <%= f.label :uploaded_date, class: "d-none" %>
+    <%= f.date_field :uploaded_date %>
+  </td>
+  <td class="border-0 py-1 uploaded-text-enabled">
+    <%= f.label :uploaded_text, class: "d-none" %>
+    <%= f.select :uploaded_text, ApplicationUpload::STAGE, { prompt: true } %>
+  </td>
+  <td class="border-0 py-1 uploaded-text-disabled">
+    <%= f.label :uploaded_text, class: "d-none" %>
+    <%= f.select :uploaded_text,
+             ApplicationUpload::STAGE,
+             { prompt: "Please add a risk rating first" },
+             { disabled: true } %>
+
+  </td>
+  <td class="border-0 py-1 text-center" style="width:3em">
+    <%= link_to_remove_association "⌫", f, class: "btn btn-sm btn-outline-danger" %>
+  </td>
+</tr>
