@@ -2,6 +2,7 @@
 
 require 'csv'
 
+# rubocop:disable Metrics/ClassLength
 class ApplicationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_application, only: %i[edit update destroy]
@@ -144,3 +145,4 @@ class ApplicationsController < ApplicationController
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 end
+# rubocop:enable Metrics/ClassLength

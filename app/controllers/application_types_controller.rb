@@ -20,6 +20,10 @@ class ApplicationTypesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def application_type_params
-    params.require(:application_type_attributes).permit!
+    params.expect(application_type_attributes: [
+                    ApplicationType.attribute_names
+                      .map(&:to_sym)
+                      .push(:_destroy)
+                  ])
   end
 end
