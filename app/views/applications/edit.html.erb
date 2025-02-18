@@ -63,6 +63,20 @@
       <div class="h-100 d-flex flex-column flex-grow-1">
         <div class="flex-grow-1">
           <h1>Certification</h1>
+
+          <div class="row">
+            <div class="col">
+              <!-- Risk Rating -->
+              <%= form.label :risk_rating %>
+              <%= form.select :risk_rating,
+                          Application::RISK_RATING,
+                          {},
+                          data: {
+                            "uploaded-risk-rating-target": "riskRating",
+                            action: "change->uploaded-risk-rating#onRiskRatingChange",
+                          } %>
+            </div>
+          </div>
         </div>
       </div>
     </div>

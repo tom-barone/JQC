@@ -6,6 +6,11 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
     super
   end
 
+  def text_area(method, options = {})
+    options[:class] = merge_classes(options[:class], 'form-control form-control-sm')
+    super
+  end
+
   def date_field(method, options = {})
     options[:class] = merge_classes(options[:class], 'form-control form-control-sm')
     super

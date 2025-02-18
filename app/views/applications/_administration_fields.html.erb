@@ -160,7 +160,7 @@
 
     </div>
   </div>
-  <div class="col-4 d-flex flex-column" style="max-height: 23em">
+  <div class="col-4 d-flex flex-column" style="max-height: 40vh">
 
     <div class="h-50 mb-3 card" style="overflow: auto">
       <!-- Additional information -->
@@ -223,18 +223,145 @@
     </div>
   </div>
 </div>
+<div class="row border-top mt-3 pt-2">
+  <div class="col-3">
+    <div class="row">
 
-<div class="row">
-  <div class="col">
-    <!-- Risk Rating -->
-    <%= form.label :risk_rating %>
-    <%= form.select :risk_rating,
-                Application::RISK_RATING,
-                {},
-                data: {
-                  "uploaded-risk-rating-target": "riskRating",
-                  action: "change->uploaded-risk-rating#onRiskRatingChange",
-                } %>
+      <div class="col">
+        <!-- Description -->
+        <%= form.label :description %>
+        <%= form.text_area :description, style: "height: 11vh" %>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col">
+        <!-- Administration notes -->
+        <%= form.label :administration_notes %>
+        <%= form.text_area :administration_notes, style: "height: 11vh" %>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="row">
+
+      <div class="col">
+        <!-- Invoice to -->
+        <%= form.label :invoice_to %>
+        <%= form.text_field :invoice_to %>
+      </div>
+
+      <div class="col">
+        <!-- Care of -->
+        <%= form.label :care_of %>
+        <%= form.text_field :care_of %>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col">
+        <!-- Invoice email -->
+        <%= form.label :invoice_email %>
+        <%= form.text_field :invoice_email %>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col">
+        <!-- Attention -->
+        <%= form.label :attention %>
+        <%= form.text_field :attention %>
+      </div>
+
+      <div class="col">
+        <!-- Purchase Order Number -->
+        <%= form.label :purchase_order_number, "Purchase No." %>
+        <%= form.text_field :purchase_order_number %>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col">
+        <!-- Invoice debtor notes -->
+        <%= form.label :invoice_debtor_notes %>
+        <%= form.text_area :invoice_debtor_notes, style: "height: rvh" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <!-- Invoices -->
+    <div class="card" style="max-height: 30vh; overflow: auto">
+      <table
+        class="table nested-table mb-0"
+        data-controller="invoice-table"
+        data-action="cocoon:after-remove->invoice-table#updateGstAndTotals"
+        data-action="cocoon:after-insert->invoice-table#updateGstAndTotals"
+      >
+        <thead style="position: sticky; top: 0; z-index: 1;">
+          <tr>
+            <th class="fw-normal small">
+              <div class="ps-2 py-2">Invoice date</div>
+            </th>
+            <th class="fw-normal small">
+              <div class="ps-2 py-2">Stage</div>
+            </th>
+            <th class="fw-normal small">
+              <div class="ps-2 py-2">KD fee</div>
+            </th>
+            <th class="fw-normal small">
+              <div class="ps-2 py-2">GST</div>
+            </th>
+            <th class="fw-normal small">
+              <div class="ps-2 py-2">Admin fee</div>
+            </th>
+            <th class="fw-normal small">
+              <div class="ps-2 py-2">Invoice no.</div>
+            </th>
+            <th class="fw-normal small">
+              <div class="ps-2 py-2">Paid</div>
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody class="invoice-fields">
+          <%= form.fields_for :invoices do |subform| %>
+            <%= render "applications/tables/invoice_fields", f: subform %>
+          <% end %>
+        </tbody>
+        <tfoot style="position: sticky; bottom: 0; z-index: 1;">
+          <tr>
+            <td class="fw-normal small">
+              <div class="ps-2">Totals</div>
+            </td>
+            <td></td>
+            <td class="fw-normal small">
+              <div class="ps-2" data-invoice-table-target="kdFeeTotal">
+              </div>
+            </td>
+            <td class="fw-normal small">
+              <div class="ps-2" data-invoice-table-target="gstTotal">
+              </div>
+            </td>
+            <td class="fw-normal small">
+              <div class="ps-2" data-invoice-table-target="adminFeeTotal">
+              </div>
+            </td>
+            <td></td>
+            <td></td>
+            <td>
+              <%= link_to_add_association "Add",
+              form,
+              :invoices,
+              "data-association-insertion-node": ".invoice-fields",
+              "data-association-insertion-method": "append",
+              partial: "applications/tables/invoice_fields",
+              class: "btn btn-sm btn-outline-primary m-2" %>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
   </div>
 </div>
 
