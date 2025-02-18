@@ -118,7 +118,14 @@
 
         <div class="card" style="max-height: 23em; min-height: 23em; overflow: auto">
           <!-- RFIs Issued -->
-          <table class="table nested-table h-100">
+          <table
+            class="table nested-table h-100"
+            data-controller="rfis-table"
+            data-action="
+              cocoon:after-remove->rfis-table#updateRfiNumbers
+              cocoon:after-insert->rfis-table#updateRfiNumbers
+            "
+          >
             <thead style="position: sticky; top: 0; z-index: 1;">
               <tr>
                 <th class="fw-normal small" style="width: 3em">
