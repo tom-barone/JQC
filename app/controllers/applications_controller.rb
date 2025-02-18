@@ -120,7 +120,8 @@ class ApplicationsController < ApplicationController
                     :consultancies_report_sent, :assessment_commenced, :consent_issued, :variation_issued, :coo_issued,
                     :engineer_certificate_received, :certifier, :certification_notes, :invoice_to, :care_of,
                     :invoice_email, :attention, :purchase_order_number, :fully_invoiced, :invoice_debtor_notes,
-                    :applicant_email, :application_type_id, :external_engineer_date,
+                    :applicant_email, :application_type_id, :external_engineer_date, :structural_engineer_fee,
+                    :documented_performance_solutions, :certificate_reference,
                     { invoices_attributes: [
                         Invoice.attribute_names.map(&:to_sym).push(:_destroy)
                       ],

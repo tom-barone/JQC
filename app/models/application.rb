@@ -40,6 +40,7 @@ class Application < ApplicationRecord
   JOB_TYPE_ADMINISTRATION = ['Residential', 'Commercial', 'Section 49'].freeze
   BUILDING_SURVEYOR = Rails.application.credentials.building_surveyors
   STRUCTURAL_ENGINEER = Rails.application.credentials.structural_engineers
+  CERTIFIER = Rails.application.credentials.certifiers
   RISK_RATING = %w[High Standard Low].freeze
   JOB_TYPE = %w[BRC Other].freeze
   CONSENT = %w[Approved Refused].freeze
@@ -240,5 +241,22 @@ class Application < ApplicationRecord
     response.stream.close
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+
+  def certifier_options
+    if CERTIFIER.include?(certifier)
+      CERTIFIER
+    else
+      # This is for old records that may have a certifier that is no longer in the list
+      [certifier] + CERTIFIER
+    end
+  end
+
+  def selected_certifier
+    return certifier unless new_record?
+
+    # Select the first option if there is only one, otherwise return nil
+    options = certifier_options.compact_blank
+    options.length == 1 ? options.first : nil
+  end
 end
 # rubocop:enable Metrics/ClassLength
