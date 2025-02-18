@@ -141,7 +141,12 @@
       <div class="col">
         <!-- Suburb -->
         <%= form.label :suburb_display_name, "Suburb" %>
-        <%= form.text_field :suburb_display_name, list: "suburbs" %>
+        <%= form.text_field :suburb_display_name,
+                        list: "suburbs",
+                        data: {
+                          controller: "validateable-datalist",
+                          action: "change->validateable-datalist#onChange",
+                        } %>
       </div>
     </div>
     <div class="row">
