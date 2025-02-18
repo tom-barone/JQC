@@ -5,7 +5,11 @@
   </div>
   <div class="d-flex justify-content-between align-items-center">
     <div class="mx-4">
-      <%= form.check_box :cancelled %>
+      <%= form.check_box :cancelled,
+                     data: {
+                       "canceallable-target": "cancelledCheckbox",
+                       action: "change->canceallable#setCancelledState",
+                     } %>
       <%= form.label :cancelled, "Mark as cancelled", style: "margin-top: 0px !important" %>
     </div>
     <div class="mx-2">

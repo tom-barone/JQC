@@ -2,7 +2,7 @@
 <%= bootstrap_form_with model: @application, local:true, 
   html: { autocomplete: "off", class: "h-100 d-flex flex-column" },
   data: {
-    controller: "unsaved-changes uploaded-risk-rating",
+    controller: "unsaved-changes uploaded-risk-rating canceallable",
     action: "change->unsaved-changes#onFormChange"
   } do |form| %>
   <ul class="nav nav-tabs" role="tablist">
@@ -44,6 +44,7 @@
       role="tabpanel"
       aria-labelledby="admin-invoicing-tab"
       tabindex="0"
+      data-canceallable-target="fieldsContainer"
     >
       <div class="h-100 d-flex flex-column flex-grow-1">
         <div class="flex-grow-1">
@@ -57,8 +58,8 @@
       role="tabpanel"
       aria-labelledby="certification-tab"
       tabindex="0"
+      data-canceallable-target="fieldsContainer"
     >
-
       <div class="h-100 d-flex flex-column flex-grow-1">
         <div class="flex-grow-1">
           <h1>Certification</h1>

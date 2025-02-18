@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = ["riskRating", "uploadedTable"];
 
   connect() {
-    console.log(this.uploadedTableTarget);
     this.setUploadedText();
   }
 
