@@ -7,7 +7,6 @@ class HealthController < ApplicationController
   # Used to test that the error notification system is working
   # GET /fail
   def fail
-    render_down
     raise SyntaxError, 'I should send an exception notification email'
   end
 
