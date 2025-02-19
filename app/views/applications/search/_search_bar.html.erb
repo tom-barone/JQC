@@ -1,5 +1,5 @@
-<div class="row justify-content-start align-items-center pb-1">
-  <div class="col-10">
+<div class="d-flex justify-content-between align-items-center my-2">
+  <div class="flex-grow-1">
     <%= form_with url: applications_path, class: "input-group", html: {"data-controller": "search"}, method: :get do |search_form| %>
       <%= search_form.select :type,
                          ApplicationType.ordered_values,
@@ -47,7 +47,7 @@
       <%= search_form.text_field :search_text,
                              value: params.dig(:search_text),
                              class: "form-control w-25",
-                             style: "max-width: 60ch; min-width: 20ch;",
+                             style: "max-width: 50ch; min-width: 20ch;",
                              "data-search-target": "searchText" %>
       <%= search_form.button "Search",
                          type: "submit",
@@ -79,11 +79,11 @@
       </button>
     <% end %>
   </div>
-  <div class="col-2">
+  <div>
     <div class="d-flex justify-content-end">
       <%= link_to "New Application",
       new_application_path,
-      class: "btn btn-primary text-nowrap new-application-button",
+      class: "btn btn-success text-nowrap new-application-button",
       data: {
         controller: "loading-button",
         action: "loading-button#onClick",

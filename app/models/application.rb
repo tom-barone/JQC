@@ -98,6 +98,12 @@ class Application < ApplicationRecord
     where(building_surveyor: surveyor) if surveyor.present?
   }
 
+  scope :filter_by_has_received_engineer_certificate, lambda { |checkbox_value|
+    return all unless checkbox_value == '1'
+
+    where.not(engineer_certificate_received: nil)
+  }
+
   scope :order_by_type_and_reference_number, lambda {
     joins(:application_type)
       .order(Arel.sql('application_types.display_priority ASC'))
@@ -128,11 +134,24 @@ class Application < ApplicationRecord
   scope :with_latest_rfis, lambda {
     latest_rfi_subquery = RequestForInformation
                           .select('DISTINCT ON (application_id) application_id, request_for_information_date')
+                          .where.not(request_for_information_date: nil)
                           .order('application_id, request_for_information_date DESC')
 
     select('applications.*, latest_rfis.*')
       .includes(:request_for_informations)
       .joins("LEFT JOIN (#{latest_rfi_subquery.to_sql}) latest_rfis ON latest_rfis.application_id = applications.id")
+  }
+
+  scope :with_latest_additional_informations, lambda {
+    latest_additional_information_subquery = ApplicationAdditionalInformation
+                                             .select('DISTINCT ON (application_id) application_id, info_date')
+                                             .where.not(info_date: nil)
+                                             .order('application_id, info_date DESC')
+
+    select('applications.*, latest_additional_informations.*')
+      .includes(:application_additional_informations)
+      .joins("LEFT JOIN (#{latest_additional_information_subquery.to_sql}) \
+             latest_additional_informations ON latest_additional_informations.application_id = applications.id")
   }
 
   def self.eager_load_associations
@@ -169,20 +188,21 @@ class Application < ApplicationRecord
   end
 
   def self.search(params)
-    Application.eager_load_associations
-               .filter_by_type(params[:type])
-               .filter_by_date(params[:start_date], params[:end_date])
-               .filter_by_search_text(params[:search_text])
-               .order_by_type_and_reference_number
+    eager_load_associations
+      .filter_by_type(params[:type])
+      .filter_by_date(params[:start_date], params[:end_date])
+      .filter_by_search_text(params[:search_text])
+      .order_by_type_and_reference_number
   end
 
   def self.building_surveyor_search(params)
-    Application.eager_load_associations
-               .filter_by_type(params[:type])
-               .filter_by_date(params[:start_date], params[:end_date])
-               .filter_by_search_text(params[:search_text])
-               .filter_by_building_surveyor(params[:building_surveyor])
-               .order_by_type_and_reference_number
+    eager_load_associations
+      .filter_by_type(params[:type])
+      .filter_by_date(params[:start_date], params[:end_date])
+      .filter_by_search_text(params[:search_text])
+      .filter_by_building_surveyor(params[:building_surveyor])
+      .filter_by_has_received_engineer_certificate(params[:has_received_engineer_certificate])
+      .order_by_type_and_reference_number
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity

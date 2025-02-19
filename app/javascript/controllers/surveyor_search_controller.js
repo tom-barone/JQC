@@ -20,7 +20,14 @@ export function _getFormattedDateString(date) {
 }
 
 export default class extends Controller {
-  static targets = ["type", "startDate", "endDate", "searchText", "surveyor"];
+  static targets = [
+    "type",
+    "startDate",
+    "endDate",
+    "searchText",
+    "surveyor",
+    "engineerCertificate",
+  ];
 
   connect() {
     const today = _getFormattedDateString(new Date());
@@ -34,5 +41,6 @@ export default class extends Controller {
     this.endDateTarget.value = "";
     this.searchTextTarget.value = "";
     this.surveyorTarget.value = "";
+    this.engineerCertificateTarget.checked = false;
   }
 }

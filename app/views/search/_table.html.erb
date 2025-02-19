@@ -12,6 +12,8 @@
         <th>Applicant</th>
         <th style="max-width: 11ch">Date created</th>
         <th style="max-width: 11ch">Latest RFI</th>
+        <th style="max-width: 11ch">Latest additional info</th>
+        <th style="max-width: 14ch">Engineer certificate received</th>
         <th
           style="max-width: <%= Application::BUILDING_SURVEYOR.map(&:length).max %>ch"
         >Building surveyor</th>
@@ -40,11 +42,17 @@
           <td role="button" class="text-truncate" style="max-width: 8vw">
             <%= application.applicant&.client_name %>
           </td>
-          <td role="button" class="text-truncate">
+          <td role="button" class="text-truncate" style="max-width: 11ch">
             <%= application.created_at.strftime("%-d %b %Y") %>
           </td>
-          <td role="button" class="text-truncate">
+          <td role="button" class="text-truncate" style="max-width: 11ch">
             <%= application.request_for_information_date&.strftime("%-d %b %Y") %>
+          </td>
+          <td role="button" class="text-truncate" style="max-width: 11ch">
+            <%= application.info_date&.strftime("%-d %b %Y") %>
+          </td>
+          <td role="button" class="text-truncate" style="max-width: 11ch">
+            <%= application.engineer_certificate_received&.strftime("%-d %b %Y") %>
           </td>
           <td
             role="button"
