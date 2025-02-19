@@ -10,6 +10,7 @@
         <th>Suburb</th>
         <th>Description</th>
         <th>Admin notes</th>
+        <th>Owner</th>
         <th>Applicant</th>
         <th>Council</th>
         <th style="max-width: 11ch">Date created</th>
@@ -41,6 +42,9 @@
           </td>
           <td role="button" class="text-truncate" style="max-width: 12vw">
             <%= application.administration_notes %>
+          </td>
+          <td role="button" class="text-truncate" style="max-width: 8vw">
+            <%= application.owner&.client_name %>
           </td>
           <td role="button" class="text-truncate" style="max-width: 8vw">
             <%= application.applicant&.client_name %>
