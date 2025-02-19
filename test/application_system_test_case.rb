@@ -13,13 +13,17 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     assert_button 'Sign in'
   end
 
-  def sign_in_test_user
+  def sign_in_with(username, password)
     visit root_path
     assert_text 'Remember me'
-    fill_in 'Username', with: 'test_user'
-    fill_in 'Password', with: 'h2&BUa0qvxoqTM^K'
+    fill_in 'Username', with: username
+    fill_in 'Password', with: password
     click_on 'Sign in'
     assert_text 'Sign out'
+  end
+
+  def sign_in_test_user
+    sign_in_with 'test_user', 'h2&BUa0qvxoqTM^K'
   end
 
   def sign_out

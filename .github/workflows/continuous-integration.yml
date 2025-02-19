@@ -99,9 +99,18 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
       - name: Push to dokku
         uses: dokku/github-action@master
         with:
           branch: "develop"
           git_remote_url: "ssh://dokku@${{ secrets.STAGING_DOMAIN }}:22/${{ secrets.STAGING_DOMAIN }}"
           ssh_private_key: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+
+      - name: "Run deployment checks"
+        run: 'WEBSITE_URL="https://${{ secrets.STAGING_DOMAIN }}" bundle exec rake run_deployment_checks'

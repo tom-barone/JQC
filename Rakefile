@@ -55,6 +55,10 @@ task precommit: %i[environment install format lint test_all]
 
 ### Deployment and backup tasks
 
+task run_deployment_checks: %i[environment] do
+  sh 'bundle exec ruby deployment_checks/run.rb'
+end
+
 task schedule_postgres_backups_to_s3: %i[environment] do
   remote = ENV.fetch('DOKKU_REMOTE')
   db_name = ENV.fetch('DOKKU_DB_NAME')

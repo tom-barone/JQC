@@ -76,6 +76,7 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     amoeba (3.3.0)
       activerecord (>= 5.2.0)
+    ansi (1.5.0)
     ast (2.4.2)
     base64 (0.2.0)
     bcrypt (3.1.20)
@@ -164,6 +165,11 @@ GEM
     matrix (0.4.2)
     mini_mime (1.1.5)
     minitest (5.25.4)
+    minitest-reporters (1.7.1)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
     msgpack (1.8.0)
     net-imap (0.5.6)
       date
@@ -381,6 +387,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   letter_opener
+  minitest-reporters
   pagy
   pg (~> 1.1)
   propshaft

@@ -96,4 +96,6 @@ group :test do
 
   # Use SimpleCov for code coverage [https://github.com/simplecov-ruby/simplecov]
   gem 'simplecov', require: false
+
+  gem 'minitest-reporters'
 end
