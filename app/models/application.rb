@@ -98,6 +98,18 @@ class Application < ApplicationRecord
     where(building_surveyor: surveyor) if surveyor.present?
   }
 
+  scope :filter_by_has_rfis_issued, lambda { |checkbox_value|
+    return all unless checkbox_value == '1'
+
+    where.not(request_for_informations: { request_for_information_date: nil })
+  }
+
+  scope :filter_by_has_additional_information, lambda { |checkbox_value|
+    return all unless checkbox_value == '1'
+
+    where.not(application_additional_informations: { info_date: nil })
+  }
+
   scope :filter_by_has_received_engineer_certificate, lambda { |checkbox_value|
     return all unless checkbox_value == '1'
 
@@ -201,6 +213,8 @@ class Application < ApplicationRecord
       .filter_by_date(params[:start_date], params[:end_date])
       .filter_by_search_text(params[:search_text])
       .filter_by_building_surveyor(params[:building_surveyor])
+      .filter_by_has_rfis_issued(params[:has_rfis_issued])
+      .filter_by_has_additional_information(params[:has_additional_information])
       .filter_by_has_received_engineer_certificate(params[:has_received_engineer_certificate])
       .order_by_type_and_reference_number
   end

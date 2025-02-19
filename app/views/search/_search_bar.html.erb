@@ -108,6 +108,31 @@
     </div>
 
     <div class="mx-2">
+      <!-- Has RFIs issued -->
+      <%= form.label :has_rfis_issued, "Has RFIs issued?", class: "w-100 form-check-label" %>
+      <%= checkbox_tag "has_rfis_issued",
+      checked: params.dig(:has_rfis_issued) == "1",
+      data: {
+        "surveyor-search-target": "rfisIssued",
+      },
+      class: "form-check-input" %>
+    </div>
+
+    <div class="mx-2">
+      <!-- Has additional information -->
+      <%= form.label :has_additional_information,
+                 "Has additional information?",
+                 class: "w-100 form-check-label" %>
+      <%= checkbox_tag "has_additional_information",
+      checked: params.dig(:has_additional_information) == "1",
+      data: {
+        "surveyor-search-target": "additionalInformation",
+      },
+      class: "form-check-input" %>
+    </div>
+
+    <div class="mx-2">
+      <!-- Has received engineer certificate -->
       <%= form.label :has_received_engineer_certificate,
                  "Has received engineer certificate?",
                  class: "w-100 form-check-label" %>

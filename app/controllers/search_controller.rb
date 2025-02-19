@@ -25,6 +25,8 @@ class SearchController < ApplicationController
       :end_date,
       :search_text,
       :building_surveyor,
+      :has_rfis_issued,
+      :has_additional_information,
       :has_received_engineer_certificate,
       :page,  # What page of results
       :format # Whether we're asking for HTML or CSV
