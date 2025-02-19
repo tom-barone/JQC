@@ -47,6 +47,8 @@ task test_all: :environment do
   sh 'bundle exec bin/rails db:test:prepare'
   sh 'bundle exec bin/rails test:all'
   # sh 'bundle exec bin/rails test ./test/system/basic_health_test.rb'
+
+  Rake::Task['check_for_recent_backup'].invoke
 end
 
 task precommit: %i[environment install format lint test_all]
@@ -112,6 +114,7 @@ task restore_development_db_from_most_recent_backup: %i[environment] do
 end
 
 task check_for_recent_backup: %i[environment] do
+  puts 'Checking for recent backup in S3'
   # Check that we have a backup within the last 24 hours
   config = Rails.application.credentials.postgres_backups
   aws_bucket = config[:aws_s3_bucket]

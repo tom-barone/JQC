@@ -3,15 +3,18 @@
 require 'English'
 require 'tempfile'
 
-class BackupController < ApplicationController
-  rescue_from(Exception) do |exception|
+class HealthController < ApplicationController
+  # Used to test that the error notification system is working
+  # GET /fail
+  def fail
     render_down
-    raise exception
+    raise SyntaxError, 'I should send an exception notification email'
   end
 
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # Check that we have a recent backup in the last 24 hours
+  # GET /check_for_recent_backup
   def check_recent_backup
-    # Check that we have a recent backup in the last 24 hours
     config = Rails.application.credentials.postgres_backups
     aws_bucket = config[:aws_s3_bucket]
     aws_access_key_id = config[:aws_access_key_id]
@@ -38,6 +41,9 @@ class BackupController < ApplicationController
         render_up
       end
     end
+  rescue StandardError => e
+    render_down
+    raise e
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
