@@ -268,3 +268,9 @@ if __name__ == "__main__":
 
     if tunnel:
         tunnel.stop()
+
+    print(
+        """NOTE: Need to rerun the 20250217112136_add_display_priority_to_application_types.rb
+    migration to add the display_priority column to the application_types table.
+    """
+    )

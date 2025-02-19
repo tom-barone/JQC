@@ -10,7 +10,7 @@ module ApplicationsHelper
 
   def flash_class(level)
     {
-      'notice' => 'alert-secondary',
+      'notice' => 'alert-primary',
       'success' => 'alert-success',
       'warning' => 'alert-warning',
       'error' => 'alert-danger',
