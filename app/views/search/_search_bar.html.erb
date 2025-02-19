@@ -1,0 +1,128 @@
+<%= form_with url: building_surveyor_search_path, html: {"data-controller": "surveyor-search"}, method: :get do |search_form| %>
+  <div class="d-flex justify-content-start align-items-end">
+
+    <div class="me-2">
+      <!-- Building Surveyor -->
+      <%= search_form.label :building_surveyor, class: "form-label small mb-0 mt-2" %>
+      <%= search_form.select :building_surveyor,
+                         Application::BUILDING_SURVEYOR,
+                         {
+                           include_blank: "Select:",
+                           selected: params.dig(:building_surveyor),
+                         },
+                         {
+                           class: "form-select",
+                           "data-surveyor-search-target": "surveyor",
+                         } %>
+    </div>
+
+    <div class="mx-2">
+      <!-- Start date -->
+      <%= search_form.label :start_date, "From", class: "form-label small mb-0 mt-2" %>
+      <%= search_form.date_field :start_date,
+                             {
+                               value: params.dig(:start_date),
+                               class: "form-control",
+                               style: "max-width: 18ch; min-width: 18ch;",
+                               "data-surveyor-search-target": "startDate",
+                               min: "1970-01-01",
+                             } %>
+    </div>
+
+    <div class="mx-2">
+      <!-- End date -->
+      <%= search_form.label :end_date, "To", class: "form-label small mb-0 mt-2" %>
+      <%= search_form.date_field :end_date,
+                             {
+                               value: params.dig(:end_date),
+                               class: "form-control",
+                               style: "max-width: 18ch; min-width: 18ch;",
+                               "data-surveyor-search-target": "endDate",
+                               min: "1970-01-01",
+                             } %>
+    </div>
+
+    <div class="mx-2 flex-grow-1">
+      <!-- Search text -->
+      <div class="input-group" style="flex-wrap: nowrap">
+        <span class="input-group-text">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-search"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+            />
+          </svg>
+
+        </span>
+        <!-- Search -->
+        <%= search_form.text_field :search_text,
+                               value: params.dig(:search_text),
+                               class: "form-control",
+                               style: "max-width: 60ch; min-width: 30ch;",
+                               "data-surveyor-search-target": "searchText" %>
+        <%= search_form.button "Search",
+                           type: "submit",
+                           name: nil,
+                           class: "btn btn-primary",
+                           data: {
+                             controller: "loading-button",
+                             action: "loading-button#onSubmit",
+                             "loading-button-loading-text-param": "",
+                           } %>
+
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          id="clear-search"
+          data-action="surveyor-search#resetForm"
+        >
+          <!-- Clear -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="25"
+            height="25"
+            fill="currentColor"
+            class="bi bi-x-circle-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-start align-items-end mb-3">
+
+    <div class="me-2">
+      <!-- Application Type -->
+      <%= search_form.label :application_type_id,
+                        "Type",
+                        class: "form-label small mb-0 mt-2" %>
+      <%= search_form.select :type,
+                         ApplicationType.ordered_values,
+                         { include_blank: "Select:", selected: params.dig(:type) },
+                         { class: "form-select", "data-search-target": "type" } %>
+    </div>
+
+    <div class="mx-2 flex-grow-1 d-flex justify-content-end">
+      <!-- New Application -->
+      <div>
+        <%= link_to "New Application",
+        new_application_path,
+        class: "btn btn-primary text-nowrap new-application-button",
+        data: {
+          controller: "loading-button",
+          action: "loading-button#onClick",
+        } %>
+      </div>
+    </div>
+  </div>
+<% end %>

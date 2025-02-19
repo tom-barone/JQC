@@ -94,6 +94,10 @@ class Application < ApplicationRecord
     scope
   }
 
+  scope :filter_by_building_surveyor, lambda { |surveyor|
+    where(building_surveyor: surveyor) if surveyor.present?
+  }
+
   scope :order_by_type_and_reference_number, lambda {
     joins(:application_type)
       .order(Arel.sql('application_types.display_priority ASC'))
@@ -119,6 +123,16 @@ class Application < ApplicationRecord
     safe_rank = sanitize_sql_array(["ts_rank(searchable_tsvector, to_tsquery('english', ?)) DESC", formatted_query])
 
     order(Arel.sql(safe_rank))
+  }
+
+  scope :with_latest_rfis, lambda {
+    latest_rfi_subquery = RequestForInformation
+                          .select('DISTINCT ON (application_id) application_id, request_for_information_date')
+                          .order('application_id, request_for_information_date DESC')
+
+    select('applications.*, latest_rfis.*')
+      .includes(:request_for_informations)
+      .joins("LEFT JOIN (#{latest_rfi_subquery.to_sql}) latest_rfis ON latest_rfis.application_id = applications.id")
   }
 
   def self.eager_load_associations
@@ -159,6 +173,15 @@ class Application < ApplicationRecord
                .filter_by_type(params[:type])
                .filter_by_date(params[:start_date], params[:end_date])
                .filter_by_search_text(params[:search_text])
+               .order_by_type_and_reference_number
+  end
+
+  def self.building_surveyor_search(params)
+    Application.eager_load_associations
+               .filter_by_type(params[:type])
+               .filter_by_date(params[:start_date], params[:end_date])
+               .filter_by_search_text(params[:search_text])
+               .filter_by_building_surveyor(params[:building_surveyor])
                .order_by_type_and_reference_number
   end
 

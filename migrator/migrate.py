@@ -209,6 +209,15 @@ def transfer_data(
 
 
 if __name__ == "__main__":
+    print(
+        """NOTE: Make sure you run this beforehand to make sure all the indexes and search columns are built properly.\n\nrails db:migrate VERSION=20250214044701\n\n"""
+    )
+    print("Continue? (y/n)")
+    user_input = input()
+    if user_input.lower() != "y" and user_input.lower() != "yes":
+        print("Exiting...")
+        sys.exit(0)
+
     config = dotenv_values(".env")
     mysql_config = {
         "host": config["MYSQL_HOST"],
@@ -268,9 +277,3 @@ if __name__ == "__main__":
 
     if tunnel:
         tunnel.stop()
-
-    print(
-        """NOTE: Need to rerun the 20250217112136_add_display_priority_to_application_types.rb
-    migration to add the display_priority column to the application_types table.
-    """
-    )

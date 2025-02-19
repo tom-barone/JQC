@@ -18,7 +18,20 @@
             class:
               "nav-link" +
                 (
-                  if params[:controller] == "applications"
+                  if params[:controller] == "applications" && params[:action] == "index"
+                    " active"
+                  else
+                    ""
+                  end
+                ) %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Surveyor dashboard",
+            building_surveyor_search_path,
+            class:
+              "nav-link" +
+                (
+                  if params[:action] == "building_surveyor_search"
                     " active"
                   else
                     ""
