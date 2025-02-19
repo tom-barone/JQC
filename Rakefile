@@ -62,7 +62,7 @@ task schedule_postgres_backups_to_s3: %i[environment] do
   aws_access_key_id = config[:aws_access_key_id]
   aws_secret_access_key = config[:aws_secret_access_key]
   aws_region = config[:aws_region]
-  schedule = config[:schedule]
+  schedule = config[:schedule].gsub('*', '\\*')
   encryption_key = config[:encryption_key]
 
   dokku = "dokku --remote #{remote}"
