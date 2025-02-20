@@ -6,10 +6,7 @@
       <%= form.label :building_surveyor, class: 'form-label small mb-0 mt-2' %>
       <%= form.select :building_surveyor,
                       Application::BUILDING_SURVEYOR,
-                      {
-                        include_blank: 'Select:',
-                        selected: params[:building_surveyor]
-                      },
+                      { include_blank: 'Select:', selected: params[:building_surveyor] },
                       { class: 'form-select', 'data-surveyor-search-target': 'surveyor' } %>
     </div>
 
