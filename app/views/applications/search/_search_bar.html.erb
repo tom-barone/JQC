@@ -74,15 +74,13 @@
       </button>
     <% end %>
   </div>
-  <div>
-    <div class="d-flex justify-content-end">
-      <%= link_to 'New Application',
-                  new_application_path,
-                  class: 'btn btn-success text-nowrap new-application-button',
-                  data: {
-                    controller: 'loading-button',
-                    action: 'loading-button#onClick'
-                  } %>
-    </div>
+  <div class="d-flex justify-content-end ps-2">
+    <%= link_to 'New Application',
+                new_application_path,
+                class: 'btn btn-success text-nowrap new-application-button',
+                data: {
+                  controller: 'loading-button',
+                  action: 'loading-button#onClick'
+                } %>
   </div>
 </div>
