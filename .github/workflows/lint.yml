@@ -3,11 +3,15 @@ name: "Lint"
 on:
   workflow_call:
     inputs: {}
-    secrets: {}
+    secrets:
+      RAILS_MASTER_KEY:
+        required: true
 
 jobs:
   lint:
     runs-on: ubuntu-latest
+    env:
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

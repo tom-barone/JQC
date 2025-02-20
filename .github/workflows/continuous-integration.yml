@@ -7,6 +7,8 @@ on:
 jobs:
   lint:
     uses: ./.github/workflows/lint.yml
+    secrets:
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
   test:
     needs: [lint]
@@ -18,7 +20,6 @@ jobs:
     needs: [test]
     uses: ./.github/workflows/deploy.yml
     with:
-      environment: staging
       branch: develop
     secrets:
       DOMAIN: ${{ secrets.STAGING_DOMAIN }}
