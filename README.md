@@ -1,29 +1,41 @@
-# README
+# JQC
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![License](https://img.shields.io/github/license/tom-barone/JQC?color=969696)](https://github.com/tom-barone/JQC/blob/master/LICENSE)
 
-Things you may want to cover:
+[![Continuous Integration](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml/badge.svg?branch=develop)](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml)
+[![Continuous Deployment](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml/badge.svg?branch=master)](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=alert_status)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
 
-- Ruby version
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=security_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=vulnerabilities)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
 
-- System dependencies
+Rails/PostgreSQL app deployed with Dokku and styled with Bootstrap.
 
-- Configuration
+## Getting started
 
-- Database creation
+All work is done on the `develop` branch.
 
-- Database initialization
+After committing and pushing to `develop`, the
+[CI Github Action](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml)
+will:
 
-- How to run the test suite
+1. Run the unit, integration and end to end tests.
+1. Deploy a staging site.
+1. Run a set of smaller, production safe checks against the staging site.
 
-- Services (job queues, cache servers, search engines, etc.)
+To deploy a new production version:
 
-- Deployment instructions
+1. Do a manual smoke test of the staging site
+1. Create a pull request to merge `develop` -> `master`.
+1. Once all checks have passed, the pull request will automatically merge.
+1. The [CD Github Action](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml)
+   will deploy a new production version to dokku, run the production safe checks and create a new git release tag.
 
-# Deployment
+## Deployment
 
-## Dokku
+### Dokku
 
 ```bash
 # Create the app
