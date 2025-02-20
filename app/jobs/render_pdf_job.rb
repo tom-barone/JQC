@@ -4,6 +4,7 @@ class RenderPdfJob < ApplicationJob
   queue_as :default
 
   def perform(html, host, protocol)
+    FerrumPdf.browser(process_timeout: 25)
     FerrumPdf.render_pdf(
       html: html,
       host: host,
