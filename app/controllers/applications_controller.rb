@@ -29,8 +29,9 @@ class ApplicationsController < ApplicationController
     respond_to do |format|
       format.pdf do
         # Use Timeout with Concurrent::Future so we don't tank the main thread
-        # It's a hack, but whatever
-        pdf_result = Timeout.timeout(30) do
+        # It's a hack, but whatever.
+        # I actually don't think it even works.
+        pdf_result = Timeout.timeout(20) do
           future = Concurrent::Future.new do
             RenderPdfJob.perform_now(
               render_to_string(template: 'applications/show', formats: [:html]),
