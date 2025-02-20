@@ -1,0 +1,7 @@
+<% content_for :title, @application.reference_number %>
+<!-- Hide all other elements except our form, so we can print it nicely -->
+<div class="fixed-top w-100 h-100 bg-white" style="z-index: 100">
+</div>
+<div style="z-index: 101">
+  <%= render 'form', application: @application %>
+</div>

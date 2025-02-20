@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   # TODO add this to a /health endpoint
   get 'fail' => 'testing#fail' unless Rails.env.production?
 
-  resources :applications, only: %i[index new create edit update destroy]
+  resources :applications
 
   get 'application_types/edit', to: 'application_types#edit'
   put 'application_types/update_all', to: 'application_types#update_all'

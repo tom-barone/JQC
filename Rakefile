@@ -13,8 +13,12 @@ end
 task format: :environment do
   sh 'bundle exec bin/rubocop --autocorrect-all --fail-level F'
   sh 'bundle exec bin/rubocop --fix-layout --autocorrect-all --fail-level F'
+
+  # These two formatters sort of conflict with each other, but they both do useful things
+  # erb_lint is ultimately better for now so run it last.
   sh 'find app -name "*.html.erb" -exec bundle exec erb-formatter --write {} \;'
   sh 'bundle exec erb_lint --autocorrect --lint-all'
+
   sh 'npx prettier --write app/javascript/**/*.js'
 end
 
