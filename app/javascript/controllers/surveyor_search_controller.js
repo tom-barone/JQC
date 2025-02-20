@@ -27,8 +27,8 @@ export default class extends Controller {
     "searchText",
     "surveyor",
     "engineerCertificate",
-		"additionalInformation",
-		"rfisIssued",
+    "additionalInformation",
+    "rfisIssued",
   ];
 
   connect() {
@@ -44,7 +44,7 @@ export default class extends Controller {
     this.searchTextTarget.value = "";
     this.surveyorTarget.value = "";
     this.engineerCertificateTarget.checked = false;
-		this.additionalInformationTarget.checked = false;
-		this.rfisIssuedTarget.checked = false;
+    this.additionalInformationTarget.checked = false;
+    this.rfisIssuedTarget.checked = false;
   }
 }

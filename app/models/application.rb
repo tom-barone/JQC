@@ -69,16 +69,16 @@ class Application < ApplicationRecord
   end
 
   %i[applicant owner contact].each do |attribute|
-    define_method("#{attribute}_name=") do |name|
+    define_method(:"#{attribute}_name=") do |name|
       stripped = name.strip
       if stripped.empty?
-        send("#{attribute}=", nil)
+        send(:"#{attribute}=", nil)
         return
       end
-      send("#{attribute}=", Client.find_or_create_by(client_name: stripped))
+      send(:"#{attribute}=", Client.find_or_create_by(client_name: stripped))
     end
 
-    define_method("#{attribute}_name") do
+    define_method(:"#{attribute}_name") do
       send(attribute)&.client_name
     end
   end

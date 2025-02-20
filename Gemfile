@@ -73,6 +73,8 @@ group :development, :test do
   gem 'rubocop'
   gem 'rubocop-capybara', require: false
   gem 'rubocop-rails', require: false
+  # [https://github.com/rubocop/rubocop-performance]
+  gem 'rubocop-performance', require: false
 
   # For formatting ERB code [https://github.com/nebulab/erb-formatter]
   gem 'erb-formatter'

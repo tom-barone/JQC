@@ -284,6 +284,10 @@ GEM
       parser (>= 3.3.1.0)
     rubocop-capybara (2.21.0)
       rubocop (~> 1.41)
+    rubocop-performance (1.24.0)
+      lint_roller (~> 1.1)
+      rubocop (>= 1.72.1, < 2.0)
+      rubocop-ast (>= 1.38.0, < 2.0)
     rubocop-rails (2.30.1)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
@@ -395,6 +399,7 @@ DEPENDENCIES
   rails (~> 8.0.1)
   rubocop
   rubocop-capybara
+  rubocop-performance
   rubocop-rails
   schema_to_scaffold
   selenium-webdriver

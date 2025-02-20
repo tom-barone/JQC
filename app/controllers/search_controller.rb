@@ -18,6 +18,7 @@ class SearchController < ApplicationController
 
   private
 
+  # rubocop:disable Metrics/MethodLength
   def building_surveyor_search_params
     params.permit(
       :type,
@@ -32,4 +33,5 @@ class SearchController < ApplicationController
       :format # Whether we're asking for HTML or CSV
     )
   end
+  # rubocop:enable Metrics/MethodLength
 end

@@ -210,7 +210,7 @@ def transfer_data(
 
 if __name__ == "__main__":
     print(
-        """NOTE: Make sure you run this beforehand to make sure all the indexes and search columns are built properly.\n\nrails db:migrate VERSION=20250214044701\n\n"""
+        """NOTE: Make sure you run this beforehand to make sure all the indexes and search columns are built properly.\n\nrails db:migrate(:primary) VERSION=20250214044701\n\n"""
     )
     print("Continue? (y/n)")
     user_input = input()
