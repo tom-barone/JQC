@@ -4,8 +4,9 @@
                           controller: 'unsaved-changes uploaded-risk-rating canceallable reference-number',
                           action: 'change->unsaved-changes#onFormChange'
                         } do |form| %>
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="nav-item" role="presentation">
+
+  <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
       <button
         class="nav-link active"
         id="admin-invoicing-tab"
@@ -15,8 +16,6 @@
         role="tab"
         aria-controls="admin-invoicing-tab-pane"
         aria-selected="true">Administration & Invoicing</button>
-    </li>
-    <li class="nav-item" role="presentation">
       <button
         class="nav-link"
         id="certification-tab"
@@ -26,8 +25,8 @@
         role="tab"
         aria-controls="certification-tab-pane"
         aria-selected="false">Certification</button>
-    </li>
-  </ul>
+    </div>
+  </nav>
   <div
     class="
       tab-content mb-3 bg-white border border-1 rounded-bottom-1 p-3 flex-grow-1
