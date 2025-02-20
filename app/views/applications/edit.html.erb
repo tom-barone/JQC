@@ -1,5 +1,13 @@
 <% content_for :title, @application.reference_number %>
 
+<% content_for :nav_buttons do %>
+  <%= link_to application_path(format: :pdf),
+              class: 'btn btn-sm btn-outline-danger text-nowrap mx-1' do %>
+    <i class="bi bi-file-earmark-pdf-fill"></i>
+    Printable PDF
+  <% end %>
+<% end %>
+
 <% content_for :submit_actions do %>
   <div class="mx-2">
     <%= button_tag 'Save', type: 'submit', class: 'btn btn-success' %>
@@ -29,3 +37,24 @@
 <% end %>
 
 <%= render 'form', application: @application %>
+
+<datalist id="clients">
+  <% @clients.each do |client| %>
+    <option value="<%= client %>" />
+  <% end %>
+  <option value="" />
+</datalist>
+
+<datalist id="councils">
+  <% @councils.each do |council| %>
+    <option value="<%= council %>" />
+  <% end %>
+  <option value="" />
+</datalist>
+
+<datalist id="suburbs">
+  <% @suburbs.each do |suburb| %>
+    <option value="<%= suburb %>" />
+  <% end %>
+  <option value="" />
+</datalist>

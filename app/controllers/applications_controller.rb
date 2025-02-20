@@ -5,8 +5,8 @@ require 'csv'
 # rubocop:disable Metrics/ClassLength
 class ApplicationsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_application, only: %i[edit update destroy]
-  before_action :prepare_association_lists, only: %i[new edit]
+  before_action :set_application, only: %i[show edit update destroy]
+  before_action :prepare_association_lists, only: %i[show new edit]
   include Pagy::Backend
 
   # GET /applications
@@ -21,6 +21,39 @@ class ApplicationsController < ApplicationController
       format.html { session[:search_results] = request.url } # Save the search results for later
     end
   end
+
+  # GET /applications/1.pdf
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def show
+    @converted_application = @application.converted_application
+    respond_to do |format|
+      format.pdf do
+        # Use Timeout with Concurrent::Future so we don't tank the main thread
+        # It's a hack, but whatever.
+        # I actually don't think it even works.
+        pdf_result = Timeout.timeout(20) do
+          future = Concurrent::Future.new do
+            RenderPdfJob.perform_now(
+              render_to_string(template: 'applications/show', formats: [:html]),
+              "#{request.base_url}/",
+              request.protocol
+            )
+          end
+          future.execute
+          future.value!
+        end
+        send_data pdf_result, disposition: :inline, filename: "#{@application[:reference_number]}.pdf"
+      rescue Timeout::Error
+        flash[:warning] = 'PDF generation is taking longer than expected sorry. Please try again.'
+        redirect_to edit_application_path(@application)
+      rescue StandardError => e
+        ExceptionNotifier.notify_exception(e)
+        flash[:error] = 'Failed to generate PDF. Please try again later.'
+        redirect_to edit_application_path(@application)
+      end
+    end
+  end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   # GET /applications/new
   def new
@@ -95,7 +128,11 @@ class ApplicationsController < ApplicationController
   private
 
   def prepare_association_lists
-    @application_types = ApplicationType.ordered
+    # Only allow creating / editing active application types,
+    # but if we're editing an existing application, include that type
+    @application_types = ApplicationType.active.ordered
+    @application_types |= [@application&.application_type].compact
+
     # Cache the lists of suburbs, since they'll never change really
     @suburbs = Rails.cache.fetch('association_lists_suburbs', expires_in: 1.day) do
       Suburb.pluck(:display_name)
