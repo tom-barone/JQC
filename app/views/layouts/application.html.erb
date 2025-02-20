@@ -57,14 +57,18 @@
     <div class="mx-3 d-flex flex-column" style="height: 100vh; overflow: auto">
       <%= render 'layouts/navbar' %>
       <% if user_signed_in? %>
-        <% flash.each do |key, value| %>
+        <% flash.each do |key, content| %>
           <div
             class="
               alert <%= flash_class(key) %> alert-dismissible fade show
               text-center text-nowrap position-fixed translate-middle-x start-50 mt-2 z-3
             "
             role="alert">
-            <%= raw(value) %>
+            <% if content.is_a?(Array) %>
+              <%= flash_with_links(*content) %>
+            <% else %>
+              <%= content %>
+            <% end %>
             <button
               type="button"
               class="btn-close"

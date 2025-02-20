@@ -16,11 +16,3 @@ linters:
         Enabled: false
       Style/FrozenStringLiteralComment:
         Enabled: false
-      #Layout/LineLength:
-      #  Enabled: false
-      #Naming/FileName:
-      #  Enabled: false
-      #Lint/UselessAssignment:
-      #  Enabled: false
-      #Rails/OutputSafety:
-      #  Enabled: false

@@ -32,11 +32,12 @@ class ApplicationsController < ApplicationController
     @converted_application = @application.converted_application
     if @converted_application.present? &&
        @converted_application[:updated_at] > @application[:updated_at]
-      flash.now[:warning] = %(
-        The related application
-        <a href="#{edit_application_path(@converted_application)}">#{@converted_application[:reference_number]}</a>
-        has been updated more recently.
-      ).squish
+      flash.now[:warning] = [
+        'The related application ',
+        { 'text' => @converted_application[:reference_number],
+          'link_to' => edit_application_path(@converted_application) },
+        ' has been updated more recently.'
+      ]
     end
   end
 
@@ -48,10 +49,10 @@ class ApplicationsController < ApplicationController
       if @application.save
         format.html do
           redirect_to session[:search_results]
-          flash[:success] = %(
-            <a href="#{edit_application_path(@application)}">#{@application[:reference_number]}</a>
-            was successfully created.
-          ).squish
+          flash[:success] = [
+            'Successfully created ',
+            { 'text' => @application[:reference_number], 'link_to' => edit_application_path(@application) }
+          ]
         end
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -61,22 +62,33 @@ class ApplicationsController < ApplicationController
   # rubocop:enable Metrics/MethodLength
 
   # PATCH/PUT /applications/1
+  # rubocop:disable Metrics/MethodLength
   def update
     respond_to do |format|
       if @application.update(application_params)
-        format.html { redirect_to session[:search_results] }
+        format.html do
+          flash[:success] = [
+            'Successfully updated ',
+            { 'text' => @application[:reference_number], 'link_to' => edit_application_path(@application) }
+          ]
+          redirect_to session[:search_results]
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   # DELETE /applications/1
   def destroy
     @application.destroy!
 
     respond_to do |format|
-      format.html { redirect_to session[:search_results] }
+      format.html do
+        flash[:success] = ["Successfully deleted #{@application[:reference_number]}"]
+        redirect_to session[:search_results]
+      end
     end
   end
 
