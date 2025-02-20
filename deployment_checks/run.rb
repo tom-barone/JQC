@@ -3,15 +3,15 @@
 ENV['RAILS_ENV'] ||= 'development'
 require_relative '../config/environment'
 require 'minitest/autorun'
-# require 'minitest/reporters'
+require 'minitest/reporters'
 
-## We don't want to report any test results and possibly expose sensitive data
-# class MinimalReporter < Minitest::Reporters::DefaultReporter
-#  def on_report
-#    # Print nothing
-#  end
-# end
-# Minitest::Reporters.use! [MinimalReporter.new]
+# We don't want to report any test results and possibly expose sensitive data
+class MinimalReporter < Minitest::Reporters::DefaultReporter
+  def on_report
+    # Print nothing
+  end
+end
+Minitest::Reporters.use! [MinimalReporter.new]
 
 # This is designed to run against deployed sites to make
 # sure everything is all good
@@ -19,6 +19,7 @@ require 'minitest/autorun'
 class DeploymentTest < ActionDispatch::SystemTestCase
   Capybara.app_host = ENV.fetch('WEBSITE_URL')
   Capybara.run_server = false
+  Capybara.default_max_wait_time = 10
   driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
 
   def sign_in_with(username, password)

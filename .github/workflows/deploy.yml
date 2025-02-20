@@ -40,11 +40,3 @@ jobs:
 
       - name: "Run deployment checks"
         run: 'WEBSITE_URL="https://${{ secrets.DOMAIN }}" bundle exec rake run_deployment_checks'
-
-      - name: Keep screenshots from failed deployment checks
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
