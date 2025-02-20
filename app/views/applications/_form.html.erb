@@ -1,9 +1,9 @@
-<%= bootstrap_form_with model: @application, local:true, 
-  html: { autocomplete: "off", class: "h-100 d-flex flex-column" },
-  data: {
-    controller: "unsaved-changes uploaded-risk-rating canceallable reference-number",
-    action: "change->unsaved-changes#onFormChange"
-  } do |form| %>
+<%= bootstrap_form_with model: @application, local: true,
+                        html: { autocomplete: 'off', class: 'h-100 d-flex flex-column' },
+                        data: {
+                          controller: 'unsaved-changes uploaded-risk-rating canceallable reference-number',
+                          action: 'change->unsaved-changes#onFormChange'
+                        } do |form| %>
   <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item" role="presentation">
       <button
@@ -14,8 +14,7 @@
         type="button"
         role="tab"
         aria-controls="admin-invoicing-tab-pane"
-        aria-selected="true"
-      >Administration & Invoicing</button>
+        aria-selected="true">Administration & Invoicing</button>
     </li>
     <li class="nav-item" role="presentation">
       <button
@@ -26,8 +25,7 @@
         type="button"
         role="tab"
         aria-controls="certification-tab-pane"
-        aria-selected="false"
-      >Certification</button>
+        aria-selected="false">Certification</button>
     </li>
   </ul>
   <div
@@ -35,21 +33,19 @@
       tab-content mb-3 bg-white border border-1 rounded-bottom-1 p-3 flex-grow-1
       d-flex flex-column
     "
-    style="border-top: none !important"
-  >
+    style="border-top: none !important">
     <div
       class="tab-pane show active h-100"
       id="admin-invoicing-tab-pane"
       role="tabpanel"
       aria-labelledby="admin-invoicing-tab"
       tabindex="0"
-      data-canceallable-target="fieldsContainer"
-    >
+      data-canceallable-target="fieldsContainer">
       <div class="h-100 d-flex flex-column flex-grow-1">
         <div class="flex-grow-1">
-          <%= render "applications/form/administration_fields",
-          application: @application,
-          form: form %>
+          <%= render 'applications/form/administration_fields',
+                     application: @application,
+                     form: form %>
         </div>
       </div>
     </div>
@@ -59,16 +55,15 @@
       role="tabpanel"
       aria-labelledby="certification-tab"
       tabindex="0"
-      data-canceallable-target="fieldsContainer"
-    >
+      data-canceallable-target="fieldsContainer">
       <div class="h-100 d-flex flex-column flex-grow-1">
         <div class="flex-grow-1">
-          <%= render "applications/form/certification_fields",
-          application: @application,
-          form: form %>
+          <%= render 'applications/form/certification_fields',
+                     application: @application,
+                     form: form %>
         </div>
       </div>
     </div>
-    <%= render "applications/form/form_submission_bar", form: form %>
+    <%= render 'applications/form/form_submission_bar', form: form %>
   </div>
 <% end %>

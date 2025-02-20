@@ -1,20 +1,20 @@
-<% content_for :title, "New application" %>
+<% content_for :title, 'New application' %>
 
 <% content_for :submit_actions do %>
   <div class="mx-2">
-    <%= button_tag "Save", type: "submit", class: "btn btn-success" %>
+    <%= button_tag 'Save', type: 'submit', class: 'btn btn-success' %>
   </div>
   <div class="ms-2">
-    <%= link_to "Exit",
-    session[:search_results],
-    class: "btn btn-outline-secondary",
-    data: {
-      "unsaved-changes-target": "exitButton",
-      turbo_method: "get",
-      turbo_confirm: "Are you sure?",
-      confirm_details: "All unsaved changes will be discarded.",
-    } %>
+    <%= link_to 'Exit',
+                session[:search_results],
+                class: 'btn btn-outline-secondary',
+                data: {
+                  'unsaved-changes-target': 'exitButton',
+                  turbo_method: 'get',
+                  turbo_confirm: 'Are you sure?',
+                  confirm_details: 'All unsaved changes will be discarded.'
+                } %>
   </div>
 <% end %>
 
-<%= render "form", application: @application %>
+<%= render 'form', application: @application %>

@@ -1,26 +1,26 @@
-<%= form_for :application_type, :url => application_types_update_all_path, :html => { :method => :put, id: 'application_type_form' } do %>
+<%= form_for :application_type, url: application_types_update_all_path,
+                                html: { method: :put, id: 'application_type_form' } do %>
   <table
     class="table"
     aria-label="Settings for the last used reference numbers"
-    style="width: auto"
-  >
+    style="width: auto">
     <tr>
       <th>Application Type</th>
       <th>Last used number</th>
     </tr>
     <% @application_types.each do |application_type| %>
-      <%= fields_for "application_type_attributes[]", application_type do |application_type_fields| %>
+      <%= fields_for 'application_type_attributes[]', application_type do |application_type_fields| %>
         <tr>
           <td class="application_type_cell">
             <%= application_type_fields.text_field :application_type,
-                                               disabled: "true",
-                                               class: "form-control form-control-sm" %>
+                                                   disabled: 'true',
+                                                   class: 'form-control form-control-sm' %>
           </td>
           <td class="last_used_cell">
             <%= application_type_fields.text_field :last_used,
-                                               type: "number",
-                                               step: "1",
-                                               class: "form-control form-control-sm" %>
+                                                   type: 'number',
+                                                   step: '1',
+                                                   class: 'form-control form-control-sm' %>
           </td>
         </tr>
       <% end %>
@@ -32,11 +32,10 @@
         type="submit"
         value="Save"
         form="application_type_form"
-        class="btn btn-success mx-2"
-      />
-      <%= link_to "Exit",
-      session[:search_results],
-      class: "btn btn-outline-secondary ms-2" %>
+        class="btn btn-success mx-2">
+      <%= link_to 'Exit',
+                  session[:search_results],
+                  class: 'btn btn-outline-secondary ms-2' %>
     </div>
   </div>
 <% end %>

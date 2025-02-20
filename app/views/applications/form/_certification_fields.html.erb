@@ -9,7 +9,7 @@
 
       <div class="col">
         <!-- Assessment Assigned -->
-        <%= form.label :assessment_commenced, "Assessment assigned" %>
+        <%= form.label :assessment_commenced, 'Assessment assigned' %>
         <%= form.date_field :assessment_commenced %>
       </div>
 
@@ -17,32 +17,32 @@
         <!-- Risk Rating -->
         <%= form.label :risk_rating %>
         <%= form.select :risk_rating,
-                    Application::RISK_RATING,
-                    {},
-                    data: {
-                      "uploaded-risk-rating-target": "riskRating",
-                      action: "change->uploaded-risk-rating#onRiskRatingChange",
-                    } %>
+                        Application::RISK_RATING,
+                        {},
+                        data: {
+                          'uploaded-risk-rating-target': 'riskRating',
+                          action: 'change->uploaded-risk-rating#onRiskRatingChange'
+                        } %>
       </div>
     </div>
     <div class="row">
 
       <div class="col">
         <!-- Structural Engineer -->
-        <%= form.label :structural_engineer, style: "font-size:smaller" %>
+        <%= form.label :structural_engineer, style: 'font-size:smaller' %>
         <%= form.select :structural_engineer, Application::STRUCTURAL_ENGINEER %>
       </div>
 
       <div class="col">
         <!-- External Engineer Date -->
-        <%= form.label :external_engineer_date, "External engineer" %>
+        <%= form.label :external_engineer_date, 'External engineer' %>
         <%= form.date_field :external_engineer_date %>
       </div>
 
       <div class="col">
         <!-- Structural engineer fee -->
-        <%= form.label :structural_engineer_fee, "Structural engineer fee ($)" %>
-        <%= form.text_field :structural_engineer_fee, type: "number", min: "1", step: "any" %>
+        <%= form.label :structural_engineer_fee, 'Structural engineer fee ($)' %>
+        <%= form.text_field :structural_engineer_fee, type: 'number', min: '1', step: 'any' %>
       </div>
     </div>
     <div class="row">
@@ -63,10 +63,10 @@
         <!-- Documented performance solutions -->
         <%= form.label :documented_performance_solutions %>
         <%= form.text_field :documented_performance_solutions,
-                        type: "number",
-                        min: "0",
-                        max: "99",
-                        step: "1" %>
+                            type: 'number',
+                            min: '0',
+                            max: '99',
+                            step: '1' %>
       </div>
     </div>
     <div class="row">
@@ -75,21 +75,21 @@
         <!-- Certifier -->
         <%= form.label :certifier %>
         <%= form.select :certifier,
-                    # Allows old certifiers to be selected and auto-selects single option
-                    application.certifier_options,
-                    selected: application.selected_certifier,
-                    include_blank: false %>
+                        # Allows old certifiers to be selected and auto-selects single option
+                        application.certifier_options,
+                        selected: application.selected_certifier,
+                        include_blank: false %>
       </div>
 
       <div class="col">
         <!-- C Review/Inspection -->
-        <%= form.label :consultancies_review_inspection, "C Review/Inspection" %>
+        <%= form.label :consultancies_review_inspection, 'C Review/Inspection' %>
         <%= form.date_field :consultancies_review_inspection %>
       </div>
 
       <div class="col">
         <!-- C Report Sent -->
-        <%= form.label :consultancies_report_sent, "C Report Sent" %>
+        <%= form.label :consultancies_report_sent, 'C Report Sent' %>
         <%= form.date_field :consultancies_report_sent %>
       </div>
     </div>
@@ -124,8 +124,7 @@
             data-action="
               cocoon:after-remove->rfis-table#updateRfiNumbers
               cocoon:after-insert->rfis-table#updateRfiNumbers
-            "
-          >
+            ">
             <thead style="position: sticky; top: 0; z-index: 1;">
               <tr>
                 <th class="fw-normal small" style="width: 3em">
@@ -133,19 +132,19 @@
                 </th>
                 <th></th>
                 <th class="text-center" style="width:3em">
-                  <%= link_to_add_association "Add",
-                  form,
-                  :request_for_informations,
-                  "data-association-insertion-node": ".request-for-informations-fields",
-                  "data-association-insertion-method": "append",
-                  partial: "applications/tables/request_for_informations_fields",
-                  class: "btn btn-sm btn-outline-primary m-2" %>
+                  <%= link_to_add_association 'Add',
+                                              form,
+                                              :request_for_informations,
+                                              'data-association-insertion-node': '.request-for-informations-fields',
+                                              'data-association-insertion-method': 'append',
+                                              partial: 'applications/tables/request_for_informations_fields',
+                                              class: 'btn btn-sm btn-outline-primary m-2' %>
                 </th>
               </tr>
             </thead>
             <tbody class="request-for-informations-fields">
               <%= form.fields_for :request_for_informations do |subform| %>
-                <%= render "applications/tables/request_for_informations_fields", f: subform %>
+                <%= render 'applications/tables/request_for_informations_fields', f: subform %>
               <% end %>
             </tbody>
           </table>
@@ -163,19 +162,19 @@
                 </th>
                 <th></th>
                 <th class="text-center" style="width:3em">
-                  <%= link_to_add_association "Add",
-                  form,
-                  :stages,
-                  "data-association-insertion-node": ".stages-fields",
-                  "data-association-insertion-method": "append",
-                  partial: "applications/tables/stages_fields",
-                  class: "btn btn-sm btn-outline-primary m-2" %>
+                  <%= link_to_add_association 'Add',
+                                              form,
+                                              :stages,
+                                              'data-association-insertion-node': '.stages-fields',
+                                              'data-association-insertion-method': 'append',
+                                              partial: 'applications/tables/stages_fields',
+                                              class: 'btn btn-sm btn-outline-primary m-2' %>
                 </th>
               </tr>
             </thead>
             <tbody class="stages-fields">
               <%= form.fields_for :stages do |subform| %>
-                <%= render "applications/tables/stages_fields", f: subform %>
+                <%= render 'applications/tables/stages_fields', f: subform %>
               <% end %>
             </tbody>
           </table>
@@ -188,7 +187,7 @@
     <div class="col">
       <!-- Certification notes -->
       <%= form.label :certification_notes %>
-      <%= form.text_area :certification_notes, style: "height: 47.5em" %>
+      <%= form.text_area :certification_notes, style: 'height: 47.5em' %>
     </div>
   </div>
 </div>

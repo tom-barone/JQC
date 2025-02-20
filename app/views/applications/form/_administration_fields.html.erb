@@ -4,49 +4,49 @@
 
       <div class="col-2">
         <!-- Application Type -->
-        <%= form.label :application_type_id, "Type" %>
+        <%= form.label :application_type_id, 'Type' %>
         <%= form.collection_select :application_type_id,
-                               @application_types,
-                               :id,
-                               :application_type,
-                               { prompt: "Select" },
-                               {
-                                 required: true,
-                                 "data-action":
-                                   "reference-number#onApplicationTypeChange",
-                                 "data-reference-number-target": "applicationType",
-                                 "data-reference-number-type-details-param":
-                                   @application_types.to_json,
-                               } %>
+                                   @application_types,
+                                   :id,
+                                   :application_type,
+                                   { prompt: 'Select' },
+                                   {
+                                     required: true,
+                                     'data-action':
+                                       'reference-number#onApplicationTypeChange',
+                                     'data-reference-number-target': 'applicationType',
+                                     'data-reference-number-type-details-param':
+                                       @application_types.to_json
+                                   } %>
       </div>
 
       <div class="col">
         <!-- Reference Number -->
-        <%= form.label :reference_number, "Reference no." %>
+        <%= form.label :reference_number, 'Reference no.' %>
         <%= form.text_field :reference_number,
-                        {
-                          required: true,
-                          "data-reference-number-target": "referenceNumber",
-                        } %>
+                            {
+                              required: true,
+                              'data-reference-number-target': 'referenceNumber'
+                            } %>
       </div>
 
       <div class="col">
         <!-- Converted to/from -->
-        <%= form.label :converted_to_from, "Converted to/from" %>
+        <%= form.label :converted_to_from, 'Converted to/from' %>
         <div class="input-group">
           <%= form.text_field :converted_to_from,
-                          { "data-reference-number-target": "convertedToFrom" } %>
+                              { 'data-reference-number-target': 'convertedToFrom' } %>
           <% if @converted_application.present? %>
-            <%= link_to "Go to",
-            edit_application_path(@converted_application),
-            class: "btn btn-sm btn-outline-primary" %>
+            <%= link_to 'Go to',
+                        edit_application_path(@converted_application),
+                        class: 'btn btn-sm btn-outline-primary' %>
           <% end %>
         </div>
       </div>
 
       <div class="col">
         <!-- Date Entered -->
-        <%= form.label :created_at, "Date entered" %>
+        <%= form.label :created_at, 'Date entered' %>
         <%= form.date_field :created_at %>
       </div>
     </div>
@@ -54,19 +54,19 @@
 
       <div class="col">
         <!-- Applicant -->
-        <%= form.label :applicant_name, "Applicant" %>
-        <%= form.text_field :applicant_name, list: "clients" %>
+        <%= form.label :applicant_name, 'Applicant' %>
+        <%= form.text_field :applicant_name, list: 'clients' %>
       </div>
 
       <div class="col">
         <!-- Council -->
         <%= form.label :council %>
-        <%= form.text_field :council_name, list: "councils" %>
+        <%= form.text_field :council_name, list: 'councils' %>
       </div>
 
       <div class="col">
         <!-- DA Number -->
-        <%= form.label :development_application_number, "DA number" %>
+        <%= form.label :development_application_number, 'DA number' %>
         <%= form.text_field :development_application_number %>
       </div>
     </div>
@@ -74,42 +74,42 @@
 
       <div class="col">
         <!-- Owner -->
-        <%= form.label :owner_name, "Owner" %>
-        <%= form.text_field :owner_name, list: "clients" %>
+        <%= form.label :owner_name, 'Owner' %>
+        <%= form.text_field :owner_name, list: 'clients' %>
       </div>
 
       <div class="col">
         <!-- Number of Storeys -->
         <%= form.label :number_of_storeys %>
         <%= form.text_field :number_of_storeys,
-                        type: "number",
-                        min: "0",
-                        max: "99",
-                        step: "1" %>
+                            type: 'number',
+                            min: '0',
+                            max: '99',
+                            step: '1' %>
       </div>
 
       <div class="col">
         <!-- Construction Value -->
-        <%= form.label :construction_value, "Construction value ($)" %>
+        <%= form.label :construction_value, 'Construction value ($)' %>
         <%= form.text_field :construction_value,
-                        type: "number",
-                        min: "0",
-                        max: "1000000000",
-                        step: "any" %>
+                            type: 'number',
+                            min: '0',
+                            max: '1000000000',
+                            step: 'any' %>
       </div>
     </div>
     <div class="row">
 
       <div class="col">
         <!-- Contact -->
-        <%= form.label :contact_name, "Contact" %>
-        <%= form.text_field :contact_name, list: "clients" %>
+        <%= form.label :contact_name, 'Contact' %>
+        <%= form.text_field :contact_name, list: 'clients' %>
       </div>
 
       <div class="col">
         <!-- Fee amount -->
-        <%= form.label :fee_amount, "Fee amount ($)" %>
-        <%= form.text_field :fee_amount, type: "number", min: "1", step: "any" %>
+        <%= form.label :fee_amount, 'Fee amount ($)' %>
+        <%= form.text_field :fee_amount, type: 'number', min: '1', step: 'any' %>
       </div>
 
       <div class="col">
@@ -140,26 +140,26 @@
 
       <div class="col">
         <!-- Suburb -->
-        <%= form.label :suburb_display_name, "Suburb" %>
+        <%= form.label :suburb_display_name, 'Suburb' %>
         <%= form.text_field :suburb_display_name,
-                        list: "suburbs",
-                        data: {
-                          controller: "validateable-datalist",
-                          action: "change->validateable-datalist#onChange",
-                        } %>
+                            list: 'suburbs',
+                            data: {
+                              controller: 'validateable-datalist',
+                              action: 'change->validateable-datalist#onChange'
+                            } %>
       </div>
     </div>
     <div class="row">
 
       <div class="col-2">
         <!-- Staged consent -->
-        <%= form.label :staged_consent, "Staged consent?", class: "w-100" %>
+        <%= form.label :staged_consent, 'Staged consent?', class: 'w-100' %>
         <%= form.check_box :staged_consent %>
       </div>
 
       <div class="col-2">
         <!-- Engagement form -->
-        <%= form.label :engagement_form, "Engagement form?", class: "w-100" %>
+        <%= form.label :engagement_form, 'Engagement form?', class: 'w-100' %>
         <%= form.check_box :engagement_form %>
       </div>
 
@@ -189,19 +189,19 @@
             </th>
             <th></th>
             <th class="text-center" style="width:3em">
-              <%= link_to_add_association "Add",
-              form,
-              :application_additional_informations,
-              "data-association-insertion-node": ".additional-information-fields",
-              "data-association-insertion-method": "append",
-              partial: "applications/tables/additional_information_fields",
-              class: "btn btn-sm btn-outline-primary m-2" %>
+              <%= link_to_add_association 'Add',
+                                          form,
+                                          :application_additional_informations,
+                                          'data-association-insertion-node': '.additional-information-fields',
+                                          'data-association-insertion-method': 'append',
+                                          partial: 'applications/tables/additional_information_fields',
+                                          class: 'btn btn-sm btn-outline-primary m-2' %>
             </th>
           </tr>
         </thead>
         <tbody class="additional-information-fields">
           <%= form.fields_for :application_additional_informations do |subform| %>
-            <%= render "applications/tables/additional_information_fields", f: subform %>
+            <%= render 'applications/tables/additional_information_fields', f: subform %>
           <% end %>
         </tbody>
       </table>
@@ -211,8 +211,7 @@
       <!-- Uploaded -->
       <table
         class="table nested-table uploaded-table"
-        data-uploaded-risk-rating-target="uploadedTable"
-      >
+        data-uploaded-risk-rating-target="uploadedTable">
         <thead style="position: sticky; top: 0; z-index: 1;">
           <tr>
             <th class="fw-normal small" style="width: 14em">
@@ -220,20 +219,20 @@
             </th>
             <th></th>
             <th class="text-center" style="width:3em">
-              <%= link_to_add_association "Add",
-              form,
-              :application_uploads,
-              "data-association-insertion-node": ".uploaded-fields",
-              "data-association-insertion-method": "append",
-              partial: "applications/tables/uploaded_fields",
-              class: "btn btn-sm btn-outline-primary m-2",
-              "data-action": "change->uploaded-risk-rating#setUploadedText" %>
+              <%= link_to_add_association 'Add',
+                                          form,
+                                          :application_uploads,
+                                          'data-association-insertion-node': '.uploaded-fields',
+                                          'data-association-insertion-method': 'append',
+                                          partial: 'applications/tables/uploaded_fields',
+                                          class: 'btn btn-sm btn-outline-primary m-2',
+                                          'data-action': 'change->uploaded-risk-rating#setUploadedText' %>
             </th>
           </tr>
         </thead>
         <tbody class="uploaded-fields">
           <%= form.fields_for :application_uploads do |subform| %>
-            <%= render "applications/tables/uploaded_fields", f: subform %>
+            <%= render 'applications/tables/uploaded_fields', f: subform %>
           <% end %>
         </tbody>
       </table>
@@ -247,7 +246,7 @@
       <div class="col">
         <!-- Description -->
         <%= form.label :description %>
-        <%= form.text_area :description, style: "height: 11vh" %>
+        <%= form.text_area :description, style: 'height: 11vh' %>
       </div>
     </div>
     <div class="row">
@@ -255,7 +254,7 @@
       <div class="col">
         <!-- Administration notes -->
         <%= form.label :administration_notes %>
-        <%= form.text_area :administration_notes, style: "height: 11vh" %>
+        <%= form.text_area :administration_notes, style: 'height: 11vh' %>
       </div>
     </div>
   </div>
@@ -292,7 +291,7 @@
 
       <div class="col">
         <!-- Purchase Order Number -->
-        <%= form.label :purchase_order_number, "Purchase No." %>
+        <%= form.label :purchase_order_number, 'Purchase No.' %>
         <%= form.text_field :purchase_order_number %>
       </div>
     </div>
@@ -301,7 +300,7 @@
       <div class="col">
         <!-- Invoice debtor notes -->
         <%= form.label :invoice_debtor_notes %>
-        <%= form.text_area :invoice_debtor_notes, style: "height: rvh" %>
+        <%= form.text_area :invoice_debtor_notes, style: 'height: rvh' %>
       </div>
     </div>
   </div>
@@ -313,8 +312,7 @@
         class="table nested-table mb-0"
         data-controller="invoice-table"
         data-action="cocoon:after-remove->invoice-table#updateGstAndTotals"
-        data-action="cocoon:after-insert->invoice-table#updateGstAndTotals"
-      >
+        data-action="cocoon:after-insert->invoice-table#updateGstAndTotals">
         <thead style="position: sticky; top: 0; z-index: 1;">
           <tr>
             <th class="fw-normal small">
@@ -343,7 +341,7 @@
         </thead>
         <tbody class="invoice-fields">
           <%= form.fields_for :invoices do |subform| %>
-            <%= render "applications/tables/invoice_fields", f: subform %>
+            <%= render 'applications/tables/invoice_fields', f: subform %>
           <% end %>
         </tbody>
         <tfoot style="position: sticky; bottom: 0; z-index: 1;">
@@ -366,20 +364,20 @@
             </td>
             <td class="fw-normal small">
               <%= form.label :fully_invoiced,
-                         "Fully invoiced",
-                         style: "margin-top: 0px !important" %>
+                             'Fully invoiced',
+                             style: 'margin-top: 0px !important' %>
             </td>
             <td class="fw-normal small">
               <%= form.check_box :fully_invoiced %>
             </td>
             <td>
-              <%= link_to_add_association "Add",
-              form,
-              :invoices,
-              "data-association-insertion-node": ".invoice-fields",
-              "data-association-insertion-method": "append",
-              partial: "applications/tables/invoice_fields",
-              class: "btn btn-sm btn-outline-primary m-2" %>
+              <%= link_to_add_association 'Add',
+                                          form,
+                                          :invoices,
+                                          'data-association-insertion-node': '.invoice-fields',
+                                          'data-association-insertion-method': 'append',
+                                          partial: 'applications/tables/invoice_fields',
+                                          class: 'btn btn-sm btn-outline-primary m-2' %>
             </td>
           </tr>
         </tfoot>
@@ -390,21 +388,21 @@
 
 <datalist id="clients">
   <% @clients.each do |client| %>
-    <option value="<%= client %>"/>
+    <option value="<%= client %>" />
   <% end %>
-  <option value=""/>
+  <option value="" />
 </datalist>
 
 <datalist id="councils">
   <% @councils.each do |council| %>
-    <option value="<%= council %>"/>
+    <option value="<%= council %>" />
   <% end %>
-  <option value=""/>
+  <option value="" />
 </datalist>
 
 <datalist id="suburbs">
   <% @suburbs.each do |suburb| %>
-    <option value="<%= suburb %>"/>
+    <option value="<%= suburb %>" />
   <% end %>
-  <option value=""/>
+  <option value="" />
 </datalist>

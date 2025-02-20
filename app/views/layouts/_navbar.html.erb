@@ -2,61 +2,36 @@
   <nav
     class="
       navbar navbar-default navbar-static-top navbar-expand-md navbar-light pt-0
-    "
-  >
+    ">
     <div class="container-fluid p-0">
       <div class="navbar-brand">
         <%= link_to root_path do %>
-          <%= image_tag "logo_with_name.png", style: "width: 150px; height: auto" %>
+          <%= image_tag 'logo_with_name.png', style: 'width: 150px; height: auto' %>
         <% end %>
       </div>
       <div class="d-flex flex-grow-1">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <%= link_to "Applications",
-            applications_path,
-            class:
-              "nav-link" +
-                (
-                  if params[:controller] == "applications" && params[:action] == "index"
-                    " active"
-                  else
-                    ""
-                  end
-                ) %>
+            <%= link_to 'Applications',
+                        applications_path,
+                        class: applications_nav_link_class(params) %>
           </li>
           <li class="nav-item">
-            <%= link_to "Surveyor dashboard",
-            building_surveyor_search_path,
-            class:
-              "nav-link" +
-                (
-                  if params[:action] == "building_surveyor_search"
-                    " active"
-                  else
-                    ""
-                  end
-                ) %>
+            <%= link_to 'Surveyor dashboard',
+                        building_surveyor_search_path,
+                        class: surveyor_dashboard_nav_link_class(params) %>
           </li>
 
           <li class="nav-item">
-            <%= link_to "Settings",
-            application_types_edit_path,
-            class:
-              "nav-link" +
-                (
-                  if params[:controller] == "application_types"
-                    " active"
-                  else
-                    ""
-                  end
-                ) %>
+            <%= link_to 'Settings',
+                        application_types_edit_path,
+                        class: settings_nav_link_class(params) %>
           </li>
 
         </ul>
       </div>
       <div class="d-flex justify-content-end">
-        <%= yield :nav_buttons %>
+            <%= yield :nav_buttons %>
         <button
           type="button"
           class="btn btn-sm btn-outline-secondary mx-1 text-nowrap"
@@ -65,24 +40,24 @@
           data-bs-trigger="focus"
           data-bs-toggle="popover"
           data-bs-placement="bottom"
-          data-bs-content="<%= """If you have any issues, please contact #{Rails.application.credentials.support_name!} 
-            at <a href='mailto:#{Rails.application.credentials.support_email!}'>#{Rails.application.credentials.support_email!}</a> 
+          data-bs-content="<%= "If you have any issues, please contact
+            #{Rails.application.credentials.support_name!}
+            at <a href='mailto:#{Rails.application.credentials.support_email!}'>
+            #{Rails.application.credentials.support_email!}</a>
             or call #{Rails.application.credentials.support_phone!}.<br/>
             <br/>
             - Something isn't working properly and you need it fixed.<br/>
             - A specific report or summary (e.g. a list of all PC's for 2014 to 2019).<br/>
             - General feedback about what could be improved.<br/>
-            <br/>"""%>"
-        >
+            <br/>" %>">
           Request Support
         </button>
-        <%= button_to destroy_user_session_path, 
-          method: :delete, 
-          class: "btn btn-sm btn-danger mx-1 text-nowrap" do %>
+        <%= button_to destroy_user_session_path,
+                      method: :delete,
+                      class: 'btn btn-sm btn-danger mx-1 text-nowrap' do %>
           Sign out
         <% end %>
       </div>
     </div>
   </nav>
-
 <% end %>

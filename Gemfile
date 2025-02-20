@@ -76,6 +76,12 @@ group :development, :test do
   # [https://github.com/rubocop/rubocop-performance]
   gem 'rubocop-performance', require: false
 
+  # HTML safety [https://github.com/Shopify/better-html]
+  gem 'better_html'
+
+  # ERB linting [https://github.com/Shopify/erb_lint]
+  gem 'erb_lint', require: false
+
   # For formatting ERB code [https://github.com/nebulab/erb-formatter]
   gem 'erb-formatter'
 end

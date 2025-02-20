@@ -8,13 +8,12 @@
     data-bs-trigger="focus"
     data-bs-toggle="popover"
     data-bs-placement="bottom"
-    data-bs-content='<%= render 'applications/search/download_as_spreadsheet_message' %>'
-  >
+    data-bs-content='<%= render 'applications/search/download_as_spreadsheet_message' %>'>
     Download as Spreadsheet
   </button>
 <% end %>
-<%= render "applications/search/search_bar" %>
-<%= render "applications/search/results_table" %>
+<%= render 'applications/search/search_bar' %>
+<%= render 'applications/search/results_table' %>
 <div class="d-flex justify-content-between align-items-start pt-2">
   <span>
     <%= @total_count %>
