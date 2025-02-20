@@ -1,0 +1,44 @@
+name: "continuous deployment"
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  lint:
+    uses: ./.github/workflows/lint.yml
+    secrets:
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+  test:
+    needs: [lint]
+    uses: ./.github/workflows/test.yml
+    secrets:
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+  deploy:
+    needs: [test]
+    uses: ./.github/workflows/deploy.yml
+    with:
+      branch: master
+    secrets:
+      DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
+      SSH_PRIVATE_KEY: ${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }}
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+  tag_release:
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "Get production version using todays date"
+        id: "production_version"
+        run: echo "VERSION=production$(date '+%Y%m%dt%H%M%S')" >> $GITHUB_OUTPUT
+
+      - name: "Create tag"
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: ${{ steps.production_version.outputs.VERSION }}
