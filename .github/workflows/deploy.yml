@@ -1,0 +1,43 @@
+name: "Deploy"
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      branch:
+        required: true
+        type: string
+    secrets:
+      DOMAIN:
+        required: true
+      SSH_PRIVATE_KEY:
+        required: true
+      RAILS_MASTER_KEY:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: "actions/checkout@v4"
+        with:
+          fetch-depth: 0
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: .ruby-version
+          bundler-cache: true
+
+      - name: Push to dokku
+        uses: dokku/github-action@master
+        with:
+          branch: ${{ inputs.branch }}
+          git_remote_url: "ssh://dokku@${{ secrets.DOMAIN }}:22/${{ secrets.DOMAIN }}"
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: "Run deployment checks"
+        run: 'WEBSITE_URL="https://${{ secrets.DOMAIN }}" bundle exec rake run_deployment_checks'
