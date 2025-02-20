@@ -7,20 +7,31 @@
     <tr>
       <th>Application Type</th>
       <th>Last used number</th>
+      <th>Priority</th>
+      <th>Active?</th>
     </tr>
     <% @application_types.each do |application_type| %>
       <%= fields_for 'application_type_attributes[]', application_type do |application_type_fields| %>
         <tr>
-          <td class="application_type_cell">
+          <td>
             <%= application_type_fields.text_field :application_type,
                                                    disabled: 'true',
                                                    class: 'form-control form-control-sm' %>
           </td>
-          <td class="last_used_cell">
+          <td>
             <%= application_type_fields.text_field :last_used,
                                                    type: 'number',
                                                    step: '1',
                                                    class: 'form-control form-control-sm' %>
+          </td>
+          <td>
+            <%= application_type_fields.text_field :display_priority,
+                                                   type: 'number',
+                                                   step: '1',
+                                                   class: 'form-control form-control-sm' %>
+          </td>
+          <td>
+            <%= application_type_fields.checkbox :active, class: 'form-check-input' %>
           </td>
         </tr>
       <% end %>
@@ -37,5 +48,10 @@
                   session[:search_results],
                   class: 'btn btn-outline-secondary ms-2' %>
     </div>
+  </div>
+  <div class="alert alert-primary mt-4 w-50 text-center" role="alert">
+    The
+    <strong>Priority</strong>
+    field determines the order for table results and dropdowns.
   </div>
 <% end %>

@@ -95,7 +95,11 @@ class ApplicationsController < ApplicationController
   private
 
   def prepare_association_lists
-    @application_types = ApplicationType.ordered
+    # Only allow creating / editing active application types,
+    # but if we're editing an existing application, include that type
+    @application_types = ApplicationType.active.ordered
+    @application_types |= [@application&.application_type].compact
+
     # Cache the lists of suburbs, since they'll never change really
     @suburbs = Rails.cache.fetch('association_lists_suburbs', expires_in: 1.day) do
       Suburb.pluck(:display_name)

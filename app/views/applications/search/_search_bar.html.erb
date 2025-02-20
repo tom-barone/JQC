@@ -2,7 +2,8 @@
   <div class="flex-grow-1">
     <%= form_with url: applications_path, class: 'input-group', html: { 'data-controller': 'search' }, method: :get do |search_form| %>
       <%= search_form.select :type,
-                             ApplicationType.ordered_values,
+                             # All types are searchable, even inactive ones
+                             ApplicationType.ordered_values, 
                              { include_blank: 'Select Type:', selected: params[:type] },
                              {
                                class: 'form-select',

@@ -94,6 +94,7 @@
       <!-- Application Type -->
       <%= form.label :application_type_id, 'Type', class: 'form-label small mb-0 mt-2' %>
       <%= form.select :type,
+                      # All types are searchable, even inactive ones
                       ApplicationType.ordered_values,
                       { include_blank: 'Select:', selected: params[:type] },
                       { class: 'form-select', 'data-surveyor-search-target': 'type' } %>
