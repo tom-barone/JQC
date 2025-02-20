@@ -3,15 +3,15 @@
 ENV['RAILS_ENV'] ||= 'development'
 require_relative '../config/environment'
 require 'minitest/autorun'
-require 'minitest/reporters'
+# require 'minitest/reporters'
 
-# We don't want to report any test results and possibly expose sensitive data
-class MinimalReporter < Minitest::Reporters::DefaultReporter
-  def on_report
-    # Print nothing
-  end
-end
-Minitest::Reporters.use! [MinimalReporter.new]
+## We don't want to report any test results and possibly expose sensitive data
+# class MinimalReporter < Minitest::Reporters::DefaultReporter
+#  def on_report
+#    # Print nothing
+#  end
+# end
+# Minitest::Reporters.use! [MinimalReporter.new]
 
 # This is designed to run against deployed sites to make
 # sure everything is all good
