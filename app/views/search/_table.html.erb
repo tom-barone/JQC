@@ -23,36 +23,36 @@
         <tr
           data-controller="navigatable"
           data-navigatable-path-param="<%= edit_application_path(application) %>"
-          data-action="click->navigatable#navigate">
-          <td role="button" class="text-truncate" style="max-width: 9ch">
+          data-action="click->navigatable#navigate"
+          role="button">
+          <td class="text-truncate" style="max-width: 9ch">
             <%= application.reference_number %>
           </td>
-          <td role="button" class="text-truncate" style="max-width: 8vw">
+          <td class="text-truncate" style="max-width: 8vw">
             <%= application.location %>
           </td>
-          <td role="button" class="text-truncate" style="max-width: 8vw">
+          <td class="text-truncate" style="max-width: 8vw">
             <%= application.suburb&.display_name %>
           </td>
-          <td role="button" class="text-truncate" style="max-width: 18vw">
+          <td class="text-truncate" style="max-width: 18vw">
             <%= application.description %>
           </td>
-          <td role="button" class="text-truncate" style="max-width: 8vw">
+          <td class="text-truncate" style="max-width: 8vw">
             <%= application.applicant&.client_name %>
           </td>
-          <td role="button" class="text-truncate" style="max-width: 11ch">
+          <td class="text-truncate" style="max-width: 11ch">
             <%= application.created_at.strftime('%-d %b %Y') %>
           </td>
-          <td role="button" class="text-truncate" style="max-width: 11ch">
+          <td class="text-truncate" style="max-width: 11ch">
             <%= application.request_for_information_date&.strftime('%-d %b %Y') %>
           </td>
-          <td role="button" class="text-truncate" style="max-width: 11ch">
+          <td class="text-truncate" style="max-width: 11ch">
             <%= application.info_date&.strftime('%-d %b %Y') %>
           </td>
-          <td role="button" class="text-truncate" style="max-width: 11ch">
+          <td class="text-truncate" style="max-width: 11ch">
             <%= application.engineer_certificate_received&.strftime('%-d %b %Y') %>
           </td>
           <td
-            role="button"
             class="text-truncate"
             style="max-width: <%= Application::BUILDING_SURVEYOR.map(&:length).max %>ch">
             <%= application.building_surveyor %>
