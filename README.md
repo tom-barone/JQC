@@ -27,7 +27,7 @@ will:
 
 To deploy a new production version:
 
-1. Do a manual smoke test of the staging site
+1. Do a manual smoke test of the staging site.
 1. Create a pull request to merge `develop` -> `master`.
 1. Once all checks have passed, the pull request will automatically merge.
 1. The [CD Github Action](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml)
