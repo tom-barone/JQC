@@ -96,8 +96,8 @@ task manual_backup_to_s3: %i[environment] do
   sh "#{dokku} postgres:backup #{db_name} #{aws_bucket}"
 end
 
-task restore_development_db_from_most_recent_backup: %i[environment] do
-  local_db_name = ENV.fetch('LOCAL_DB_NAME')
+task fetch_most_recent_backup: %i[environment] do
+  sh 'rm -rf backup'
 
   config = Rails.application.credentials.postgres_backups
   aws_bucket = config[:aws_s3_bucket]
@@ -118,9 +118,8 @@ task restore_development_db_from_most_recent_backup: %i[environment] do
   sh "echo '#{encryption_key}' | gpg --passphrase-fd 0 --batch --decrypt #{most_recent_backup} > latest_backup.tgz"
   sh 'tar -xf latest_backup.tgz && rm latest_backup.tgz'
 
-  # Restore to local development database
-  sh "pg_restore --clean --dbname=#{local_db_name} --exit-on-error backup/export"
-  sh "rm -rf #{most_recent_backup} latest_backup.tgz backup"
+  # Cleanup (doesn't touch the decrypted backup at ./backup/export)
+  sh "rm -rf #{most_recent_backup} latest_backup.tgz"
 end
 
 task check_for_recent_backup: %i[environment] do

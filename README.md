@@ -86,3 +86,23 @@ dokku --remote <remote_name> postgres:unexpose <app_name>-db 5432
 # View the connection string (password etc.) and use it in pgAdmin, along with relevant SSH tunnel settings
 dokku --remote <remote_name> postgres:info <app_name>-db
 ```
+
+Sometimes it's handy to blast away the database and start fresh:
+
+```bash
+dokku --remote <remote_name> postgres:unlink <app_name>-db <website_domain>
+dokku --remote <remote_name> postgres:destroy <app_name>-db --force
+dokku --remote <remote_name> postgres:create <app_name>-db
+dokku --remote <remote_name> postgres:link <app_name>-db <website_domain>
+```
+
+To recreate the database from a backup
+
+```bash
+# Downloads the most recent backup to ./backup/export
+rake fetch_most_recent_backup
+# For a local development database
+pg_restore --clean --dbname=<local_db_name> --exit-on-error backup/export
+# For a dokku hosted database
+dokku --remote <remote_name> postgres:import <app_name>-db < backup/export"
+```
