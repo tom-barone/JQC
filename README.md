@@ -104,5 +104,5 @@ rake fetch_most_recent_backup
 # For a local development database
 pg_restore --clean --dbname=<local_db_name> --exit-on-error backup/export
 # For a dokku hosted database
-dokku --remote <remote_name> postgres:import <app_name>-db < backup/export"
+dokku --remote <remote_name> postgres:import <app_name>-db < backup/export
 ```
