@@ -4,6 +4,11 @@ on:
   push:
     branches: [develop]
 
+# Run only one CI workflow at a time
+concurrency:
+  group: develop
+  cancel-in-progress: false
+
 jobs:
   lint:
     uses: ./.github/workflows/lint.yml
@@ -18,7 +23,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v4
+        uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
