@@ -79,6 +79,7 @@
       <% end %>
       <%= yield %>
     </div>
+    <%= render 'components/confirm_dialog' %>
   </body>
   <script>
     document.addEventListener("turbo:load", () => {

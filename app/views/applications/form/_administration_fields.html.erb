@@ -55,7 +55,14 @@
       <div class="col">
         <!-- Applicant -->
         <%= form.label :applicant_name, 'Applicant' %>
-        <%= form.text_field :applicant_name, list: 'clients' %>
+        <div class="input-group">
+          <%= form.text_field :applicant_name, list: 'clients' %>
+          <% if @application.applicant_id %>
+            <%= link_to 'Edit',
+                        edit_client_path(@application.applicant_id ||= 0),
+                        class: 'btn btn-sm btn-outline-primary' %>
+          <% end %>
+        </div>
       </div>
 
       <div class="col">
@@ -75,7 +82,14 @@
       <div class="col">
         <!-- Owner -->
         <%= form.label :owner_name, 'Owner' %>
-        <%= form.text_field :owner_name, list: 'clients' %>
+        <div class="input-group">
+          <%= form.text_field :owner_name, list: 'clients' %>
+          <% if @application.owner_id %>
+            <%= link_to 'Edit',
+                        edit_client_path(@application.owner_id ||= 0),
+                        class: 'btn btn-sm btn-outline-primary' %>
+          <% end %>
+        </div>
       </div>
 
       <div class="col">
@@ -103,7 +117,14 @@
       <div class="col">
         <!-- Contact -->
         <%= form.label :contact_name, 'Contact' %>
-        <%= form.text_field :contact_name, list: 'clients' %>
+        <div class="input-group">
+          <%= form.text_field :contact_name, list: 'clients' %>
+          <% if @application.contact_id %>
+            <%= link_to 'Edit',
+                        edit_client_path(@application.contact_id ||= 0),
+                        class: 'btn btn-sm btn-outline-primary' %>
+          <% end %>
+        </div>
       </div>
 
       <div class="col">

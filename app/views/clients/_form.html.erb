@@ -1,0 +1,168 @@
+<%= bootstrap_form_with model: client, local: true,
+                        html: { autocomplete: 'off', class: 'h-100 d-flex flex-column' },
+                        data: {
+                          controller: 'unsaved-changes',
+                          action: 'change->unsaved-changes#onFormChange'
+                        } do |form| %>
+  <div class="mb-3 bg-white border border-1 rounded-1 p-3 flex-grow-1">
+    <div class="row">
+
+      <div class="col">
+        <%= form.label :client_type %>
+        <%= form.select :client_type, Client::TYPE, required: true %>
+      </div>
+
+      <div class="col">
+        <%= form.label :client_name %>
+        <%= form.text_field :client_name, required: true %>
+      </div>
+
+      <div class="col">
+        <%= form.label :bad_payer, 'Bad payer?', class: 'w-100' %>
+        <%= form.check_box :bad_payer %>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="col">
+        <%= form.label :first_name %>
+        <%= form.text_field :first_name %>
+      </div>
+
+      <div class="col">
+        <%= form.label :surname %>
+        <%= form.text_field :surname %>
+      </div>
+
+      <div class="col">
+        <%= form.label :initials %>
+        <%= form.text_field :initials %>
+      </div>
+
+      <div class="col">
+        <%= form.label :title %>
+        <%= form.text_field :title %>
+      </div>
+
+      <div class="col">
+        <%= form.label :salutation %>
+        <%= form.text_field :salutation %>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="col">
+        <%= form.label :company_name %>
+        <%= form.text_field :company_name %>
+      </div>
+
+      <div class="col">
+        <%= form.label :australian_business_number %>
+        <%= form.text_field :australian_business_number %>
+      </div>
+
+      <div class="col">
+        <%= form.label :state %>
+        <%= form.text_field :state %>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="col">
+        <%= form.label :phone %>
+        <%= form.text_field :phone %>
+      </div>
+
+      <div class="col">
+        <%= form.label :fax %>
+        <%= form.text_field :fax %>
+      </div>
+
+      <div class="col">
+        <%= form.label :mobile_number %>
+        <%= form.text_field :mobile_number %>
+      </div>
+
+      <div class="col">
+        <%= form.label :email %>
+        <%= form.text_field :email, type: 'email' %>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="col">
+        <%= form.label :street %>
+        <%= form.text_field :street %>
+      </div>
+
+      <div class="col">
+        <%= form.label :suburb_display_name, 'Suburb' %>
+        <%= form.text_field :suburb_display_name,
+                            list: 'suburbs',
+                            data: {
+                              controller: 'validateable-datalist',
+                              action: 'change->validateable-datalist#onChange'
+                            } %>
+
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col">
+        <%= form.label :postal_address %>
+        <%= form.text_field :postal_address %>
+      </div>
+
+      <div class="col">
+        <%= form.label :postal_suburb_display_name, 'Postal suburb' %>
+        <%= form.text_field :postal_suburb_display_name,
+                            list: 'suburbs',
+                            data: {
+                              controller: 'validateable-datalist',
+                              action: 'change->validateable-datalist#onChange'
+                            } %>
+      </div>
+
+    </div>
+    <div class="row">
+
+      <div class="col">
+        <%= form.label :notes %>
+        <%= form.text_area :notes, rows: 3 %>
+      </div>
+
+    </div>
+
+    <div class="d-flex justify-content-end align-items-center border-top pt-3 mt-3">
+      <div class="mx-2">
+        <!-- Hidden field to store the previous request URL -->
+        <%= hidden_field_tag :previous_request, request.referer %>
+        <%= button_tag 'Save', type: 'submit', class: 'btn btn-success' %>
+      </div>
+      <div class="ms-2">
+        <%= link_to 'Exit',
+                    :back,
+                    class: 'btn btn-outline-secondary',
+                    data: {
+                      'unsaved-changes-target': 'exitButton',
+                      turbo_method: 'get',
+                      turbo_confirm: 'Are you sure?',
+                      confirm_details: 'All unsaved changes will be discarded.'
+                    } %>
+      </div>
+
+    </div>
+
+  </div>
+<% end %>
+
+<datalist id="suburbs">
+  <% @suburbs.each do |suburb| %>
+    <option value="<%= suburb %>" />
+  <% end %>
+  <option value="" />
+</datalist>
