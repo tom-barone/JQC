@@ -18,4 +18,24 @@ class Client < ApplicationRecord
            dependent: :nullify
 
   TYPE = %w[Business Individual].freeze
+
+  def suburb_display_name=(display_name)
+    self.suburb = Suburb.find_by(display_name:)
+  end
+
+  def suburb_display_name
+    suburb&.display_name
+  end
+
+  def postal_suburb_display_name=(display_name)
+    self.postal_suburb = Suburb.find_by(display_name:)
+  end
+
+  def postal_suburb_display_name
+    postal_suburb&.display_name
+  end
+
+  def self.eager_load_associations
+    eager_load(:suburb, :postal_suburb)
+  end
 end

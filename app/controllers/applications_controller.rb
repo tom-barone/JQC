@@ -98,16 +98,16 @@ class ApplicationsController < ApplicationController
   # rubocop:disable Metrics/MethodLength
   def update
     respond_to do |format|
-      if @application.update(application_params)
-        format.html do
+      format.html do
+        if @application.update(application_params)
           flash[:success] = [
             'Successfully updated ',
             { 'text' => @application[:reference_number], 'link_to' => edit_application_path(@application) }
           ]
           redirect_to session[:search_results]
+        else
+          render :edit, status: :unprocessable_entity
         end
-      else
-        format.html { render :edit, status: :unprocessable_entity }
       end
     end
   end
