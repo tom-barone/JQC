@@ -209,8 +209,10 @@ class Application < ApplicationRecord
       .order_by_type_and_reference_number
   end
 
+  # rubocop:disable Metrics/AbcSize
   def self.building_surveyor_search(params)
     eager_load_associations
+      .where(consent_issued: nil)
       .filter_by_type(params[:type])
       .filter_by_date(params[:start_date], params[:end_date])
       .filter_by_search_text(params[:search_text])
@@ -220,6 +222,7 @@ class Application < ApplicationRecord
       .filter_by_has_received_engineer_certificate(params[:has_received_engineer_certificate])
       .order_by_type_and_reference_number
   end
+  # rubocop:enable Metrics/AbcSize
 
   def certifier_options
     if CERTIFIER.include?(certifier)
