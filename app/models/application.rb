@@ -3,6 +3,7 @@
 # rubocop:disable Metrics/ClassLength
 class Application < ApplicationRecord
   include CsvExportable
+  include CsvReportable
 
   belongs_to :suburb, optional: true
   belongs_to :council, optional: true

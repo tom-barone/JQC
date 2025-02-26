@@ -1,10 +1,13 @@
-# production:
-#   periodic_cleanup:
-#     class: CleanSoftDeletedRecordsJob
-#     queue: background
-#     args: [ 1000, { batch_size: 500 } ]
-#     schedule: every hour
-#   periodic_command:
-#     command: "SoftDeletedRecord.due.delete_all"
-#     priority: 2
-#     schedule: at 5am every day
+default: &default
+  last_month_reports:
+    command: "ReportMailer.last_month_csv_reports.deliver_later"
+    priority: 1
+    schedule: "every month at 9am, Australia/Adelaide"
+# For quarterly
+# every 3 months at 9am, Australia/Adelaide
+
+development:
+  <<: *default
+
+production:
+  <<: *default

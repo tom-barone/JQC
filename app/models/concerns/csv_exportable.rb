@@ -9,52 +9,9 @@ module CsvExportable
     end
   end
 
-  class CsvExporter
-    def initialize(applications, response)
-      # Preload associations to avoid N+1 queries
-      @applications = applications.includes(:request_for_informations, :invoices)
-      @response = response
-    end
-
-    def export
-      set_response_headers
-      write_headers
-      write_records
-    ensure
-      @response.stream.close
-    end
-
-    private
-
-    def set_response_headers
-      filename = "JQC_Applications_Export_#{Time.zone.now.strftime('%Y-%m-%d')}.csv"
-
-      @response.headers.merge!(
-        'Content-Type' => 'text/csv',
-        'Content-Disposition' => "attachment; filename=\"#{filename}\"",
-        'X-Accel-Buffering' => 'no',
-        'Cache-Control' => 'no-cache',
-        'Last-Modified' => Time.current.httpdate
-      )
-      @response.headers.delete('Content-Length')
-    end
-
-    def write_headers
-      @response.stream.write CSV.generate_line(columns.map(&:first))
-    end
-
-    def write_records
-      @applications.find_in_batches(batch_size: 1000) do |batch|
-        batch.each do |application|
-          @response.stream.write CSV.generate_line(
-            columns.map { |_, getter| getter.call(application) }
-          )
-        end
-      end
-    end
-
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
-    def columns
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/BlockLength
+  included do
+    def self.csv_columns
       [
         ['id', ->(app) { app.id }],
         ['application_type', ->(app) { app.application_type&.application_type }],
@@ -106,6 +63,51 @@ module CsvExportable
         ['updated_at', ->(app) { app.updated_at }]
       ]
     end
-    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  end
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/BlockLength
+
+  class CsvExporter
+    def initialize(applications, response)
+      # Preload associations to avoid N+1 queries
+      @applications = applications.includes(:request_for_informations, :invoices)
+      @response = response
+    end
+
+    def export
+      set_response_headers
+      write_headers
+      write_records
+    ensure
+      @response.stream.close
+    end
+
+    private
+
+    def set_response_headers
+      filename = "JQC_Applications_Export_#{Time.zone.now.strftime('%Y-%m-%d')}.csv"
+
+      @response.headers.merge!(
+        'Content-Type' => 'text/csv',
+        'Content-Disposition' => "attachment; filename=\"#{filename}\"",
+        'X-Accel-Buffering' => 'no',
+        'Cache-Control' => 'no-cache',
+        'Last-Modified' => Time.current.httpdate
+      )
+      @response.headers.delete('Content-Length')
+    end
+
+    def write_headers
+      @response.stream.write CSV.generate_line(Application.csv_columns.map(&:first))
+    end
+
+    def write_records
+      @applications.find_in_batches(batch_size: 1000) do |batch|
+        batch.each do |application|
+          @response.stream.write CSV.generate_line(
+            Application.csv_columns.map { |_, getter| getter.call(application) }
+          )
+        end
+      end
+    end
   end
 end
