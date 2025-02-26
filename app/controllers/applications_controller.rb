@@ -7,6 +7,7 @@ class ApplicationsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_application, only: %i[show edit update destroy]
   before_action :prepare_association_lists, only: %i[show new edit]
+  before_action :only_admin, only: %i[destroy]
   include Pagy::Backend
 
   # GET /applications
