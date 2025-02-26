@@ -1,7 +1,17 @@
 <% content_for :title, @application.reference_number %>
-<!-- Hide all other elements except our form, so we can print it nicely -->
-<div class="fixed-top w-100 h-100 bg-white" style="z-index: 100">
+
+<% content_for :nav_bar do %>
+  <!-- No navbar shown -->
+  <div></div>
+<% end %>
+
+<div
+  class="fixed-top w-100 h-100 bg-white"
+  style="z-index: 100; pointer-events: none">
+  <!-- Hide all other elements except our form, so we can print it nicely -->
 </div>
+
 <div style="z-index: 101">
+  <h1><%= @application.reference_number %></h1>
   <%= render 'form', application: @application %>
 </div>

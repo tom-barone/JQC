@@ -27,6 +27,7 @@ class ApplicationsController < ApplicationController
   def show
     @converted_application = @application.converted_application
     respond_to do |format|
+      format.html { render :show }
       format.pdf do
         # Use Timeout with Concurrent::Future so we don't tank the main thread
         # It's a hack, but whatever.
