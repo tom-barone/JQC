@@ -177,6 +177,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_064610) do
     t.bigint "application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "stage_free_text"
     t.index ["application_id"], name: "index_stages_on_application_id"
   end
 

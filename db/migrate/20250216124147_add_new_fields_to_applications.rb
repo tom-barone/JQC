@@ -10,5 +10,7 @@ class AddNewFieldsToApplications < ActiveRecord::Migration[8.0]
       t.boolean :construction_industry_trading_board, default: false, null: false
       t.boolean :kd_to_lodge, default: false, null: false
     end
+
+    add_column :stages, :stage_free_text, :text
   end
 end

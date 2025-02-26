@@ -7,6 +7,10 @@
     <%= f.label :stage_text, class: 'd-none' %>
     <%= f.select :stage_text, Stage::STAGE, prompt: true %>
   </td>
+  <td class="border-0 py-1">
+    <%= f.label :stage_free_text, class: 'd-none' %>
+    <%= f.text_field :stage_free_text %>
+  </td>
   <td class="border-0 py-1 text-center" style="width:3em">
     <%= link_to_remove_association '⌫', f, class: 'btn btn-sm btn-outline-danger' %>
   </td>
