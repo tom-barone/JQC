@@ -62,7 +62,8 @@ gem 'cocoon'
 # Generating PDFs [https://github.com/excid3/ferrum_pdf]
 gem 'ferrum_pdf'
 
-# Active storage on S3 [https://guides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis]
+# Active storage on S3
+# [https://guides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis]
 gem 'aws-sdk-s3', require: false
 
 group :development, :test do
