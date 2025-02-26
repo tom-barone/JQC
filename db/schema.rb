@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_26_024024) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_20_105818) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -93,6 +93,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_024024) do
     t.decimal "structural_engineer_fee", precision: 13, scale: 2
     t.text "certificate_reference"
     t.decimal "area_m2", precision: 13, scale: 2
+    t.boolean "construction_industry_trading_board", default: false, null: false
+    t.boolean "kd_to_lodge", default: false, null: false
     t.index ["applicant_id"], name: "index_applications_on_applicant_id"
     t.index ["application_type_id"], name: "index_applications_on_application_type_id"
     t.index ["contact_id"], name: "index_applications_on_contact_id"

@@ -172,7 +172,7 @@ class ApplicationsController < ApplicationController
                     :engineer_certificate_received, :certifier, :certification_notes, :invoice_to, :care_of,
                     :invoice_email, :attention, :purchase_order_number, :fully_invoiced, :invoice_debtor_notes,
                     :applicant_email, :area_m2, :application_type_id, :external_engineer_date, :structural_engineer_fee,
-                    :certificate_reference,
+                    :certificate_reference, :construction_industry_trading_board, :kd_to_lodge,
                     { invoices_attributes: [
                         Invoice.attribute_names.map(&:to_sym).push(:_destroy)
                       ],

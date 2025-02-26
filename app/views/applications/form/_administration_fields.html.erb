@@ -179,6 +179,12 @@
     <div class="row">
 
       <div class="col-2">
+        <!-- KD to lodge -->
+        <%= form.label :kd_to_lodge, 'KD to lodge', class: 'w-100' %>
+        <%= form.check_box :kd_to_lodge %>
+      </div>
+
+      <div class="col-2">
         <!-- Staged consent -->
         <%= form.label :staged_consent, 'Staged consent?', class: 'w-100' %>
         <%= form.check_box :staged_consent %>
