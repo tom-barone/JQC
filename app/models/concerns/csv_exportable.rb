@@ -86,7 +86,6 @@ module CsvExportable
         ['structural_engineer_fee', ->(app) { app.structural_engineer_fee }],
         ['engineer_certificate_received', ->(app) { app.engineer_certificate_received }],
         ['certificate_reference', ->(app) { app.certificate_reference }],
-        ['documented_performance_solutions', ->(app) { app.documented_performance_solutions }],
         ['risk_rating', ->(app) { app.risk_rating }],
         ['consultancies_review_inspection', ->(app) { app.consultancies_review_inspection }],
         ['consultancies_report_sent', ->(app) { app.consultancies_report_sent }],

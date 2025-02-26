@@ -91,7 +91,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_26_024024) do
     t.tsvector "searchable_tsvector"
     t.boolean "staged_consent", default: false, null: false
     t.decimal "structural_engineer_fee", precision: 13, scale: 2
-    t.integer "documented_performance_solutions"
     t.text "certificate_reference"
     t.decimal "area_m2", precision: 13, scale: 2
     t.index ["applicant_id"], name: "index_applications_on_applicant_id"
