@@ -33,7 +33,7 @@ end
 task dev: %i[environment install] do
   sh 'bundle exec bin/rails db:migrate'
   sh 'bundle exec bin/rails db:seed'
-  sh 'PORT=3008 bundle exec bin/dev'
+  sh 'PORT=3008 SOLID_QUEUE_IN_PUMA=true bundle exec bin/dev'
 end
 
 task dev_with_test_db: %i[environment] do
