@@ -29,6 +29,7 @@ export default class extends Controller {
     "engineerCertificate",
     "additionalInformation",
     "rfisIssued",
+		"invoicesOutstanding"
   ];
 
   connect() {
@@ -46,5 +47,6 @@ export default class extends Controller {
     this.engineerCertificateTarget.checked = false;
     this.additionalInformationTarget.checked = false;
     this.rfisIssuedTarget.checked = false;
+		this.invoicesOutstandingTarget.checked = false;
   }
 }

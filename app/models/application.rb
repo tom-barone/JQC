@@ -126,6 +126,12 @@ class Application < ApplicationRecord
     where.not(engineer_certificate_received: nil)
   }
 
+  scope :filter_by_has_invoices_outstanding, lambda { |checkbox_value|
+    return all unless checkbox_value == '1'
+
+    where('unpaid_invoices_count > ?', 0)
+  }
+
   scope :order_by_type_and_reference_number, lambda {
     joins(:application_type)
       .order(Arel.sql('application_types.display_priority ASC'))
@@ -176,6 +182,18 @@ class Application < ApplicationRecord
              latest_additional_informations ON latest_additional_informations.application_id = applications.id")
   }
 
+  scope :with_invoices_outstanding, lambda {
+    invoice_count_subquery = Invoice
+                             .select('application_id, COUNT(*) as unpaid_invoices_count')
+                             .where(paid: false)
+                             .group(:application_id)
+
+    select('applications.*, COALESCE(invoice_counts.unpaid_invoices_count, 0) as unpaid_invoices_count')
+      .includes(:invoices)
+      .joins("LEFT JOIN (#{invoice_count_subquery.to_sql}) invoice_counts
+             ON invoice_counts.application_id = applications.id")
+  }
+
   def self.eager_load_associations
     eager_load(:application_type, :applicant, :owner, :contact, :council, :suburb)
   end
@@ -217,9 +235,12 @@ class Application < ApplicationRecord
       .order_by_type_and_reference_number
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def self.building_surveyor_search(params)
-    eager_load_associations
+    with_latest_rfis
+      .with_latest_additional_informations
+      .with_invoices_outstanding
+      .eager_load_associations
       .where(consent_issued: nil)
       .filter_by_type(params[:type])
       .filter_by_assessment_commenced_date(params[:start_date], params[:end_date])
@@ -228,9 +249,10 @@ class Application < ApplicationRecord
       .filter_by_has_rfis_issued(params[:has_rfis_issued])
       .filter_by_has_additional_information(params[:has_additional_information])
       .filter_by_has_received_engineer_certificate(params[:has_received_engineer_certificate])
+      .filter_by_has_invoices_outstanding(params[:has_invoices_outstanding])
       .order_by_type_and_reference_number
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def certifier_options
     if CERTIFIER.include?(certifier)

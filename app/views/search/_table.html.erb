@@ -13,6 +13,7 @@
         <th style="max-width: 11ch">Latest RFI</th>
         <th style="max-width: 11ch">Latest additional info</th>
         <th style="max-width: 14ch">Engineer certificate received</th>
+        <th style="max-width: 11ch">Invoices outstanding</th>
         <th
           style="max-width: <%= Application::BUILDING_SURVEYOR.map(&:length).max %>ch">Building surveyor</th>
         <th></th>
@@ -51,6 +52,9 @@
           </td>
           <td class="text-truncate" style="max-width: 11ch">
             <%= application.engineer_certificate_received&.strftime('%-d %b %Y') %>
+          </td>
+          <td class="text-truncate" style="max-width: 11ch">
+            <%= application.unpaid_invoices_count %>
           </td>
           <td
             class="text-truncate"
