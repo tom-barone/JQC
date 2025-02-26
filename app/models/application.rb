@@ -16,6 +16,8 @@ class Application < ApplicationRecord
 
   amoeba { enable }
 
+  has_many_attached :attachments
+
   # Do the conversions between records and update the last used reference number
   before_create :update_last_used_reference_number
   before_update :convert_to_new_application

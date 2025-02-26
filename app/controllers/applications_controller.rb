@@ -127,6 +127,15 @@ class ApplicationsController < ApplicationController
     end
   end
 
+  # DELETE /applications/1/remove_attachment
+  def remove_attachment
+    @attachment = ActiveStorage::Attachment.find(params[:id])
+    filename = @attachment.filename
+    @attachment.purge_later
+    flash[:success] = ["Successfully removed \"#{filename}\""]
+    redirect_back(fallback_location: request.referer)
+  end
+
   private
 
   def prepare_association_lists
@@ -146,7 +155,10 @@ class ApplicationsController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_application
-    @application = Application.eager_load_associations.find(params.expect(:id))
+    @application = Application
+                   .with_attached_attachments
+                   .eager_load_associations
+                   .find(params.expect(:id))
   end
 
   def search_params
@@ -191,7 +203,8 @@ class ApplicationsController < ApplicationController
                       ],
                       request_for_informations_attributes: [
                         RequestForInformation.attribute_names.map(&:to_sym).push(:_destroy)
-                      ] }
+                      ],
+                      attachments: [] }
                   ])
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
