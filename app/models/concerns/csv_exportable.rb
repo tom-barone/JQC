@@ -78,6 +78,7 @@ module CsvExportable
         ['administration_notes', ->(app) { app.administration_notes }],
         ['number_of_storeys', ->(app) { app.number_of_storeys }],
         ['construction_value', ->(app) { app.construction_value }],
+        ['area_m²', ->(app) { app.area_m2 }],
         ['fee_amount', ->(app) { app.fee_amount }],
         ['building_surveyor', ->(app) { app.building_surveyor }],
         ['structural_engineer', ->(app) { app.structural_engineer }],
