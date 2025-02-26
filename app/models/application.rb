@@ -97,6 +97,13 @@ class Application < ApplicationRecord
     scope
   }
 
+  scope :filter_by_assessment_commenced_date, lambda { |start_date, end_date|
+    scope = all
+    scope = scope.where(applications: { assessment_commenced: start_date.. }) if start_date.present?
+    scope = scope.where(applications: { assessment_commenced: ..end_date }) if end_date.present?
+    scope
+  }
+
   scope :filter_by_building_surveyor, lambda { |surveyor|
     where(building_surveyor: surveyor) if surveyor.present?
   }
@@ -215,7 +222,7 @@ class Application < ApplicationRecord
     eager_load_associations
       .where(consent_issued: nil)
       .filter_by_type(params[:type])
-      .filter_by_date(params[:start_date], params[:end_date])
+      .filter_by_assessment_commenced_date(params[:start_date], params[:end_date])
       .filter_by_search_text(params[:search_text])
       .filter_by_building_surveyor(params[:building_surveyor])
       .filter_by_has_rfis_issued(params[:has_rfis_issued])

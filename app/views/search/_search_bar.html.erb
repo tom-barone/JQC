@@ -11,8 +11,8 @@
     </div>
 
     <div class="mx-2">
-      <!-- Start date -->
-      <%= form.label :start_date, 'From', class: 'form-label small mb-0 mt-2' %>
+      <!-- Assessment assigned start date -->
+      <%= form.label :start_date, 'Assessment assigned from', class: 'form-label small mb-0 mt-2' %>
       <%= form.date_field :start_date,
                           {
                             value: params[:start_date],
@@ -24,8 +24,8 @@
     </div>
 
     <div class="mx-2">
-      <!-- End date -->
-      <%= form.label :end_date, 'To', class: 'form-label small mb-0 mt-2' %>
+    <!-- Assessment assigned end date -->
+      <%= form.label :end_date, 'Assessment assigned to', class: 'form-label small mb-0 mt-2' %>
       <%= form.date_field :end_date,
                           {
                             value: params[:end_date],
