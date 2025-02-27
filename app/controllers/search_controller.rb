@@ -28,6 +28,7 @@ class SearchController < ApplicationController
       :has_additional_information,
       :has_received_engineer_certificate,
       :has_invoices_outstanding,
+      :has_variation_requested,
       :page,  # What page of results
       :format # Whether we're asking for HTML or CSV
     )

@@ -14,6 +14,7 @@
         <th class="pe-1" style="max-width: 11ch">Latest additional info</th>
         <th class="pe-1" style="max-width: 14ch">Latest certificate received</th>
         <th class="pe-1" style="max-width: 11ch">Invoices outstanding</th>
+        <th class="pe-1" style="max-width: 11ch">Variation requested</th>
         <th
           style="max-width: <%= Application::BUILDING_SURVEYOR.map(&:length).max %>ch">Building surveyor</th>
         <th></th>
@@ -55,6 +56,9 @@
           </td>
           <td class="text-truncate" style="max-width: 11ch">
             <%= application.unpaid_invoices_count %>
+          </td>
+          <td class="text-truncate" style="max-width: 11ch">
+            <%= application.variation_requested ? 'Yes' : 'No' %>
           </td>
           <td
             class="text-truncate"

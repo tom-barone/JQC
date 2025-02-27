@@ -142,6 +142,12 @@ class Application < ApplicationRecord
     where('unpaid_invoices_count > ?', 0)
   }
 
+  scope :filter_by_has_variation_requested, lambda { |checkbox_value|
+    return all unless checkbox_value == '1'
+
+    where(variation_requested: true)
+  }
+
   scope :order_by_type_and_reference_number, lambda {
     joins(:application_type)
       .order(Arel.sql('application_types.display_priority ASC'))
@@ -273,6 +279,7 @@ class Application < ApplicationRecord
       .filter_by_has_additional_information(params[:has_additional_information])
       .filter_by_has_received_engineer_certificate(params[:has_received_engineer_certificate])
       .filter_by_has_invoices_outstanding(params[:has_invoices_outstanding])
+      .filter_by_has_variation_requested(params[:has_variation_requested])
       .order_by_type_and_reference_number
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength

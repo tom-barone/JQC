@@ -30,6 +30,7 @@ export default class extends Controller {
     "additionalInformation",
     "rfisIssued",
     "invoicesOutstanding",
+    "variationRequested",
   ];
 
   connect() {
@@ -48,5 +49,6 @@ export default class extends Controller {
     this.additionalInformationTarget.checked = false;
     this.rfisIssuedTarget.checked = false;
     this.invoicesOutstandingTarget.checked = false;
+    this.variationRequestedTarget.checked = false;
   }
 }
