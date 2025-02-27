@@ -8,9 +8,7 @@ class SearchController < ApplicationController
   def building_surveyor_search
     @params = building_surveyor_search_params
     @number_results_per_page = 500
-    @all_applications = Application.with_latest_rfis
-                                   .with_latest_additional_informations
-                                   .building_surveyor_search(@params)
+    @all_applications = Application.building_surveyor_search(@params)
     @pagy, @applications = pagy(@all_applications, limit: @number_results_per_page)
     @total_count = @pagy.count
     session[:search_results] = request.url # Save the search results for later
@@ -29,6 +27,8 @@ class SearchController < ApplicationController
       :has_rfis_issued,
       :has_additional_information,
       :has_received_engineer_certificate,
+      :has_invoices_outstanding,
+      :has_variation_requested,
       :page,  # What page of results
       :format # Whether we're asking for HTML or CSV
     )

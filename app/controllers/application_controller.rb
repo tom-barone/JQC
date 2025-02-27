@@ -11,4 +11,10 @@ class ApplicationController < ActionController::Base
       current_user: current_user
     }
   end
+
+  def only_admin
+    return if current_user&.admin?
+
+    head :forbidden
+  end
 end

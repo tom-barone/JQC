@@ -79,7 +79,7 @@
     </div>
     <div class="row">
 
-      <div class="col">
+      <div class="col-4">
         <!-- Owner -->
         <%= form.label :owner_name, 'Owner' %>
         <div class="input-group">
@@ -110,6 +110,12 @@
                             min: '0',
                             max: '1000000000',
                             step: 'any' %>
+      </div>
+
+      <div class="col">
+        <!-- Area (m²) -->
+        <%= form.label :area_m2, 'Area (m²)' %>
+        <%= form.text_field :area_m2, type: 'number', step: 'any' %>
       </div>
     </div>
     <div class="row">
@@ -171,6 +177,12 @@
       </div>
     </div>
     <div class="row">
+
+      <div class="col-2">
+        <!-- KD to lodge -->
+        <%= form.label :kd_to_lodge, 'KD to lodge', class: 'w-100' %>
+        <%= form.check_box :kd_to_lodge %>
+      </div>
 
       <div class="col-2">
         <!-- Staged consent -->

@@ -2,7 +2,17 @@
 
 Rails.application.routes.draw do
   resources :clients, only: %i[edit update]
-  resources :applications
+  resources :applications do
+    member do
+      delete :remove_attachment
+    end
+  end
+
+  scope ActiveStorage.routes_prefix do
+    # Make it so only authenticated users can access active storage blobs
+    get '/blobs/redirect/:signed_id/*filename' => 'secure_blobs#show'
+  end
+
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -20,8 +30,6 @@ Rails.application.routes.draw do
   # Test routes to check emails are sent on exceptions
   # TODO add this to a /health endpoint
   get 'fail' => 'testing#fail' unless Rails.env.production?
-
-  resources :applications
 
   get 'application_types/edit', to: 'application_types#edit'
   put 'application_types/update_all', to: 'application_types#update_all'

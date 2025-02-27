@@ -25,6 +25,15 @@
         role="tab"
         aria-controls="certification-tab-pane"
         aria-selected="false">Certification</button>
+      <button
+        class="nav-link"
+        id="attachments-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#attachments-tab-pane"
+        type="button"
+        role="tab"
+        aria-controls="attachments-tab-pane"
+        aria-selected="false">Attachments (<%= @application.attachments.length %>)</button>
     </div>
   </nav>
   <div
@@ -33,6 +42,7 @@
       d-flex flex-column
     "
     style="border-top: none !important">
+
     <div
       class="tab-pane show active h-100"
       id="admin-invoicing-tab-pane"
@@ -47,6 +57,7 @@
         </div>
       </div>
     </div>
+
     <div
       class="tab-pane h-100"
       id="certification-tab-pane"
@@ -61,6 +72,20 @@
         </div>
       </div>
     </div>
+
+    <div
+      class="tab-pane h-100"
+      id="attachments-tab-pane"
+      role="tabpanel"
+      aria-labelledby="attachments-tab"
+      data-canceallable-target="fieldsContainer">
+      <div class="h-100 d-flex flex-column flex-grow-1">
+        <div class="flex-grow-1">
+          <%= render 'applications/form/attachments', application: @application, form: form %>
+        </div>
+      </div>
+    </div>
+
     <%= render 'applications/form/form_submission_bar', form: form %>
   </div>
 <% end %>

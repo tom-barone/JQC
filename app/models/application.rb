@@ -3,6 +3,7 @@
 # rubocop:disable Metrics/ClassLength
 class Application < ApplicationRecord
   include CsvExportable
+  include Reportable
 
   belongs_to :suburb, optional: true
   belongs_to :council, optional: true
@@ -14,6 +15,8 @@ class Application < ApplicationRecord
   belongs_to :application_type
 
   amoeba { enable }
+
+  has_many_attached :attachments
 
   # Do the conversions between records and update the last used reference number
   before_create :update_last_used_reference_number
@@ -39,9 +42,17 @@ class Application < ApplicationRecord
   has_many :invoices, inverse_of: :application, dependent: :destroy
   accepts_nested_attributes_for :invoices, allow_destroy: true
 
+  has_many :structural_engineers, inverse_of: :application, dependent: :destroy
+  accepts_nested_attributes_for :structural_engineers, allow_destroy: true
+
+  has_many :consultancies, inverse_of: :application, dependent: :destroy
+  accepts_nested_attributes_for :consultancies, allow_destroy: true
+
+  has_many :variations, inverse_of: :application, dependent: :destroy
+  accepts_nested_attributes_for :variations, allow_destroy: true
+
   JOB_TYPE_ADMINISTRATION = ['Residential', 'Commercial', 'Section 49'].freeze
   BUILDING_SURVEYOR = Rails.application.credentials.building_surveyors
-  STRUCTURAL_ENGINEER = Rails.application.credentials.structural_engineers
   CERTIFIER = Rails.application.credentials.certifiers
   RISK_RATING = %w[High Standard Low].freeze
   JOB_TYPE = %w[BRC Other].freeze
@@ -96,6 +107,13 @@ class Application < ApplicationRecord
     scope
   }
 
+  scope :filter_by_assessment_commenced_date, lambda { |start_date, end_date|
+    scope = all
+    scope = scope.where(applications: { assessment_commenced: start_date.. }) if start_date.present?
+    scope = scope.where(applications: { assessment_commenced: ..end_date }) if end_date.present?
+    scope
+  }
+
   scope :filter_by_building_surveyor, lambda { |surveyor|
     where(building_surveyor: surveyor) if surveyor.present?
   }
@@ -115,7 +133,19 @@ class Application < ApplicationRecord
   scope :filter_by_has_received_engineer_certificate, lambda { |checkbox_value|
     return all unless checkbox_value == '1'
 
-    where.not(engineer_certificate_received: nil)
+    where.not(structural_engineers: { engineer_certificate_received: nil })
+  }
+
+  scope :filter_by_has_invoices_outstanding, lambda { |checkbox_value|
+    return all unless checkbox_value == '1'
+
+    where('unpaid_invoices_count > ?', 0)
+  }
+
+  scope :filter_by_has_variation_requested, lambda { |checkbox_value|
+    return all unless checkbox_value == '1'
+
+    where(variation_requested: true)
   }
 
   scope :order_by_type_and_reference_number, lambda {
@@ -168,6 +198,30 @@ class Application < ApplicationRecord
              latest_additional_informations ON latest_additional_informations.application_id = applications.id")
   }
 
+  scope :with_latest_engineer_certificate_received, lambda {
+    subquery = StructuralEngineer
+               .select('DISTINCT ON (application_id) application_id, engineer_certificate_received')
+               .where.not(engineer_certificate_received: nil)
+               .order('application_id, engineer_certificate_received DESC')
+
+    select('applications.*, latest_structural_engineers.*')
+      .includes(:structural_engineers)
+      .joins("LEFT JOIN (#{subquery.to_sql}) \
+             latest_structural_engineers ON latest_structural_engineers.application_id = applications.id")
+  }
+
+  scope :with_invoices_outstanding, lambda {
+    invoice_count_subquery = Invoice
+                             .select('application_id, COUNT(*) as unpaid_invoices_count')
+                             .where(paid: false)
+                             .group(:application_id)
+
+    select('applications.*, COALESCE(invoice_counts.unpaid_invoices_count, 0) as unpaid_invoices_count')
+      .includes(:invoices)
+      .joins("LEFT JOIN (#{invoice_count_subquery.to_sql}) invoice_counts
+             ON invoice_counts.application_id = applications.id")
+  }
+
   def self.eager_load_associations
     eager_load(:application_type, :applicant, :owner, :contact, :council, :suburb)
   end
@@ -209,17 +263,26 @@ class Application < ApplicationRecord
       .order_by_type_and_reference_number
   end
 
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def self.building_surveyor_search(params)
-    eager_load_associations
+    with_latest_rfis
+      .with_latest_additional_informations
+      .with_latest_engineer_certificate_received
+      .with_invoices_outstanding
+      .eager_load_associations
+      .where(consent_issued: nil)
       .filter_by_type(params[:type])
-      .filter_by_date(params[:start_date], params[:end_date])
+      .filter_by_assessment_commenced_date(params[:start_date], params[:end_date])
       .filter_by_search_text(params[:search_text])
       .filter_by_building_surveyor(params[:building_surveyor])
       .filter_by_has_rfis_issued(params[:has_rfis_issued])
       .filter_by_has_additional_information(params[:has_additional_information])
       .filter_by_has_received_engineer_certificate(params[:has_received_engineer_certificate])
+      .filter_by_has_invoices_outstanding(params[:has_invoices_outstanding])
+      .filter_by_has_variation_requested(params[:has_variation_requested])
       .order_by_type_and_reference_number
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def certifier_options
     if CERTIFIER.include?(certifier)

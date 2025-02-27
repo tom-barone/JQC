@@ -4,15 +4,17 @@
     aria-label="Table containing all the applications">
     <thead style="position: sticky; top: 0; z-index: 1;">
       <tr>
-        <th style="max-width: 9ch">Reference number</th>
-        <th>Location</th>
-        <th>Suburb</th>
-        <th>Description</th>
-        <th>Applicant</th>
-        <th style="max-width: 11ch">Date created</th>
-        <th style="max-width: 11ch">Latest RFI</th>
-        <th style="max-width: 11ch">Latest additional info</th>
-        <th style="max-width: 14ch">Engineer certificate received</th>
+        <th class="pe-1" style="max-width: 9ch">Reference number</th>
+        <th class="pe-1">Location</th>
+        <th class="pe-1">Suburb</th>
+        <th class="pe-1">Description</th>
+        <th class="pe-1">Applicant</th>
+        <th class="pe-1" style="max-width: 11ch">Date created</th>
+        <th class="pe-1" style="max-width: 11ch">Latest RFI</th>
+        <th class="pe-1" style="max-width: 11ch">Latest additional info</th>
+        <th class="pe-1" style="max-width: 14ch">Latest certificate received</th>
+        <th class="pe-1" style="max-width: 11ch">Invoices outstanding</th>
+        <th class="pe-1" style="max-width: 11ch">Variation requested</th>
         <th
           style="max-width: <%= Application::BUILDING_SURVEYOR.map(&:length).max %>ch">Building surveyor</th>
         <th></th>
@@ -51,6 +53,12 @@
           </td>
           <td class="text-truncate" style="max-width: 11ch">
             <%= application.engineer_certificate_received&.strftime('%-d %b %Y') %>
+          </td>
+          <td class="text-truncate" style="max-width: 11ch">
+            <%= application.unpaid_invoices_count %>
+          </td>
+          <td class="text-truncate" style="max-width: 11ch">
+            <%= application.variation_requested ? 'Yes' : 'No' %>
           </td>
           <td
             class="text-truncate"

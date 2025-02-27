@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class ApplicationMailer < ActionMailer::Base
-  default from: 'from@example.com'
-  layout 'mailer'
+  ActionMailer::MailDeliveryJob.rescue_from(Exception) do |exception|
+    ExceptionNotifier.notify_exception(exception)
+    raise exception
+  end
 end

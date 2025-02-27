@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col">
     <div class="row">
+
       <div class="col">
         <!-- Building Surveyor -->
         <%= form.label :building_surveyor %>
@@ -24,52 +25,6 @@
                           action: 'change->uploaded-risk-rating#onRiskRatingChange'
                         } %>
       </div>
-    </div>
-    <div class="row">
-
-      <div class="col">
-        <!-- Structural Engineer -->
-        <%= form.label :structural_engineer, style: 'font-size:smaller' %>
-        <%= form.select :structural_engineer, Application::STRUCTURAL_ENGINEER %>
-      </div>
-
-      <div class="col">
-        <!-- External Engineer Date -->
-        <%= form.label :external_engineer_date, 'External engineer' %>
-        <%= form.date_field :external_engineer_date %>
-      </div>
-
-      <div class="col">
-        <!-- Structural engineer fee -->
-        <%= form.label :structural_engineer_fee, 'Structural engineer fee ($)' %>
-        <%= form.text_field :structural_engineer_fee, type: 'number', min: '1', step: 'any' %>
-      </div>
-    </div>
-    <div class="row">
-
-      <div class="col">
-        <!-- Engineer certificate ceceived -->
-        <%= form.label :engineer_certificate_received %>
-        <%= form.date_field :engineer_certificate_received %>
-      </div>
-
-      <div class="col">
-        <!-- Certificate reference -->
-        <%= form.label :certificate_reference %>
-        <%= form.text_field :certificate_reference %>
-      </div>
-
-      <div class="col">
-        <!-- Documented performance solutions -->
-        <%= form.label :documented_performance_solutions %>
-        <%= form.text_field :documented_performance_solutions,
-                            type: 'number',
-                            min: '0',
-                            max: '99',
-                            step: '1' %>
-      </div>
-    </div>
-    <div class="row">
 
       <div class="col">
         <!-- Certifier -->
@@ -81,86 +36,121 @@
                         include_blank: false %>
       </div>
 
-      <div class="col">
-        <!-- C Review/Inspection -->
-        <%= form.label :consultancies_review_inspection, 'C Review/Inspection' %>
-        <%= form.date_field :consultancies_review_inspection %>
+      <div class="col-2">
+        <!-- CITB -->
+        <%= form.label :construction_industry_trading_board, 'CITB', class: 'w-100' %>
+        <%= form.check_box :construction_industry_trading_board %>
       </div>
 
-      <div class="col">
-        <!-- C Report Sent -->
-        <%= form.label :consultancies_report_sent, 'C Report Sent' %>
-        <%= form.date_field :consultancies_report_sent %>
-      </div>
-    </div>
-    <div class="row">
-
-      <div class="col">
-        <!-- Consent issued -->
-        <%= form.label :consent_issued %>
-        <%= form.date_field :consent_issued %>
-      </div>
-
-      <div class="col">
-        <!-- Variation Issued -->
-        <%= form.label :variation_issued %>
-        <%= form.date_field :variation_issued %>
-      </div>
-
-      <div class="col">
-        <!-- COO Issued -->
-        <%= form.label :coo_issued %>
-        <%= form.date_field :coo_issued %>
+      <div class="col-2">
+        <!-- Variation requested -->
+        <%= form.label :variation_requested, 'Variation requested', class: 'w-100' %>
+        <%= form.check_box :variation_requested %>
       </div>
     </div>
     <div class="row mt-3 pt-2">
-      <div class="col">
 
-        <div class="card" style="max-height: 23em; min-height: 23em; overflow: auto">
-          <!-- RFIs Issued -->
-          <table
-            class="table nested-table h-100"
-            data-controller="rfis-table"
-            data-action="
-              cocoon:after-remove->rfis-table#updateRfiNumbers
-              cocoon:after-insert->rfis-table#updateRfiNumbers
-            ">
+      <div class="col">
+        <div class="card" style="max-height: 12em; min-height: 12em; overflow: auto">
+          <!-- Consultancies -->
+          <table class="table nested-table h-100">
             <thead style="position: sticky; top: 0; z-index: 1;">
               <tr>
-                <th class="fw-normal small" style="width: 3em">
-                  <div class="ps-2 pb-1">RFIs issued</div>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">Consultancy type</div>
                 </th>
-                <th></th>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">Scheduled date</div>
+                </th>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">Notes</div>
+                </th>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">Report / email sent</div>
+                </th>
                 <th class="text-center" style="width:3em">
                   <%= link_to_add_association 'Add',
                                               form,
-                                              :request_for_informations,
-                                              'data-association-insertion-node': '.request-for-informations-fields',
+                                              :consultancies,
+                                              'data-association-insertion-node': '.consultancies-fields',
                                               'data-association-insertion-method': 'append',
-                                              partial: 'applications/tables/request_for_informations_fields',
+                                              partial: 'applications/tables/consultancies_fields',
                                               class: 'btn btn-sm btn-outline-primary m-2' %>
                 </th>
               </tr>
             </thead>
-            <tbody class="request-for-informations-fields">
-              <%= form.fields_for :request_for_informations do |subform| %>
-                <%= render 'applications/tables/request_for_informations_fields', f: subform %>
+            <tbody class="consultancies-fields">
+              <%= form.fields_for :consultancies do |subform| %>
+                <%= render 'applications/tables/consultancies_fields', f: subform %>
               <% end %>
             </tbody>
           </table>
         </div>
       </div>
+    </div>
+    <div class="row mt-3 pt-2">
 
       <div class="col">
-        <div class="card" style="max-height: 23em; min-height: 23em; overflow: auto">
+        <div class="card" style="max-height: 12em; min-height: 12em; overflow: auto">
+          <!-- Structural Engineers -->
+          <table class="table nested-table h-100">
+            <thead style="position: sticky; top: 0; z-index: 1;">
+              <tr>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">Structural Engineer</div>
+                </th>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">External Engineer</div>
+                </th>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">S.E Fee ($)</div>
+                </th>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">Certificate received</div>
+                </th>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">Certificate reference</div>
+                </th>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">S.E OK to pay</div>
+                </th>
+                <th class="text-center" style="width:3em">
+                  <%= link_to_add_association 'Add',
+                                              form,
+                                              :structural_engineers,
+                                              'data-association-insertion-node': '.structural-engineers-fields',
+                                              'data-association-insertion-method': 'append',
+                                              partial: 'applications/tables/structural_engineers_fields',
+                                              class: 'btn btn-sm btn-outline-primary m-2' %>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="structural-engineers-fields">
+              <%= form.fields_for :structural_engineers do |subform| %>
+                <%= render 'applications/tables/structural_engineers_fields', f: subform %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3 pt-2">
+
+      <div class="col">
+        <div class="card" style="max-height: 12em; min-height: 12em; overflow: auto">
           <!-- Stages -->
           <table class="table nested-table h-100">
             <thead style="position: sticky; top: 0; z-index: 1;">
               <tr>
                 <th class="fw-normal small">
-                  <div class="ps-2 pb-2">Stages</div>
+                  <div class="ps-2 pb-2">Stage date</div>
                 </th>
-                <th></th>
+                <th class="fw-normal small">
+                  <div class="ps-2 pb-2">Stage type</div>
+                </th>
+                <th class="fw-normal small">
+                  <div class="ps-2 pb-2">Notes</div>
+                </th>
                 <th class="text-center" style="width:3em">
                   <%= link_to_add_association 'Add',
                                               form,
@@ -180,14 +170,105 @@
           </table>
         </div>
       </div>
+
+      <div class="col-4">
+        <div class="card" style="max-height: 12em; min-height: 12em; overflow: auto">
+          <!-- RFIs Issued -->
+          <table
+            class="table nested-table h-100"
+            data-controller="rfis-table"
+            data-action="
+              cocoon:after-remove->rfis-table#updateRfiNumbers
+              cocoon:after-insert->rfis-table#updateRfiNumbers
+            ">
+            <thead style="position: sticky; top: 0; z-index: 1;">
+              <tr>
+                <th class="fw-normal small">
+                  <div class="ps-2 pb-1">RFI date</div>
+                </th>
+                <th class="fw-normal small">
+                  <div class="ps-2 pb-1">No.</div>
+                </th>
+                <th class="text-center" style="width:3em">
+                  <%= link_to_add_association 'Add',
+                                              form,
+                                              :request_for_informations,
+                                              'data-association-insertion-node': '.request-for-informations-fields',
+                                              'data-association-insertion-method': 'append',
+                                              partial: 'applications/tables/request_for_informations_fields',
+                                              class: 'btn btn-sm btn-outline-primary m-2' %>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="request-for-informations-fields">
+              <%= form.fields_for :request_for_informations do |subform| %>
+                <%= render 'applications/tables/request_for_informations_fields', f: subform %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
   <div class="col-4">
+    <div class="row">
 
-    <div class="col">
-      <!-- Certification notes -->
-      <%= form.label :certification_notes %>
-      <%= form.text_area :certification_notes, style: 'height: 47.5em' %>
+      <div class="col">
+        <div class="card" style="max-height: 12em; min-height: 12em; overflow: auto">
+          <!-- Variations -->
+          <table class="table nested-table h-100">
+            <thead style="position: sticky; top: 0; z-index: 1;">
+              <tr>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">Variation date</div>
+                </th>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">Variation type</div>
+                </th>
+                <th class="fw-normal small">
+                  <div class="ps-2 py-2">Variation issued</div>
+                </th>
+                <th class="text-center" style="width:3em">
+                  <%= link_to_add_association 'Add',
+                                              form,
+                                              :variations,
+                                              'data-association-insertion-node': '.variations-fields',
+                                              'data-association-insertion-method': 'append',
+                                              partial: 'applications/tables/variations_fields',
+                                              class: 'btn btn-sm btn-outline-primary m-2' %>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="variations-fields">
+              <%= form.fields_for :variations do |subform| %>
+                <%= render 'applications/tables/variations_fields', f: subform %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col">
+        <!-- Certification notes -->
+        <%= form.label :certification_notes %>
+        <%= form.text_area :certification_notes, style: 'height: 18em' %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <!-- COO Issued -->
+        <%= form.label :coo_issued %>
+        <%= form.date_field :coo_issued %>
+      </div>
+
+      <div class="col">
+        <!-- Final consent issued -->
+        <%= form.label :consent_issued, 'Final consent issued' %>
+        <%= form.date_field :consent_issued %>
+      </div>
     </div>
   </div>
 </div>

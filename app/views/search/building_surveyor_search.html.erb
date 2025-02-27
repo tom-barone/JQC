@@ -5,7 +5,9 @@
     <%= @total_count %>
     results available. Showing
     <%= @number_results_per_page %>
-    results per page.
+    results per page. Results with
+    <strong>Final consent issued</strong>
+    are not shown.
   </span>
   <span>
     <%== pagy_bootstrap_nav(@pagy) %>

@@ -12,17 +12,19 @@
   <div class="mx-2">
     <%= button_tag 'Save', type: 'submit', class: 'btn btn-success' %>
   </div>
-  <div class="mx-2">
-    <%= link_to 'Delete',
-                @application,
-                method: :delete,
-                data: {
-                  turbo_method: 'delete',
-                  turbo_confirm: 'Are you sure you want to delete?',
-                  confirm_details: 'This cannot be undone.'
-                },
-                class: 'btn btn-danger' %>
-  </div>
+  <% if current_user&.admin? %>
+    <div class="mx-2">
+      <%= link_to 'Delete',
+                  @application,
+                  method: :delete,
+                  data: {
+                    turbo_method: 'delete',
+                    turbo_confirm: 'Are you sure you want to delete?',
+                    confirm_details: 'This cannot be undone.'
+                  },
+                  class: 'btn btn-danger' %>
+    </div>
+  <% end %>
   <div class="ms-2">
     <%= link_to 'Exit',
                 session[:search_results],

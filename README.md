@@ -52,6 +52,8 @@ dokku --remote <remote_name> redis:link <app_name>-redis <website_domain>
 # Set important environment variables
 dokku --remote <remote_name> config:set RAILS_MASTER_KEY=$(cat config/master.key)
 dokku --remote <remote_name> config:set DOMAIN=<website_domain>
+# Set on the staging environment
+dokku --remote <remote_name> config:set STAGING=true
 # Setup LetsEncrypt certs
 # - Make sure to have your domain DNS settings point <website_domain> to the server before running this
 dokku --remote <remote_name> letsencrypt:enable

@@ -10,9 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_20_105818) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_27_114919) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum"
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "application_additional_informations", id: :serial, force: :cascade do |t|
     t.date "info_date"
@@ -64,15 +92,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_105818) do
     t.decimal "construction_value", precision: 13, scale: 2
     t.decimal "fee_amount", precision: 13, scale: 2
     t.text "building_surveyor"
-    t.text "structural_engineer"
     t.text "risk_rating"
-    t.date "consultancies_review_inspection"
-    t.date "consultancies_report_sent"
     t.date "assessment_commenced"
     t.date "consent_issued"
-    t.date "variation_issued"
     t.date "coo_issued"
-    t.date "engineer_certificate_received"
     t.text "certifier"
     t.text "certification_notes"
     t.text "invoice_to"
@@ -84,15 +107,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_105818) do
     t.text "invoice_debtor_notes"
     t.text "applicant_email"
     t.bigint "application_type_id"
-    t.date "external_engineer_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.virtual "location", type: :string, as: "((COALESCE((lot_number || ' '::text), ''::text) || COALESCE((street_number || ' '::text), ''::text)) || street_name)", stored: true
     t.tsvector "searchable_tsvector"
     t.boolean "staged_consent", default: false, null: false
-    t.decimal "structural_engineer_fee", precision: 13, scale: 2
-    t.integer "documented_performance_solutions"
-    t.text "certificate_reference"
+    t.decimal "area_m2", precision: 13, scale: 2
+    t.boolean "construction_industry_trading_board", default: false, null: false
+    t.boolean "kd_to_lodge", default: false, null: false
+    t.boolean "variation_requested", default: false, null: false
     t.index ["applicant_id"], name: "index_applications_on_applicant_id"
     t.index ["application_type_id"], name: "index_applications_on_application_type_id"
     t.index ["contact_id"], name: "index_applications_on_contact_id"
@@ -127,6 +150,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_105818) do
     t.bigint "postal_suburb_id"
     t.index ["postal_suburb_id"], name: "index_clients_on_postal_suburb_id"
     t.index ["suburb_id"], name: "index_clients_on_suburb_id"
+  end
+
+  create_table "consultancies", force: :cascade do |t|
+    t.text "consultancy_type"
+    t.date "scheduled_date"
+    t.text "notes"
+    t.date "report_or_email_sent"
+    t.bigint "application_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_id"], name: "index_consultancies_on_application_id"
   end
 
   create_table "councils", id: :serial, force: :cascade do |t|
@@ -175,7 +209,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_105818) do
     t.bigint "application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "stage_notes"
     t.index ["application_id"], name: "index_stages_on_application_id"
+  end
+
+  create_table "structural_engineers", force: :cascade do |t|
+    t.text "structural_engineer"
+    t.date "external_engineer_date"
+    t.decimal "structural_engineer_fee", precision: 13, scale: 2
+    t.date "engineer_certificate_received"
+    t.text "certificate_reference"
+    t.boolean "structural_engineer_ok_to_pay", default: false, null: false
+    t.bigint "application_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_id"], name: "index_structural_engineers_on_application_id"
   end
 
   create_table "suburbs", id: :serial, force: :cascade do |t|
@@ -196,11 +244,24 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_105818) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "username"
+    t.boolean "admin", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  create_table "variations", force: :cascade do |t|
+    t.date "variation_date"
+    t.text "variation_type"
+    t.date "variation_issued"
+    t.bigint "application_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_id"], name: "index_variations_on_application_id"
+  end
+
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "application_additional_informations", "applications"
   add_foreign_key "application_uploads", "applications"
   add_foreign_key "applications", "application_types"
@@ -211,9 +272,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_20_105818) do
   add_foreign_key "applications", "suburbs"
   add_foreign_key "clients", "suburbs"
   add_foreign_key "clients", "suburbs", column: "postal_suburb_id"
+  add_foreign_key "consultancies", "applications"
   add_foreign_key "councils", "suburbs"
   add_foreign_key "councils", "suburbs", column: "postal_suburb_id"
   add_foreign_key "invoices", "applications"
   add_foreign_key "request_for_informations", "applications"
   add_foreign_key "stages", "applications"
+  add_foreign_key "structural_engineers", "applications"
+  add_foreign_key "variations", "applications"
 end
