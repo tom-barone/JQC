@@ -1,0 +1,21 @@
+<tr class="nested-fields">
+  <td class="border-0 py-1">
+    <%= f.label :consultancy_type, class: 'd-none' %>
+    <%= f.select :consultancy_type, Consultancy::TYPE %>
+  </td>
+  <td class="border-0 py-1">
+    <%= f.label :scheduled_date, class: 'd-none' %>
+    <%= f.date_field :scheduled_date %>
+  </td>
+  <td class="border-0 py-1">
+    <%= f.label :notes, class: 'd-none' %>
+    <%= f.text_field :notes %>
+  </td>
+  <td class="border-0 py-1">
+    <%= f.label :report_or_email_sent, class: 'd-none' %>
+    <%= f.date_field :report_or_email_sent %>
+  </td>
+  <td class="border-0 py-1 text-center" style="width:3em">
+    <%= link_to_remove_association '⌫', f, class: 'btn btn-sm btn-outline-danger' %>
+  </td>
+</tr>

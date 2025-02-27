@@ -83,7 +83,7 @@ class ApplicationsController < ApplicationController
     respond_to do |format|
       if @application.save
         format.html do
-          redirect_to session[:search_results]
+          redirect_to session[:search_results] || '/'
           flash[:success] = [
             'Successfully created ',
             { 'text' => @application[:reference_number], 'link_to' => edit_application_path(@application) }
@@ -106,7 +106,7 @@ class ApplicationsController < ApplicationController
             'Successfully updated ',
             { 'text' => @application[:reference_number], 'link_to' => edit_application_path(@application) }
           ]
-          redirect_to session[:search_results]
+          redirect_to session[:search_results] || '/'
         else
           render :edit, status: :unprocessable_entity
         end
@@ -122,7 +122,7 @@ class ApplicationsController < ApplicationController
     respond_to do |format|
       format.html do
         flash[:success] = ["Successfully deleted #{@application[:reference_number]}"]
-        redirect_to session[:search_results]
+        redirect_to session[:search_results] || '/'
       end
     end
   end
@@ -154,12 +154,22 @@ class ApplicationsController < ApplicationController
   end
 
   # Use callbacks to share common setup or constraints between actions.
+  # rubocop:disable Metrics/MethodLength
   def set_application
     @application = Application
+                   .includes(:invoices,
+                             :application_additional_informations,
+                             :application_uploads,
+                             :request_for_informations,
+                             :stages,
+                             :structural_engineers,
+                             :consultancies,
+                             :variations)
                    .with_attached_attachments
                    .eager_load_associations
                    .find(params.expect(:id))
   end
+  # rubocop:enable Metrics/MethodLength
 
   def search_params
     params.permit(
@@ -173,19 +183,17 @@ class ApplicationsController < ApplicationController
   end
 
   # Only allow a list of trusted parameters through.
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   def application_params
     params.expect(application: [
                     :reference_number, :converted_to_from, :council_name, :development_application_number,
                     :applicant_name, :owner_name, :contact_name, :description, :cancelled, :street_number, :lot_number,
                     :street_name, :suburb_display_name, :staged_consent, :engagement_form, :job_type_administration,
                     :quote_accepted_date, :administration_notes, :number_of_storeys, :construction_value, :fee_amount,
-                    :building_surveyor, :structural_engineer, :risk_rating, :consultancies_review_inspection,
-                    :consultancies_report_sent, :assessment_commenced, :consent_issued, :variation_issued, :coo_issued,
-                    :engineer_certificate_received, :certifier, :certification_notes, :invoice_to, :care_of,
-                    :invoice_email, :attention, :purchase_order_number, :fully_invoiced, :invoice_debtor_notes,
-                    :applicant_email, :area_m2, :application_type_id, :external_engineer_date, :structural_engineer_fee,
-                    :certificate_reference, :construction_industry_trading_board, :kd_to_lodge,
+                    :building_surveyor, :risk_rating, :assessment_commenced, :consent_issued, :coo_issued, :certifier,
+                    :certification_notes, :invoice_to, :care_of, :invoice_email, :attention, :purchase_order_number,
+                    :fully_invoiced, :invoice_debtor_notes, :applicant_email, :area_m2, :application_type_id,
+                    :construction_industry_trading_board, :kd_to_lodge, :variation_requested,
                     { invoices_attributes: [
                         Invoice.attribute_names.map(&:to_sym).push(:_destroy)
                       ],
@@ -204,9 +212,18 @@ class ApplicationsController < ApplicationController
                       request_for_informations_attributes: [
                         RequestForInformation.attribute_names.map(&:to_sym).push(:_destroy)
                       ],
+                      structural_engineers_attributes: [
+                        StructuralEngineer.attribute_names.map(&:to_sym).push(:_destroy)
+                      ],
+                      consultancies_attributes: [
+                        Consultancy.attribute_names.map(&:to_sym).push(:_destroy)
+                      ],
+                      variations_attributes: [
+                        Variation.attribute_names.map(&:to_sym).push(:_destroy)
+                      ],
                       attachments: [] }
                   ])
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
 end
 # rubocop:enable Metrics/ClassLength

@@ -1,0 +1,29 @@
+<tr class="nested-fields">
+  <td class="border-0 py-1">
+    <%= f.label :structural_engineer, class: 'd-none' %>
+    <%= f.select :structural_engineer, StructuralEngineer::STRUCTURAL_ENGINEER %>
+  </td>
+  <td class="border-0 py-1">
+    <%= f.label :external_engineer_date, class: 'd-none' %>
+    <%= f.date_field :external_engineer_date %>
+  </td>
+  <td class="border-0 py-1">
+    <%= f.label :structural_engineer_fee, class: 'd-none' %>
+    <%= f.text_field :structural_engineer_fee, type: 'number', min: '1', step: 'any' %>
+  </td>
+  <td class="border-0 py-1">
+    <%= f.label :engineer_certificate_received, class: 'd-none' %>
+    <%= f.date_field :engineer_certificate_received %>
+  </td>
+  <td class="border-0 py-1">
+    <%= f.label :certificate_reference, class: 'd-none' %>
+    <%= f.text_field :certificate_reference %>
+  </td>
+  <td class="border-0 py-1">
+    <%= f.label :structural_engineer_ok_to_pay, class: 'd-none' %>
+    <%= f.check_box :structural_engineer_ok_to_pay %>
+  </td>
+  <td class="border-0 py-1 text-center" style="width:3em">
+    <%= link_to_remove_association '⌫', f, class: 'btn btn-sm btn-outline-danger' %>
+  </td>
+</tr>

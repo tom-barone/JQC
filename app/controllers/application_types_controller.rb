@@ -13,7 +13,7 @@ class ApplicationTypesController < ApplicationController
         active: application_type_params[id]['active']
       )
     end
-    redirect_to session[:search_results]
+    redirect_to session[:search_results] || '/'
   end
   # rubocop:enable Metrics/AbcSize
 

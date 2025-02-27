@@ -42,9 +42,17 @@ class Application < ApplicationRecord
   has_many :invoices, inverse_of: :application, dependent: :destroy
   accepts_nested_attributes_for :invoices, allow_destroy: true
 
+  has_many :structural_engineers, inverse_of: :application, dependent: :destroy
+  accepts_nested_attributes_for :structural_engineers, allow_destroy: true
+
+  has_many :consultancies, inverse_of: :application, dependent: :destroy
+  accepts_nested_attributes_for :consultancies, allow_destroy: true
+
+  has_many :variations, inverse_of: :application, dependent: :destroy
+  accepts_nested_attributes_for :variations, allow_destroy: true
+
   JOB_TYPE_ADMINISTRATION = ['Residential', 'Commercial', 'Section 49'].freeze
   BUILDING_SURVEYOR = Rails.application.credentials.building_surveyors
-  STRUCTURAL_ENGINEER = Rails.application.credentials.structural_engineers
   CERTIFIER = Rails.application.credentials.certifiers
   RISK_RATING = %w[High Standard Low].freeze
   JOB_TYPE = %w[BRC Other].freeze
@@ -125,7 +133,7 @@ class Application < ApplicationRecord
   scope :filter_by_has_received_engineer_certificate, lambda { |checkbox_value|
     return all unless checkbox_value == '1'
 
-    where.not(engineer_certificate_received: nil)
+    where.not(structural_engineers: { engineer_certificate_received: nil })
   }
 
   scope :filter_by_has_invoices_outstanding, lambda { |checkbox_value|
@@ -182,6 +190,18 @@ class Application < ApplicationRecord
       .includes(:application_additional_informations)
       .joins("LEFT JOIN (#{latest_additional_information_subquery.to_sql}) \
              latest_additional_informations ON latest_additional_informations.application_id = applications.id")
+  }
+
+  scope :with_latest_engineer_certificate_received, lambda {
+    subquery = StructuralEngineer
+               .select('DISTINCT ON (application_id) application_id, engineer_certificate_received')
+               .where.not(engineer_certificate_received: nil)
+               .order('application_id, engineer_certificate_received DESC')
+
+    select('applications.*, latest_structural_engineers.*')
+      .includes(:structural_engineers)
+      .joins("LEFT JOIN (#{subquery.to_sql}) \
+             latest_structural_engineers ON latest_structural_engineers.application_id = applications.id")
   }
 
   scope :with_invoices_outstanding, lambda {
@@ -241,6 +261,7 @@ class Application < ApplicationRecord
   def self.building_surveyor_search(params)
     with_latest_rfis
       .with_latest_additional_informations
+      .with_latest_engineer_certificate_received
       .with_invoices_outstanding
       .eager_load_associations
       .where(consent_issued: nil)
