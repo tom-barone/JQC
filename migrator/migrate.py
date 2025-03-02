@@ -209,6 +209,7 @@ def transfer_data(
 
 
 if __name__ == "__main__":
+    print("Reset the database first with rails db:reset")
     print(
         """NOTE: Make sure you run this beforehand to make sure all the indexes and search columns are built properly.\n\nrails db:migrate:primary VERSION=20250214044701\n\n"""
     )

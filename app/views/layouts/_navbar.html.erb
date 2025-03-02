@@ -47,9 +47,13 @@
             or call #{Rails.application.credentials.support_phone!}.<br/>
             <br/>
             - Something isn't working properly and you need it fixed.<br/>
-            - A specific report or summary (e.g. a list of all PC's for 2014 to 2019).<br/>
+            - A specialised report or summary.<br/>
             - General feedback about what could be improved.<br/>
-            <br/>" %>">
+            <br/>
+            For more information, please see the <a
+            href='#{Rails.application.credentials.as_built_documentation_link!}'>
+            JQC As Built Documentation</a>.
+          " %>">
           Request Support
         </button>
         <%= button_to destroy_user_session_path,
