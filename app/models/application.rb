@@ -159,10 +159,31 @@ class Application < ApplicationRecord
   scope :filter_by_search_text, lambda { |query|
     return all if query.blank?
 
+    # Text search query
     formatted_query = query.split.map { |word| "#{word}:*" }.join(' & ')
-    safe_query = sanitize_sql_array(["searchable_tsvector @@ to_tsquery('english', ?)", formatted_query])
+    ts_condition = sanitize_sql_array(["searchable_tsvector @@ to_tsquery('english', ?)", formatted_query])
 
-    where(Arel.sql(safe_query))
+    # Reference number query (fixed approach)
+    words = query.split
+    reference_condition = words.map.with_index do |word, idx|
+      ["reference_number ILIKE :word#{idx}", { "word#{idx}": "%#{word}%" }]
+    end
+
+    # Combine conditions safely
+    reference_clause = nil
+
+    if reference_condition.any?
+      reference_queries = reference_condition.map(&:first)
+      reference_params = reference_condition.map(&:last).reduce({}, :merge)
+      reference_clause = [reference_queries.join(' OR '), reference_params]
+    end
+
+    # Use a proper OR condition
+    if reference_clause
+      where(ts_condition).or(where(*reference_clause))
+    else
+      where(ts_condition)
+    end
   }
 
   # Not used right now, but could be cool in the future
