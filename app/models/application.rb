@@ -160,9 +160,16 @@ class Application < ApplicationRecord
     return all if query.blank?
 
     formatted_query = query.split.map { |word| "#{word}:*" }.join(' & ')
-    safe_query = sanitize_sql_array(["searchable_tsvector @@ to_tsquery('english', ?)", formatted_query])
+    ts_query = sanitize_sql_array(["searchable_tsvector @@ to_tsquery('english', ?)", formatted_query])
 
-    where(Arel.sql(safe_query))
+    # Reference number matching part (new)
+    reference_conditions = query.split.map do |word|
+      sanitize_sql_array(['reference_number ILIKE ?', "%#{word}%"])
+    end
+
+    reference_query = reference_conditions.join(' OR ')
+
+    where(Arel.sql("(#{ts_query}) OR (#{reference_query})"))
   }
 
   # Not used right now, but could be cool in the future
