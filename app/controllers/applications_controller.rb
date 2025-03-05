@@ -193,7 +193,7 @@ class ApplicationsController < ApplicationController
                     :building_surveyor, :risk_rating, :assessment_commenced, :consent_issued, :coo_issued, :certifier,
                     :certification_notes, :invoice_to, :care_of, :invoice_email, :attention, :purchase_order_number,
                     :fully_invoiced, :invoice_debtor_notes, :applicant_email, :area_m2, :application_type_id,
-                    :construction_industry_trading_board, :kd_to_lodge, :variation_requested,
+                    :construction_industry_trading_board, :kd_to_lodge, :variation_requested, :created_at,
                     { invoices_attributes: [
                         Invoice.attribute_names.map(&:to_sym).push(:_destroy)
                       ],
