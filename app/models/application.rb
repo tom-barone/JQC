@@ -290,8 +290,12 @@ class Application < ApplicationRecord
       .with_latest_additional_informations
       .with_latest_engineer_certificate_received
       .with_invoices_outstanding
-      .eager_load_associations
-      .where(consent_issued: nil)
+      .eager_load_associations.and(
+        # variation_requested might come after final consent has been issued
+        where(consent_issued: nil).or(
+          where.not(consent_issued: nil).where(variation_requested: true)
+        )
+      )
       .filter_by_type(params[:type])
       .filter_by_assessment_commenced_date(params[:start_date], params[:end_date])
       .filter_by_search_text(params[:search_text])
