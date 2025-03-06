@@ -154,13 +154,59 @@ class Application < ApplicationRecord
       .order(reference_number: :desc)
   }
 
+  # rubocop:disable Metrics/BlockLength
   # See db/migrate/20250215120712_add_text_search_to_applications.rb for the triggers and search functions
   # behind the searchable_tsvector column
   scope :filter_by_search_text, lambda { |query|
     return all if query.blank?
 
+    # Extract terms, handling quoted phrases properly
+    terms = []
+    remaining = query.dup
+
+    # Process quoted sections first
+    ['"', "'"].each do |quote_char|
+      while remaining.include?(quote_char)
+        parts = remaining.split(quote_char, 3)
+
+        if parts.length >= 3
+          # We found an opening and closing quote
+          before_quote = parts[0]
+          quoted_content = parts[1]
+          after_quote = parts[2]
+
+          # Add any terms before the quote
+          before_quote.split.each { |term| terms << term unless term.empty? }
+
+          # Add the quoted content as a single term if not empty
+          terms << quoted_content unless quoted_content.empty?
+
+          # Continue processing the remainder
+          remaining = after_quote
+        else
+          # Unmatched quote - treat the rest as normal text
+          remaining = parts.join(quote_char)
+          break
+        end
+      end
+    end
+
+    # Add any remaining unquoted terms
+    remaining.split.each { |term| terms << term unless term.empty? }
+
+    # Format for text search
+    formatted_query = terms.map do |term|
+      if term.include?(' ')
+        # Phrase search - terms must appear together in order
+        term.split.map(&:to_s).join(' <-> ')
+      else
+        # Regular prefix search
+        "#{term.gsub(/["']/, '')}:*"
+      end
+    end.join(' & ')
+
     # Text search query
-    formatted_query = query.split.map { |word| "#{word}:*" }.join(' & ')
+    # formatted_query = query.split.map { |word| "#{word.gsub(/["']/, '')}:*" }.join(' & ')
     ts_condition = sanitize_sql_array(["searchable_tsvector @@ to_tsquery('english', ?)", formatted_query])
 
     # Reference number query (fixed approach)
@@ -185,11 +231,13 @@ class Application < ApplicationRecord
       where(ts_condition)
     end
   }
+  # rubocop:enable Metrics/BlockLength
 
   # Not used right now, but could be cool in the future
   scope :order_by_search_text_rank, lambda { |query|
     return all if query.blank?
 
+    # Remove quotes from the word
     formatted_query = query.split.map { |word| "#{word}:*" }.join(' & ')
     safe_rank = sanitize_sql_array(["ts_rank(searchable_tsvector, to_tsquery('english', ?)) DESC", formatted_query])
 
