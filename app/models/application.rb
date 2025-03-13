@@ -160,73 +160,76 @@ class Application < ApplicationRecord
   scope :filter_by_search_text, lambda { |query|
     return all if query.blank?
 
-    # Extract terms, handling quoted phrases properly
-    terms = []
-    remaining = query.dup
+    # Create a plainto_tsquery from the entire query string
+    # This handles special characters and properly formats the search
+    ts_condition = sanitize_sql_array([
+                                        "searchable_tsvector @@ plainto_tsquery('english', ?)",
+                                        query
+                                      ])
 
-    # Process quoted sections first
-    ['"', "'"].each do |quote_char|
-      while remaining.include?(quote_char)
-        parts = remaining.split(quote_char, 3)
+    # For better searching with quoted phrases, we can use phraseto_tsquery
+    # when quotes are detected
+    if query.include?('"') || query.include?("'")
+      quoted_query = query.tr('\'', '"') # Standardize on double quotes
 
-        if parts.length >= 3
-          # We found an opening and closing quote
-          before_quote = parts[0]
-          quoted_content = parts[1]
-          after_quote = parts[2]
+      # Extract phrases in quotes
+      phrases = []
+      remaining = quoted_query.dup
 
-          # Add any terms before the quote
-          before_quote.split.each { |term| terms << term unless term.empty? }
+      # Process quoted sections
+      while remaining.include?('"')
+        parts = remaining.split('"', 3)
 
-          # Add the quoted content as a single term if not empty
-          terms << quoted_content unless quoted_content.empty?
+        break unless parts.length >= 3
 
-          # Continue processing the remainder
-          remaining = after_quote
-        else
-          # Unmatched quote - treat the rest as normal text
-          remaining = parts.join(quote_char)
-          break
+        # We found an opening and closing quote
+        phrases << parts[1] unless parts[1].empty?
+        remaining = "#{parts[0]} #{parts[2]}"
+
+        # Unmatched quote - stop processing
+
+      end
+
+      # Create phrase conditions with phraseto_tsquery for quoted sections
+      phrase_conditions = phrases.map do |phrase|
+        sanitize_sql_array([
+                             "searchable_tsvector @@ phraseto_tsquery('english', ?)",
+                             phrase
+                           ])
+      end
+
+      # Add the phrase conditions to the main condition if we found any
+      if phrase_conditions.any?
+        # Use plainto_tsquery for the remaining text (outside quotes)
+        unless remaining.strip.empty?
+          remaining_condition = sanitize_sql_array([
+                                                     "searchable_tsvector @@ plainto_tsquery('english', ?)",
+                                                     remaining.strip
+                                                   ])
         end
+
+        # Combine all conditions
+        combined_conditions = phrase_conditions
+        combined_conditions << remaining_condition unless remaining.strip.empty?
+
+        ts_condition = combined_conditions.join(' AND ')
       end
     end
 
-    # Add any remaining unquoted terms
-    remaining.split.each { |term| terms << term unless term.empty? }
+    # Reference number query
+    # Create a safer approach using ActiveRecord's where chaining
+    reference_query = all
 
-    # Format for text search
-    formatted_query = terms.map do |term|
-      if term.include?(' ')
-        # Phrase search - terms must appear together in order
-        term.split.map(&:to_s).join(' <-> ')
-      else
-        # Regular prefix search
-        "#{term.gsub(/["']/, '')}:*"
-      end
-    end.join(' & ')
-
-    # Text search query
-    # formatted_query = query.split.map { |word| "#{word.gsub(/["']/, '')}:*" }.join(' & ')
-    ts_condition = sanitize_sql_array(["searchable_tsvector @@ to_tsquery('english', ?)", formatted_query])
-
-    # Reference number query (fixed approach)
-    words = query.split
-    reference_condition = words.map.with_index do |word, idx|
-      ["reference_number ILIKE :word#{idx}", { "word#{idx}": "%#{word}%" }]
+    # Start with the base relation
+    query.split.each_with_index do |word, _idx|
+      # Use sanitized parameter binding for each word
+      reference_query = reference_query.where('reference_number ILIKE ?', "%#{word}%")
     end
 
-    # Combine conditions safely
-    reference_clause = nil
-
-    if reference_condition.any?
-      reference_queries = reference_condition.map(&:first)
-      reference_params = reference_condition.map(&:last).reduce({}, :merge)
-      reference_clause = [reference_queries.join(' OR '), reference_params]
-    end
-
-    # Use a proper OR condition
-    if reference_clause
-      where(ts_condition).or(where(*reference_clause))
+    # Combine tsquery and reference conditions using ActiveRecord's or method
+    # This avoids manually constructing SQL fragments
+    if query.split.any?
+      where(ts_condition).or(reference_query)
     else
       where(ts_condition)
     end
