@@ -63,6 +63,11 @@ dokku --remote <remote_name> git:set deploy-branch <branch_name>
 git push <remote_name> <branch>
 # Scale up the web and worker processes
 dokku --remote <remote_name> ps:scale web=1 worker=1
+# Limit the app resources, set these to whatever you need
+# See https://docs.docker.com/engine/containers/resource_constraints
+dokku --remote <remote_name> resource:limit --cpu 1 --memory 1g --process-type web
+dokku --remote <remote_name> resource:limit --cpu 0.5 --memory 500m --process-type worker 
+dokku --remote <remote_name> resource:report
 
 # Anytime you need to deploy a new release
 git push <remote_name> <branch>

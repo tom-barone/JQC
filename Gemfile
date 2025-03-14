@@ -102,6 +102,10 @@ group :development do
 
   # For viewing emails in development [https://github.com/ryanb/letter_opener]
   gem 'letter_opener'
+
+  # For finding memory leaks
+  gem 'derailed_benchmarks'
+  gem 'stackprof'
 end
 
 group :test do
