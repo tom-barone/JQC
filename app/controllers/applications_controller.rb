@@ -154,22 +154,12 @@ class ApplicationsController < ApplicationController
   end
 
   # Use callbacks to share common setup or constraints between actions.
-  # rubocop:disable Metrics/MethodLength
   def set_application
     @application = Application
-                   .includes(:invoices,
-                             :application_additional_informations,
-                             :application_uploads,
-                             :request_for_informations,
-                             :stages,
-                             :structural_engineers,
-                             :consultancies,
-                             :variations)
                    .with_attached_attachments
                    .eager_load_associations
                    .find(params.expect(:id))
   end
-  # rubocop:enable Metrics/MethodLength
 
   def search_params
     params.permit(
