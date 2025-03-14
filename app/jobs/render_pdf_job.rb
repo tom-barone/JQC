@@ -5,12 +5,14 @@ class RenderPdfJob < ApplicationJob
 
   def perform(html, host, protocol)
     FerrumPdf.browser(process_timeout: 10, browser_options: { 'no-sandbox': nil })
-    FerrumPdf.render_pdf(
+    result = FerrumPdf.render_pdf(
       html: html,
       host: host,
       protocol: protocol,
       pdf_options: pdf_render_options
     )
+    FerrumPdf.quit
+    result
   end
 
   private

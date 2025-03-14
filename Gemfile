@@ -5,7 +5,7 @@ source 'https://rubygems.org'
 ruby '3.3.7'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 8.0.1'
+gem 'rails', '~> 8.0.2'
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem 'propshaft'
 # Use postgresql as the database for Active Record
@@ -102,6 +102,10 @@ group :development do
 
   # For viewing emails in development [https://github.com/ryanb/letter_opener]
   gem 'letter_opener'
+
+  # For finding memory leaks
+  gem 'derailed_benchmarks'
+  gem 'stackprof'
 end
 
 group :test do
