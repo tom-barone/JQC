@@ -66,8 +66,11 @@ dokku --remote <remote_name> ps:scale web=1 worker=1
 # Limit the app resources, set these to whatever you need
 # See https://docs.docker.com/engine/containers/resource_constraints
 dokku --remote <remote_name> resource:limit --cpu 1 --memory 1g --process-type web
-dokku --remote <remote_name> resource:limit --cpu 0.5 --memory 500m --process-type worker 
+dokku --remote <remote_name> resource:limit --cpu 0.5 --memory 500m --process-type worker
 dokku --remote <remote_name> resource:report
+# Setup vector logging to a file at /var/log/dokku/apps/<app_name>.log
+dokku --remote <remote_name> logs:set vector-sink "file://?encoding[codec]=csv&encoding[csv][fields][]=timestamp&encoding[csv][fields][]=message&encoding[csv][quote_style]=always&path=/var/log/dokku/apps/<app_name>.log"
+dokku --remote <remote_name> logs:vector-start
 
 # Anytime you need to deploy a new release
 git push <remote_name> <branch>
