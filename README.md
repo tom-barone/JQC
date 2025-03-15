@@ -44,7 +44,7 @@ ssh -t <user>@<dokku_server> dokku apps:create <website_domain>
 git remote add <remote_name> dokku@<dokku_server>:<website_domain>
 # Set the domain for the dokku container
 dokku --remote <remote_name> domains:set <website_domain>
-# Create & link postgres and redis containers (can limit memory usage in MB with --memory)
+# Create & link postgres and redis containers (limit memory usage in MB with --memory)
 dokku --remote <remote_name> postgres:create <app_name>-db --memory 1024
 dokku --remote <remote_name> postgres:link <app_name>-db <website_domain>
 dokku --remote <remote_name> redis:create <app_name>-redis
