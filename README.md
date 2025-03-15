@@ -44,8 +44,8 @@ ssh -t <user>@<dokku_server> dokku apps:create <website_domain>
 git remote add <remote_name> dokku@<dokku_server>:<website_domain>
 # Set the domain for the dokku container
 dokku --remote <remote_name> domains:set <website_domain>
-# Create & link postgres and redis containers
-dokku --remote <remote_name> postgres:create <app_name>-db
+# Create & link postgres and redis containers (can limit memory usage in MB with --memory)
+dokku --remote <remote_name> postgres:create <app_name>-db --memory 1024
 dokku --remote <remote_name> postgres:link <app_name>-db <website_domain>
 dokku --remote <remote_name> redis:create <app_name>-redis
 dokku --remote <remote_name> redis:link <app_name>-redis <website_domain>
@@ -68,7 +68,8 @@ dokku --remote <remote_name> ps:scale web=1 worker=1
 dokku --remote <remote_name> resource:limit --cpu 1 --memory 1g --process-type web
 dokku --remote <remote_name> resource:limit --cpu 0.5 --memory 500m --process-type worker
 dokku --remote <remote_name> resource:report
-# Setup vector logging to a file at /var/log/dokku/apps/<app_name>.log
+# Setup persistent logging to a file at /var/log/dokku/apps/<app_name>.log
+# The regular app logs are not kept between container restarts / deploys
 dokku --remote <remote_name> logs:set vector-sink "file://?encoding[codec]=csv&encoding[csv][fields][]=timestamp&encoding[csv][fields][]=message&encoding[csv][quote_style]=always&path=/var/log/dokku/apps/<app_name>.log"
 dokku --remote <remote_name> logs:vector-start
 
