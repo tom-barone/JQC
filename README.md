@@ -65,8 +65,8 @@ git push <remote_name> <branch>
 dokku --remote <remote_name> ps:scale web=1 worker=1
 # Limit the app resources, set these to whatever you need
 # See https://docs.docker.com/engine/containers/resource_constraints
-dokku --remote <remote_name> resource:limit --cpu 1 --memory 1g --process-type web
-dokku --remote <remote_name> resource:limit --cpu 0.5 --memory 500m --process-type worker
+dokku --remote <remote_name> resource:limit --memory 1.5g --process-type web
+dokku --remote <remote_name> resource:limit --memory 500m --process-type worker
 dokku --remote <remote_name> resource:report
 # Setup persistent logging to a file at /var/log/dokku/apps/<app_name>.log
 # The regular app logs are not kept between container restarts / deploys
