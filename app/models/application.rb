@@ -260,14 +260,16 @@ class Application < ApplicationRecord
 
   scope :with_latest_additional_informations, lambda {
     latest_additional_information_subquery = ApplicationAdditionalInformation
-                                             .select('DISTINCT ON (application_id) application_id, info_date')
+                                             .select('application_id, MAX(info_date) as latest_info_date')
                                              .where.not(info_date: nil)
-                                             .order('application_id, info_date DESC')
+                                             .group('application_id')
 
-    select('applications.*, latest_additional_informations.*')
-      .includes(:application_additional_informations)
-      .joins("LEFT JOIN (#{latest_additional_information_subquery.to_sql}) \
-             latest_additional_informations ON latest_additional_informations.application_id = applications.id")
+    select('applications.*, application_additional_informations.info_date AS info_date')
+      .joins("LEFT JOIN (#{latest_additional_information_subquery.to_sql}) latest_ai
+           ON latest_ai.application_id = applications.id")
+      .joins("LEFT JOIN application_additional_informations
+           ON application_additional_informations.application_id = applications.id
+           AND application_additional_informations.info_date = latest_ai.latest_info_date")
   }
 
   scope :with_latest_engineer_certificate_received, lambda {

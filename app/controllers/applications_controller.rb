@@ -24,7 +24,7 @@ class ApplicationsController < ApplicationController
   end
 
   # GET /applications/1.pdf
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
   def show
     @converted_application = @application.converted_application
     respond_to do |format|
@@ -33,6 +33,7 @@ class ApplicationsController < ApplicationController
         # Use Timeout with Concurrent::Future so we don't tank the main thread
         # It's a hack, but whatever.
         # I actually don't think it even works.
+        future = nil
         pdf_result = Timeout.timeout(20) do
           future = Concurrent::Future.new do
             RenderPdfJob.perform_now(
@@ -46,16 +47,21 @@ class ApplicationsController < ApplicationController
         end
         send_data pdf_result, disposition: :inline, filename: "#{@application[:reference_number]}.pdf"
       rescue Timeout::Error
+        future&.cancel if future&.incomplete?
         flash[:warning] = 'PDF generation is taking longer than expected sorry. Please try again.'
         redirect_to edit_application_path(@application)
       rescue StandardError => e
+        future&.cancel if future&.incomplete?
         ExceptionNotifier.notify_exception(e)
         flash[:error] = 'Failed to generate PDF. Please try again later.'
         redirect_to edit_application_path(@application)
+      ensure
+        future&.cancel if future&.incomplete?
+        future = nil
       end
     end
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
 
   # GET /applications/new
   def new
