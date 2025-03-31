@@ -36,8 +36,8 @@ module CsvExportable
         ['administration_notes', ->(app) { app.administration_notes }],
         ['number_of_storeys', ->(app) { app.number_of_storeys }],
         ['construction_value', ->(app) { app.construction_value }],
-        ['area_m²', ->(app) { app.area_m2 }],
         ['fee_amount', ->(app) { app.fee_amount }],
+        ['area_m²', ->(app) { app.area_m2 }],
         ['building_surveyor', ->(app) { app.building_surveyor }],
         ['risk_rating', ->(app) { app.risk_rating }],
         ['CITB', ->(app) { app.construction_industry_trading_board }],
@@ -47,6 +47,9 @@ module CsvExportable
         }],
         ['consent_issued', ->(app) { app.consent_issued }],
         ['variation_requested', ->(app) { app.variation_requested }],
+        ['structural_engineers', lambda { |app|
+          app.structural_engineers.map(&:structural_engineer).join(', ')
+        }],
         ['coo_issued', ->(app) { app.coo_issued }],
         ['certification_notes', ->(app) { app.certification_notes }],
         ['invoice_to', ->(app) { app.invoice_to }],
