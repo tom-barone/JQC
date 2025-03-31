@@ -50,6 +50,9 @@ module CsvExportable
         ['structural_engineers', lambda { |app|
           app.structural_engineers.map(&:structural_engineer).join(', ')
         }],
+        ['certificates_received', lambda { |app|
+          app.structural_engineers.map(&:engineer_certificate_received).join(', ')
+        }],
         ['coo_issued', ->(app) { app.coo_issued }],
         ['certification_notes', ->(app) { app.certification_notes }],
         ['invoice_to', ->(app) { app.invoice_to }],
