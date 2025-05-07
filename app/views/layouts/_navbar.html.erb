@@ -21,7 +21,9 @@
                         building_surveyor_search_path,
                         class: surveyor_dashboard_nav_link_class(params) %>
           </li>
-
+          <li class="nav-item">
+            <%= link_to 'Reports', reports_path, class: reports_nav_link_class(params) %>
+          </li>
           <li class="nav-item">
             <%= link_to 'Settings',
                         application_types_edit_path,

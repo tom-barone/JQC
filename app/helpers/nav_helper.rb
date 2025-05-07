@@ -11,6 +11,11 @@ module NavHelper
     "nav-link #{'active' if active}"
   end
 
+  def reports_nav_link_class(params)
+    active = params[:controller] == 'reports'
+    "nav-link #{'active' if active}"
+  end
+
   def settings_nav_link_class(params)
     active = params[:controller] == 'application_types'
     "nav-link #{'active' if active}"
