@@ -4,11 +4,15 @@ updates:
     directory: "/"
     target-branch: develop
     schedule:
-      interval: daily
-    open-pull-requests-limit: 10
+      interval: weekly
+    groups:
+      security-updates:
+        applies-to: security-updates
+      version-updates:
+        applies-to: version-updates
   - package-ecosystem: github-actions
     directory: "/"
     target-branch: develop
     schedule:
-      interval: daily
+      interval: weekly
     open-pull-requests-limit: 10
