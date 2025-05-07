@@ -1,0 +1,74 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "18dd695e498bf906663a98b119d0cc5f06159927bf1347b2f46ce3c8648fcff3",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/reportable.rb",
+      "line": 127,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"select\\n          a.reference_number,\\n          a.consent_issued,\\n          a.created_at as date_entered,\\n          a.risk_rating,\\n          c.client_name,\\n          a.building_surveyor,\\n          string_agg(se.structural_engineer, ', ') as structural_engineers,\\n          a.job_type_administration as job_type,\\n          a.assessment_commenced as assessment_started\\n      from applications a\\n      left join clients c on c.id = a.applicant_id\\n      left join structural_engineers se on se.application_id = a.id\\n      where a.reference_number like 'PC%' and\\n      a.consent_issued >= '#{(this_month - 1).beginning_of_month}' and a.consent_issued <= '#{(this_month - 1)}'\\n      group by\\n        a.reference_number,\\n        a.consent_issued,\\n        a.created_at,\\n        a.risk_rating,\\n        c.client_name,\\n        a.building_surveyor,\\n        a.job_type_administration,\\n        a.assessment_commenced\\n      order by consent_issued asc\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Reportable",
+        "method": "Reportable.last_month_pcs"
+      },
+      "user_input": "(this_month - 1).beginning_of_month",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "92e8a39b466ad79b2e2135bb33dcf0ff54be7bf33ee01d0f17ccac57cbfbee38",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/reportable.rb",
+      "line": 54,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"select\\n              created_at,\\n              quote_number,\\n              building_surveyor,\\n              fee_amount as quote_cost,\\n              quote_accepted_date,\\n              case\\n                  when (converted_to_from ~ '^PC.*') then converted_to_from\\n              else null end as PC_converted,\\n              case\\n                  when (converted_to_from ~ '^C.*') then converted_to_from\\n              else null end as C_converted\\n          from (\\n              select\\n                  created_at,\\n                  case\\n                      when (reference_number ~ '^Q.*') then reference_number\\n                  else converted_to_from end as quote_number,\\n                  case\\n                      when (reference_number ~ '^Q.*') then converted_to_from\\n                  else reference_number end as converted_to_from,\\n                  quote_accepted_date,\\n                  fee_amount,\\n                  building_surveyor\\n              from applications\\n              where\\n              (reference_number like 'Q%' or converted_to_from like 'Q%') and\\n              created_at >= '#{(this_month << 3).to_s}' and created_at <= '#{((this_month << 3) - 1)}' and\\n              cancelled is not true\\n              group by quote_number, created_at, converted_to_from, quote_accepted_date,\\n                fee_amount, building_surveyor, reference_number\\n          ) as a order by created_at asc\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Reportable",
+        "method": "Reportable.last_3_months_quotes"
+      },
+      "user_input": "(this_month << 3)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "b9b4fc66c985699fa82cdc3c102bbbc8e1860dc66045250f2cf17d1882f0eab0",
+      "check_name": "SQL",
+      "message": "Possible SQL injection",
+      "file": "app/models/concerns/reportable.rb",
+      "line": 89,
+      "link": "https://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.exec_query(\"select a.reference_number,\\n               a.assessment_commenced as assessment_started,\\n               rfi.latest_request_for_information_date,\\n               a.consent_issued,\\n               a.created_at as date_entered,\\n               a.risk_rating,\\n               c.client_name,\\n               a.building_surveyor,\\n               string_agg(se.structural_engineer, ', ') as structural_engineers,\\n               a.job_type_administration as job_type,\\n               a.description\\n        from applications a\\n        left join clients c on c.id = a.applicant_id\\n        left join structural_engineers se on se.application_id = a.id\\n        left join\\n          (select application_id,\\n                  MAX(request_for_information_date) as latest_request_for_information_date\\n           from request_for_informations\\n           group by application_id) as rfi on a.id = rfi.application_id\\n        where a.reference_number like 'PC%'\\n          and a.consent_issued is null\\n          and a.assessment_commenced is not null\\n          and (-- 3 months have passed since assesment and no RFI date\\n         rfi.latest_request_for_information_date is null\\n               and a.assessment_commenced <= '#{(this_month << 3).to_s}'\\n               or -- 3 months have passed since the RFI date\\n         rfi.latest_request_for_information_date is not null\\n               and rfi.latest_request_for_information_date <= '#{(this_month << 3).to_s}')\\n          and cancelled is not true\\n\\t\\t group by\\n\\t\\t   a.reference_number,\\n\\t\\t   a.assessment_commenced,\\n\\t\\t   rfi.latest_request_for_information_date,\\n\\t\\t   a.consent_issued,\\n\\t\\t   a.created_at,\\n\\t\\t   a.risk_rating,\\n\\t\\t   c.client_name,\\n\\t\\t   a.building_surveyor,\\n\\t\\t   a.job_type_administration,\\n\\t\\t   a.description\\n        order by date_entered asc\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Reportable",
+        "method": "Reportable.overdue_pcs"
+      },
+      "user_input": "(this_month << 3)",
+      "confidence": "Medium",
+      "cwe_id": [
+        89
+      ],
+      "note": ""
+    }
+  ],
+  "brakeman_version": "7.0.2"
+}
