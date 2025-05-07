@@ -35,6 +35,22 @@ class ReportMailer < ApplicationMailer
                   mime_type: 'text/csv',
                   content: to_csv(Application.no_rfi_sent_but_assessment_assigned_over_3_months_ago(this_month))
                 }
+    attachments['Quotes_last_3_months.csv'] = {
+      mime_type: 'text/csv',
+      content: convert_to_csv(Application.last_3_months_quotes(this_month))
+    }
+    attachments['Overdue_PCs.csv'] = {
+      mime_type: 'text/csv',
+      content: convert_to_csv(Application.overdue_pcs(this_month))
+    }
+    attachments['PCs_last_month.csv'] = {
+      mime_type: 'text/csv',
+      content: convert_to_csv(Application.last_month_pcs(this_month))
+    }
+    attachments['PCs_invoice_sent_and_consent_not_issued.csv'] = {
+      mime_type: 'text/csv',
+      content: convert_to_csv(Application.pcs_with_invoices_sent_and_consent_not_issued)
+    }
 
     # Mail it
     mail(
@@ -56,6 +72,13 @@ class ReportMailer < ApplicationMailer
           csv << csv_columns.map { |_, getter| getter.call(application) }
         end
       end
+    end
+  end
+
+  def convert_to_csv(report)
+    CSV.generate(headers: true) do |csv|
+      csv << report.columns
+      report.rows.each { |row| csv << row }
     end
   end
 end

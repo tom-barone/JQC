@@ -149,4 +149,10 @@ task check_for_recent_backup: %i[environment] do
   end
 end
 
+task restore_development_db_from_most_recent_backup: %i[environment fetch_most_recent_backup] do
+  sh 'pg_restore --clean --dbname=jqc_development --exit-on-error backup/export'
+  sh 'bundle exec bin/rails db:seed db:migrate'
+  sh 'rm -rf backup'
+end
+
 Rails.application.load_tasks
