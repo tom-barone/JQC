@@ -117,3 +117,16 @@ pg_restore --clean --dbname=<local_db_name> --exit-on-error backup/export
 # For a dokku hosted database
 dokku --remote <remote_name> postgres:import <app_name>-db < backup/export
 ```
+
+## Development
+
+There are some issues with `solid_queue` causing trouble when resetting the database.
+To reset everything from scratch so we can load in backed up data in development:
+
+```bash
+rails db:migrate:reset
+rails db:drop:queue
+# Reset the db/queue_schema.rb file
+rails db:prepare
+rake restore_development_db_from_most_recent_backup
+```

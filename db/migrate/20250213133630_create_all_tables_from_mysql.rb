@@ -141,6 +141,11 @@ class CreateAllTablesFromMysql < ActiveRecord::Migration[8.0]
       t.references :application, foreign_key: true
       t.timestamps null: false
     end
+
+    # Seed the ApplicationTypes table
+    %w[C LG PC Q RC SC].each do |type|
+      ApplicationType.create(application_type: type, last_used: 0)
+    end
   end
 end
 # rubocop:enable Metrics/BlockLength, Metrics/ClassLength, Metrics/AbcSize
