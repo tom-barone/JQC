@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   resources :clients, only: %i[edit update]
   resources :applications do
@@ -27,6 +28,12 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get 'building_surveyor_search' => 'search#building_surveyor_search', as: :building_surveyor_search
 
+  resources :reports, only: [:index] do
+    collection do
+      get :download
+    end
+  end
+
   # Test routes to check emails are sent on exceptions
   # TODO add this to a /health endpoint
   get 'fail' => 'testing#fail' unless Rails.env.production?
@@ -42,3 +49,4 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root to: redirect('/users/sign_in')
 end
+# rubocop:enable Metrics/BlockLength

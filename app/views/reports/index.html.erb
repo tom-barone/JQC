@@ -1,0 +1,82 @@
+<h2 class="text-center mb-5">
+  JQC Reports</h2>
+<div class="container overflow-hidden">
+  <div class="row gx-5">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Applications with no final consent issued</h5>
+          <%= bootstrap_form_with url: reports_path(format: :csv), method: :get do |form| %>
+
+            <p class="card-text">
+              <%= form.label :latest_rfi_sent_date, 'Last RFI sent before:' %>
+              <%= form.date_field :latest_rfi_sent_date, value: @three_months_ago, required: true %>
+              <%= form.hidden_field :report_type,
+                                    value: 'applications_with_no_final_consent_issued' %>
+            </p>
+            <button type="submit" class="card-link btn btn-primary">Download</button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Applications with no RFI sent</h5>
+          <%= bootstrap_form_with url: reports_path(format: :csv), method: :get do |form| %>
+
+            <p class="card-text">
+              <%= form.label :assessment_assigned_before, 'Assessment assigned before:' %>
+              <%= form.date_field :assessment_assigned_before,
+                                  value: @three_months_ago,
+                                  required: true %>
+              <%= form.hidden_field :report_type, value: 'applications_with_no_rfi_sent' %>
+            </p>
+            <button type="submit" class="card-link btn btn-primary">Download</button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row gx-5 mt-5">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Overdue PCs</h5>
+          <%= bootstrap_form_with url: reports_path(format: :csv), method: :get do |form| %>
+
+            <p class="card-text">
+              <%= form.label :assessment_assigned_before_date, 'Assessment assigned before:' %>
+              <%= form.date_field :assessment_assigned_before_date,
+                                  value: @three_months_ago,
+                                  required: true %>
+              <%= form.label :latest_rfi_sent_before_date, 'Latest RFI sent before:' %>
+              <%= form.date_field :latest_rfi_sent_before_date,
+                                  value: @three_months_ago,
+                                  required: true %>
+              <%= form.hidden_field :report_type, value: 'overdue_pcs' %>
+            </p>
+            <button type="submit" class="card-link btn btn-primary">Download</button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">PCs with invoices sent and consent not issued</h5>
+          <%= bootstrap_form_with url: reports_path(format: :csv), method: :get do |form| %>
+
+            <p class="card-text">
+              <%= form.label :invoice_date_after, 'Invoice sent after:' %>
+              <%= form.date_field :invoice_date_after, value: @three_months_ago, required: true %>
+              <%= form.hidden_field :report_type,
+                                    value: 'pcs_with_invoices_sent_and_consent_not_issued' %>
+            </p>
+            <button type="submit" class="card-link btn btn-primary">Download</button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

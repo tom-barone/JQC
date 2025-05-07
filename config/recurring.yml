@@ -1,8 +1,8 @@
 default: &default
-  last_month_reports:
-    command: "ReportMailer.last_month_csv_reports.deliver_later"
-    priority: 1
-    schedule: "every month at 9am, Australia/Adelaide"
+#  last_month_reports:
+#    command: "ReportMailer.last_month_csv_reports.deliver_later"
+#    priority: 1
+#    schedule: "every month at 9am, Australia/Adelaide"
 # For quarterly
 # every 3 months at 9am, Australia/Adelaide
 
