@@ -279,7 +279,7 @@
       <div class="col">
         <!-- Description -->
         <%= form.label :description %>
-        <%= form.text_area :description, style: 'height: 11vh' %>
+        <%= form.text_area :description, style: 'height: 13vh' %>
       </div>
     </div>
     <div class="row">
@@ -287,11 +287,11 @@
       <div class="col">
         <!-- Administration notes -->
         <%= form.label :administration_notes %>
-        <%= form.text_area :administration_notes, style: 'height: 11vh' %>
+        <%= form.text_area :administration_notes, style: 'height: 13vh' %>
       </div>
     </div>
   </div>
-  <div class="col-3">
+  <div class="col-2">
     <div class="row">
 
       <div class="col">
@@ -299,6 +299,8 @@
         <%= form.label :invoice_to %>
         <%= form.text_field :invoice_to %>
       </div>
+    </div>
+    <div class="row">
 
       <div class="col">
         <!-- Care of -->
@@ -306,6 +308,7 @@
         <%= form.text_field :care_of %>
       </div>
     </div>
+
     <div class="row">
 
       <div class="col">
@@ -333,12 +336,12 @@
       <div class="col">
         <!-- Invoice debtor notes -->
         <%= form.label :invoice_debtor_notes %>
-        <%= form.text_area :invoice_debtor_notes, style: 'height: rvh' %>
+        <%= form.text_area :invoice_debtor_notes, rows: 2 %>
       </div>
     </div>
   </div>
 
-  <div class="col-6">
+  <div class="col-7">
     <!-- Invoices -->
     <div class="card" style="max-height: 17em; overflow: auto">
       <table
@@ -348,28 +351,28 @@
         data-action="cocoon:after-insert->invoice-table#updateGstAndTotals">
         <thead style="position: sticky; top: 0; z-index: 1;">
           <tr>
-            <th class="fw-normal small">
+            <th class="fw-normal small" style="width: 13em">
               <div class="ps-2 py-2">Invoice date</div>
             </th>
             <th class="fw-normal small">
               <div class="ps-2 py-2">Stage</div>
             </th>
-            <th class="fw-normal small">
+            <th class="fw-normal small" style="width: 9em">
               <div class="ps-2 py-2">KD fee</div>
             </th>
-            <th class="fw-normal small">
+            <th class="fw-normal small" style="width: 9em">
               <div class="ps-2 py-2">GST</div>
             </th>
-            <th class="fw-normal small">
+            <th class="fw-normal small" style="width: 9em">
               <div class="ps-2 py-2">Admin fee</div>
             </th>
-            <th class="fw-normal small">
+            <th class="fw-normal small" style="width: 9em">
               <div class="ps-2 py-2">Invoice no.</div>
             </th>
-            <th class="fw-normal small">
+            <th class="fw-normal small" style="width: 3em">
               <div class="ps-2 py-2">Paid</div>
             </th>
-            <th></th>
+            <th style="width: 3em"></th>
           </tr>
         </thead>
         <tbody class="invoice-fields">
@@ -382,7 +385,7 @@
             <td class="fw-normal small">
               <div class="ps-2">Totals</div>
             </td>
-            <td></td>
+            <td class="fw-normal small"></td>
             <td class="fw-normal small">
               <div class="ps-2" data-invoice-table-target="kdFeeTotal">
               </div>
@@ -400,7 +403,7 @@
                              'Fully invoiced',
                              style: 'margin-top: 0px !important' %>
             </td>
-            <td class="fw-normal small">
+            <td class="fw-normal small px-2">
               <%= form.check_box :fully_invoiced %>
             </td>
             <td>
