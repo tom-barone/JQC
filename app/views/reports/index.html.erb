@@ -78,5 +78,28 @@
         </div>
       </div>
     </div>
+  </div><div class="row gx-5 mt-5">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Structural Report</h5>
+          <%= bootstrap_form_with url: reports_path(format: :csv), method: :get do |form| %>
+
+            <p class="card-text">
+              <%= form.label :application_date_entered_from, 'Application date entered from:' %>
+              <%= form.date_field :application_date_entered_from,
+                                  value: @last_month,
+                                  required: true %>
+              <%= form.label :application_date_entered_to, 'Application date entered to:' %>
+              <%= form.date_field :application_date_entered_to, value: @today, required: true %>
+              <%= form.hidden_field :report_type, value: 'structural_report' %>
+            </p>
+            <button type="submit" class="card-link btn btn-primary">Download</button>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+    </div>
   </div>
 </div>

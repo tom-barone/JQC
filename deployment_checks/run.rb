@@ -46,7 +46,7 @@ class DeploymentTest < ActionDispatch::SystemTestCase
       'Admin notes',
       'Applicant',
       'Council',
-      'Date created',
+      'Date entered',
       'DA no.'
     ].each { |header| assert_text header }
 

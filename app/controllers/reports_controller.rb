@@ -6,9 +6,7 @@ class ReportsController < ApplicationController
   include ActionController::Live
 
   def index
-    @this_month = Time.now.in_time_zone('Australia/Adelaide').to_date.beginning_of_month
-    @last_month = @this_month << 1
-    @three_months_ago = @this_month << 3
+    set_dates
     respond_to do |format|
       format.html
       format.csv do
@@ -20,6 +18,13 @@ class ReportsController < ApplicationController
 
   private
 
+  def set_dates
+    @today = Time.now.in_time_zone('Australia/Adelaide').to_date
+    @this_month = Time.now.in_time_zone('Australia/Adelaide').to_date.beginning_of_month
+    @last_month = @this_month << 1
+    @three_months_ago = @this_month << 3
+  end
+
   def report_for(report_type)
     case report_type
     when 'applications_with_no_final_consent_issued'
@@ -30,6 +35,8 @@ class ReportsController < ApplicationController
       overdue_pcs_report
     when 'pcs_with_invoices_sent_and_consent_not_issued'
       pcs_with_invoices_sent_and_consent_not_issued_report
+    when 'structural_report'
+      structural_report
     else
       flash.now[:alert] = 'Invalid report type'
     end
@@ -73,6 +80,16 @@ class ReportsController < ApplicationController
     headers = applications.columns
     rows = applications.rows
     filename = "pcs_with_invoices_sent_after_#{invoice_date_after}_and_consent_not_issued.csv"
+    CsvResponse.new(rows, headers, filename, response).send
+  end
+
+  def structural_report
+    from = params[:application_date_entered_from]
+    to = params[:application_date_entered_to]
+    structural_engineers = StructuralEngineer.report(from, to)
+    headers = structural_engineers.columns
+    rows = structural_engineers.rows
+    filename = "structural_report_from_#{from}_to_#{to}.csv"
     CsvResponse.new(rows, headers, filename, response).send
   end
 end
