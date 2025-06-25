@@ -33,6 +33,21 @@ To deploy a new production version:
 1. The [CD Github Action](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml)
    will deploy a new production version to dokku, run the production safe checks and create a new git release tag.
 
+## Monitoring
+
+If deployed using [tom-barone/web-server-init](https://github.com/tom-barone/web-server-init), there is a [Grafana](https://grafana.com) / [Graphite](https://graphiteapp.org/) instance available at `http://monitoring.<website_domain>` to use.
+
+Definitions for a working Grafana dashboard and set of alerts are included in the `/monitoring` directory.
+
+![Grafana Dashboard Screenshot](./monitoring/grafana_dashboard_screenshot.png)
+
+Alerts:
+
+- Disk storage almost full.
+- JQC RAM usage too high.
+- System RAM usage too high.
+- CPU usage too high.
+
 ## Deployment
 
 ### Dokku
