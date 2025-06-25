@@ -38,6 +38,8 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       branch: develop
+      # Allow force push to the develop branch
+      git_push_flags: "--force"
     secrets:
       DOMAIN: ${{ secrets.STAGING_DOMAIN }}
       SSH_PRIVATE_KEY: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
