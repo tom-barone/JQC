@@ -6,6 +6,8 @@ on:
       branch:
         required: true
         type: string
+      git_push_flags:
+        type: string
     secrets:
       DOMAIN:
         required: true
@@ -37,6 +39,7 @@ jobs:
           branch: ${{ inputs.branch }}
           git_remote_url: "ssh://dokku@${{ secrets.DOMAIN }}:22/${{ secrets.DOMAIN }}"
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          git_push_flags: ${{ inputs.git_push_flags || '' }}
 
       - name: "Run deployment checks"
         run: 'WEBSITE_URL="https://${{ secrets.DOMAIN }}" bundle exec rake run_deployment_checks'
