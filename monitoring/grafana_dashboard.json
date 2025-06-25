@@ -1,489 +1,522 @@
 {
-  "annotations": {
-    "list": [
-      {
-        "builtIn": 1,
-        "datasource": "-- Grafana --",
-        "enable": true,
-        "hide": true,
-        "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations & Alerts",
-        "type": "dashboard"
-      }
-    ]
-  },
-  "editable": true,
-  "gnetId": null,
-  "graphTooltip": 0,
-  "id": 1,
-  "links": [],
-  "panels": [
-    {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                452646240
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "E",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "0m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "Available system memory on the JQC server has dropped below 500mb.",
-        "name": "Low available system memory alert",
-        "noDataState": "no_data",
-        "notifications": [
-          {
-            "uid": "zCrqefhNk"
-          }
-        ]
-      },
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "description": "Available =~ free + cached",
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 0
-      },
-      "id": 4,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "hide": false,
-          "refCount": -1,
-          "refId": "A",
-          "target": "alias(collectd-jqc-production.memory.memory-free, 'free')"
-        },
-        {
-          "hide": false,
-          "refCount": -1,
-          "refId": "B",
-          "target": "alias(collectd-jqc-production.memory.memory-cached, 'cached')"
-        },
-        {
-          "hide": true,
-          "refCount": 0,
-          "refId": "E",
-          "target": "alias(sumSeries(#A, #B), 'memory-available =~ free + cached')",
-          "targetFull": "alias(sumSeries(alias(collectd-jqc-production.memory.memory-free, 'free'), alias(collectd-jqc-production.memory.memory-cached, 'cached')), 'memory-available =~ free + cached')",
-          "textEditor": false
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "lt",
-          "value": 452646240
-        }
-      ],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Available System Memory",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "decimals": null,
-          "format": "bytes",
-          "label": "",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": "",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                10919220056
-              ],
-              "type": "lt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "0",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "The JQC Server is running out of storage, only ~10gb remaining.",
-        "name": "JQC System Storage Alert",
-        "noDataState": "no_data",
-        "notifications": []
-      },
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 0
-      },
-      "id": 6,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "refCount": 0,
-          "refId": "A",
-          "target": "alias(collectd-jqc-production.df-root.df_complex-free, 'free')"
-        },
-        {
-          "refCount": 0,
-          "refId": "B",
-          "target": "alias(collectd-jqc-production.df-root.df_complex-reserved, 'reserved')"
-        },
-        {
-          "refCount": 0,
-          "refId": "C",
-          "target": "alias(collectd-jqc-production.df-root.df_complex-used, 'used')"
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "lt",
-          "value": 10919220056
-        }
-      ],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "System Storage",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "bytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "alert": {
-        "alertRuleTags": {},
-        "conditions": [
-          {
-            "evaluator": {
-              "params": [
-                1395959596
-              ],
-              "type": "gt"
-            },
-            "operator": {
-              "type": "and"
-            },
-            "query": {
-              "params": [
-                "A",
-                "1m",
-                "now"
-              ]
-            },
-            "reducer": {
-              "params": [],
-              "type": "avg"
-            },
-            "type": "query"
-          }
-        ],
-        "executionErrorState": "alerting",
-        "for": "0m",
-        "frequency": "1m",
-        "handler": 1,
-        "message": "The JQC web process has gone above 900mb of memory",
-        "name": "JQC Memory Usage alert",
-        "noDataState": "no_data",
-        "notifications": []
-      },
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": null,
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 8
-      },
-      "id": 2,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "refCount": 0,
-          "refId": "A",
-          "target": "alias(stats.gauges.cadvisor.jqc-kdcertifiers.*.web.1.memory_working_set, 'web.memory')",
-          "textEditor": false
-        },
-        {
-          "refCount": 0,
-          "refId": "B",
-          "target": "alias(stats.gauges.cadvisor.jqc-kdcertifiers.*.worker.1.memory_working_set, 'worker.memory')"
-        },
-        {
-          "refCount": 0,
-          "refId": "C",
-          "target": "alias(stats.gauges.cadvisor.dokku.postgres.jqc-production-db.memory_working_set, 'postgres.memory')"
-        },
-        {
-          "refCount": 0,
-          "refId": "D",
-          "target": "alias(stats.gauges.cadvisor.dokku.redis.jqc-production-redis.memory_working_set, 'redis.memory')"
-        }
-      ],
-      "thresholds": [
-        {
-          "colorMode": "critical",
-          "fill": true,
-          "line": true,
-          "op": "gt",
-          "value": 1395959596,
-          "yaxis": "left"
-        }
-      ],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "JQC Memory Usage",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "bytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    }
-  ],
-  "schemaVersion": 20,
-  "style": "dark",
-  "tags": [],
-  "templating": {
-    "list": []
-  },
-  "time": {
-    "from": "now-24h",
-    "to": "now"
-  },
-  "timepicker": {
-    "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m",
-      "5m",
-      "15m",
-      "30m",
-      "1h",
-      "2h",
-      "1d"
-    ]
-  },
-  "timezone": "",
-  "title": "JQC Monitoring",
-  "uid": "VePPsBhNz",
-  "version": 5
+	"annotations": {
+		"list": [
+			{
+				"builtIn": 1,
+				"datasource": {
+					"type": "grafana",
+					"uid": "-- Grafana --"
+				},
+				"enable": true,
+				"hide": true,
+				"iconColor": "rgba(0, 211, 255, 1)",
+				"name": "Annotations & Alerts",
+				"type": "dashboard"
+			}
+		]
+	},
+	"editable": true,
+	"fiscalYearStartMonth": 0,
+	"graphTooltip": 0,
+	"id": 3,
+	"links": [],
+	"panels": [
+		{
+			"datasource": {
+				"type": "graphite",
+				"uid": "depze4isdaznka"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisBorderShow": false,
+						"axisCenteredZero": false,
+						"axisColorMode": "text",
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"barWidthFactor": 0.6,
+						"drawStyle": "line",
+						"fillOpacity": 10,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"insertNulls": false,
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "never",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "normal"
+						},
+						"thresholdsStyle": {
+							"mode": "dashed+area"
+						}
+					},
+					"mappings": [],
+					"max": 1600000000,
+					"min": 0,
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "transparent"
+							},
+							{
+								"color": "dark-red",
+								"value": 1395864381
+							}
+						]
+					},
+					"unit": "bytes"
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 12,
+				"x": 0,
+				"y": 0
+			},
+			"id": 1,
+			"options": {
+				"legend": {
+					"calcs": [
+						"lastNotNull"
+					],
+					"displayMode": "table",
+					"placement": "right",
+					"showLegend": true,
+					"width": 180
+				},
+				"tooltip": {
+					"hideZeros": false,
+					"mode": "multi",
+					"sort": "none"
+				}
+			},
+			"pluginVersion": "11.6.0",
+			"targets": [
+				{
+					"datasource": {
+						"type": "graphite",
+						"uid": "depze4isdaznka"
+					},
+					"hide": false,
+					"refCount": 0,
+					"refId": "A",
+					"target": "alias(stats.gauges.cadvisor.jqc-*.*.web.1.memory_working_set, 'web')"
+				},
+				{
+					"datasource": {
+						"type": "graphite",
+						"uid": "depze4isdaznka"
+					},
+					"hide": false,
+					"refCount": 0,
+					"refId": "B",
+					"target": "alias(stats.gauges.cadvisor.jqc-*.*.worker.1.memory_working_set, 'worker')"
+				},
+				{
+					"datasource": {
+						"type": "graphite",
+						"uid": "depze4isdaznka"
+					},
+					"hide": false,
+					"refCount": 0,
+					"refId": "C",
+					"target": "alias(stats.gauges.cadvisor.dokku.postgres.*.memory_working_set, 'postgres')"
+				},
+				{
+					"datasource": {
+						"type": "graphite",
+						"uid": "depze4isdaznka"
+					},
+					"hide": false,
+					"refCount": 0,
+					"refId": "D",
+					"target": "alias(stats.gauges.cadvisor.dokku.redis.*.memory_working_set, 'redis')"
+				}
+			],
+			"title": "JQC RAM usage",
+			"type": "timeseries"
+		},
+		{
+			"datasource": {
+				"type": "graphite",
+				"uid": "depze4isdaznka"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						}
+					},
+					"mappings": [],
+					"unit": "bytes"
+				},
+				"overrides": [
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "Used"
+						},
+						"properties": [
+							{
+								"id": "color",
+								"value": {
+									"fixedColor": "semi-dark-blue",
+									"mode": "fixed"
+								}
+							}
+						]
+					},
+					{
+						"matcher": {
+							"id": "byName",
+							"options": "Available"
+						},
+						"properties": [
+							{
+								"id": "color",
+								"value": {
+									"fixedColor": "#1f61c429",
+									"mode": "fixed"
+								}
+							}
+						]
+					}
+				]
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 12,
+				"x": 12,
+				"y": 0
+			},
+			"id": 2,
+			"options": {
+				"legend": {
+					"displayMode": "table",
+					"placement": "right",
+					"showLegend": true,
+					"sortBy": "Value",
+					"sortDesc": true,
+					"values": [
+						"value"
+					]
+				},
+				"pieType": "donut",
+				"reduceOptions": {
+					"calcs": [
+						"lastNotNull"
+					],
+					"fields": "",
+					"values": false
+				},
+				"tooltip": {
+					"hideZeros": false,
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"pluginVersion": "11.6.0",
+			"targets": [
+				{
+					"datasource": {
+						"type": "graphite",
+						"uid": "depze4isdaznka"
+					},
+					"hide": false,
+					"refCount": 0,
+					"refId": "A",
+					"target": "alias(collectd-jqc-*.df-root.df_complex-free, 'Available')"
+				},
+				{
+					"datasource": {
+						"type": "graphite",
+						"uid": "depze4isdaznka"
+					},
+					"hide": false,
+					"refCount": 0,
+					"refId": "B",
+					"target": "alias(collectd-jqc-*.df-root.df_complex-used, 'Used')"
+				}
+			],
+			"title": "Disk storage",
+			"type": "piechart"
+		},
+		{
+			"datasource": {
+				"type": "graphite",
+				"uid": "depze4isdaznka"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisBorderShow": false,
+						"axisCenteredZero": false,
+						"axisColorMode": "text",
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"barWidthFactor": 0.6,
+						"drawStyle": "line",
+						"fillOpacity": 10,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"insertNulls": false,
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "never",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "dashed+area"
+						}
+					},
+					"mappings": [],
+					"max": 100,
+					"min": 0,
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "transparent"
+							},
+							{
+								"color": "dark-red",
+								"value": 90
+							}
+						]
+					},
+					"unit": "percent"
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 12,
+				"x": 0,
+				"y": 8
+			},
+			"id": 3,
+			"options": {
+				"legend": {
+					"calcs": [
+						"lastNotNull"
+					],
+					"displayMode": "table",
+					"placement": "right",
+					"showLegend": true,
+					"width": 180
+				},
+				"tooltip": {
+					"hideZeros": false,
+					"mode": "single",
+					"sort": "none"
+				}
+			},
+			"pluginVersion": "11.6.0",
+			"targets": [
+				{
+					"hide": true,
+					"refCount": 0,
+					"refId": "A",
+					"target": "collectd-jqc-*.memory.percent-used"
+				},
+				{
+					"datasource": {
+						"type": "graphite",
+						"uid": "depze4isdaznka"
+					},
+					"hide": true,
+					"refCount": 0,
+					"refId": "B",
+					"target": "collectd-jqc-*.memory.percent-slab_unrecl"
+				},
+				{
+					"datasource": {
+						"name": "Expression",
+						"type": "__expr__",
+						"uid": "__expr__"
+					},
+					"expression": "$A + $B",
+					"hide": true,
+					"refId": "C",
+					"type": "math"
+				},
+				{
+					"datasource": {
+						"name": "Expression",
+						"type": "__expr__",
+						"uid": "__expr__"
+					},
+					"expression": "$C * 1",
+					"hide": false,
+					"refId": "D",
+					"type": "math"
+				}
+			],
+			"title": "System RAM usage",
+			"transformations": [
+				{
+					"id": "organize",
+					"options": {
+						"excludeByName": {},
+						"includeByName": {},
+						"indexByName": {},
+						"renameByName": {
+							"C": "used",
+							"C used": "used",
+							"D": "used"
+						}
+					}
+				}
+			],
+			"type": "timeseries"
+		},
+		{
+			"datasource": {
+				"type": "graphite",
+				"uid": "depze4isdaznka"
+			},
+			"fieldConfig": {
+				"defaults": {
+					"color": {
+						"mode": "palette-classic"
+					},
+					"custom": {
+						"axisBorderShow": false,
+						"axisCenteredZero": false,
+						"axisColorMode": "text",
+						"axisLabel": "",
+						"axisPlacement": "auto",
+						"barAlignment": 0,
+						"barWidthFactor": 0.6,
+						"drawStyle": "line",
+						"fillOpacity": 0,
+						"gradientMode": "none",
+						"hideFrom": {
+							"legend": false,
+							"tooltip": false,
+							"viz": false
+						},
+						"insertNulls": false,
+						"lineInterpolation": "linear",
+						"lineWidth": 1,
+						"pointSize": 5,
+						"scaleDistribution": {
+							"type": "linear"
+						},
+						"showPoints": "never",
+						"spanNulls": false,
+						"stacking": {
+							"group": "A",
+							"mode": "none"
+						},
+						"thresholdsStyle": {
+							"mode": "dashed+area"
+						}
+					},
+					"decimals": 0,
+					"mappings": [],
+					"max": 100,
+					"min": 0,
+					"thresholds": {
+						"mode": "absolute",
+						"steps": [
+							{
+								"color": "transparent"
+							},
+							{
+								"color": "red",
+								"value": 90
+							}
+						]
+					},
+					"unit": "percent"
+				},
+				"overrides": []
+			},
+			"gridPos": {
+				"h": 8,
+				"w": 12,
+				"x": 12,
+				"y": 8
+			},
+			"id": 4,
+			"options": {
+				"legend": {
+					"calcs": [],
+					"displayMode": "table",
+					"placement": "right",
+					"showLegend": true,
+					"sortBy": "Name",
+					"sortDesc": false
+				},
+				"tooltip": {
+					"hideZeros": false,
+					"mode": "multi",
+					"sort": "none"
+				}
+			},
+			"pluginVersion": "11.6.0",
+			"targets": [
+				{
+					"refCount": 0,
+					"refId": "A",
+					"target": "aliasByNode(collectd-jqc-*.cpu-*.percent-active, 1)"
+				}
+			],
+			"title": "CPU Usage",
+			"type": "timeseries"
+		}
+	],
+	"preload": false,
+	"schemaVersion": 41,
+	"tags": [],
+	"templating": {
+		"list": []
+	},
+	"time": {
+		"from": "now-15m",
+		"to": "now"
+	},
+	"timepicker": {},
+	"timezone": "browser",
+	"title": "Monitoring",
+	"uid": "depze4isdaznka",
+	"version": 14
 }
