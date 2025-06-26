@@ -87,6 +87,9 @@ dokku --remote <remote_name> resource:report
 # The regular app logs are not kept between container restarts / deploys
 dokku --remote <remote_name> logs:set vector-sink "file://?encoding[codec]=csv&encoding[csv][fields][]=timestamp&encoding[csv][fields][]=message&encoding[csv][quote_style]=always&path=/var/log/dokku/apps/<app_name>.log"
 dokku --remote <remote_name> logs:vector-start
+# If using dokku-graphite and reporting with StatsD,
+# this will make the environment variable STATSD_URL available in the app
+dokku --remote <remote_name> graphite:link <graphite_service> <app_name>
 
 # Anytime you need to deploy a new release
 git push <remote_name> <branch>

@@ -50,9 +50,8 @@ task test_all: :environment do
   end
 
   sh 'npm run test'
-  sh 'bundle exec bin/rails db:test:prepare'
+  sh 'RAILS_ENV=test bundle exec bin/rails db:test:prepare'
   sh 'bundle exec bin/rails test:all'
-  # sh 'bundle exec bin/rails test ./test/system/basic_health_test.rb'
 
   Rake::Task['check_for_recent_backup'].invoke
 end

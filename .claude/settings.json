@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "Bash(bundle exec rails test:*)",
+      "Bash(rake format)",
+      "Bash(rake lint)"
+    ],
+    "deny": []
+  }
+}
