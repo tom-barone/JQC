@@ -1,4 +1,53 @@
 {
+	"__inputs": [
+		{
+			"name": "DS_GRAPHITE",
+			"label": "graphite",
+			"description": "",
+			"type": "datasource",
+			"pluginId": "graphite",
+			"pluginName": "Graphite"
+		},
+		{
+			"name": "DS_EXPRESSION",
+			"label": "Expression",
+			"description": "",
+			"type": "datasource",
+			"pluginId": "__expr__"
+		}
+	],
+	"__elements": {},
+	"__requires": [
+		{
+			"type": "datasource",
+			"id": "__expr__",
+			"version": "1.0.0"
+		},
+		{
+			"type": "grafana",
+			"id": "grafana",
+			"name": "Grafana",
+			"version": "11.6.0"
+		},
+		{
+			"type": "datasource",
+			"id": "graphite",
+			"name": "Graphite",
+			"version": "1.0.0"
+		},
+		{
+			"type": "panel",
+			"id": "piechart",
+			"name": "Pie chart",
+			"version": ""
+		},
+		{
+			"type": "panel",
+			"id": "timeseries",
+			"name": "Time series",
+			"version": ""
+		}
+	],
 	"annotations": {
 		"list": [
 			{
@@ -18,13 +67,13 @@
 	"editable": true,
 	"fiscalYearStartMonth": 0,
 	"graphTooltip": 0,
-	"id": 3,
+	"id": null,
 	"links": [],
 	"panels": [
 		{
 			"datasource": {
 				"type": "graphite",
-				"uid": "depze4isdaznka"
+				"uid": "${DS_GRAPHITE}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -111,27 +160,27 @@
 				{
 					"datasource": {
 						"type": "graphite",
-						"uid": "depze4isdaznka"
+						"uid": "${DS_GRAPHITE}"
 					},
 					"hide": false,
 					"refCount": 0,
 					"refId": "A",
-					"target": "alias(stats.gauges.cadvisor.jqc-*.*.web.1.memory_working_set, 'web')"
+					"target": "group(\n  alias(stats.gauges.cadvisor.jqc-*.*.web.1.memory_working_set, 'web'),\n  alias(stats.gauges.cadvisor.staging.jqc-*.*.web.1.memory_working_set, 'web')\n)"
 				},
 				{
 					"datasource": {
 						"type": "graphite",
-						"uid": "depze4isdaznka"
+						"uid": "${DS_GRAPHITE}"
 					},
 					"hide": false,
 					"refCount": 0,
 					"refId": "B",
-					"target": "alias(stats.gauges.cadvisor.jqc-*.*.worker.1.memory_working_set, 'worker')"
+					"target": "group(\n  alias(stats.gauges.cadvisor.jqc-*.*.worker.1.memory_working_set, 'worker'),\n  alias(stats.gauges.cadvisor.staging.jqc-*.*.worker.1.memory_working_set, 'worker')\n)"
 				},
 				{
 					"datasource": {
 						"type": "graphite",
-						"uid": "depze4isdaznka"
+						"uid": "${DS_GRAPHITE}"
 					},
 					"hide": false,
 					"refCount": 0,
@@ -141,7 +190,7 @@
 				{
 					"datasource": {
 						"type": "graphite",
-						"uid": "depze4isdaznka"
+						"uid": "${DS_GRAPHITE}"
 					},
 					"hide": false,
 					"refCount": 0,
@@ -155,7 +204,7 @@
 		{
 			"datasource": {
 				"type": "graphite",
-				"uid": "depze4isdaznka"
+				"uid": "${DS_GRAPHITE}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -242,22 +291,22 @@
 				{
 					"datasource": {
 						"type": "graphite",
-						"uid": "depze4isdaznka"
+						"uid": "${DS_GRAPHITE}"
 					},
 					"hide": false,
 					"refCount": 0,
 					"refId": "A",
-					"target": "alias(collectd-jqc-*.df-root.df_complex-free, 'Available')"
+					"target": "alias(collectd-*.df-root.df_complex-free, 'Available')"
 				},
 				{
 					"datasource": {
 						"type": "graphite",
-						"uid": "depze4isdaznka"
+						"uid": "${DS_GRAPHITE}"
 					},
 					"hide": false,
 					"refCount": 0,
 					"refId": "B",
-					"target": "alias(collectd-jqc-*.df-root.df_complex-used, 'Used')"
+					"target": "alias(collectd-*.df-root.df_complex-used, 'Used')"
 				}
 			],
 			"title": "Disk storage",
@@ -266,7 +315,7 @@
 		{
 			"datasource": {
 				"type": "graphite",
-				"uid": "depze4isdaznka"
+				"uid": "${DS_GRAPHITE}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -354,23 +403,26 @@
 					"hide": true,
 					"refCount": 0,
 					"refId": "A",
-					"target": "collectd-jqc-*.memory.percent-used"
+					"target": "collectd-*.memory.percent-used",
+					"datasource": {
+						"type": "graphite",
+						"uid": "${DS_GRAPHITE}"
+					}
 				},
 				{
 					"datasource": {
 						"type": "graphite",
-						"uid": "depze4isdaznka"
+						"uid": "${DS_GRAPHITE}"
 					},
 					"hide": true,
 					"refCount": 0,
 					"refId": "B",
-					"target": "collectd-jqc-*.memory.percent-slab_unrecl"
+					"target": "collectd-*.memory.percent-slab_unrecl"
 				},
 				{
 					"datasource": {
-						"name": "Expression",
 						"type": "__expr__",
-						"uid": "__expr__"
+						"uid": "${DS_EXPRESSION}"
 					},
 					"expression": "$A + $B",
 					"hide": true,
@@ -379,9 +431,8 @@
 				},
 				{
 					"datasource": {
-						"name": "Expression",
 						"type": "__expr__",
-						"uid": "__expr__"
+						"uid": "${DS_EXPRESSION}"
 					},
 					"expression": "$C * 1",
 					"hide": false,
@@ -410,7 +461,7 @@
 		{
 			"datasource": {
 				"type": "graphite",
-				"uid": "depze4isdaznka"
+				"uid": "${DS_GRAPHITE}"
 			},
 			"fieldConfig": {
 				"defaults": {
@@ -497,26 +548,30 @@
 				{
 					"refCount": 0,
 					"refId": "A",
-					"target": "aliasByNode(collectd-jqc-*.cpu-*.percent-active, 1)"
+					"target": "aliasByNode(collectd-*.cpu-*.percent-active, 1)",
+					"datasource": {
+						"type": "graphite",
+						"uid": "${DS_GRAPHITE}"
+					}
 				}
 			],
 			"title": "CPU Usage",
 			"type": "timeseries"
 		}
 	],
-	"preload": false,
 	"schemaVersion": 41,
 	"tags": [],
 	"templating": {
 		"list": []
 	},
 	"time": {
-		"from": "now-15m",
+		"from": "now-7d",
 		"to": "now"
 	},
 	"timepicker": {},
 	"timezone": "browser",
 	"title": "Monitoring",
 	"uid": "depze4isdaznka",
-	"version": 14
+	"version": 21,
+	"weekStart": ""
 }

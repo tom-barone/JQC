@@ -53,6 +53,9 @@ gem 'pagy'
 # For reporting exceptions [https://github.com/smartinez87/exception_notification]
 gem 'exception_notification'
 
+# For monitoring and metrics [https://github.com/Shopify/statsd-instrument]
+gem 'statsd-instrument'
+
 # Won't be included by default in the future
 gem 'csv'
 
