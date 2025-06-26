@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# Set default prefix if not provided
 ENV['STATSD_PREFIX'] ||= 'jqc'
+ENV['STATSD_IMPLEMENTATION'] ||= 'statsd'
 
 # Configuration for dokku-graphite
 # We need to strip the 'statsd://' prefix if it exists
