@@ -10,8 +10,6 @@
 plugins:
   - rubocop-rails
   - rubocop-performance
-
-require:
   - rubocop-capybara
 
 AllCops:
