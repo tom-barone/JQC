@@ -2,14 +2,9 @@
 
 [![License](https://img.shields.io/github/license/tom-barone/JQC?color=969696)](https://github.com/tom-barone/JQC/blob/master/LICENSE)
 
-[![Continuous Integration](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml/badge.svg?branch=develop)](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml)
-[![Continuous Deployment](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml/badge.svg?branch=master)](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=alert_status)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
+[![Continuous Integration](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml/badge.svg?branch=develop)](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml) [![Continuous Deployment](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml/badge.svg?branch=master)](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=alert_status)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
 
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=security_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
-[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=vulnerabilities)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=security_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=vulnerabilities)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
 
 Rails/PostgreSQL app deployed with Dokku and styled with Bootstrap.
 
@@ -17,9 +12,7 @@ Rails/PostgreSQL app deployed with Dokku and styled with Bootstrap.
 
 All work is done on the `develop` branch.
 
-After committing and pushing to `develop`, the
-[CI Github Action](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml)
-will:
+After committing and pushing to `develop`, the [CI Github Action](https://github.com/tom-barone/JQC/actions/workflows/continuous-integration.yml) will:
 
 1. Run the unit, integration and end to end tests.
 1. Deploy a staging site.
@@ -30,8 +23,7 @@ To deploy a new production version:
 1. Do a manual smoke test of the staging site.
 1. Create a pull request to merge `develop` -> `master`.
 1. Once all checks have passed, the pull request will automatically merge.
-1. The [CD Github Action](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml)
-   will deploy a new production version to dokku, run the production safe checks and create a new git release tag.
+1. The [CD Github Action](https://github.com/tom-barone/JQC/actions/workflows/continuous-deployment.yml) will deploy a new production version to dokku, run the production safe checks and create a new git release tag.
 
 ## Monitoring
 
@@ -95,17 +87,14 @@ dokku --remote <remote_name> graphite:link <graphite_service> <app_name>
 git push <remote_name> <branch>
 ```
 
-You can omit the `<remote_name>` and keep it as the default `dokku` remote if you like.
-But it's nice if you've got a staging and production servers to have different remotes,
-e.g. `staging` and `production`. That way you can deploy to each server with:
+You can omit the `<remote_name>` and keep it as the default `dokku` remote if you like. But it's nice if you've got a staging and production servers to have different remotes, e.g. `staging` and `production`. That way you can deploy to each server with:
 
 ```bash
 git push staging master
 git push production master
 ```
 
-I like to use `pgAdmin` to interface with the postgres database, which can be done with SSH tunneling.
-First you'll need to expose the database port from the docker container to the host machine:
+I like to use `pgAdmin` to interface with the postgres database, which can be done with SSH tunneling. First you'll need to expose the database port from the docker container to the host machine:
 
 ```bash
 # Expose the database internally from dokku to 0.0.0.0 on the host
@@ -138,8 +127,7 @@ dokku --remote <remote_name> postgres:import <app_name>-db < backup/export
 
 ## Development
 
-There are some issues with `solid_queue` causing trouble when resetting the database.
-To reset everything from scratch so we can load in backed up data in development:
+There are some issues with `solid_queue` causing trouble when resetting the database. To reset everything from scratch so we can load in backed up data in development:
 
 ```bash
 rails db:migrate:reset
