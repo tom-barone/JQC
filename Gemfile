@@ -63,7 +63,7 @@ gem 'csv'
 gem 'cocoon'
 
 # Generating PDFs [https://github.com/excid3/ferrum_pdf]
-gem 'ferrum_pdf', '= 0.3.0'
+gem 'ferrum_pdf', '2.0.0'
 
 # Active storage on S3
 # [https://guides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis]
