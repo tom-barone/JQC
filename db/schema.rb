@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_03_06_231800) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_08_042802) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -186,7 +186,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_03_06_231800) do
     t.text "stage"
     t.decimal "fee", precision: 13, scale: 2
     t.decimal "gst", precision: 13, scale: 2
-    t.decimal "admin_fee", precision: 13, scale: 2
+    t.decimal "admin_fee", precision: 13, scale: 2, comment: "Currently hidden from the UI"
     t.date "invoice_date"
     t.boolean "paid", default: false, null: false
     t.bigint "application_id"

@@ -33,17 +33,6 @@
                      } %>
   </td>
   <td class="py-1">
-    <%= f.label :admin_fee, class: 'd-none' %>
-    <%= f.text_field :admin_fee,
-                     type: 'number',
-                     min: '0',
-                     step: 'any',
-                     data: {
-                       'invoice-table-target': 'adminFee',
-                       action: 'change->invoice-table#updateGstAndTotals'
-                     } %>
-  </td>
-  <td class="py-1">
     <%= f.label :invoice_number, class: 'd-none' %>
     <%= f.text_field :invoice_number %>
   </td>
