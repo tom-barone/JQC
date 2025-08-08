@@ -11,14 +11,7 @@ export function _getFloat(inputElement) {
 }
 
 export default class extends Controller {
-  static targets = [
-    "kdFee",
-    "gst",
-    "adminFee",
-    "kdFeeTotal",
-    "gstTotal",
-    "adminFeeTotal",
-  ];
+  static targets = ["kdFee", "gst", "kdFeeTotal", "gstTotal"];
 
   connect() {
     this.updateGstAndTotals();
@@ -36,7 +29,6 @@ export default class extends Controller {
     const totals = [
       [this.kdFeeTotalTarget, this._visible(this.kdFeeTargets)],
       [this.gstTotalTarget, this._visible(this.gstTargets)],
-      [this.adminFeeTotalTarget, this._visible(this.adminFeeTargets)],
     ];
     totals.forEach(([total, values]) => {
       total.innerHTML =

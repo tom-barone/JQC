@@ -233,7 +233,10 @@
           </tr>
         </thead>
         <tbody class="additional-information-fields">
-          <%= form.fields_for :application_additional_informations do |subform| %>
+          <%= form.fields_for :application_additional_informations,
+                              @application.application_additional_informations
+                                          .sort_by(&:info_date)
+                                          .reverse do |subform| %>
             <%= render 'applications/tables/additional_information_fields', f: subform %>
           <% end %>
         </tbody>
@@ -364,9 +367,6 @@
               <div class="ps-2 py-2">GST</div>
             </th>
             <th class="fw-normal small" style="width: 9em">
-              <div class="ps-2 py-2">Admin fee</div>
-            </th>
-            <th class="fw-normal small" style="width: 9em">
               <div class="ps-2 py-2">Invoice no.</div>
             </th>
             <th class="fw-normal small" style="width: 3em">
@@ -392,10 +392,6 @@
             </td>
             <td class="fw-normal small">
               <div class="ps-2" data-invoice-table-target="gstTotal">
-              </div>
-            </td>
-            <td class="fw-normal small">
-              <div class="ps-2" data-invoice-table-target="adminFeeTotal">
               </div>
             </td>
             <td class="fw-normal small">
