@@ -122,7 +122,6 @@ task fetch_most_recent_backup: %i[environment] do
 end
 
 task check_for_recent_backup: %i[environment] do
-  puts 'Checking for recent backup in S3'
   # Check that we have a backup within the last 24 hours
   config = Rails.application.credentials.postgres_backups
   aws_bucket = config[:aws_s3_bucket]

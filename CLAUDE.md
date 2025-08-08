@@ -5,9 +5,6 @@ code in this repository.
 
 ## Core Architecture
 
-**JQC** is a Rails 8.0 application for managing building consent applications
-and related data. Built with PostgreSQL and deployed via Dokku.
-
 **Domain Model**: The core entity is `Application` which represents building
 consent applications. Applications belong to an `ApplicationType` and have
 relationships with `Client` records (applicant, owner, contact), `Council`,
