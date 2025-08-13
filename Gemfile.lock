@@ -176,6 +176,13 @@ GEM
     exception_notification (5.0.0)
       actionmailer (>= 7.1, < 9)
       activesupport (>= 7.1, < 9)
+    factory_bot (6.5.4)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.5.0)
+      factory_bot (~> 6.5)
+      railties (>= 6.1.0)
+    faker (3.5.2)
+      i18n (>= 1.8.11, < 2)
     ferrum (0.17.1)
       addressable (~> 2.5)
       base64 (~> 0.2)
@@ -480,6 +487,8 @@ DEPENDENCIES
   erb-formatter
   erb_lint
   exception_notification
+  factory_bot_rails
+  faker
   ferrum_pdf (= 0.3.0)
   importmap-rails
   jbuilder

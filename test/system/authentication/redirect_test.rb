@@ -16,11 +16,12 @@ class RedirectTest < ApplicationSystemTestCase
 
   test 'redirect to originally requested page after successful login' do
     # Arrange
+    user = create(:user)
     visit new_application_path
     assert_signed_out
 
     # Act
-    sign_in_with_test_user
+    sign_in_with(user)
 
     # Assert
     assert_current_path new_application_path

@@ -7,10 +7,11 @@ class RememberMeTest < ApplicationSystemTestCase
 
   test 'remember me functionality keeps session active' do
     # Arrange
+    user = create(:user)
     visit_sign_in_page
 
     # Act
-    sign_in_with_test_user(remember_me: true)
+    sign_in_with(user, remember_me: true)
     assert_signed_in
     delete_session_cookie
     visit applications_path
@@ -21,10 +22,11 @@ class RememberMeTest < ApplicationSystemTestCase
 
   test 'no remember me allows session to expire' do
     # Arrange
+    user = create(:user)
     visit_sign_in_page
 
     # Act
-    sign_in_with_test_user(remember_me: false)
+    sign_in_with(user, remember_me: false)
     assert_signed_in
     delete_session_cookie
     visit applications_path
@@ -35,8 +37,9 @@ class RememberMeTest < ApplicationSystemTestCase
 
   test 'session persistence across page refreshes' do
     # Arrange
+    user = create(:user)
     visit_sign_in_page
-    sign_in_with_test_user
+    sign_in_with(user, remember_me: true)
     assert_signed_in
 
     # Act

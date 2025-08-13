@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Test user for development
-if Rails.env.local? && User.find_by(username: 'test_user').nil?
+if Rails.env.development? && User.find_by(username: 'test_user').nil?
   User.create!(
     email: 'test@email.com',
     username: 'test_user',

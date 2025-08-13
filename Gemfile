@@ -120,4 +120,10 @@ group :test do
   gem 'simplecov', require: false
 
   gem 'minitest-reporters'
+
+  # For generating test data [https://github.com/thoughtbot/factory_bot_rails]
+  gem 'factory_bot_rails'
+
+  # For generating fake data in tests [https://github.com/faker-ruby/faker]
+  gem 'faker'
 end

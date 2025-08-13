@@ -7,10 +7,11 @@ class SignInTest < ApplicationSystemTestCase
 
   test 'successful login with valid credentials' do
     # Arrange
+    user = create(:user)
     visit_sign_in_page
 
     # Act
-    sign_in_with_test_user
+    sign_in_with(user)
 
     # Assert
     assert_signed_in
@@ -18,10 +19,11 @@ class SignInTest < ApplicationSystemTestCase
 
   test 'failed login with invalid username' do
     # Arrange
+    user = create(:user)
     visit_sign_in_page
 
     # Act
-    sign_in_with_wrong_username
+    sign_in_with_fields("#{user.username}invalid", user.password)
 
     # Assert
     assert_signed_out
@@ -30,10 +32,11 @@ class SignInTest < ApplicationSystemTestCase
 
   test 'failed login with invalid password' do
     # Arrange
+    user = create(:user)
     visit_sign_in_page
 
     # Act
-    sign_in_with_wrong_password
+    sign_in_with_fields(user.username, "#{user.password}invalid")
 
     # Assert
     assert_signed_out
@@ -42,6 +45,7 @@ class SignInTest < ApplicationSystemTestCase
 
   test 'failed login with empty credentials' do
     # Arrange
+    create(:user)
     visit_sign_in_page
 
     # Act
@@ -54,14 +58,15 @@ class SignInTest < ApplicationSystemTestCase
 
   test 'multiple failed login attempts' do
     # Arrange
+    user = create(:user)
     visit_sign_in_page
 
     # Act
     3.times do |_i|
-      sign_in_with_wrong_password
+      sign_in_with_fields("#{user.username}invalid", "#{user.password}invalid")
       assert_signed_out
     end
-    sign_in_with_test_user
+    sign_in_with(user)
 
     # Assert
     assert_signed_in
@@ -69,12 +74,11 @@ class SignInTest < ApplicationSystemTestCase
 
   test 'username field can be case insensitive' do
     # Arrange
+    user = create(:user, username: 'test_user')
     visit_sign_in_page
 
     # Act
-    fill_username 'TEST_USER'
-    fill_password 'h2&BUa0qvxoqTM^K'
-    click_sign_in_button
+    sign_in_with_fields('TEST_USER', user.password)
 
     # Act
     assert_signed_in
@@ -82,12 +86,11 @@ class SignInTest < ApplicationSystemTestCase
 
   test 'username can have leading and trailing spaces' do
     # Arrange
+    user = create(:user, username: 'test_user')
     visit_sign_in_page
 
     # Act
-    fill_username '  test_user  '
-    fill_password 'h2&BUa0qvxoqTM^K'
-    click_sign_in_button
+    sign_in_with_fields('  test_user  ', user.password)
 
     # Assert
     assert_signed_in
@@ -95,11 +98,12 @@ class SignInTest < ApplicationSystemTestCase
 
   test 'sign in form submission with enter key' do
     # Arrange
+    user = create(:user)
     visit_sign_in_page
 
     # Act
-    fill_username 'test_user'
-    fill_password 'h2&BUa0qvxoqTM^K'
+    fill_username user.username
+    fill_password user.password
     find_field(SignInPageObject::PASSWORD_FIELD).native.send_keys(:return)
 
     # Assert

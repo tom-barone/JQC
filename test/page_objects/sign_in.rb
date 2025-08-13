@@ -30,7 +30,7 @@ module SignInPageObject
   end
 
   # Composite actions
-  def sign_in_with(username, password, remember_me: false)
+  def sign_in_with_fields(username, password, remember_me: false)
     fill_username(username)
     fill_password(password)
 
@@ -43,15 +43,7 @@ module SignInPageObject
     click_sign_in_button
   end
 
-  def sign_in_with_test_user(remember_me: false)
-    sign_in_with('test_user', 'h2&BUa0qvxoqTM^K', remember_me: remember_me)
-  end
-
-  def sign_in_with_wrong_username(remember_me: false)
-    sign_in_with('invalid_user', 'h2&BUa0qvxoqTM^K', remember_me: remember_me)
-  end
-
-  def sign_in_with_wrong_password(remember_me: false)
-    sign_in_with('test_user', 'wrong_password', remember_me: remember_me)
+  def sign_in_with(user, remember_me: false)
+    sign_in_with_fields(user.username, user.password, remember_me: remember_me)
   end
 end
