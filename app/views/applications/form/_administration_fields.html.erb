@@ -235,7 +235,7 @@
         <tbody class="additional-information-fields">
           <%= form.fields_for :application_additional_informations,
                               @application.application_additional_informations
-                                          .sort_by(&:info_date)
+                                          .sort_by { |info| info.info_date || Date.new(1900, 1, 1) }
                                           .reverse do |subform| %>
             <%= render 'applications/tables/additional_information_fields', f: subform %>
           <% end %>
