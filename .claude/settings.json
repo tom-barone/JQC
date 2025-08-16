@@ -6,6 +6,9 @@
 			"Bash(rake lint)",
 			"Bash(bundle exec:*)"
 		],
-		"deny": []
+    "deny": [
+      "Read(**/*.key)",
+      "Read(**/*.enc)"
+    ]
 	}
 }
