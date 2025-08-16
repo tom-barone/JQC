@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 module NavigationHelper
+  include SignInPageObject
+
   def visit_sign_in_page
     visit root_path # Assumes we haven't authenticated yet, will be redirected to sign in
   end

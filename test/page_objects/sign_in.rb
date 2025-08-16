@@ -7,8 +7,6 @@ module SignInPageObject
   REMEMBER_ME_CHECKBOX = 'Remember me'
   SIGN_IN_BUTTON = 'Sign in'
 
-  module_function
-
   def fill_username(username)
     fill_in USERNAME_FIELD, with: username
   end
