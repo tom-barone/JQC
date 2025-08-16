@@ -2,7 +2,7 @@
 
 module NavBarPageObject
   SIGN_OUT_BUTTON = 'Sign out'
-  REQUEST_SUPPORT_BUTTON = 'Request support'
+  REQUEST_SUPPORT_BUTTON = 'Request Support'
   APPLICATIONS_LINK = 'Applications'
   BUILDING_SURVEYORS_LINK = 'Building Surveyors'
 
