@@ -22,7 +22,6 @@ lint:
 # Run tests
 test:
     npm run test
-    echo $DATABASE_URL
     RAILS_ENV=test bundle exec bin/rails db:test:prepare
     RAILS_ENV=test COVERAGE=true bundle exec bin/rails test:all
 
