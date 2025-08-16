@@ -22,7 +22,7 @@ lint:
 # Run tests
 test:
     npm run test
-    bundle exec bin/rails test:all
+    RAILS_ENV=test bundle exec bin/rails test:all
 
 # Run formatters
 format:

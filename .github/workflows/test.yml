@@ -29,6 +29,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
+      - name: Setup the just task runner
+        uses: extractions/setup-just@v3
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -42,12 +45,10 @@ jobs:
 
       - name: Run tests
         env:
-          RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
-          COVERAGE: "true"
         run: |
-          npm ci
-          bundle exec rake test_all
+          just install
+          just test
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4

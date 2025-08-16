@@ -1,12 +1,12 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-if ENV['COVERAGE'] == 'true'
+if ENV['RAILS_ENV'] == 'test'
   require 'simplecov'
+  puts 'Running SimpleCov for test coverage...'
   SimpleCov.start 'rails'
   SimpleCov.coverage_dir('ci/ruby/coverage')
   SimpleCov.add_filter ['lib/tasks', 'bin', 'Rakefile']
-  puts 'Required simplecov'
 end
 
 APP_PATH = File.expand_path('../config/application', __dir__)
