@@ -12,6 +12,7 @@ class RememberMeTest < ApplicationSystemTestCase
 
     # Act
     sign_in_with(user, remember_me: true)
+
     assert_signed_in
     delete_session_cookie
     visit applications_path
@@ -27,6 +28,7 @@ class RememberMeTest < ApplicationSystemTestCase
 
     # Act
     sign_in_with(user, remember_me: false)
+
     assert_signed_in
     delete_session_cookie
     visit applications_path
@@ -40,6 +42,7 @@ class RememberMeTest < ApplicationSystemTestCase
     user = create(:user)
     visit_sign_in_page
     sign_in_with(user, remember_me: true)
+
     assert_signed_in
 
     # Act

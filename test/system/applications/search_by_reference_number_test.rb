@@ -80,6 +80,7 @@ class BasicSearchTest < ApplicationSystemTestCase
     # Assert
     assert_equal 2, results.count
     reference_numbers = results.map { |r| r[:reference_number].text }
+
     assert_includes reference_numbers, 'PC1001'
     assert_includes reference_numbers, 'PC1002'
   end

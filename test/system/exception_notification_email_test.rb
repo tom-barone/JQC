@@ -15,6 +15,7 @@ class ExceptionNotificationEmailTest < ApplicationSystemTestCase
     assert_equal 1, emails.size
 
     email = emails.first
+
     assert_match(/I should send an exception notification email/, email.body.to_s)
   end
 end

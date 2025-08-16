@@ -16,6 +16,7 @@ module NavigationHelper
     user = create(:user)
     visit_sign_in_page
     sign_in_with(user)
+
     assert_signed_in
   end
 

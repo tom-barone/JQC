@@ -64,6 +64,7 @@ class SignInTest < ApplicationSystemTestCase
     # Act
     3.times do |_i|
       sign_in_with_fields("#{user.username}invalid", "#{user.password}invalid")
+
       assert_signed_out
     end
     sign_in_with(user)
@@ -116,6 +117,7 @@ class SignInTest < ApplicationSystemTestCase
 
     # Act & Assert
     password_field = find_field(SignInPageObject::PASSWORD_FIELD)
+
     assert_equal 'password', password_field['type']
   end
 

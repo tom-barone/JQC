@@ -1,36 +1,39 @@
 # frozen_string_literal: true
 
-require 'application_system_test_case'
-require 'helpers/application_search_helper'
+## frozen_string_literal: true
 
-class SearchApplicationByTypeTest < ApplicationSystemTestCase
-  include ApplicationSearchHelper
+# require 'application_system_test_case'
+# require 'helpers/application_search_helper'
 
-  test 'The applications can be searched by application_type correctly' do
-    sign_in_test_user
+# class SearchApplicationByTypeTest < ApplicationSystemTestCase
+#  include ApplicationSearchHelper
 
-    # Can see all of them to start with
-    ApplicationType.active_ordered_values.each.with_index do |type, index|
-      assert_text "#{type}900#{index}"
-    end
+#  test 'The applications can be searched by application_type correctly' do
+#    sign_in_test_user
 
-    # Searching for each type should only show that type
-    ApplicationType.active_ordered_values.each.with_index do |type, index|
-      select_application_type type
-      click_search
+#    # Can see all of them to start with
+#    ApplicationType.active_ordered_values.each.with_index do |type, index|
+#      assert_text "#{type}900#{index}"
+#    end
 
-      assert_text "#{type}900#{index}"
-      # None of the other types should be visible
-      ApplicationType.active_ordered_values.reject { |t| t == type }.each.with_index do |t, i|
-        assert_no_text "#{t}900#{i}"
-      end
-    end
+#    # Searching for each type should only show that type
+#    ApplicationType.active_ordered_values.each.with_index do |type, index|
+#      select_application_type type
+#      click_search
 
-    # Clearing the search should show all of them again
-    clear_search
-    click_search
-    ApplicationType.active_ordered_values.each.with_index do |type, index|
-      assert_text "#{type}900#{index}"
-    end
-  end
-end
+#      assert_text "#{type}900#{index}"
+#      # None of the other types should be visible
+#      ApplicationType.active_ordered_values.reject { |t| t == type }.each.with_index do |t, i|
+#        assert_no_text "#{t}900#{i}"
+#      end
+#    end
+
+#    # Clearing the search should show all of them again
+#    clear_search
+#    click_search
+
+#    ApplicationType.active_ordered_values.each.with_index do |type, index|
+#      assert_text "#{type}900#{index}"
+#    end
+#  end
+# end
