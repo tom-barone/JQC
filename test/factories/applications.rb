@@ -21,10 +21,16 @@ FactoryBot.define do
     # Use like this:
     #   create(:pc90_application, ...)
     #   create(:pc91_application, ...)
-    (0..9).each do |n|
-      factory :"pc9#{n}_application" do
-        application_type factory: %i[application_type pc]
-        reference_number { "PC9#{n}" }
+    #   create(:q90_application, ...)
+    %w[pc q c].each do |type|
+      (0..9).each do |n|
+        factory :"#{type}9#{n}_application" do
+          # Reuse the application_type if already created
+          application_type do
+            ApplicationType.find_by(application_type: type.upcase) || create(:application_type, type.to_sym)
+          end
+          reference_number { "#{type.upcase}9#{n}" }
+        end
       end
     end
   end
