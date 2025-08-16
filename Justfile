@@ -22,10 +22,8 @@ lint:
 
 # Run tests
 test:
-    npm run test
-    RAILS_ENV=test bundle exec bin/rails db:test:prepare
-    bundle exec bin/rails test:all
-    bundle exec bin/rake check_for_recent_backup
+		npm run test
+		bundle exec bin/rails test:all
 
 # Run formatters
 format:
