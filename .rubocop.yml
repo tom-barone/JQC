@@ -8,9 +8,11 @@
 #   Enabled: false
 
 plugins:
-  - rubocop-rails
-  - rubocop-performance
   - rubocop-capybara
+  - rubocop-factory_bot
+  - rubocop-minitest
+  - rubocop-performance
+  - rubocop-rails
 
 AllCops:
   NewCops: enable

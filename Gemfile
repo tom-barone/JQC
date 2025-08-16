@@ -81,10 +81,19 @@ group :development, :test do
 
   # For linting and formatting [https://github.com/rubocop/rubocop]
   gem 'rubocop'
+
   gem 'rubocop-capybara', require: false
-  gem 'rubocop-rails', require: false
+
+  # Extra cops for factory_bot best practices [https://github.com/rubocop/rubocop-factory_bot]
+  gem 'rubocop-factory_bot', require: false
+
+  # Extra cops for minitest best practices [https://github.com/rubocop/rubocop-minitest]
+  gem 'rubocop-minitest', require: false
+
   # [https://github.com/rubocop/rubocop-performance]
   gem 'rubocop-performance', require: false
+
+  gem 'rubocop-rails', require: false
 
   # HTML safety [https://github.com/Shopify/better-html]
   gem 'better_html'
