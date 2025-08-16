@@ -110,4 +110,3 @@ class SearchByApplicantTest < ApplicationSystemTestCase
     end
   end
 end
-

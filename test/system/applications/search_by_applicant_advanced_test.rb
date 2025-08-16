@@ -152,4 +152,3 @@ class SearchByApplicantAdvancedTest < ApplicationSystemTestCase
     end
   end
 end
-

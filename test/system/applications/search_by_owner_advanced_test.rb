@@ -94,6 +94,7 @@ class SearchByOwnerAdvancedTest < ApplicationSystemTestCase
     # Assert
     assert_equal 2, results.count
     owner_names = results.map { |result| result[:owner].text }
+
     assert_includes owner_names, 'Michael Davis'
     assert_includes owner_names, 'Davis Enterprises Pty Ltd'
   end
