@@ -4,6 +4,7 @@ module Applications
   module TablePageObject
     NEW_APPLICATION_BUTTON = 'New Application'
     RESULTS_TABLE = '.applications-table'
+    PAGINATION_NAV = '.pagination'
     TABLE_HEADERS = {
       reference_number: 'Reference number',
       location: 'Location',
@@ -36,6 +37,12 @@ module Applications
         TABLE_HEADERS.map.with_index do |(field, _header), index|
           [field, columns[index]]
         end.to_h
+      end
+    end
+
+    def goto_page(page_number)
+      within(PAGINATION_NAV) do
+        click_on page_number.to_s
       end
     end
   end
