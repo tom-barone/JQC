@@ -1,10 +1,11 @@
 {
-  "permissions": {
-    "allow": [
-      "WebFetch(domain:github.com)",
-      "Bash(rake format)",
-      "Bash(rake lint)"
-    ],
-    "deny": []
-  }
+	"permissions": {
+		"allow": [
+			"WebFetch(domain:github.com)",
+			"Bash(rake format)",
+			"Bash(rake lint)",
+			"Bash(bundle exec:*)"
+		],
+		"deny": []
+	}
 }

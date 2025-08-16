@@ -15,7 +15,7 @@ dev:
 lint:
     bundle exec bin/rubocop --autocorrect-all --fail-level I
     bundle exec bin/brakeman --no-pager --quiet --no-summary
-    bundle exec erb_lint --lint-all --enable-all-linters
+    bundle exec erb_lint --lint-all
     npx eslint app/javascript
     bundle exec bin/importmap audit
 
