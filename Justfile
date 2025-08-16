@@ -22,7 +22,8 @@ lint:
 # Run tests
 test:
     npm run test
-    RAILS_ENV=test bundle exec bin/rails test:all
+    bundle exec bin/rails db:test:prepare
+    COVERAGE=true bundle exec bin/rails test:all
 
 # Run formatters
 format:
