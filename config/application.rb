@@ -29,6 +29,10 @@ module Jqc
     # Exclude jest tests from being loaded by the asset pipeline
     config.assets.excluded_paths = [Rails.root.join('app/assets/javascript/tests')]
 
+    # Change this from :ruby to :sql because we have some postgres specific triggers
+    # we need to keep in the schema.
+    config.active_record.schema_format = :sql
+
     # Used for whenever we need to know what our host / scheme is
     # Stuff like swagger UI etc.
     config.port = ENV.fetch('PORT', 3008)
