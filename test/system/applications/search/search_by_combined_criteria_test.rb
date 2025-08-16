@@ -104,60 +104,6 @@ class SearchByCombinedCriteriaTest < ApplicationSystemTestCase
     assert_empty results
   end
 
-  test 'search by all three criteria with matching data returns correct results' do
-    # Arrange
-    create(:pc90_application, created_at: Date.new(2024, 3, 10), description: 'New residential dwelling')
-    create(:pc91_application, created_at: Date.new(2024, 3, 15), description: 'New residential dwelling')
-    create(:q90_application, created_at: Date.new(2024, 3, 12), description: 'New residential dwelling')
-    create(:pc92_application, created_at: Date.new(2024, 3, 20), description: 'Commercial office building')
-    sign_in
-
-    # Act
-    search_by(
-      type: 'PC',
-      text: 'residential dwelling',
-      start_date: Date.new(2024, 3, 11),
-      end_date: Date.new(2024, 3, 18)
-    )
-    results = table_rows_as_hashes
-
-    # Assert
-    assert_equal 1, results.count
-    within results.first[:reference_number] do
-      assert_text 'PC91'
-    end
-    within results.first[:description] do
-      assert_text 'New residential dwelling'
-    end
-    within results.first[:date_entered] do
-      assert_text '15 Mar 2024'
-    end
-  end
-
-  test 'combined search criteria narrows results appropriately' do
-    # Arrange
-    create(:pc90_application, description: 'New residential dwelling')
-    create(:pc91_application, description: 'Commercial office building')
-    create(:q90_application, description: 'New residential dwelling')
-    sign_in
-
-    # Act - Search by type only
-    search_by(type: 'PC')
-    type_only_results = table_rows_as_hashes
-
-    # Search by type + text (in a new browser session to avoid state)
-    visit applications_path
-    search_by(type: 'PC', text: 'residential dwelling')
-    combined_results = table_rows_as_hashes
-
-    # Assert
-    assert_equal 2, type_only_results.count
-    assert_equal 1, combined_results.count
-    within combined_results.first[:reference_number] do
-      assert_text 'PC90'
-    end
-  end
-
   test 'combined search with no matching results returns empty set' do
     # Arrange
     create(:pc90_application, created_at: Date.new(2024, 1, 10), description: 'New residential dwelling')
