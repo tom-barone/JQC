@@ -3,12 +3,13 @@
 require 'application_system_test_case'
 
 class BasicSearchTest < ApplicationSystemTestCase
+  include Parallelize
   include Applications::SearchBarPageObject
   include Applications::TablePageObject
 
   test 'search by reference number returns correct result' do
     # Arrange
-    create(:pc_application, reference_number: 'PC1001')
+    create(:pc90_application, reference_number: 'PC1001')
     sign_in
 
     # Act
@@ -24,7 +25,7 @@ class BasicSearchTest < ApplicationSystemTestCase
 
   test 'search by application reference number prefix returns correct result' do
     # Arrange
-    create(:pc_application, reference_number: 'PC1001')
+    create(:pc90_application, reference_number: 'PC1001')
     sign_in
 
     # Act
@@ -40,7 +41,7 @@ class BasicSearchTest < ApplicationSystemTestCase
 
   test 'search by reference number with numbers only returns correct result' do
     # Arrange
-    create(:pc_application, reference_number: 'PC1001')
+    create(:pc90_application, reference_number: 'PC1001')
     sign_in
 
     # Act
@@ -68,9 +69,9 @@ class BasicSearchTest < ApplicationSystemTestCase
 
   test 'search by reference number multiple matching applications returns correct results' do
     # Arrange
-    create(:pc_application, reference_number: 'PC1001')
-    create(:pc_application, reference_number: 'PC1002')
-    create(:pc_application, reference_number: 'PC2002')
+    create(:pc90_application, reference_number: 'PC1001')
+    create(:pc91_application, reference_number: 'PC1002')
+    create(:pc92_application, reference_number: 'PC2002')
     sign_in
 
     # Act

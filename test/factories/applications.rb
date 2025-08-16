@@ -18,9 +18,14 @@ FactoryBot.define do
 
     # Good for when we need to know the reference number so there's no testing overlap if we use 90 as a street
     # address or something.
-    factory :pc90_application do
-      application_type factory: %i[application_type pc]
-      reference_number { 'PC90' }
+    # Use like this:
+    #   create(:pc90_application, ...)
+    #   create(:pc91_application, ...)
+    (0..9).each do |n|
+      factory :"pc9#{n}_application" do
+        application_type factory: %i[application_type pc]
+        reference_number { "PC9#{n}" }
+      end
     end
   end
 end

@@ -3,6 +3,7 @@
 require 'application_system_test_case'
 
 class SearchBySuburbTest < ApplicationSystemTestCase
+  include Parallelize
   include Applications::SearchBarPageObject
   include Applications::TablePageObject
 
@@ -106,7 +107,7 @@ class SearchBySuburbTest < ApplicationSystemTestCase
     # Arrange
     suburb = create(:suburb, suburb: 'Adelaide', state: 'SA', postcode: '5000')
     create(:pc90_application, suburb: suburb, reference_number: 'PC100')
-    create(:pc90_application, suburb: suburb, reference_number: 'PC101')
+    create(:pc91_application, suburb: suburb, reference_number: 'PC101')
     sign_in
 
     # Act

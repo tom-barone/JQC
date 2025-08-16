@@ -3,6 +3,7 @@
 require 'application_system_test_case'
 
 class SearchBySuburbAdvancedTest < ApplicationSystemTestCase
+  include Parallelize
   include Applications::SearchBarPageObject
   include Applications::TablePageObject
 
@@ -44,7 +45,7 @@ class SearchBySuburbAdvancedTest < ApplicationSystemTestCase
     # Arrange
     suburb = create(:suburb, suburb: 'Adelaide', state: 'SA', postcode: '5000')
     create(:pc90_application, suburb: suburb, reference_number: 'PC100')
-    create(:pc90_application, suburb: suburb, reference_number: 'PC101')
+    create(:pc91_application, suburb: suburb, reference_number: 'PC101')
     sign_in
 
     # Act
@@ -65,7 +66,7 @@ class SearchBySuburbAdvancedTest < ApplicationSystemTestCase
     adelaide = create(:suburb, suburb: 'Adelaide', state: 'SA', postcode: '5000')
     adelaide_hills = create(:suburb, suburb: 'Adelaide Hills', state: 'SA', postcode: '5152')
     create(:pc90_application, suburb: adelaide, reference_number: 'PC100')
-    create(:pc90_application, suburb: adelaide_hills, reference_number: 'PC101')
+    create(:pc91_application, suburb: adelaide_hills, reference_number: 'PC101')
     sign_in
 
     # Act
@@ -84,7 +85,7 @@ class SearchBySuburbAdvancedTest < ApplicationSystemTestCase
     suburb_apostrophe = create(:suburb, suburb: "O'Halloran Hill", state: 'SA', postcode: '5158')
     suburb_hyphen = create(:suburb, suburb: 'Port Adelaide-Enfield', state: 'SA', postcode: '5015')
     create(:pc90_application, suburb: suburb_apostrophe, reference_number: 'PC100')
-    create(:pc90_application, suburb: suburb_hyphen, reference_number: 'PC101')
+    create(:pc91_application, suburb: suburb_hyphen, reference_number: 'PC101')
     sign_in
 
     # Act
@@ -103,7 +104,7 @@ class SearchBySuburbAdvancedTest < ApplicationSystemTestCase
     adelaide_sa = create(:suburb, suburb: 'Adelaide', state: 'SA', postcode: '5000')
     richmond_vic = create(:suburb, suburb: 'Richmond', state: 'VIC', postcode: '3121')
     create(:pc90_application, suburb: adelaide_sa, reference_number: 'PC100')
-    create(:pc90_application, suburb: richmond_vic, reference_number: 'PC101')
+    create(:pc91_application, suburb: richmond_vic, reference_number: 'PC101')
     sign_in
 
     # Act
@@ -121,7 +122,7 @@ class SearchBySuburbAdvancedTest < ApplicationSystemTestCase
     # Arrange
     suburb = create(:suburb, suburb: 'Adelaide', state: 'SA', postcode: '5000')
     create(:pc90_application, suburb: suburb, reference_number: 'PC100')
-    create(:pc90_application, suburb: nil, reference_number: 'PC101')
+    create(:pc91_application, suburb: nil, reference_number: 'PC101')
     sign_in
 
     # Act

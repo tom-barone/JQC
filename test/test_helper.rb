@@ -6,9 +6,7 @@ require 'rails/test_help'
 
 module ActiveSupport
   class TestCase
-    # Run tests in parallel with specified workers
-    parallelize(workers: :number_of_processors)
-
+    # parallelize(workers: :number_of_processors)
     include FactoryBot::Syntax::Methods
 
     setup do
@@ -30,6 +28,16 @@ module ActiveSupport
 
     def restore_stderr
       $stderr = @original_stderr if @original_stderr
+    end
+  end
+end
+
+# Run tests in parallel with specified workers
+# Include this module in your test class to enable parallelization
+module Parallelize
+  def self.included(base)
+    base.class_eval do
+      parallelize(workers: :number_of_processors)
     end
   end
 end

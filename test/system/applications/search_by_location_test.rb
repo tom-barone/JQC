@@ -3,6 +3,7 @@
 require 'application_system_test_case'
 
 class SearchByLocationTest < ApplicationSystemTestCase
+  include Parallelize
   include Applications::SearchBarPageObject
   include Applications::TablePageObject
 

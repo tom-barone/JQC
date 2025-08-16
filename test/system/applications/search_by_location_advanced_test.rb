@@ -3,14 +3,15 @@
 require 'application_system_test_case'
 
 class SearchByLocationAdvancedTest < ApplicationSystemTestCase
+  include Parallelize
   include Applications::SearchBarPageObject
   include Applications::TablePageObject
 
   test 'search returns multiple matching locations' do
     # Arrange
     create(:pc90_application, lot_number: '5', street_number: '123', street_name: 'Main Street')
-    create(:pc90_application, lot_number: '7', street_number: '125', street_name: 'Main Street')
-    create(:pc90_application, lot_number: '10', street_number: '200', street_name: 'Oak Street')
+    create(:pc91_application, lot_number: '7', street_number: '125', street_name: 'Main Street')
+    create(:pc92_application, lot_number: '10', street_number: '200', street_name: 'Oak Street')
     sign_in
 
     # Act
@@ -60,7 +61,7 @@ class SearchByLocationAdvancedTest < ApplicationSystemTestCase
   test 'search by combined partial location elements returns correct result' do
     # Arrange
     create(:pc90_application, lot_number: '5', street_number: '123', street_name: 'Main Street')
-    create(:pc90_application, lot_number: '7', street_number: '456', street_name: 'Main Street')
+    create(:pc91_application, lot_number: '7', street_number: '456', street_name: 'Main Street')
     sign_in
 
     # Act
@@ -77,7 +78,7 @@ class SearchByLocationAdvancedTest < ApplicationSystemTestCase
   test 'search distinguishes between different addresses on same street' do
     # Arrange
     create(:pc90_application, lot_number: '5', street_number: '123', street_name: 'Main Street')
-    create(:pc90_application, lot_number: '7', street_number: '125', street_name: 'Main Street')
+    create(:pc91_application, lot_number: '7', street_number: '125', street_name: 'Main Street')
     sign_in
 
     # Act
@@ -110,7 +111,7 @@ class SearchByLocationAdvancedTest < ApplicationSystemTestCase
   test 'search handles special characters in street names' do
     # Arrange
     create(:pc90_application, lot_number: '5', street_number: '123', street_name: "O'Connor Street")
-    create(:pc90_application, lot_number: '7', street_number: '456', street_name: 'King-William Road')
+    create(:pc91_application, lot_number: '7', street_number: '456', street_name: 'King-William Road')
     sign_in
 
     # Act
