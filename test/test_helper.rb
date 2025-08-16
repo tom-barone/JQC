@@ -6,11 +6,16 @@ require 'rails/test_help'
 
 module ActiveSupport
   class TestCase
-    # parallelize(workers: :number_of_processors)
     include FactoryBot::Syntax::Methods
 
-    parallelize_setup do |_worker|
-      SimpleCov.command_name "Job::#{Process.pid}" if const_defined?(:SimpleCov)
+    if const_defined?(:SimpleCov)
+      parallelize_setup do |worker|
+        SimpleCov.command_name "#{SimpleCov.command_name}-#{worker}"
+      end
+
+      parallelize_teardown do |_worker|
+        SimpleCov.result
+      end
     end
 
     setup do
