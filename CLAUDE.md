@@ -139,3 +139,5 @@ just precommit
 **Tasks**: `Rakefile` contains all custom rake tasks
 
 **Routes**: Authentication required for all routes except sign-in
+
+**DB Schema**: `db/structure.sql` for database structure
