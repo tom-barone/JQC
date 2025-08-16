@@ -15,15 +15,14 @@ dev:
 lint:
     bundle exec bin/rubocop --autocorrect-all --fail-level I
     bundle exec bin/brakeman --no-pager --quiet --no-summary
-    #bundle exec erb_lint --lint-all --enable-all-linters
-    bundle exec erb_lint --lint-all
+    bundle exec erb_lint --lint-all --enable-all-linters
     npx eslint app/javascript
     bundle exec bin/importmap audit
 
 # Run tests
 test:
-		npm run test
-		bundle exec bin/rails test:all
+    npm run test
+    bundle exec bin/rails test:all
 
 # Run formatters
 format:
