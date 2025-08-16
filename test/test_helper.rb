@@ -9,6 +9,10 @@ module ActiveSupport
     # parallelize(workers: :number_of_processors)
     include FactoryBot::Syntax::Methods
 
+    parallelize_setup do |_worker|
+      SimpleCov.command_name "Job::#{Process.pid}" if const_defined?(:SimpleCov)
+    end
+
     setup do
       redirect_stderr
     end

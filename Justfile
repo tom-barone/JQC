@@ -23,7 +23,7 @@ lint:
 test:
     npm run test
     bundle exec bin/rails db:test:prepare
-    COVERAGE=true bundle exec bin/rails test:all
+    COVERAGE='true' bundle exec bin/rails test:all
 
 # Run formatters
 format:
