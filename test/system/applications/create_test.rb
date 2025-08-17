@@ -3,7 +3,9 @@
 require 'application_system_test_case'
 
 class CreateApplicationTest < ApplicationSystemTestCase
-  include Parallelize
+  # For SOME REASON this suite can't be parallelized because it messes with
+  # the "Are you sure you want to exit?" confirmation dialog.
+  # include Parallelize
   include Applications::TablePageObject
   include Applications::EditPageObject
 
