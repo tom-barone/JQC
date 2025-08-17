@@ -5,6 +5,7 @@ require 'page_objects/sign_in'
 require 'page_objects/nav_bar'
 require 'page_objects/applications/search_bar'
 require 'page_objects/applications/table'
+require 'helpers/application_types'
 require 'helpers/navigation'
 require 'helpers/cookies'
 
@@ -14,4 +15,5 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
 
   include NavigationHelper
   include CookiesHelper
+  include ApplicationTypesHelper
 end
