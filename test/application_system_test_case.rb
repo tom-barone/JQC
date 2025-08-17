@@ -3,6 +3,7 @@
 require 'test_helper'
 require 'page_objects/sign_in'
 require 'page_objects/nav_bar'
+require 'page_objects/applications/edit'
 require 'page_objects/applications/search_bar'
 require 'page_objects/applications/table'
 require 'helpers/application_types'
