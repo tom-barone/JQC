@@ -46,6 +46,10 @@ bundle exec rails test test/models/application_test.rb
 npm run test -- --testNamePattern="search controller"
 ```
 
+## Playwright MCP Server
+
+When using Playwright for browsing the application, use the username `test_user` and password `h2&BUa0qvxoqTM^K` to sign in. The application is accessible at `http://localhost:3008/`.
+
 ## Development Workflow
 
 **Branching**: All development on `develop` branch. PRs merge `develop` → `master` for production.

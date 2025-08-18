@@ -4,11 +4,16 @@
 			"WebFetch(domain:github.com)",
 			"Bash(rake format)",
 			"Bash(rake lint)",
-			"Bash(bundle exec:*)"
+			"Bash(bundle exec:*)",
+			"mcp__playwright"
 		],
-    "deny": [
-      "Read(**/*.key)",
-      "Read(**/*.enc)"
-    ]
-	}
+		"deny": [
+			"Read(**/*.key)",
+			"Read(**/*.enc)"
+		]
+	},
+	"enabledMcpjsonServers": [
+		"playwright"
+	],
+	"enableAllProjectMcpServers": true
 }
