@@ -25,6 +25,7 @@ jobs:
     steps:
       - name: Install packages
         run: |
+          # Install the PostgreSQL apt repository so we can get psql 17
           sudo apt install --no-install-recommends -y curl ca-certificates
           sudo install -d /usr/share/postgresql-common/pgdg
           sudo curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
