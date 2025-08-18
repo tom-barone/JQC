@@ -24,7 +24,17 @@ jobs:
 
     steps:
       - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config google-chrome-stable postgresql-client
+        run: | 
+          sudo apt-get update
+          sudo apt install -y postgresql-common
+          sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh
+          sudo apt-get install --no-install-recommends -y \
+            build-essential \
+            git \
+            libpq-dev \
+            pkg-config \
+            google-chrome-stable \
+            postgresql-client-17
 
       - name: Checkout code
         uses: actions/checkout@v5
