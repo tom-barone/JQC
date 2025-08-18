@@ -25,13 +25,19 @@ jobs:
     steps:
       - name: Install packages
         run: |
+          sudo apt install --no-install-recommends -y curl ca-certificates
+          sudo install -d /usr/share/postgresql-common/pgdg
+          sudo curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
+          . /etc/os-release
+          sudo sh -c "echo 'deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $VERSION_CODENAME-pgdg main' > /etc/apt/sources.list.d/pgdg.list"
           sudo apt-get update
           sudo apt-get install --no-install-recommends -y \
             build-essential \
             git \
             libpq-dev \
             pkg-config \
-            google-chrome-stable
+            google-chrome-stable \
+            postgresql-client-17
 
       - name: Checkout code
         uses: actions/checkout@v5
