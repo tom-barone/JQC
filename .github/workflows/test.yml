@@ -14,7 +14,7 @@ jobs:
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
     services:
       postgres:
-        image: postgres
+        image: postgres:17.6
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config google-chrome-stable
+        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config google-chrome-stable postgresql-client
 
       - name: Checkout code
         uses: actions/checkout@v5
@@ -47,6 +47,7 @@ jobs:
         env:
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
         run: |
+          psql --version
           just install
           just test
 

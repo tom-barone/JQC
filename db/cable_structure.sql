@@ -1,3 +1,8 @@
+\restrict qFgVjkN6et9204loR5wiJmwpotb9vuTSfgGt95NCJG2MAEqPoNB4nOJF9na5Ai3
+
+-- Dumped from database version 17.6 (Postgres.app)
+-- Dumped by pg_dump version 17.6 (Postgres.app)
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -122,6 +127,8 @@ CREATE INDEX index_solid_cable_messages_on_created_at ON public.solid_cable_mess
 --
 -- PostgreSQL database dump complete
 --
+
+\unrestrict qFgVjkN6et9204loR5wiJmwpotb9vuTSfgGt95NCJG2MAEqPoNB4nOJF9na5Ai3
 
 SET search_path TO "$user", public;
 

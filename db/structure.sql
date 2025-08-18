@@ -1,3 +1,8 @@
+\restrict FZHI2ntOSEkUm88BsovG0DNe28b7xetl7weNblKIimMTc0CfgCfQANvcx2u2Lhk
+
+-- Dumped from database version 17.6 (Postgres.app)
+-- Dumped by pg_dump version 17.6 (Postgres.app)
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -1395,6 +1400,8 @@ ALTER TABLE ONLY public.structural_engineers
 --
 -- PostgreSQL database dump complete
 --
+
+\unrestrict FZHI2ntOSEkUm88BsovG0DNe28b7xetl7weNblKIimMTc0CfgCfQANvcx2u2Lhk
 
 SET search_path TO "$user", public;
 
