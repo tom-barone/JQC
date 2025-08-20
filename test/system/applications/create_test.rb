@@ -34,7 +34,7 @@ class CreateApplicationTest < ApplicationSystemTestCase
     select_application_type('PC')
 
     # Assert
-    assert_field REFERENCE_NUMBER_FIELD, with: 'PC124'
+    assert_reference_number 'PC124'
   end
 
   test 'discarding a new application and creating a new one does not change the last used reference number' do
@@ -46,13 +46,69 @@ class CreateApplicationTest < ApplicationSystemTestCase
     click_new_application
     select_application_type('PC')
 
-    assert_field REFERENCE_NUMBER_FIELD, with: 'PC124'
+    assert_reference_number 'PC124'
 
     click_and_confirm_exit
     click_new_application
     select_application_type('PC')
 
     # Assert
-    assert_field REFERENCE_NUMBER_FIELD, with: 'PC124'
+    assert_reference_number 'PC124'
+  end
+
+  test 'a new application cannot be saved without appropriate fields filled in' do
+    # Arrange
+    sign_in
+
+    # Act
+    click_new_application
+    click_save
+
+    # Assert
+    assert_current_path new_application_path # No successful save
+  end
+
+  test 'a new application cannot be saved without an application type' do
+    # Arrange
+    sign_in
+
+    # Act
+    click_new_application
+    fill_in_reference_number('Test123')
+    fill_in_date_entered(Date.current)
+    click_save
+
+    # Assert
+    assert_current_path new_application_path # No successful save
+  end
+
+  test 'a new application cannot be saved without a reference number' do
+    # Arrange
+    create_application_types
+    sign_in
+
+    # Act
+    click_new_application
+    select_application_type('PC')
+    fill_in_reference_number('') # Clear the auto-filled reference number
+    fill_in_date_entered(Date.current)
+    click_save
+
+    # Assert
+    assert_current_path new_application_path # No successful save
+  end
+
+  test 'a new application cannot be saved without date entered' do
+    # Arrange
+    create_application_types
+    sign_in
+
+    # Act
+    click_new_application
+    select_application_type('PC') # Auto sets the reference number
+    click_save
+
+    # Assert
+    assert_current_path new_application_path # No successful save
   end
 end

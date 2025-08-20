@@ -4,20 +4,32 @@ module Applications
   module EditPageObject
     # Navigation
     EXIT_BUTTON = 'Exit'
-    EXIT_CONFIRM = 'OK'
+    EXIT_CONFIRM = 'confirm-accept'
     EXIT_CANCEL = 'Cancel'
     SAVE_BUTTON = 'Save'
 
-    # Fields
+    # Select Fields
     APPLICATION_TYPE_SELECT = 'application[application_type_id]'
-    REFERENCE_NUMBER_FIELD = 'application[reference_number]'
+
+    # Input Fields
+    INPUT_FIELDS = {
+      reference_number: 'application[reference_number]',
+      date_entered: 'application[created_at]'
+    }.freeze
 
     def select_application_type(value)
       select value, from: APPLICATION_TYPE_SELECT
     end
 
-    def fill_in_reference_number(value)
-      fill_in REFERENCE_NUMBER_FIELD, with: value
+    # Dynamically define methods for each input field
+    INPUT_FIELDS.each do |field, selector|
+      define_method("fill_in_#{field}") do |value|
+        fill_in selector, with: value
+      end
+
+      define_method("assert_#{field}") do |value|
+        assert_field selector, with: value
+      end
     end
 
     def click_exit
@@ -25,7 +37,7 @@ module Applications
     end
 
     def confirm_exit
-      click_on EXIT_CONFIRM
+      find_button(EXIT_CONFIRM, wait: 5).click
     end
 
     def cancel_exit
