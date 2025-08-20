@@ -32,6 +32,9 @@ module Jqc
     # Change this from :ruby to :sql because we have some postgres specific triggers
     # we need to keep in the schema.
     config.active_record.schema_format = :sql
+    # Arguments to pass to pg_dump
+    ActiveRecord::Tasks::DatabaseTasks.structure_dump_flags =
+      ['--restrict-key=aIB41y39xeDI6RSI038EB2NrqmFWrvcCjoDvWdl9t9kNI0uy9gHtvSHuZBJxhPG']
 
     # Used for whenever we need to know what our host / scheme is
     # Stuff like swagger UI etc.
