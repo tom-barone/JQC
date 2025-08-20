@@ -3,9 +3,7 @@
 require 'application_system_test_case'
 
 class CreateApplicationTest < ApplicationSystemTestCase
-  # For SOME REASON this suite can't be parallelized because it messes with
-  # the "Are you sure you want to exit?" confirmation dialog.
-  # include Parallelize
+  include Parallelize
   include Applications::TablePageObject
   include Applications::EditPageObject
 
@@ -110,5 +108,33 @@ class CreateApplicationTest < ApplicationSystemTestCase
 
     # Assert
     assert_current_path new_application_path # No successful save
+  end
+
+  test 'if there are form changes on a new application, confirmation is required when exiting' do
+    # Arrange
+    create_application_types
+    sign_in
+
+    # Act
+    click_new_application
+    select_application_type('PC')
+    click_exit
+
+    # Assert
+    assert_current_path new_application_path
+    assert_text 'All unsaved changes will be discarded.'
+  end
+
+  test 'if there are no form changes on a new application, no confirmation is required when exiting' do
+    # Arrange
+    create_application_types
+    sign_in
+
+    # Act
+    click_new_application
+    click_exit
+
+    # Assert
+    assert_no_current_path new_application_path
   end
 end

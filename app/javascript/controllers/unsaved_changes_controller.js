@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { TurboConfirm } from "@rolemodel/turbo-confirm";
 
 /**
  * This adds a sparkle of javascript so the "Are you sure you want to leave this page?"
@@ -9,24 +10,29 @@ export default class extends Controller {
 
   connect() {
     this.unsavedChanges = false;
-    // Take off the confirm attributes from the exit button
-    const attributes = ["data-turbo-confirm", "data-confirm-details"];
-    this.confirmHtmlAttributes = {};
-    for (const attribute of attributes) {
-      this.confirmHtmlAttributes[attribute] =
-        this.exitButtonTarget.getAttribute(attribute);
-      this.exitButtonTarget.removeAttribute(attribute);
-    }
   }
 
   onFormChange() {
-    if (this.unsavedChanges) return;
     this.unsavedChanges = true;
-    // Put back the confirm attributes on the exit button
-    for (const [attribute, value] of Object.entries(
-      this.confirmHtmlAttributes,
-    )) {
-      this.exitButtonTarget.setAttribute(attribute, value);
+  }
+
+  onExitClick(event) {
+    console.log(this.unsavedChanges);
+    if (!this.unsavedChanges) {
+      // No unsaved changes, proceed with the exit
+      return;
     }
+    // Ask for confirmation first
+    event.preventDefault();
+    const tc = new TurboConfirm();
+    tc.confirmWithContent({
+      "#confirm-title": "Are you sure?",
+      "#confirm-body": "All unsaved changes will be discarded.",
+    }).then((result) => {
+      if (result) {
+        // User confirmed, proceed with the exit
+        window.location.href = event.target.href;
+      }
+    });
   }
 }

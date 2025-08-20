@@ -149,9 +149,7 @@
                     class: 'btn btn-outline-secondary',
                     data: {
                       'unsaved-changes-target': 'exitButton',
-                      turbo_method: 'get',
-                      turbo_confirm: 'Are you sure?',
-                      confirm_details: 'All unsaved changes will be discarded.'
+                      action: 'click->unsaved-changes#onExitClick'
                     } %>
       </div>
 

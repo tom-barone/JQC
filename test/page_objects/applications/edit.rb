@@ -4,7 +4,7 @@ module Applications
   module EditPageObject
     # Navigation
     EXIT_BUTTON = 'Exit'
-    EXIT_CONFIRM = 'confirm-accept'
+    EXIT_CONFIRM = 'OK'
     EXIT_CANCEL = 'Cancel'
     SAVE_BUTTON = 'Save'
 
@@ -37,7 +37,7 @@ module Applications
     end
 
     def confirm_exit
-      find_button(EXIT_CONFIRM, wait: 5).click
+      click_on EXIT_CONFIRM
     end
 
     def cancel_exit
