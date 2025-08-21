@@ -8,13 +8,29 @@ module Applications
     EXIT_CANCEL = 'Cancel'
     SAVE_BUTTON = 'Save'
 
-    # Select Fields
-    APPLICATION_TYPE_SELECT = 'application[application_type_id]'
+    APPLICATION_TYPE_SELECT = 'Type'
 
-    # Input Fields
     INPUT_FIELDS = {
-      reference_number: 'application[reference_number]',
-      date_entered: 'application[created_at]'
+      reference_number: 'Reference no.',
+      date_entered: 'Date entered',
+      da_number: 'DA number',
+      number_of_storeys: 'Number of storeys',
+      construction_value: 'Construction value ($)',
+      area: 'Area (m²)',
+      fee_amount: 'Fee amount ($)',
+      applicant_email: 'Applicant email',
+      lot_number: 'Lot number',
+      street_number: 'Street number',
+      street_name: 'Street name',
+      quote_accepted_date: 'Quote accepted date',
+      description: 'Description',
+      administration_notes: 'Administration notes',
+      invoice_to: 'Invoice to',
+      care_of: 'Care of',
+      invoice_email: 'Invoice email',
+      attention: 'Attention',
+      purchase_order_number: 'Purchase No.',
+      invoice_debtor_notes: 'Invoice debtor notes'
     }.freeze
 
     def select_application_type(value)
