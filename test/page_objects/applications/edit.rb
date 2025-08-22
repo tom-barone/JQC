@@ -22,6 +22,7 @@ module Applications
       lot_number: 'Lot number',
       street_number: 'Street number',
       street_name: 'Street name',
+      suburb: 'Suburb',
       quote_accepted_date: 'Quote accepted date',
       description: 'Description',
       administration_notes: 'Administration notes',
@@ -33,11 +34,18 @@ module Applications
       invoice_debtor_notes: 'Invoice debtor notes'
     }.freeze
 
+    CHECKBOX_FIELDS = {
+      kd_to_lodge: 'KD to lodge',
+      staged_consent: 'Staged consent?',
+      engagement_form: 'Engagement form?',
+      cancelled: 'Mark as cancelled'
+    }.freeze
+
     def select_application_type(value)
       select value, from: APPLICATION_TYPE_SELECT
     end
 
-    # Dynamically define methods for each input field
+    # Dynamically define methods for each field
     INPUT_FIELDS.each do |field, selector|
       define_method("fill_in_#{field}") do |value|
         fill_in selector, with: value
@@ -45,6 +53,18 @@ module Applications
 
       define_method("assert_#{field}") do |value|
         assert_field selector, with: value
+      end
+    end
+
+    CHECKBOX_FIELDS.each do |field, selector|
+      define_method("set_#{field}") do |checked|
+        check selector if checked
+        uncheck selector unless checked
+      end
+
+      define_method("assert_#{field}") do |checked|
+        assert_checked_field selector if checked
+        assert_unchecked_field selector unless checked
       end
     end
 
