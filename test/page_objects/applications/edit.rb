@@ -8,8 +8,6 @@ module Applications
     EXIT_CANCEL = 'Cancel'
     SAVE_BUTTON = 'Save'
 
-    APPLICATION_TYPE_SELECT = 'Type'
-
     INPUT_FIELDS = {
       reference_number: 'Reference no.',
       date_entered: 'Date entered',
@@ -41,9 +39,10 @@ module Applications
       cancelled: 'Mark as cancelled'
     }.freeze
 
-    def select_application_type(value)
-      select value, from: APPLICATION_TYPE_SELECT
-    end
+    SELECT_FIELDS = {
+      application_type: 'Type',
+      job_type_administration: 'Job type administration'
+    }.freeze
 
     # Dynamically define methods for each field
     INPUT_FIELDS.each do |field, selector|
@@ -65,6 +64,16 @@ module Applications
       define_method("assert_#{field}") do |checked|
         assert_checked_field selector if checked
         assert_unchecked_field selector unless checked
+      end
+    end
+
+    SELECT_FIELDS.each do |field, selector|
+      define_method("select_#{field}") do |value|
+        select value, from: selector
+      end
+
+      define_method("assert_#{field}") do |value|
+        assert_field selector, with: value
       end
     end
 

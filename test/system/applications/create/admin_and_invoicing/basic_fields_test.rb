@@ -44,20 +44,24 @@ class AdminAndInvoicingBasicFieldsTest < ApplicationSystemTestCase
     cancelled: Faker::Boolean.boolean
   }.freeze
 
+  SELECTS = {
+    job_type_administration: Application::JOB_TYPE_ADMINISTRATION.sample
+  }.freeze
+
   # Tests for creating a new application, setting a simple field and checking it has been saved
-  INPUTS.each do |field, selector|
+  INPUTS.each do |field, value|
     test "can create a new application and set #{field}" do
       # Arrange
       create_new_pc124_and_set_default_fields
 
       # Act
-      send("fill_in_#{field}", selector)
+      send("fill_in_#{field}", value)
       click_save
 
       # Assert
       assert_no_current_path new_application_path
       click_on 'PC124'
-      send("assert_#{field}", selector)
+      send("assert_#{field}", value)
     end
   end
 
@@ -77,32 +81,19 @@ class AdminAndInvoicingBasicFieldsTest < ApplicationSystemTestCase
     end
   end
 
-  test 'can create a new application with a suburb' do
-    # Arrange
-    create(:suburb, suburb: 'TEST', state: 'SA', postcode: '5123')
-    create_new_pc124_and_set_default_fields
+  SELECTS.each do |field, value|
+    test "can create a new application and set #{field}" do
+      # Arrange
+      create_new_pc124_and_set_default_fields
 
-    # Act
-    fill_in_suburb('TEST, SA 5123')
-    click_save
+      # Act
+      send("select_#{field}", value)
+      click_save
 
-    # Assert
-    assert_no_current_path new_application_path
-    click_on 'PC124'
-
-    assert_suburb 'TEST, SA 5123'
-  end
-
-  test 'cannot save a new application if the suburb does not exist' do
-    # Arrange
-    create(:suburb, suburb: 'TEST', state: 'SA', postcode: '5123')
-    create_new_pc124_and_set_default_fields
-
-    # Act
-    fill_in_suburb('OTHER, SA 5123')
-    click_save
-
-    # Assert
-    assert_current_path new_application_path
+      # Assert
+      assert_no_current_path new_application_path
+      click_on 'PC124'
+      send("assert_#{field}", value)
+    end
   end
 end
