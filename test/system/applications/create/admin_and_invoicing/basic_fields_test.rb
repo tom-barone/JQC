@@ -3,7 +3,7 @@
 require 'application_system_test_case'
 require 'faker'
 
-class CreateApplicationTest < ApplicationSystemTestCase
+class AdminAndInvoicingBasicFieldsTest < ApplicationSystemTestCase
   include Parallelize
   include Applications::TablePageObject
   include Applications::EditPageObject
