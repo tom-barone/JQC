@@ -32,10 +32,11 @@ module Applications
       invoice_debtor_notes: 'Invoice debtor notes'
     }.freeze
 
-    MULTIPLE_INPUT_FIELDS = {
+    MULTIPLE_FIELDS = {
       # Additional information
       info_date: 'info_date',
-      info_text: 'info_text'
+      info_text: 'info_text',
+      delete_additional_information: 'delete_additional_information'
     }.freeze
 
     CHECKBOX_FIELDS = {
@@ -83,7 +84,7 @@ module Applications
       end
     end
 
-    MULTIPLE_INPUT_FIELDS.each do |field, selector|
+    MULTIPLE_FIELDS.each do |field, selector|
       define_method("all_#{field}") do
         all(:field, selector)
       end
@@ -94,7 +95,7 @@ module Applications
     end
 
     def click_add_additional_information
-      click_link 'add-additional-information'
+      click_link 'add_additional_information'
     end
 
     def confirm_exit

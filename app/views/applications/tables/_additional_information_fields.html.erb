@@ -8,6 +8,9 @@
     <%= f.text_field :info_text, 'data-testid': 'info_text' %>
   </td>
   <td class="border-0 py-1 text-center" style="width:3em">
-    <%= link_to_remove_association '⌫', f, class: 'btn btn-sm btn-outline-danger' %>
+    <%= link_to_remove_association '⌫',
+                                   f,
+                                   class: 'btn btn-sm btn-outline-danger',
+                                   'data-testid': 'delete_additional_information' %>
   </td>
 </tr>
