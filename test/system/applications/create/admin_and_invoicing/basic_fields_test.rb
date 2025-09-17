@@ -8,14 +8,6 @@ class AdminAndInvoicingBasicFieldsTest < ApplicationSystemTestCase
   include Applications::TablePageObject
   include Applications::EditPageObject
 
-  def create_new_pc124_and_set_default_fields
-    create(:application_type, :pc, last_used: 123)
-    sign_in
-    click_new_application
-    select_application_type('PC')
-    fill_in_date_entered(Date.current)
-  end
-
   INPUTS = {
     da_number: Faker::Alphanumeric.alphanumeric(number: 8).upcase,
     number_of_storeys: Faker::Number.between(from: 1, to: 10).to_s,

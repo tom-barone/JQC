@@ -32,6 +32,12 @@ module Applications
       invoice_debtor_notes: 'Invoice debtor notes'
     }.freeze
 
+    MULTIPLE_INPUT_FIELDS = {
+      # Additional information
+      info_date: 'info_date',
+      info_text: 'info_text'
+    }.freeze
+
     CHECKBOX_FIELDS = {
       kd_to_lodge: 'KD to lodge',
       staged_consent: 'Staged consent?',
@@ -77,8 +83,18 @@ module Applications
       end
     end
 
+    MULTIPLE_INPUT_FIELDS.each do |field, selector|
+      define_method("all_#{field}") do
+        all(:field, selector)
+      end
+    end
+
     def click_exit
       click_on EXIT_BUTTON
+    end
+
+    def click_add_additional_information
+      click_link 'add-additional-information'
     end
 
     def confirm_exit
