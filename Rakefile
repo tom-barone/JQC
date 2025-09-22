@@ -121,6 +121,44 @@ task fetch_most_recent_backup: %i[environment] do
   sh "rm -rf #{most_recent_backup} latest_backup.tgz"
 end
 
+# Fetch a backup from S3
+# Specify the date with the env variable DATE="2024-01-15"
+# If DATE is not specified, it will fetch the most recent backup
+task fetch_backup: %i[environment] do
+  sh 'rm -rf backup'
+
+  config = Rails.application.credentials.postgres_backups
+  aws_bucket = config[:aws_s3_bucket]
+  aws_access_key_id = config[:aws_access_key_id]
+  aws_secret_access_key = config[:aws_secret_access_key]
+  encryption_key = config[:encryption_key]
+  credentials = "AWS_ACCESS_KEY_ID=#{aws_access_key_id} AWS_SECRET_ACCESS_KEY=#{aws_secret_access_key}"
+
+  if ENV['DATE']
+    date = ENV['DATE']
+    puts "Searching for backups from #{date}..."
+    all_backups = `#{credentials} aws s3api list-objects-v2 --bucket #{aws_bucket} \
+      --query 'Contents[].{Key:Key,LastModified:LastModified}' \
+      --output json`.strip
+    date_backups = JSON.parse(all_backups).select { |backup| backup['Key'].include?(date) }
+    selected_backup = date_backups.max_by { |backup| backup['LastModified'] }['Key']
+  else
+    puts 'Fetching most recent backup...'
+    # Find the most recent backup saved to S3
+    selected_backup = `#{credentials} aws s3api list-objects-v2 --bucket #{aws_bucket} \
+      --query 'sort_by(Contents, &LastModified)[-1].Key' \
+      --output=text`.strip
+  end
+  sh "#{credentials} aws s3 cp s3://#{aws_bucket}/#{selected_backup} ."
+
+  # Decrypt and unzip the backup
+  sh "echo '#{encryption_key}' | gpg --passphrase-fd 0 --batch --decrypt #{selected_backup} > latest_backup.tgz"
+  sh 'tar -xf latest_backup.tgz && rm latest_backup.tgz'
+
+  # Cleanup (doesn't touch the decrypted backup at ./backup/export)
+  sh "rm -rf #{selected_backup}"
+end
+
 task check_for_recent_backup: %i[environment] do
   # Check that we have a backup within the last 24 hours
   config = Rails.application.credentials.postgres_backups
