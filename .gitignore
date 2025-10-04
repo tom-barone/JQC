@@ -38,3 +38,7 @@
 
 # Test and coverage reports
 /ci
+
+# MCP servers
+.playwright-mcp
+

@@ -1,15 +1,15 @@
-# Fixture set to test searching applications by type
+## Fixture set to test searching applications by type
 
-_fixture:
-  model_class: Application
+#_fixture:
+#  model_class: Application
 
-DEFAULTS: &DEFAULTS
-  created_at: <%= Date.new(2022,7,10) %>
+#DEFAULTS: &DEFAULTS
+#  created_at: <%= Date.new(2022,7,10) %>
 
-<% %w[PC Q C LG RC SC].each.with_index do |type, index| %>
-search_application_by_type_<%=type%>:
-  <<: *DEFAULTS
-  application_type: <%=type%>
-  reference_number: <%=type%>900<%=index%>
-  description: "Search application by type <%=type%>"
-<% end %>
+#<% %w[PC Q C LG RC SC].each.with_index do |type, index| %>
+#search_application_by_type_<%=type%>:
+#  <<: *DEFAULTS
+#  application_type: <%=type%>
+#  reference_number: <%=type%>900<%=index%>
+#  description: "Search application by type <%=type%>"
+#<% end %>

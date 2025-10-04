@@ -1,0 +1,74 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "92cf9d414751897658450ffdb5e0b961a360570277f15a60b357eec6baddc021",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "script/find_in_backups.rb",
+      "line": 45,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "`#{aws_credentials_string} aws s3api list-objects-v2 --bucket #{Rails.application.credentials.postgres_backups[:aws_s3_bucket]}       --query 'Contents[].{Key:Key,LastModified:LastModified}'       --output json`",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "BackupSearcher",
+        "method": "fetch_available_backups"
+      },
+      "user_input": "aws_credentials_string",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "c122072b60c45437b39c6b5e77500a58d096aeb6cadcfad0d4829bd79b010617",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "script/find_in_backups.rb",
+      "line": 91,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"DATE=#{date} bundle exec rake fetch_backup > /dev/null 2>&1\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "BackupSearcher",
+        "method": "backup_contains_matches?"
+      },
+      "user_input": "date",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Command Injection",
+      "warning_code": 14,
+      "fingerprint": "d51d3f5660b42af0f366e96c8e6eb670875a405b28dfd6ef676da9be0d8b8ad0",
+      "check_name": "Execute",
+      "message": "Possible command injection",
+      "file": "script/find_in_backups.rb",
+      "line": 99,
+      "link": "https://brakemanscanner.org/docs/warning_types/command_injection/",
+      "code": "system(\"pg_restore -f - backup/export 2>/dev/null | #{search_command} > /dev/null 2>&1\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "BackupSearcher",
+        "method": "backup_contains_matches?"
+      },
+      "user_input": "search_command",
+      "confidence": "Medium",
+      "cwe_id": [
+        77
+      ],
+      "note": ""
+    }
+  ],
+  "brakeman_version": "7.1.0"
+}

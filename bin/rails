@@ -3,10 +3,10 @@
 
 if ENV['COVERAGE'] == 'true'
   require 'simplecov'
+  puts 'Running SimpleCov for test coverage...'
   SimpleCov.start 'rails'
   SimpleCov.coverage_dir('ci/ruby/coverage')
   SimpleCov.add_filter ['lib/tasks', 'bin', 'Rakefile']
-  puts 'Required simplecov'
 end
 
 APP_PATH = File.expand_path('../config/application', __dir__)

@@ -1,17 +1,17 @@
-# Fixture set to test pagination of applications
+## Fixture set to test pagination of applications
 
-_fixture:
-  model_class: Application
+#_fixture:
+#  model_class: Application
 
-DEFAULTS: &DEFAULTS
-  created_at: <%= Date.new(2022,7,10) %>
+#DEFAULTS: &DEFAULTS
+#  created_at: <%= Date.new(2022,7,10) %>
 
-# Use SCs so we don't step on all the other applications
-# SC is last in the natural order
-<% 5000.upto(7000) do |n| %>
-pagination_application_<%=n%>:
-  <<: *DEFAULTS
-  application_type: SC
-  reference_number: SC<%=n%>
-  description: "Pagination application <%=n%>"
-<% end %>
+## Use SCs so we don't step on all the other applications
+## SC is last in the natural order
+#<% 5000.upto(7000) do |n| %>
+#pagination_application_<%=n%>:
+#  <<: *DEFAULTS
+#  application_type: SC
+#  reference_number: SC<%=n%>
+#  description: "Pagination application <%=n%>"
+#<% end %>

@@ -14,7 +14,7 @@ jobs:
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
     services:
       postgres:
-        image: postgres
+        image: postgres:17.6
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -24,10 +24,27 @@ jobs:
 
     steps:
       - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libpq-dev pkg-config google-chrome-stable
+        run: |
+          # Install the PostgreSQL apt repository so we can get psql 17
+          sudo apt install --no-install-recommends -y curl ca-certificates
+          sudo install -d /usr/share/postgresql-common/pgdg
+          sudo curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc --fail https://www.postgresql.org/media/keys/ACCC4CF8.asc
+          . /etc/os-release
+          sudo sh -c "echo 'deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $VERSION_CODENAME-pgdg main' > /etc/apt/sources.list.d/pgdg.list"
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y \
+            build-essential \
+            git \
+            libpq-dev \
+            pkg-config \
+            google-chrome-stable \
+            postgresql-client-17
 
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+
+      - name: Setup the just task runner
+        uses: extractions/setup-just@v3
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -42,12 +59,11 @@ jobs:
 
       - name: Run tests
         env:
-          RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432
-          COVERAGE: "true"
         run: |
-          npm ci
-          bundle exec rake test_all
+          psql --version
+          just install
+          just test
 
       - name: Keep screenshots from failed system tests
         uses: actions/upload-artifact@v4

@@ -9,7 +9,7 @@
 		"prettier": "^3.5.0"
 	},
 	"scripts": {
-		"test": "NODE_OPTIONS=--experimental-vm-modules jest app --silent"
+		"test": "NODE_OPTIONS=--experimental-vm-modules jest app --silent --coverage --coverageDirectory ci/javascript/coverage"
 	},
 	"type": "module"
 }

@@ -1,11 +1,19 @@
 {
-  "permissions": {
-    "allow": [
-      "WebFetch(domain:github.com)",
-      "Bash(bundle exec rails test:*)",
-      "Bash(rake format)",
-      "Bash(rake lint)"
-    ],
-    "deny": []
-  }
+	"permissions": {
+		"allow": [
+			"WebFetch(domain:github.com)",
+			"Bash(rake format)",
+			"Bash(rake lint)",
+			"Bash(bundle exec:*)",
+			"mcp__playwright"
+		],
+		"deny": [
+			"Read(**/*.key)",
+			"Read(**/*.enc)"
+		]
+	},
+	"enabledMcpjsonServers": [
+		"playwright"
+	],
+	"enableAllProjectMcpServers": true
 }

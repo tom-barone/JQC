@@ -176,6 +176,13 @@ GEM
     exception_notification (5.0.0)
       actionmailer (>= 7.1, < 9)
       activesupport (>= 7.1, < 9)
+    factory_bot (6.5.4)
+      activesupport (>= 6.1.0)
+    factory_bot_rails (6.5.0)
+      factory_bot (~> 6.5)
+      railties (>= 6.1.0)
+    faker (3.5.2)
+      i18n (>= 1.8.11, < 2)
     ferrum (0.17.1)
       addressable (~> 2.5)
       base64 (~> 0.2)
@@ -366,6 +373,13 @@ GEM
     rubocop-capybara (2.22.1)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
+    rubocop-factory_bot (2.27.1)
+      lint_roller (~> 1.1)
+      rubocop (~> 1.72, >= 1.72.1)
+    rubocop-minitest (0.38.1)
+      lint_roller (~> 1.1)
+      rubocop (>= 1.75.0, < 2.0)
+      rubocop-ast (>= 1.38.0, < 2.0)
     rubocop-performance (1.25.0)
       lint_roller (~> 1.1)
       rubocop (>= 1.75.0, < 2.0)
@@ -393,7 +407,7 @@ GEM
       docile (~> 1.1)
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
-    simplecov-html (0.13.1)
+    simplecov-html (0.13.2)
     simplecov_json_formatter (0.1.4)
     smart_properties (1.17.0)
     solid_cable (3.0.11)
@@ -480,6 +494,8 @@ DEPENDENCIES
   erb-formatter
   erb_lint
   exception_notification
+  factory_bot_rails
+  faker
   ferrum_pdf (= 0.3.0)
   importmap-rails
   jbuilder
@@ -492,6 +508,8 @@ DEPENDENCIES
   rails (~> 8.0.2)
   rubocop
   rubocop-capybara
+  rubocop-factory_bot
+  rubocop-minitest
   rubocop-performance
   rubocop-rails
   schema_to_scaffold

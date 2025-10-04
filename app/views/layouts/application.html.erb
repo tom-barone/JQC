@@ -12,6 +12,9 @@
     load if someone hovers over the "Exit" button -->
     <meta name="turbo-prefetch" content="false">
 
+    <%# We don't want to cache form fields we want to ensure all forms are always up-to-date with the latest data %>
+    <meta name="turbo-cache-control" content="no-cache">
+
     <%= yield :head %>
 
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>

@@ -19,7 +19,7 @@ jobs:
     needs: [lint]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
       - name: SonarQube Scan
@@ -33,14 +33,14 @@ jobs:
     secrets:
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
-  deploy:
-    needs: [test, sonarqube]
-    uses: ./.github/workflows/deploy.yml
-    with:
-      branch: develop
-      # Allow force push to the develop branch
-      git_push_flags: "--force"
-    secrets:
-      DOMAIN: ${{ secrets.STAGING_DOMAIN }}
-      SSH_PRIVATE_KEY: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
-      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+  #deploy:
+  #  needs: [test, sonarqube]
+  #  uses: ./.github/workflows/deploy.yml
+  #  with:
+  #    branch: develop
+  #    # Allow force push to the develop branch
+  #    git_push_flags: "--force"
+  #  secrets:
+  #    DOMAIN: ${{ secrets.STAGING_DOMAIN }}
+  #    SSH_PRIVATE_KEY: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+  #    RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
