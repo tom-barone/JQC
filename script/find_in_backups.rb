@@ -13,6 +13,7 @@ class BackupSearcher
     @config = Rails.application.credentials.postgres_backups
   end
 
+  # rubocop:disable Metrics/MethodLength
   def run
     puts "Searching for matches between #{@search_from} and #{@search_to}"
     puts "Search command: #{@search_command}"
@@ -83,6 +84,7 @@ class BackupSearcher
 
     latest_match
   end
+  # rubocop:enable Metrics/MethodLength
 
   def backup_contains_matches?(date)
     # Use the existing rake task to fetch the backup
