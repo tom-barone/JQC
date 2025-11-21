@@ -41,7 +41,7 @@ jobs:
             postgresql-client-17
 
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup the just task runner
         uses: extractions/setup-just@v3
