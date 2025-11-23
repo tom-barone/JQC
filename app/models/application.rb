@@ -251,7 +251,7 @@ class Application < ApplicationRecord
     latest_rfi_subquery = RequestForInformation
                           .select('DISTINCT ON (application_id) application_id, request_for_information_date')
                           .where.not(request_for_information_date: nil)
-                          .order('application_id, request_for_information_date DESC')
+                          .order(:application_id, request_for_information_date: :desc)
 
     select('applications.*, latest_rfis.*')
       .includes(:request_for_informations)
@@ -276,7 +276,7 @@ class Application < ApplicationRecord
     subquery = StructuralEngineer
                .select('DISTINCT ON (application_id) application_id, engineer_certificate_received')
                .where.not(engineer_certificate_received: nil)
-               .order('application_id, engineer_certificate_received DESC')
+               .order(:application_id, engineer_certificate_received: :desc)
 
     select('applications.*, latest_structural_engineers.*')
       .includes(:structural_engineers)

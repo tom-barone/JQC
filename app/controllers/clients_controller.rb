@@ -20,7 +20,7 @@ class ClientsController < ApplicationController
           ]
           redirect_to params[:previous_request]
         else
-          render :edit, status: :unprocessable_entity
+          render :edit, status: :unprocessable_content
         end
       end
     end

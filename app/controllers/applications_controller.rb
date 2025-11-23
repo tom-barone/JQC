@@ -96,7 +96,7 @@ class ApplicationsController < ApplicationController
           ]
         end
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, status: :unprocessable_content }
       end
     end
   end
@@ -114,7 +114,7 @@ class ApplicationsController < ApplicationController
           ]
           redirect_to session[:search_results] || '/'
         else
-          render :edit, status: :unprocessable_entity
+          render :edit, status: :unprocessable_content
         end
       end
     end
@@ -139,7 +139,7 @@ class ApplicationsController < ApplicationController
     filename = @attachment.filename
     @attachment.purge_later
     flash[:success] = ["Successfully removed \"#{filename}\""]
-    redirect_back(fallback_location: request.referer)
+    redirect_back_or_to(request.referer)
   end
 
   private
