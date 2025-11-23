@@ -84,10 +84,7 @@ class Application < ApplicationRecord
   %i[applicant owner contact].each do |attribute|
     define_method(:"#{attribute}_name=") do |name|
       stripped = name.strip
-      if stripped.empty?
-        send(:"#{attribute}=", nil)
-        return
-      end
+      send(:"#{attribute}=", nil) if stripped.empty?
       send(:"#{attribute}=", Client.find_or_create_by(client_name: stripped))
     end
 
@@ -119,31 +116,31 @@ class Application < ApplicationRecord
   }
 
   scope :filter_by_has_rfis_issued, lambda { |checkbox_value|
-    return all unless checkbox_value == '1'
+    all unless checkbox_value == '1'
 
     where.not(request_for_informations: { request_for_information_date: nil })
   }
 
   scope :filter_by_has_additional_information, lambda { |checkbox_value|
-    return all unless checkbox_value == '1'
+    all unless checkbox_value == '1'
 
     where.not(application_additional_informations: { info_date: nil })
   }
 
   scope :filter_by_has_received_engineer_certificate, lambda { |checkbox_value|
-    return all unless checkbox_value == '1'
+    all unless checkbox_value == '1'
 
     where.not(structural_engineers: { engineer_certificate_received: nil })
   }
 
   scope :filter_by_has_invoices_outstanding, lambda { |checkbox_value|
-    return all unless checkbox_value == '1'
+    all unless checkbox_value == '1'
 
     where('unpaid_invoices_count > ?', 0)
   }
 
   scope :filter_by_has_variation_requested, lambda { |checkbox_value|
-    return all unless checkbox_value == '1'
+    all unless checkbox_value == '1'
 
     where(variation_requested: true)
   }
@@ -158,7 +155,7 @@ class Application < ApplicationRecord
   # See db/migrate/20250215120712_add_text_search_to_applications.rb for the triggers and search functions
   # behind the searchable_tsvector column
   scope :filter_by_search_text, lambda { |query|
-    return all if query.blank?
+    all if query.blank?
 
     # Create a plainto_tsquery from the entire query string
     # This handles special characters and properly formats the search
@@ -238,7 +235,7 @@ class Application < ApplicationRecord
 
   # Not used right now, but could be cool in the future
   scope :order_by_search_text_rank, lambda { |query|
-    return all if query.blank?
+    all if query.blank?
 
     # Remove quotes from the word
     formatted_query = query.split.map { |word| "#{word}:*" }.join(' & ')
