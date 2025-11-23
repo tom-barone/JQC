@@ -41,7 +41,7 @@ jobs:
             postgresql-client-17
 
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Setup the just task runner
         uses: extractions/setup-just@v3
@@ -53,7 +53,7 @@ jobs:
           bundler-cache: true
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           cache: "npm"
 
@@ -66,7 +66,7 @@ jobs:
           just test
 
       - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         if: failure()
         with:
           name: screenshots
@@ -74,7 +74,7 @@ jobs:
           if-no-files-found: ignore
 
       - name: "Save test and code coverage results"
-        uses: "actions/upload-artifact@v4"
+        uses: "actions/upload-artifact@v5"
         with:
           name: "test-reports"
           path: "ci"

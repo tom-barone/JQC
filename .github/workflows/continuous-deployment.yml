@@ -28,6 +28,7 @@ jobs:
       branch: master
     secrets:
       DOMAIN: ${{ secrets.PRODUCTION_DOMAIN }}
+      SSH_PORT: ${{ secrets.PRODUCTION_SSH_PORT }}
       SSH_PRIVATE_KEY: ${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }}
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
@@ -35,7 +36,7 @@ jobs:
     needs: [deploy]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 

@@ -3,6 +3,7 @@
 # Only authenticated users can access active storage blobs
 class SecureBlobsController < ActiveStorage::BaseController
   include ActiveStorage::SetBlob
+
   before_action :authenticate_user!
 
   def show

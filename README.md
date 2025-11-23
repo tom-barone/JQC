@@ -48,7 +48,7 @@ Alerts:
 # Create the app
 ssh -t <user>@<dokku_server> dokku apps:create <website_domain>
 # Add the dokku git remote to the repo
-git remote add <remote_name> dokku@<dokku_server>:<website_domain>
+git remote add <remote_name> ssh://dokku@<dokku_server>:<port>/<website_domain>
 # Set the domain for the dokku container
 dokku --remote <remote_name> domains:set <website_domain>
 # Create & link postgres and redis containers (can limit memory usage in MB with --memory)
@@ -121,7 +121,7 @@ To recreate the database from a backup
 rake fetch_most_recent_backup
 # For a local development database
 pg_restore --clean --dbname=<local_db_name> --exit-on-error backup/export
-# For a dokku hosted database
+# For a dokku hosted database (you may need to blast away and recreate the database first)
 dokku --remote <remote_name> postgres:import <app_name>-db < backup/export
 ```
 
