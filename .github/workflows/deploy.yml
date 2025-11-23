@@ -11,6 +11,8 @@ on:
     secrets:
       DOMAIN:
         required: true
+      SSH_PORT:
+        required: true
       SSH_PRIVATE_KEY:
         required: true
       RAILS_MASTER_KEY:
@@ -37,7 +39,7 @@ jobs:
         uses: dokku/github-action@master
         with:
           branch: ${{ inputs.branch }}
-          git_remote_url: "ssh://dokku@${{ secrets.DOMAIN }}:22/${{ secrets.DOMAIN }}"
+          git_remote_url: "ssh://dokku@${{ secrets.DOMAIN }}:${{ secrets.SSH_PORT }}/${{ secrets.DOMAIN }}"
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           git_push_flags: ${{ inputs.git_push_flags || '' }}
 
