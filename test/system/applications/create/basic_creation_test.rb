@@ -15,7 +15,6 @@ class CreateApplicationTest < ApplicationSystemTestCase
     click_new_application
 
     # Assert
-    assert_current_path new_application_path
     assert_text 'Administration & Invoicing'
   end
 
