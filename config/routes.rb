@@ -15,13 +15,13 @@ Rails.application.routes.draw do
   resources :clients, only: %i[edit update]
   resources :applications do
     member do
-      delete :remove_attachment
+      delete 'remove_attachment', to: 'applications#remove_attachment'
     end
   end
   get 'building_surveyor_search' => 'search#building_surveyor_search', as: :building_surveyor_search
   resources :reports, only: [:index] do
     collection do
-      get :download
+      get 'download', to: 'reports#index'
     end
   end
   get 'application_types/edit', to: 'application_types#edit'

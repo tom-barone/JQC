@@ -10,6 +10,7 @@ updates:
         dependency-type: "production"
       development-dependencies:
         dependency-type: "development"
+    versioning-strategy: lockfile-only
   - package-ecosystem: github-actions
     directory: "/"
     target-branch: develop

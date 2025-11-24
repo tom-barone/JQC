@@ -30,7 +30,7 @@ class HealthController < ApplicationController
       Rails.logger.debug { "Running command: #{check_command}" }
       success = async_run(check_command)
       Rails.logger.debug { "Command success: #{success}" }
-      return render_down unless success
+      render_down unless success
 
       result = JSON.parse(s3_list.read)
       Rails.logger.debug { "Result: #{result}" }
@@ -60,7 +60,7 @@ class HealthController < ApplicationController
           "Process with PID: #{pid} exited with status: #{$CHILD_STATUS}, success: #{$CHILD_STATUS.success?}"
         end
 
-        return $CHILD_STATUS.success?
+        $CHILD_STATUS.success?
       end
     rescue Timeout::Error
       Rails.logger.debug { "Timed out waiting for process with PID: #{pid}" }
