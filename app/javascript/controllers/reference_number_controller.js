@@ -44,9 +44,9 @@ export default class extends Controller {
   }
 
   _updateReferenceNumber(applicationType, typeDetails) {
-    const selected_application_type_id = parseInt(applicationType);
+    const selected_application_type_id = Number.parseInt(applicationType);
 
-    if (isNaN(selected_application_type_id)) {
+    if (Number.isNaN(selected_application_type_id)) {
       console.error("Could not find the application type id");
       return;
     }
