@@ -5,21 +5,21 @@ source 'https://rubygems.org'
 ruby '3.3.7'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 8.0.2'
+gem 'rails', '~> 8.1.1'
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
-gem 'propshaft', '~> 1.2.1'
+gem 'propshaft', '~> 1.3.1'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.5.9'
+gem 'pg', '~> 1.6.2'
 # Use the Puma web server [https://github.com/puma/puma]
-gem 'puma', '~> 6.6.0'
+gem 'puma', '~> 7.1.0'
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem 'importmap-rails', '~> 2.1.0'
+gem 'importmap-rails', '~> 2.2.2'
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem 'turbo-rails', '~> 2.0.16'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'stimulus-rails', '~> 1.3.4'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem 'jbuilder', '~> 2.13.0'
+gem 'jbuilder', '~> 2.14.1'
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -33,7 +33,7 @@ gem 'solid_cache', '~> 1.0.7'
 gem 'solid_queue', '~> 1.2.1'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '~> 1.18.6', require: false
+gem 'bootsnap', '~> 1.19.0', require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem 'thruster', '~> 0.1.14', require: false
@@ -48,7 +48,7 @@ gem 'devise', '~> 4.9.4'
 gem 'amoeba', '~> 3.3.0'
 
 # Pagination [https://github.com/ddnexus/pagy]
-gem 'pagy', '~> 9.3.5'
+gem 'pagy', '~> 43.1.4'
 
 # For reporting exceptions [https://github.com/smartinez87/exception_notification]
 gem 'exception_notification', '~> 5.0.0'
@@ -67,7 +67,7 @@ gem 'ferrum_pdf', '~> 0.3.0'
 
 # Active storage on S3
 # [https://guides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis]
-gem 'aws-sdk-s3', '~> 1.194.0', require: false
+gem 'aws-sdk-s3', '~> 1.205.0', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
