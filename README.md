@@ -127,7 +127,7 @@ dokku --remote <remote_name> postgres:import <app_name>-db < backup/export
 
 ## Development
 
-There are some issues with `solid_queue` causing trouble when resetting the database. To reset everything from scratch so we can load in backed up data in development:
+There are a few issues with `solid_queue` causing trouble when resetting the database. To reset everything from scratch so we can load in backed up data in development:
 
 ```bash
 rails db:migrate:reset
