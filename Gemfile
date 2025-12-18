@@ -67,7 +67,7 @@ gem 'ferrum_pdf', '~> 0.3.0'
 
 # Active storage on S3
 # [https://guides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis]
-gem 'aws-sdk-s3', '~> 1.194.0', require: false
+gem 'aws-sdk-s3', '~> 1.208.0', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
