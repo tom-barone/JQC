@@ -1,5 +1,5 @@
-<%= form_for :application_type, url: application_types_update_all_path,
-                                html: { method: :put, id: 'application_type_form' } do %>
+<%= form_for :application_type, url: settings_path,
+                                html: { method: :patch, id: 'application_type_form' } do %>
   <table
     class="table"
     aria-label="Settings for the last used reference numbers"
