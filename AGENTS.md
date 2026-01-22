@@ -11,3 +11,9 @@ Do not change or ignore any linting rules, you must fix the underlying issues in
 ## Coding guidelines
 
 Keep your code absolutely simple and minimal. Avoid unnecessary abstractions, over-engineering, or complex patterns. Strive for clarity and maintainability in every line of code.
+
+While writing tests and for a quick feedback loop, you can run just a specific test file with:
+
+```bash
+bundle exec bin/rails test <path_to_test_file>
+```
