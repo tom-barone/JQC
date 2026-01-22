@@ -1,65 +1,96 @@
-<%= form_for :application_type, url: settings_path,
-                                html: { method: :patch, id: 'application_type_form' } do %>
-  <div class="card" style="width: fit-content; overflow: auto">
-    <table
-      class="table nested-table"
-      aria-label="Settings for the last used reference numbers">
-      <thead>
-        <tr>
-          <% ['Application type', 'Last used number', 'Priority', 'Active'].each do |header| %>
-            <th class="fw-normal small">
-              <div class="p-2">
-                <%= header %>
-              </div>
-            </th>
-          <% end %>
-        </tr>
-      </thead>
-      <tbody>
-        <% @application_types.each do |application_type| %>
-          <%= fields_for 'application_type_attributes[]', application_type do |application_type_fields| %>
-            <tr>
-              <td>
-                <%= application_type_fields.text_field :application_type,
-                                                       disabled: 'true',
-                                                       class: 'form-control form-control-sm' %>
-              </td>
-              <td>
-                <%= application_type_fields.text_field :last_used,
-                                                       type: 'number',
-                                                       step: '1',
-                                                       class: 'form-control form-control-sm' %>
-              </td>
-              <td>
-                <%= application_type_fields.text_field :display_priority,
-                                                       type: 'number',
-                                                       step: '1',
-                                                       class: 'form-control form-control-sm' %>
-              </td>
-              <td>
-                <%= application_type_fields.checkbox :active, class: 'form-check-input' %>
-              </td>
-            </tr>
-          <% end %>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-  <div class="row mt-3">
-    <div class="col">
-      <input
-        type="submit"
-        value="Save"
-        form="application_type_form"
-        class="btn btn-success mx-2">
-      <%= link_to 'Exit',
-                  session[:search_results],
-                  class: 'btn btn-outline-secondary ms-2' %>
+<div class="card h-100 mb-3 p-3">
+  <%= form_for :application_type, url: settings_path, class: 'h-100',
+                                  html: { method: :patch, id: 'application_type_form' } do %>
+
+    <div class="d-flex flex-column h-100">
+      <div class="flex-grow-1">
+        <div class="row no-gutters">
+          <div class="col">
+            <div class="card" style="width: fit-content; overflow: auto">
+              <table
+                class="table nested-table w-100 mb-2"
+                aria-label="Settings for the last used reference numbers">
+                <thead>
+                  <tr>
+                    <th class="fw-normal small">
+                      <div class="p-2">
+                        Application type
+                      </div>
+                    </th>
+                    <th class="fw-normal small">
+                      <div class="p-2">
+                        Last used number
+                      </div>
+                    </th>
+                    <th class="fw-normal small">
+                      <div class="p-2">
+                        Priority
+                        <span
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="right"
+                          title="Lower numbers display first in dropdowns and tables.">
+                          <i class="bi bi-question-circle" style="font-size: 1rem;"></i>
+                        </span>
+                      </div>
+                    </th>
+                    <th class="fw-normal small text-center" style="min-width: 100px">
+                      <div class="p-2">
+                        Active
+                        <span
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="right"
+                          title="Inactive types will not be available for new applications.">
+                          <i class="bi bi-question-circle" style="font-size: 1rem;"></i>
+                        </span>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @application_types.each do |application_type| %>
+                    <%= fields_for 'application_type_attributes[]', application_type do |application_type_fields| %>
+                      <tr>
+                        <td>
+                          <%= application_type_fields.text_field :application_type,
+                                                                 disabled: 'true',
+                                                                 class: 'form-control form-control-sm' %>
+                        </td>
+                        <td>
+                          <%= application_type_fields.text_field :last_used,
+                                                                 type: 'number',
+                                                                 step: '1',
+                                                                 class: 'form-control form-control-sm' %>
+                        </td>
+                        <td>
+                          <%= application_type_fields.text_field :display_priority,
+                                                                 type: 'number',
+                                                                 step: '1',
+                                                                 class: 'form-control form-control-sm' %>
+                        </td>
+                        <td class="text-center">
+                          <%= application_type_fields.checkbox :active, class: 'form-check-input' %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col">
+          </div>
+        </div>
+      </div>
+      <div class="w-100 border-top pt-3 d-flex justify-content-end">
+        <input
+          type="submit"
+          value="Save"
+          form="application_type_form"
+          class="btn btn-success mx-2">
+        <%= link_to 'Exit',
+                    session[:search_results],
+                    class: 'btn btn-outline-secondary ms-2' %>
+      </div>
     </div>
-  </div>
-  <div class="alert alert-primary mt-4 w-50 text-center" role="alert">
-    The
-    <strong>Priority</strong>
-    field determines the order for table results and dropdowns.
-  </div>
-<% end %>
+  <% end %>
+</div>
