@@ -1,43 +1,51 @@
 <%= form_for :application_type, url: settings_path,
                                 html: { method: :patch, id: 'application_type_form' } do %>
-  <table
-    class="table"
-    aria-label="Settings for the last used reference numbers"
-    style="width: auto">
-    <tr>
-      <th>Application Type</th>
-      <th>Last used number</th>
-      <th>Priority</th>
-      <th>Active?</th>
-    </tr>
-    <% @application_types.each do |application_type| %>
-      <%= fields_for 'application_type_attributes[]', application_type do |application_type_fields| %>
+  <div class="card" style="width: fit-content; overflow: auto">
+    <table
+      class="table nested-table"
+      aria-label="Settings for the last used reference numbers">
+      <thead>
         <tr>
-          <td>
-            <%= application_type_fields.text_field :application_type,
-                                                   disabled: 'true',
-                                                   class: 'form-control form-control-sm' %>
-          </td>
-          <td>
-            <%= application_type_fields.text_field :last_used,
-                                                   type: 'number',
-                                                   step: '1',
-                                                   class: 'form-control form-control-sm' %>
-          </td>
-          <td>
-            <%= application_type_fields.text_field :display_priority,
-                                                   type: 'number',
-                                                   step: '1',
-                                                   class: 'form-control form-control-sm' %>
-          </td>
-          <td>
-            <%= application_type_fields.checkbox :active, class: 'form-check-input' %>
-          </td>
+          <% ['Application type', 'Last used number', 'Priority', 'Active'].each do |header| %>
+            <th class="fw-normal small">
+              <div class="p-2">
+                <%= header %>
+              </div>
+            </th>
+          <% end %>
         </tr>
-      <% end %>
-    <% end %>
-  </table>
-  <div class="row">
+      </thead>
+      <tbody>
+        <% @application_types.each do |application_type| %>
+          <%= fields_for 'application_type_attributes[]', application_type do |application_type_fields| %>
+            <tr>
+              <td>
+                <%= application_type_fields.text_field :application_type,
+                                                       disabled: 'true',
+                                                       class: 'form-control form-control-sm' %>
+              </td>
+              <td>
+                <%= application_type_fields.text_field :last_used,
+                                                       type: 'number',
+                                                       step: '1',
+                                                       class: 'form-control form-control-sm' %>
+              </td>
+              <td>
+                <%= application_type_fields.text_field :display_priority,
+                                                       type: 'number',
+                                                       step: '1',
+                                                       class: 'form-control form-control-sm' %>
+              </td>
+              <td>
+                <%= application_type_fields.checkbox :active, class: 'form-check-input' %>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="row mt-3">
     <div class="col">
       <input
         type="submit"
