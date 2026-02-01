@@ -87,9 +87,7 @@
 
             <p class="card-text">
               <%= form.label :external_engineer_date_from, 'External engineer date from:' %>
-              <%= form.date_field :external_engineer_date_from,
-                                  value: @last_month,
-                                  required: true %>
+              <%= form.date_field :external_engineer_date_from, value: @last_month, required: true %>
               <%= form.label :external_engineer_date_to, 'External engineer date to:' %>
               <%= form.date_field :external_engineer_date_to, value: @today, required: true %>
               <%= form.hidden_field :report_type, value: 'structural_report' %>
