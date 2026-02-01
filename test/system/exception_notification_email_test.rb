@@ -7,7 +7,7 @@ class ExceptionNotificationEmailTest < ApplicationSystemTestCase
 
   test 'Exception notification email is sent when an exception is raised' do
     emails = capture_emails do
-      assert_raises(SyntaxError) do
+      assert_raises(RuntimeError) do
         visit 'fail'
       end
     end
