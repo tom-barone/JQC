@@ -84,8 +84,8 @@ class ReportsController < ApplicationController
   end
 
   def structural_report
-    from = params[:application_date_entered_from]
-    to = params[:application_date_entered_to]
+    from = params[:external_engineer_date_from]
+    to = params[:external_engineer_date_to]
     structural_engineers = StructuralEngineer.report(from, to)
     headers = structural_engineers.columns
     rows = structural_engineers.rows

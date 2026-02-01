@@ -6,7 +6,7 @@ class StructuralEngineer < ApplicationRecord
   STRUCTURAL_ENGINEER = Rails.application.credentials.structural_engineers
 
   # rubocop:disable Metrics/MethodLength
-  def self.report(application_date_entered_from, application_date_entered_to)
+  def self.report(external_engineer_date_from, external_engineer_date_to)
     ActiveRecord::Base.connection.exec_query(
       "
       SELECT
@@ -29,11 +29,11 @@ class StructuralEngineer < ApplicationRecord
       LEFT JOIN suburbs AS s ON a.suburb_id = s.id
       LEFT JOIN clients AS c ON a.applicant_id = c.id
       WHERE
-          a.created_at >= $1
-          AND a.created_at <= $2
+          se.external_engineer_date IS NULL
+          OR se.external_engineer_date BETWEEN $1 AND $2
         ",
       nil,
-      [application_date_entered_from, application_date_entered_to]
+      [external_engineer_date_from, external_engineer_date_to]
     )
   end
   # rubocop:enable Metrics/MethodLength
