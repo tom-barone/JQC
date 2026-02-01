@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
-class ApplicationTypesController < ApplicationController
+class SettingsController < ApplicationController
   before_action :authenticate_user!
 
+  def edit
+    @application_types = ApplicationType.ordered
+  end
+
   # rubocop:disable Metrics/AbcSize
-  def update_all
+  def update
     application_type_params.each_key do |id|
       @application_type = ApplicationType.find(id.to_i)
       @application_type.update(
@@ -17,13 +21,8 @@ class ApplicationTypesController < ApplicationController
   end
   # rubocop:enable Metrics/AbcSize
 
-  def edit
-    @application_types = ApplicationType.ordered
-  end
-
   private
 
-  # Only allow a list of trusted parameters through.
   def application_type_params
     params.expect(application_type_attributes: [
                     ApplicationType.attribute_names

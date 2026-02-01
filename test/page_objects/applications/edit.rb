@@ -82,6 +82,14 @@ module Applications
       define_method("assert_#{field}") do |value|
         assert_field selector, with: value
       end
+
+      define_method("assert_#{field}_options") do |expected_options|
+        select_element = find(:field, selector)
+        # Exclude any placeholder options like "Please select..."
+        options = select_element.all('option').reject { |opt| opt[:value].blank? }.map(&:text)
+
+        assert_equal expected_options.sort, options.sort
+      end
     end
 
     MULTIPLE_FIELDS.each do |field, selector|

@@ -2,10 +2,10 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.7'
+ruby '3.3.10'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem 'rails', '~> 8.0.2'
+gem 'rails', '~> 8.1.2'
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem 'propshaft', '~> 1.2.1'
 # Use postgresql as the database for Active Record
@@ -69,12 +69,16 @@ gem 'ferrum_pdf', '~> 0.3.0'
 # [https://guides.rubyonrails.org/active_storage_overview.html#s3-service-amazon-s3-and-s3-compatible-apis]
 gem 'aws-sdk-s3', '~> 1.208.0', require: false
 
+# OpenSSL updates and patches, since the stdlib version sometimes lags behind
+# [https://rubygems.org/gems/openssl]
+gem 'openssl', '~> 4.0'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', '~> 1.11.0', platforms: %i[mri windows], require: 'debug/prelude'
 
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem 'brakeman', '~> 7.1.1', require: false
+  gem 'brakeman', '~> 8.0.1', require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   # gem "rubocop-rails-omakase", require: false

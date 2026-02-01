@@ -24,8 +24,7 @@ Rails.application.routes.draw do
       get 'download', to: 'reports#index'
     end
   end
-  get 'application_types/edit', to: 'application_types#edit'
-  put 'application_types/update_all', to: 'application_types#update_all'
+  resource :settings, only: %i[edit update]
 
   ## Health routes
   get 'up' => 'rails/health#show', as: :rails_health_check

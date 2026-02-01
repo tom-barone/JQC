@@ -7,7 +7,7 @@ class HealthController < ApplicationController
   # Used to test that the error notification system is working
   # GET /fail
   def fail
-    raise SyntaxError, 'I should send an exception notification email'
+    raise 'I should send an exception notification email'
   end
 
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
