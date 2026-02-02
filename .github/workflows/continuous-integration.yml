@@ -38,7 +38,7 @@ jobs:
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
   deploy:
-    needs: [test, sonarqube]
+    needs: [test, sonarqube, build]
     uses: ./.github/workflows/deploy.yml
     with:
       branch: develop
