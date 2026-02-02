@@ -1,8 +1,3 @@
-\restrict aIB41y39xeDI6RSI038EB2NrqmFWrvcCjoDvWdl9t9kNI0uy9gHtvSHuZBJxhPG
-
--- Dumped from database version 17.6 (Postgres.app)
--- Dumped by pg_dump version 18.0 (Postgres.app)
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -128,8 +123,6 @@ CREATE INDEX index_solid_cache_entries_on_key_hash_and_byte_size ON public.solid
 --
 -- PostgreSQL database dump complete
 --
-
-\unrestrict aIB41y39xeDI6RSI038EB2NrqmFWrvcCjoDvWdl9t9kNI0uy9gHtvSHuZBJxhPG
 
 SET search_path TO "$user", public;
 
