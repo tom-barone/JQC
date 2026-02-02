@@ -1,3 +1,3 @@
 release: bundle exec bin/rails db:migrate && bundle exec bin/rails db:seed
-web: bundle exec puma -C config/puma.rb
+web: ./bin/thrust ./bin/rails server
 worker: bundle exec bin/jobs
