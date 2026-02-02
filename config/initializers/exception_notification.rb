@@ -20,8 +20,8 @@ ExceptionNotification.configure do |config|
   # Email notifier sends notifications by email.
   config.add_notifier :email, {
     email_prefix: '[ERROR] ',
-    sender_address: %("Alerts Notifier" <#{Rails.application.credentials.exception_notification_from!}>),
-    exception_recipients: [Rails.application.credentials.exception_notification_to!]
+    sender_address: %("Alerts Notifier" <#{Rails.application.credentials.exception_notification_from}>),
+    exception_recipients: [Rails.application.credentials.exception_notification_to]
   }
 
   # Campfire notifier sends notifications to your Campfire room. Requires 'tinder' gem.
