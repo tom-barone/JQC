@@ -1,0 +1,109 @@
+<nav>
+  <div class="nav nav-tabs" id="settings-tab" role="tablist">
+    <a
+      class="nav-link"
+      href="<%= edit_settings_application_types_path %>"
+      role="tab">Application Types</a>
+    <button
+      class="nav-link active"
+      id="suburbs-tab"
+      type="button"
+      role="tab"
+      aria-selected="true">Suburbs</button>
+  </div>
+</nav>
+<div
+  class="tab-content bg-white border border-1 rounded-bottom-1"
+  style="border-top: none !important">
+  <div
+    class="tab-pane show active p-3"
+    id="suburbs-tab-pane"
+    role="tabpanel"
+    aria-labelledby="suburbs-tab">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div class="flex-grow-1">
+        <%= form_with url: settings_suburbs_path, class: 'input-group', method: :get do |form| %>
+          <%= form.select :state,
+                          Suburb::STATE,
+                          { include_blank: 'All States', selected: params[:state] },
+                          { class: 'form-select', style: 'max-width: 12ch;' } %>
+          <span class="input-group-text">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-search"
+              viewBox="0 0 16 16">
+              <path
+                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+            </svg>
+          </span>
+          <%= form.text_field :search_text,
+                              value: params[:search_text],
+                              placeholder: 'Search suburb or postcode...',
+                              class: 'form-control',
+                              style: 'max-width: 30ch;' %>
+          <%= form.button 'Search', type: 'submit', name: nil, class: 'btn btn-primary' %>
+          <%= link_to 'Clear', settings_suburbs_path, class: 'btn btn-outline-secondary' %>
+        <% end %>
+      </div>
+      <div class="ps-2">
+        <%= link_to 'Add Suburb', new_settings_suburb_path, class: 'btn btn-success' %>
+      </div>
+    </div>
+
+    <div class="card" style="overflow: auto">
+      <table class="table table-striped mb-0" aria-label="Suburbs list">
+        <thead>
+          <tr>
+            <th class="fw-normal small">Suburb</th>
+            <th class="fw-normal small">State</th>
+            <th class="fw-normal small">Postcode</th>
+            <th class="fw-normal small text-end">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @suburbs.each do |suburb| %>
+            <tr>
+              <td><%= suburb.suburb %></td>
+              <td><%= suburb.state %></td>
+              <td><%= suburb.postcode %></td>
+              <td class="text-end">
+                <%= link_to 'Edit',
+                            edit_settings_suburb_path(suburb),
+                            class: 'btn btn-sm btn-outline-primary' %>
+                <%= button_to 'Delete',
+                              settings_suburb_path(suburb),
+                              method: :delete,
+                              form: {
+                                data: {
+                                  turbo_confirm: "Are you sure you want to delete #{suburb.suburb}?"
+                                }
+                              },
+                              class: 'btn btn-sm btn-outline-danger' %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center pt-3">
+      <span>
+        <%= @pagy.count %>
+        suburbs found. Showing 50 per page.
+      </span>
+      <span>
+        <%== pagy_bootstrap_nav(@pagy) %>
+      </span>
+    </div>
+
+    <div class="w-100 border-top pt-3 mt-3 d-flex justify-content-end">
+      <%= link_to 'Exit',
+                  session[:search_results] || root_path,
+                  class: 'btn btn-outline-secondary' %>
+    </div>
+  </div>
+</div>

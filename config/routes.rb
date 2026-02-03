@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   # Auth
   devise_for :users
@@ -24,7 +25,11 @@ Rails.application.routes.draw do
       get 'download', to: 'reports#index'
     end
   end
-  resource :settings, only: %i[edit update]
+
+  namespace :settings do
+    resource :application_types, only: %i[edit update]
+    resources :suburbs, only: %i[index new create edit update destroy]
+  end
 
   ## Health routes
   get 'up' => 'rails/health#show', as: :rails_health_check
@@ -33,3 +38,4 @@ Rails.application.routes.draw do
 
   root to: redirect('/users/sign_in')
 end
+# rubocop:enable Metrics/BlockLength
