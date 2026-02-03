@@ -21,8 +21,12 @@ jobs:
     secrets:
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
+  build:
+    needs: [lint]
+    uses: ./.github/workflows/build.yml
+
   deploy:
-    needs: [test]
+    needs: [test, build]
     uses: ./.github/workflows/deploy.yml
     with:
       branch: master

@@ -1,0 +1,34 @@
+<%= bootstrap_form_with model: @suburb, url: url, local: true do |form| %>
+  <% if @suburb.errors.any? %>
+    <div class="alert alert-danger">
+      <ul class="mb-0">
+        <% @suburb.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-4">
+      <%= form.label :suburb, 'Suburb name' %>
+      <%= form.text_field :suburb, required: true %>
+    </div>
+    <div class="col-md-4">
+      <%= form.label :state %>
+      <%= form.select :state,
+                      Suburb::STATE,
+                      { include_blank: 'Select State' },
+                      required: true %>
+    </div>
+    <div class="col-md-4">
+      <%= form.label :postcode %>
+      <%= form.text_field :postcode, label: 'Postcode', required: true %>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2 mt-3">
+    <%= form.submit 'Save', class: 'btn btn-success' %>
+    <%= link_to 'Cancel', settings_suburbs_path, class: 'btn btn-outline-secondary' %>
+  </div>
+<% end %>

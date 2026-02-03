@@ -27,6 +27,10 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
+  build:
+    needs: [lint]
+    uses: ./.github/workflows/build.yml
+
   test:
     needs: [lint]
     uses: ./.github/workflows/test.yml
@@ -34,7 +38,7 @@ jobs:
       RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
 
   deploy:
-    needs: [test, sonarqube]
+    needs: [test, sonarqube, build]
     uses: ./.github/workflows/deploy.yml
     with:
       branch: develop

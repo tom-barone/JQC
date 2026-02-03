@@ -1,0 +1,17 @@
+<nav>
+  <div class="nav nav-tabs" id="settings-tab" role="tablist">
+    <a
+      class="nav-link"
+      href="<%= edit_settings_application_types_path %>"
+      role="tab">Application Types</a>
+    <a class="nav-link active" href="<%= settings_suburbs_path %>" role="tab">Suburbs</a>
+  </div>
+</nav>
+<div
+  class="tab-content bg-white border border-1 rounded-bottom-1 w-50"
+  style="border-top: none !important">
+  <div class="p-3">
+    <h5 class="mb-3">Add New Suburb</h5>
+    <%= render 'form', url: settings_suburbs_path %>
+  </div>
+</div>

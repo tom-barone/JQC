@@ -99,8 +99,8 @@ Rails.application.configure do
     address: 'smtp.gmail.com',
     port: 587,
     domain: 'tombarone.net',
-    user_name: Rails.application.credentials.action_mailer_gmail_username!,
-    password: Rails.application.credentials.action_mailer_gmail_password!,
+    user_name: Rails.application.credentials.action_mailer_gmail_username,
+    password: Rails.application.credentials.action_mailer_gmail_password,
     authentication: 'plain',
     enable_starttls_auto: true
   }

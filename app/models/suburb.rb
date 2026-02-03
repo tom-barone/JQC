@@ -16,4 +16,14 @@ class Suburb < ApplicationRecord
            dependent: :nullify
 
   STATE = %w[SA VIC TAS WA NSW NT ACT QLD].freeze
+
+  scope :search, lambda { |params|
+    result = all
+    if params[:search_text].present?
+      search_term = "%#{params[:search_text]}%"
+      result = result.where('suburb ILIKE ? OR postcode ILIKE ?', search_term, search_term)
+    end
+    result = result.where(state: params[:state]) if params[:state].present?
+    result
+  }
 end

@@ -1,0 +1,17 @@
+name: "Build"
+
+on:
+  workflow_call:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup the just task runner
+        uses: extractions/setup-just@v3
+
+      - name: Build the docker image
+        run: "just build"

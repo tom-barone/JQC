@@ -1,8 +1,3 @@
-\restrict aIB41y39xeDI6RSI038EB2NrqmFWrvcCjoDvWdl9t9kNI0uy9gHtvSHuZBJxhPG
-
--- Dumped from database version 17.6 (Postgres.app)
--- Dumped by pg_dump version 18.0 (Postgres.app)
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -507,13 +502,6 @@ CREATE TABLE public.invoices (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
-
-
---
--- Name: COLUMN invoices.admin_fee; Type: COMMENT; Schema: public; Owner: -
---
-
-COMMENT ON COLUMN public.invoices.admin_fee IS 'Currently hidden from the UI';
 
 
 --
@@ -1400,8 +1388,6 @@ ALTER TABLE ONLY public.structural_engineers
 --
 -- PostgreSQL database dump complete
 --
-
-\unrestrict aIB41y39xeDI6RSI038EB2NrqmFWrvcCjoDvWdl9t9kNI0uy9gHtvSHuZBJxhPG
 
 SET search_path TO "$user", public;
 

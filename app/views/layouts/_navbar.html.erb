@@ -25,7 +25,9 @@
             <%= link_to 'Reports', reports_path, class: reports_nav_link_class(params) %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Settings', edit_settings_path, class: settings_nav_link_class(params) %>
+            <%= link_to 'Settings',
+                        edit_settings_application_types_path,
+                        class: settings_nav_link_class(params) %>
           </li>
 
         </ul>

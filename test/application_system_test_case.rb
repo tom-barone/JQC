@@ -1,16 +1,19 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+
 require 'page_objects/sign_in'
 require 'page_objects/nav_bar'
 require 'page_objects/applications/edit'
 require 'page_objects/applications/search_bar'
 require 'page_objects/applications/table'
 require 'page_objects/settings'
+
 require 'helpers/application_types'
 require 'helpers/application_create'
 require 'helpers/navigation'
 require 'helpers/cookies'
+require 'helpers/suburbs'
 
 class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
@@ -26,4 +29,5 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   include CookiesHelper
   include ApplicationTypesHelper
   include ApplicationCreateHelper
+  include SuburbsHelper
 end
