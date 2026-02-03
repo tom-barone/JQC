@@ -11,15 +11,15 @@
 
   <div class="row">
     <div class="col-md-4">
-      <%= form.text_field :suburb, label: 'Suburb Name', required: true %>
+      <%= form.label :suburb, 'Suburb name' %>
+      <%= form.text_field :suburb, required: true %>
     </div>
     <div class="col-md-4">
-      <%= form.select :state,
-                      Suburb::STATE,
-                      { include_blank: 'Select State', label: 'State' },
-                      required: true %>
+      <%= form.label :state %>
+      <%= form.select :state, Suburb::STATE, { include_blank: 'Select State' }, required: true %>
     </div>
     <div class="col-md-4">
+      <%= form.label :postcode %>
       <%= form.text_field :postcode, label: 'Postcode', required: true %>
     </div>
   </div>
