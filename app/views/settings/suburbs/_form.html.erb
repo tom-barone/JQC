@@ -16,7 +16,10 @@
     </div>
     <div class="col-md-4">
       <%= form.label :state %>
-      <%= form.select :state, Suburb::STATE, { include_blank: 'Select State' }, required: true %>
+      <%= form.select :state,
+                      Suburb::STATE,
+                      { include_blank: 'Select State' },
+                      required: true %>
     </div>
     <div class="col-md-4">
       <%= form.label :postcode %>
