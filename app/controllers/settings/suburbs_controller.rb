@@ -8,7 +8,8 @@ module Settings
 
     def index
       @params = search_params
-      @pagy, @suburbs = pagy(Suburb.search(@params).order(:suburb, :postcode), limit: 50)
+      @limit = 10
+      @pagy, @suburbs = pagy(Suburb.search(@params).order(:suburb, :postcode), limit: @limit)
     end
 
     def new
