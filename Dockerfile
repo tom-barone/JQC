@@ -22,6 +22,7 @@ RUN apt-get update -qq \
         libvips42t64=8.16.1-1+b1 \
         postgresql-client=17+278 \
         chromium=144.0.7559.109-1~deb13u1 \
+        awscli=2.23.6-1 \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
