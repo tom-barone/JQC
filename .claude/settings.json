@@ -1,6 +1,0 @@
-{
-  "permissions": {
-    "allow": ["Bash(just:*)", "Bash(bundle exec bin/rails test:*)"],
-    "deny": ["Read(**/*.key)", "Read(**/*.enc)"]
-  }
-}
