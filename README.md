@@ -114,7 +114,7 @@ dokku --remote <remote_name> postgres:create <app_name>-db
 dokku --remote <remote_name> postgres:link <app_name>-db <website_domain>
 ```
 
-To recreate the database from a backup
+To recreate the database from a backup:
 
 ```bash
 # Downloads the most recent backup to ./backup/export
