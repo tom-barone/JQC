@@ -21,7 +21,7 @@ RUN apt-get update -qq \
         "libjemalloc2=5.*" \
         "libvips42t64=8.*" \
         "postgresql-client=17*" \
-        "chromium=144.*" \
+        "chromium=*" \
         "awscli=2.*" \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
