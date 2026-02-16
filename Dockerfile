@@ -17,12 +17,12 @@ WORKDIR /rails
 # Install base packages
 RUN apt-get update -qq \
     && apt-get install --no-install-recommends -y \
-        curl=8.14.1-2+deb13u2 \
-        libjemalloc2=5.3.0-3 \
-        libvips42t64=8.16.1-1+b1 \
-        postgresql-client=17+278 \
-        chromium=144.0.7559.109-1~deb13u1 \
-        awscli=2.23.6-1 \
+        "curl=8.*" \
+        "libjemalloc2=5.*" \
+        "libvips42t64=8.*" \
+        "postgresql-client=17*" \
+        "chromium=*" \
+        "awscli=2.*" \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
@@ -37,11 +37,11 @@ FROM base AS build
 # Install packages needed to build gems
 RUN apt-get update -qq \
     && apt-get install --no-install-recommends -y \
-        build-essential=12.12 \
-        git=1:2.47.3-0+deb13u1 \
-        libpq-dev=17.7-0+deb13u1 \
-        pkg-config=1.8.1-4 \
-        libyaml-dev=0.2.5-2 \
+        "build-essential=12.*" \
+        "git=1:2.*" \
+        "libpq-dev=17.*" \
+        "pkg-config=1.*" \
+        "libyaml-dev=*" \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems

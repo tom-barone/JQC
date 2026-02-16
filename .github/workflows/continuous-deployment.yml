@@ -6,7 +6,7 @@ on:
 
 # Run only one CD workflow at a time
 concurrency:
-  group: develop
+  group: master
   cancel-in-progress: false
 
 jobs:
@@ -52,3 +52,11 @@ jobs:
         uses: rickstaa/action-create-tag@v1
         with:
           tag: ${{ steps.production_version.outputs.VERSION }}
+
+      - name: "Back merge master into develop"
+        uses: devmasx/merge-branch@1.4.0
+        with:
+          type: "now"
+          from_branch: "master"
+          target_branch: "develop"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
