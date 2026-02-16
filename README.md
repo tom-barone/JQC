@@ -94,7 +94,7 @@ git push staging master
 git push production master
 ```
 
-I like to use `pgAdmin` to interface with the postgres database, which can be done with SSH tunneling. First you'll need to expose the database port from the docker container to the host machine:
+I like to use `pgAdmin` to interface with the postgres database, which can be done with SSH tunneling. First you'll need to expose the database port from the docker container to the host machine.
 
 ```bash
 # Expose the database internally from dokku to 0.0.0.0 on the host
