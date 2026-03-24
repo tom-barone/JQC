@@ -65,32 +65,63 @@ precommit: clean install format lint build test
 [doc('Deploy to production')]
 [group('Deploy')]
 deploy-production:
-    echo "Deploy to production"
-    just tofu-env 'tofu -chdir=infrastructure/production init \
+    #!/usr/bin/env bash
+    set -euo pipefail
+    set -o allexport && eval "$(just secrets-export)" && set +o allexport 
+    # Set OpenTofu variables
+    export AWS_ACCESS_KEY_ID=$OPENTOFU_AWS_ACCESS_KEY_ID
+    export AWS_SECRET_ACCESS_KEY=$OPENTOFU_AWS_SECRET_ACCESS_KEY
+    export TF_VAR_opentofu_state_encryption_password="$OPENTOFU_STATE_ENCRYPTION_PASSWORD"
+    export TF_VAR_backup_primary_s3_bucket_name="$BACKUP_PRIMARY_S3_BUCKET_NAME"
+    export TF_VAR_linode_region="$LINODE_REGION"
+    export TF_VAR_ansible_ssh_public_key="$ANSIBLE_SSH_PUBLIC_KEY"
+
+    tofu -chdir=infrastructure/production init \
       -backend-config=bucket=$OPENTOFU_BACKEND_S3_BUCKET_NAME \
       -backend-config=key=production.tfstate \
-      -backend-config=region=$OPENTOFU_BACKEND_S3_REGION'
-    just tofu-env 'tofu -chdir=infrastructure/production plan'
-    just tofu-env 'tofu -chdir=infrastructure/production apply -auto-approve'
+      -backend-config=region=$OPENTOFU_BACKEND_S3_REGION \
+      -reconfigure
+    tofu -chdir=infrastructure/production plan
+    tofu -chdir=infrastructure/production apply -auto-approve
 
 [doc('Deploy to an ephemeral staging environment')]
 [group('Deploy')]
 deploy-staging NAME:
-    echo "Deploy to a new staging environment named {{ NAME }}"
-    just tofu-env 'tofu -chdir=infrastructure/staging init \
+    #!/usr/bin/env bash
+    set -euo pipefail
+    set -o allexport && eval "$(just secrets-export)" && set +o allexport 
+    # Set OpenTofu variables
+    export AWS_ACCESS_KEY_ID=$OPENTOFU_AWS_ACCESS_KEY_ID
+    export AWS_SECRET_ACCESS_KEY=$OPENTOFU_AWS_SECRET_ACCESS_KEY
+    export TF_VAR_staging_name="{{ NAME }}"
+    export TF_VAR_opentofu_state_encryption_password="$OPENTOFU_STATE_ENCRYPTION_PASSWORD"
+    export TF_VAR_backup_primary_s3_bucket_name="$BACKUP_PRIMARY_S3_BUCKET_NAME"
+    export TF_VAR_linode_region="$LINODE_REGION"
+    export TF_VAR_ansible_ssh_public_key="$ANSIBLE_SSH_PUBLIC_KEY"
+
+    tofu -chdir=infrastructure/staging init \
       -backend-config=bucket=$OPENTOFU_BACKEND_S3_BUCKET_NAME \
       -backend-config=key={{ NAME }}.tfstate \
       -backend-config=region=$OPENTOFU_BACKEND_S3_REGION \
-      -reconfigure'
-    just tofu-env 'tofu -chdir=infrastructure/staging plan' \
-      -var="staging_name={{ NAME }}"
-    just tofu-env 'tofu -chdir=infrastructure/staging apply -auto-approve' \
-      -var="staging_name={{ NAME }}"
+      -reconfigure
+    tofu -chdir=infrastructure/staging plan
+    tofu -chdir=infrastructure/staging apply -auto-approve
 
 [doc('Destroy an ephemeral staging environment')]
 destroy-staging NAME:
-    echo "Destroy the staging environment named {{ NAME }}"
-    just tofu-env 'tofu -chdir=infrastructure/staging destroy -auto-approve' \
+    #!/usr/bin/env bash
+    set -euo pipefail
+    set -o allexport && eval "$(just secrets-export)" && set +o allexport 
+    # Set OpenTofu variables
+    export AWS_ACCESS_KEY_ID=$OPENTOFU_AWS_ACCESS_KEY_ID
+    export AWS_SECRET_ACCESS_KEY=$OPENTOFU_AWS_SECRET_ACCESS_KEY
+    export TF_VAR_staging_name="{{ NAME }}"
+    export TF_VAR_opentofu_state_encryption_password="$OPENTOFU_STATE_ENCRYPTION_PASSWORD"
+    export TF_VAR_backup_primary_s3_bucket_name="$BACKUP_PRIMARY_S3_BUCKET_NAME"
+    export TF_VAR_linode_region="$LINODE_REGION"
+    export TF_VAR_ansible_ssh_public_key="$ANSIBLE_SSH_PUBLIC_KEY"
+
+    tofu -chdir=infrastructure/staging destroy -auto-approve \
       -var="staging_name={{ NAME }}"
 
 # === Environment ===
@@ -102,18 +133,8 @@ secrets-edit:
 
 [doc('Inject secrets into the environment and run a command')]
 [group('Environment')]
-secrets-inject *ARGS:
-    @sops exec-env secrets.sops.env '{{ ARGS }}'
-
-[doc('Inject opentofu variables + secrets into the env')]
-[group('Environment')]
-@tofu-env *CMD:
-    just secrets-inject '\
-      AWS_ACCESS_KEY_ID=$OPENTOFU_AWS_ACCESS_KEY_ID \
-      AWS_SECRET_ACCESS_KEY=$OPENTOFU_AWS_SECRET_ACCESS_KEY \
-      TF_VAR_opentofu_state_encryption_password=$OPENTOFU_STATE_ENCRYPTION_PASSWORD \
-      TF_VAR_backup_primary_s3_bucket_name=$BACKUP_PRIMARY_S3_BUCKET_NAME \
-      {{ CMD }}'
+secrets-export:
+    @sops --decrypt secrets.sops.env
 
 alias l := lint
 alias t := test
