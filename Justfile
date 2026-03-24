@@ -1,3 +1,4 @@
+[private]
 default: help
 
 [doc('Show this help message')]
@@ -6,19 +7,21 @@ help:
 
 [doc('Install dependencies')]
 [group('Development')]
-@install:
+install:
     mise install
     bundle install
     npm install
 
-# Start the Rails development server
-@dev:
+[doc('Start the development server')]
+[group('Development')]
+dev:
     bundle exec bin/rails db:migrate
     bundle exec bin/rails db:seed
     PORT=3008 SOLID_QUEUE_IN_PUMA=true bundle exec bin/dev
 
-# Run linters
-@lint:
+[doc('Run linters')]
+[group('Development')]
+lint:
     docker run --rm -i hadolint/hadolint < Dockerfile
     bundle exec bin/rubocop --autocorrect-all --fail-level I
     bundle exec bin/brakeman --no-pager --quiet --no-summary
@@ -26,17 +29,21 @@ help:
     npx eslint app/javascript
     bundle exec bin/importmap audit
 
-@build:
+[doc('Build the Docker image')]
+[group('Development')]
+build:
     docker build .
 
-# Run tests
-@test:
+[doc('Run tests')]
+[group('Development')]
+test:
     npm run test
     RAILS_ENV=test bundle exec bin/rails db:prepare
     COVERAGE=true bundle exec bin/rails test:all
 
-# Run formatters
-@format:
+[doc('Run formatters')]
+[group('Development')]
+format:
     bundle exec bin/rubocop --fix-layout
     @# These two formatters sort of conflict with each other, but they both do useful things
     @# erb_lint is ultimately better for now so run it last.
@@ -44,12 +51,69 @@ help:
     bundle exec erb_lint --autocorrect --lint-all
     npx prettier --write app/javascript/**/*.js --log-level warn
 
-# Clean up generated files
-@clean:
+[doc('Clean up generated files')]
+[group('Development')]
+clean:
     rm -rf ci
 
-# Run all pre-commit checks
-@precommit: clean install format lint build test
+[doc('Run all pre-commit checks')]
+[group('Development')]
+precommit: clean install format lint build test
+
+# == Deployment ==
+
+[doc('Deploy to production')]
+[group('Deploy')]
+deploy-production:
+    echo "Deploy to production"
+    just tofu-env 'tofu -chdir=infrastructure/production init \
+      -backend-config=bucket=$OPENTOFU_BACKEND_S3_BUCKET_NAME \
+      -backend-config=key=production.tfstate \
+      -backend-config=region=$OPENTOFU_BACKEND_S3_REGION'
+    just tofu-env 'tofu -chdir=infrastructure/production plan'
+    just tofu-env 'tofu -chdir=infrastructure/production apply -auto-approve'
+
+[doc('Deploy to an ephemeral staging environment')]
+[group('Deploy')]
+deploy-staging NAME:
+    echo "Deploy to a new staging environment named {{ NAME }}"
+    just tofu-env 'tofu -chdir=infrastructure/staging init \
+      -backend-config=bucket=$OPENTOFU_BACKEND_S3_BUCKET_NAME \
+      -backend-config=key={{ NAME }}.tfstate \
+      -backend-config=region=$OPENTOFU_BACKEND_S3_REGION \
+      -reconfigure'
+    just tofu-env 'tofu -chdir=infrastructure/staging plan' \
+      -var="staging_name={{ NAME }}"
+    just tofu-env 'tofu -chdir=infrastructure/staging apply -auto-approve' \
+      -var="staging_name={{ NAME }}"
+
+[doc('Destroy an ephemeral staging environment')]
+destroy-staging NAME:
+    echo "Destroy the staging environment named {{ NAME }}"
+    just tofu-env 'tofu -chdir=infrastructure/staging destroy -auto-approve' \
+      -var="staging_name={{ NAME }}"
+
+# === Environment ===
+
+[doc("Edit secrets with sops")]
+[group('Environment')]
+secrets-edit:
+    sops secrets.sops.env
+
+[doc('Inject secrets into the environment and run a command')]
+[group('Environment')]
+secrets-inject *ARGS:
+    @sops exec-env secrets.sops.env '{{ ARGS }}'
+
+[doc('Inject opentofu variables + secrets into the env')]
+[group('Environment')]
+@tofu-env *CMD:
+    just secrets-inject '\
+      AWS_ACCESS_KEY_ID=$OPENTOFU_AWS_ACCESS_KEY_ID \
+      AWS_SECRET_ACCESS_KEY=$OPENTOFU_AWS_SECRET_ACCESS_KEY \
+      TF_VAR_opentofu_state_encryption_password=$OPENTOFU_STATE_ENCRYPTION_PASSWORD \
+      TF_VAR_backup_primary_s3_bucket_name=$BACKUP_PRIMARY_S3_BUCKET_NAME \
+      {{ CMD }}'
 
 alias l := lint
 alias t := test

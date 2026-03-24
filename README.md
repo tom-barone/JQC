@@ -136,3 +136,14 @@ rails db:drop:queue
 rails db:prepare
 rake restore_development_db_from_most_recent_backup
 ```
+
+## OpenTofu
+
+If starting from scratch, you need to:
+
+1. Create a new AWS account.
+2. Create an IAM user with `AdministratorAccess` permissions and generate access keys for that user.
+3. Setup the access keys in SOPS
+4. Create an S3 bucket to use as the state backend, e.g. `infrastructure-state-backend`
+   - Set `Object Versioning` to enabled.
+5. Configure OpenTofu to use the S3 bucket as the state backend, done via SOPS

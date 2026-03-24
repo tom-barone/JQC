@@ -1,0 +1,9 @@
+creation_rules:
+  # Keys:
+  # 79B39318... = Tom's GPG key
+  - pgp: >-
+      79B39318D5DD51A12808B4478672CEE1629D465B
+    # Age can be used within CI pipelines
+    # See the secrets.sops.env for the secret key itself
+    age: >-
+      age1378rd9z0z8f6ckuujhpafk30rn6667xqdyefsxzgvq3m9n63gvmqred5s3
