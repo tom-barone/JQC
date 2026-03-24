@@ -1,0 +1,6 @@
+[tools]
+opentofu = "1.11.5"
+just = "1.46.0"
+node = "24.14.0"
+sops = "3.12.1"
+ruby = "3.3.10"

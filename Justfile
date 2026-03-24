@@ -1,10 +1,13 @@
 default: help
 
-@help:
-    just --list
+[doc('Show this help message')]
+help:
+    @just --list
 
-# Install dependencies
+[doc('Install dependencies')]
+[group('Development')]
 @install:
+    mise install
     bundle install
     npm install
 
