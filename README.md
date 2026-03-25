@@ -147,3 +147,4 @@ If starting from scratch, you need to:
 4. Create an S3 bucket to use as the state backend, e.g. `infrastructure-state-backend`
    - Set `Object Versioning` to enabled.
 5. Configure OpenTofu to use the S3 bucket as the state backend, done via SOPS
+6. Create a Linode token and configure OpenTofu to use it, done via SOPS

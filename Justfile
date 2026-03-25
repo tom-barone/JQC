@@ -84,7 +84,7 @@ deploy-production:
     tofu -chdir=infrastructure/production plan
     tofu -chdir=infrastructure/production apply -auto-approve
 
-[doc('Deploy to an ephemeral staging environment')]
+[doc('Deploy an ephemeral staging environment')]
 [group('Deploy')]
 deploy-staging NAME:
     #!/usr/bin/env bash
@@ -108,6 +108,7 @@ deploy-staging NAME:
     tofu -chdir=infrastructure/staging apply -auto-approve
 
 [doc('Destroy an ephemeral staging environment')]
+[group('Deploy')]
 destroy-staging NAME:
     #!/usr/bin/env bash
     set -euo pipefail
