@@ -90,15 +90,17 @@ deploy-staging NAME:
     #!/usr/bin/env bash
     set -euo pipefail
     set -o allexport && eval "$(just secrets-export)" && set +o allexport 
+
     # Set OpenTofu variables
     export AWS_ACCESS_KEY_ID=$OPENTOFU_AWS_ACCESS_KEY_ID
     export AWS_SECRET_ACCESS_KEY=$OPENTOFU_AWS_SECRET_ACCESS_KEY
-    export TF_VAR_staging_name="{{ NAME }}"
-    export TF_VAR_opentofu_state_encryption_password="$OPENTOFU_STATE_ENCRYPTION_PASSWORD"
-    export TF_VAR_backup_primary_s3_bucket_name="$BACKUP_PRIMARY_S3_BUCKET_NAME"
-    export TF_VAR_linode_region="$LINODE_REGION"
-    export TF_VAR_ansible_ssh_public_key="$ANSIBLE_SSH_PUBLIC_KEY"
+    export TF_VAR_OPENTOFU_STATE_ENCRYPTION_PASSWORD="$OPENTOFU_STATE_ENCRYPTION_PASSWORD"
+    export TF_VAR_BACKUP_PRIMARY_S3_BUCKET_NAME="$BACKUP_PRIMARY_S3_BUCKET_NAME"
+    export TF_VAR_LINODE_REGION="$LINODE_REGION"
+    export TF_VAR_ANSIBLE_SSH_PUBLIC_KEY="$ANSIBLE_SSH_PUBLIC_KEY"
+    export TF_VAR_STAGING_NAME="{{ NAME }}"
 
+    # Deploy infrastructure with OpenTofu
     tofu -chdir=infrastructure/staging init \
       -backend-config=bucket=$OPENTOFU_BACKEND_S3_BUCKET_NAME \
       -backend-config=key={{ NAME }}.tfstate \
@@ -106,6 +108,41 @@ deploy-staging NAME:
       -reconfigure
     tofu -chdir=infrastructure/staging plan
     tofu -chdir=infrastructure/staging apply -auto-approve
+
+    # Set environment variables based on OpenTofu outputs
+    export SERVER_IP_ADDRESS="$(tofu -chdir=infrastructure/staging output -raw server_ip_address)"
+
+    # Run Ansible playbook to setup the server, adding the SSH key to the agent first
+    # and removing the server from known_hosts to avoid SSH warnings about changed host keys
+    echo "$ANSIBLE_SSH_PRIVATE_KEY_B64" | base64 --decode | ssh-add -
+    ssh-keygen -R "$SERVER_IP_ADDRESS"
+    (cd infrastructure/ansible && uv run ansible-playbook -i inventory.yml deploy.yml)
+    kamal setup
+    #kamal accessory remove -y postgres 
+    kamal accessory boot postgres
+    kamal app exec --roles=web "bin/rails db:prepare"
+    kamal deploy
+    kamal app logs -n 1000
+
+ssh-staging NAME:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    set -o allexport && eval "$(just secrets-export)" && set +o allexport 
+
+    # Set OpenTofu variables
+    export AWS_ACCESS_KEY_ID=$OPENTOFU_AWS_ACCESS_KEY_ID
+    export AWS_SECRET_ACCESS_KEY=$OPENTOFU_AWS_SECRET_ACCESS_KEY
+    export TF_VAR_STAGING_NAME="{{ NAME }}"
+    export TF_VAR_OPENTOFU_STATE_ENCRYPTION_PASSWORD="$OPENTOFU_STATE_ENCRYPTION_PASSWORD"
+    export TF_VAR_BACKUP_PRIMARY_S3_BUCKET_NAME="$BACKUP_PRIMARY_S3_BUCKET_NAME"
+    export TF_VAR_LINODE_REGION="$LINODE_REGION"
+    export TF_VAR_ANSIBLE_SSH_PUBLIC_KEY="$ANSIBLE_SSH_PUBLIC_KEY"
+
+    export SERVER_IP_ADDRESS="$(tofu -chdir=infrastructure/staging output -raw server_ip_address)"
+
+    echo "$ANSIBLE_SSH_PRIVATE_KEY_B64" | base64 --decode | ssh-add -
+    ssh-keygen -R "$SERVER_IP_ADDRESS"
+    ssh -o StrictHostKeyChecking=no "root@$SERVER_IP_ADDRESS"
 
 [doc('Destroy an ephemeral staging environment')]
 [group('Deploy')]
@@ -116,14 +153,18 @@ destroy-staging NAME:
     # Set OpenTofu variables
     export AWS_ACCESS_KEY_ID=$OPENTOFU_AWS_ACCESS_KEY_ID
     export AWS_SECRET_ACCESS_KEY=$OPENTOFU_AWS_SECRET_ACCESS_KEY
-    export TF_VAR_staging_name="{{ NAME }}"
-    export TF_VAR_opentofu_state_encryption_password="$OPENTOFU_STATE_ENCRYPTION_PASSWORD"
-    export TF_VAR_backup_primary_s3_bucket_name="$BACKUP_PRIMARY_S3_BUCKET_NAME"
-    export TF_VAR_linode_region="$LINODE_REGION"
-    export TF_VAR_ansible_ssh_public_key="$ANSIBLE_SSH_PUBLIC_KEY"
+    export TF_VAR_STAGING_NAME="{{ NAME }}"
+    export TF_VAR_OPENTOFU_STATE_ENCRYPTION_PASSWORD="$OPENTOFU_STATE_ENCRYPTION_PASSWORD"
+    export TF_VAR_BACKUP_PRIMARY_S3_BUCKET_NAME="$BACKUP_PRIMARY_S3_BUCKET_NAME"
+    export TF_VAR_LINODE_REGION="$LINODE_REGION"
+    export TF_VAR_ANSIBLE_SSH_PUBLIC_KEY="$ANSIBLE_SSH_PUBLIC_KEY"
 
-    tofu -chdir=infrastructure/staging destroy -auto-approve \
-      -var="staging_name={{ NAME }}"
+    tofu -chdir=infrastructure/staging init \
+      -backend-config=bucket=$OPENTOFU_BACKEND_S3_BUCKET_NAME \
+      -backend-config=key={{ NAME }}.tfstate \
+      -backend-config=region=$OPENTOFU_BACKEND_S3_REGION \
+      -reconfigure
+    tofu -chdir=infrastructure/staging destroy -auto-approve
 
 # === Environment ===
 

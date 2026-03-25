@@ -1,0 +1,14 @@
+---
+- name: "Setup servers"
+  hosts: "all"
+  become: true
+  roles:
+    - role: "system_locale"
+      vars:
+        system_locale_name: "en_AU.UTF-8"
+    - role: "system_harden_ssh"
+      vars:
+        system_harden_ssh_ports: [22]
+        system_harden_ssh_permit_root_login: "yes"
+        system_harden_ssh_permit_password_authentication: "no"
+        system_harden_ssh_public_key: "{{ lookup('env', 'ANSIBLE_SSH_PUBLIC_KEY') }}"

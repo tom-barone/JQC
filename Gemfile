@@ -122,6 +122,9 @@ group :development do
   # For finding memory leaks
   gem 'derailed_benchmarks', '~> 2.2.1'
   gem 'stackprof', '~> 0.2.27'
+
+  # For deployment [https://github.com/basecamp/kamal]
+  gem 'kamal', '~> 2.11.0'
 end
 
 group :test do

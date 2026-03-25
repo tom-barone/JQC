@@ -1,4 +1,4 @@
-variable "opentofu_state_encryption_password" {
+variable "OPENTOFU_STATE_ENCRYPTION_PASSWORD" {
   type      = string
   sensitive = true
 }
@@ -12,7 +12,7 @@ terraform {
 
   encryption {
     key_provider "pbkdf2" "encryption_key" {
-      passphrase = var.opentofu_state_encryption_password
+      passphrase = var.OPENTOFU_STATE_ENCRYPTION_PASSWORD
     }
     method "aes_gcm" "encryption_method" {
       keys = key_provider.pbkdf2.encryption_key
@@ -43,33 +43,73 @@ provider "linode" {}
 
 provider "aws" {}
 
-variable "staging_name" {
+variable "STAGING_NAME" {
   type = string
 }
 
-variable "backup_primary_s3_bucket_name" {
+variable "BACKUP_PRIMARY_S3_BUCKET_NAME" {
   type      = string
   sensitive = true
 }
 
 resource "aws_s3_bucket" "backups" {
-  bucket = "${var.staging_name}.${var.backup_primary_s3_bucket_name}"
+  bucket = "${var.STAGING_NAME}.${var.BACKUP_PRIMARY_S3_BUCKET_NAME}"
 }
 
-variable "linode_region" {
+variable "LINODE_REGION" {
   type      = string
   sensitive = true
 }
 
-variable "ansible_ssh_public_key" {
+variable "ANSIBLE_SSH_PUBLIC_KEY" {
   type = string
 }
 
+resource "linode_firewall" "server_firewall" {
+  label = "${var.STAGING_NAME}-web-server-firewall"
+
+  inbound {
+    label    = "allow-ssh"
+    action   = "ACCEPT"
+    protocol = "TCP"
+    ports    = "22"
+    ipv4     = ["0.0.0.0/0"]
+    ipv6     = ["::/0"]
+  }
+
+  inbound {
+    label    = "allow-http"
+    action   = "ACCEPT"
+    protocol = "TCP"
+    ports    = "80"
+    ipv4     = ["0.0.0.0/0"]
+    ipv6     = ["::/0"]
+  }
+
+  inbound {
+    label    = "allow-https"
+    action   = "ACCEPT"
+    protocol = "TCP"
+    ports    = "443"
+    ipv4     = ["0.0.0.0/0"]
+    ipv6     = ["::/0"]
+  }
+
+  inbound_policy  = "DROP"
+  outbound_policy = "ACCEPT"
+
+  linodes = [linode_instance.server.id]
+}
+
 resource "linode_instance" "server" {
-  label           = "${var.staging_name}-jqc-server"
+  label           = "${var.STAGING_NAME}-jqc-server"
   tags            = ["staging"]
   image           = "linode/debian13"
-  region          = var.linode_region
+  region          = var.LINODE_REGION
   type            = "g6-standard-2"
-  authorized_keys = [var.ansible_ssh_public_key]
+  authorized_keys = [var.ANSIBLE_SSH_PUBLIC_KEY]
+}
+
+output "server_ip_address" {
+  value = one(linode_instance.server.ipv4)
 }

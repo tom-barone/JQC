@@ -95,8 +95,6 @@ production:
     <<: *default
     url: <%= ENV["DATABASE_URL"] %>
     database: jqc_production
-    username: jqc
-    password: <%= ENV["JQC_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
     url: <%= ENV["DATABASE_URL"]&.+('_cache') if Rails.env.production? %>
