@@ -12,3 +12,11 @@
         system_harden_ssh_permit_root_login: "yes"
         system_harden_ssh_permit_password_authentication: "no"
         system_harden_ssh_public_key: "{{ lookup('env', 'ANSIBLE_SSH_PUBLIC_KEY') }}"
+    - role: "docker_install"
+    - role: "postgres_install_docker"
+      vars:
+        postgres_install_docker_password: "{{ lookup('env', 'POSTGRES_PASSWORD') }}"
+        postgres_install_docker_user: "{{ lookup('env', 'POSTGRES_USERNAME') }}"
+        postgres_install_docker_network: "{{ lookup('env', 'POSTGRES_DOCKER_NETWORK') }}"
+        postgres_install_docker_port: "{{ lookup('env', 'POSTGRES_PORT') }}"
+        postgres_install_docker_container_name: "{{ lookup('env', 'POSTGRES_HOST') }}"

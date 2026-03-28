@@ -7,7 +7,10 @@ image: jqc
 # Deploy to these servers.
 servers:
   web:
-    - <%= ENV['JQC_SERVER_IP_ADDRESS'] %>
+    hosts:
+      - <%= ENV['JQC_SERVER_IP_ADDRESS'] %>
+    options:
+      network: <%= ENV['POSTGRES_DOCKER_NETWORK'] %>
   # job:
   #   hosts:
   #     - 192.168.0.1
@@ -95,39 +98,3 @@ builder:
 # ssh:
 #   user: app
 
-# Use accessory services (secrets come from .kamal/secrets).
-accessories:
-  postgres:
-    image: postgres:18.2 # Use the correct version for your app
-    host: <%= ENV['JQC_SERVER_IP_ADDRESS'] %>
-    env:
-      clear:
-        POSTGRES_USER: jqc
-        POSTGRES_DB: jqc_production
-      secret:
-        - POSTGRES_PASSWORD
-    directories:
-      - data:/var/lib/postgresql # Persist db data on host (named volume "data")
-
-
-    #db:
-    #  image: mysql:8.0
-    #  host: 192.168.0.2
-    #  # Change to 3306 to expose port to the world instead of just local network.
-    #  port: "127.0.0.1:3306:3306"
-    #  env:
-    #    clear:
-    #      MYSQL_ROOT_HOST: '%'
-    #    secret:
-    #      - MYSQL_ROOT_PASSWORD
-    #  files:
-    #    - config/mysql/production.cnf:/etc/mysql/my.cnf
-    #    - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-    #  directories:
-    #    - data:/var/lib/mysql
-#   redis:
-#     image: valkey/valkey:8
-#     host: 192.168.0.2
-#     port: 6379
-#     directories:
-#       - data:/data

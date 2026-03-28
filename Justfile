@@ -6,6 +6,11 @@ help:
     @just --list
 
 export TOFU_DIR := "infrastructure/tofu"
+export POSTGRES_USERNAME := "postgres"
+export POSTGRES_DB := "jqc_production"
+export POSTGRES_HOST := "postgres"
+export POSTGRES_PORT := "5432"
+export POSTGRES_DOCKER_NETWORK := "postgres_network"
 
 # === Development ===
 
@@ -86,6 +91,14 @@ ssh ENVIRONMENT:
     source scripts/ansible-env.sh {{ ENVIRONMENT }}
     ssh -o StrictHostKeyChecking=no "root@$JQC_SERVER_IP_ADDRESS"
 
+[doc('View the application in the specified environment')]
+[group('Deploy')]
+browse ENVIRONMENT:
+    #!/usr/bin/env bash
+    source scripts/ansible-env.sh {{ ENVIRONMENT }}
+    python3 -m webbrowser "http://$JQC_HOSTNAME"
+    #python3 -m webbrowser "http://$JQC_HOSTNAME_MONITORING"
+
 [doc('Destroy infrastructure in the specified environment')]
 [group('Deploy')]
 destroy ENVIRONMENT: (tofu-destroy ENVIRONMENT)
@@ -123,10 +136,10 @@ tofu-init ENVIRONMENT:
 tofu-apply ENVIRONMENT:
     source scripts/tofu-apply.sh {{ ENVIRONMENT }}
 
-[doc('Get a Tofu output variable')]
+[doc('Output OpenTofu values in the specified environment')]
 [group('Deploy:Tofu')]
-tofu-output ENVIRONMENT VARIABLE:
-    source scripts/tofu-output.sh {{ ENVIRONMENT }} {{ VARIABLE }}
+tofu-output ENVIRONMENT:
+    source scripts/tofu-output.sh {{ ENVIRONMENT }}
 
 [doc('Destroy OpenTofu infrastructure in the specified environment')]
 [group('Deploy:Tofu')]
