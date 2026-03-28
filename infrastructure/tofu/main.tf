@@ -1,9 +1,6 @@
-variable "opentofu_state_encryption_password" {
-  type      = string
-  sensitive = true
-}
-
 terraform {
+  required_version = ">= 1.11.0, < 2.0.0"
+
   backend "s3" {
     use_lockfile = true
     #key          = <set by -backend-config>
@@ -12,7 +9,7 @@ terraform {
 
   encryption {
     key_provider "pbkdf2" "encryption_key" {
-      passphrase = var.opentofu_state_encryption_password
+      passphrase = var.OPENTOFU_STATE_ENCRYPTION_PASSWORD
     }
     method "aes_gcm" "encryption_method" {
       keys = key_provider.pbkdf2.encryption_key
@@ -32,16 +29,9 @@ terraform {
       source  = "hashicorp/aws"
       version = ">= 6.6.0, < 7.0.0"
     }
+    linode = {
+      source  = "linode/linode"
+      version = "3.10.0"
+    }
   }
-}
-
-provider "aws" {}
-
-variable "backup_primary_s3_bucket_name" {
-  type      = string
-  sensitive = true
-}
-
-resource "aws_s3_bucket" "backups" {
-  bucket = var.backup_primary_s3_bucket_name
 }
