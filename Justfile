@@ -81,6 +81,7 @@ precommit: clean install format lint build
 deploy ENVIRONMENT:
     just tofu-init {{ ENVIRONMENT }}
     just tofu-apply {{ ENVIRONMENT }}
+    sleep 30 # Wait a bit for the server to be up before trying to SSH
     just ansible-deploy {{ ENVIRONMENT }}
     just kamal-deploy {{ ENVIRONMENT }}
 
