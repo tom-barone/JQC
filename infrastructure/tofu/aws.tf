@@ -1,7 +1,46 @@
 provider "aws" {}
 
-resource "aws_s3_bucket" "backups" {
-  bucket = "${var.ENVIRONMENT}.${var.BACKUP_PRIMARY_S3_BUCKET_NAME}"
+data "aws_region" "current" {}
+
+resource "aws_s3_bucket" "restic_postgres_backups" {
+  bucket = "${var.ENVIRONMENT}.restic-postgres-backups.${var.DOMAIN}"
+}
+
+resource "aws_iam_user" "restic_postgres_backups" {
+  name = "${var.ENVIRONMENT}-restic-postgres-backups"
+}
+
+# User with permissions to read/write to the S3 bucket for restic postgres backups
+resource "aws_iam_user_policy" "restic_postgres_backups" {
+  name = "${var.ENVIRONMENT}-restic-postgres-backups"
+  user = aws_iam_user.restic_postgres_backups.name
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:ListBucket",
+          "s3:GetBucketLocation",
+        ]
+        Resource = aws_s3_bucket.restic_postgres_backups.arn
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:DeleteObject",
+        ]
+        Resource = "${aws_s3_bucket.restic_postgres_backups.arn}/*"
+      },
+    ]
+  })
+}
+
+resource "aws_iam_access_key" "restic_postgres_backups" {
+  user = aws_iam_user.restic_postgres_backups.name
 }
 
 data "aws_route53_zone" "domain" {
