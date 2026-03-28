@@ -19,7 +19,7 @@ output "RESTIC_POSTGRES_S3_BUCKET" {
 }
 
 output "RESTIC_POSTGRES_S3_ENDPOINT" {
-  value     = "s3.${data.aws_region.current.name}.amazonaws.com"
+  value     = "s3.${data.aws_region.current.id}.amazonaws.com"
   sensitive = true
 }
 
