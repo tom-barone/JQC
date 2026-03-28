@@ -40,7 +40,7 @@ lint:
 [doc('Build the Docker image')]
 [group('Development')]
 build:
-    docker build .
+    docker build . --tag jqc:latest
 
 [doc('Run tests')]
 [group('Development')]
@@ -84,7 +84,7 @@ deploy ENVIRONMENT:
 ssh ENVIRONMENT:
     #!/usr/bin/env bash
     source scripts/ansible-env.sh {{ ENVIRONMENT }}
-    ssh -o StrictHostKeyChecking=no "root@$SERVER_IP_ADDRESS"
+    ssh -o StrictHostKeyChecking=no "root@$JQC_SERVER_IP_ADDRESS"
 
 [doc('Destroy infrastructure in the specified environment')]
 [group('Deploy')]

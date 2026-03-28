@@ -35,3 +35,10 @@ terraform {
     }
   }
 }
+
+locals {
+  environment   = var.ENVIRONMENT
+  domain_prefix = local.environment == "production" ? "" : "${local.environment}."
+  domain        = var.DOMAIN
+  subdomains    = ["monitoring"]
+}

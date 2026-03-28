@@ -18,5 +18,11 @@ variable "LINODE_REGION" {
 }
 
 variable "ANSIBLE_SSH_PUBLIC_KEY" {
-  type = string
+  type      = string
+  sensitive = true
+}
+
+variable "DOMAIN" {
+  type      = string
+  sensitive = true
 }
