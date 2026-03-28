@@ -3,7 +3,8 @@ provider "aws" {}
 data "aws_region" "current" {}
 
 resource "aws_s3_bucket" "restic_postgres_backups" {
-  bucket = "${var.ENVIRONMENT}.restic-postgres-backups.${var.DOMAIN}"
+  bucket        = "${var.ENVIRONMENT}.restic-postgres-backups.${var.DOMAIN}"
+  force_destroy = var.ENVIRONMENT != "production"
 }
 
 resource "aws_iam_user" "restic_postgres_backups" {
