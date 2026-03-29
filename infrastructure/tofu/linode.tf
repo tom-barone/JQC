@@ -55,7 +55,7 @@ resource "terraform_data" "wait_for_new_server" {
 
   provisioner "local-exec" {
     command = <<EOT
-      sleep 120
+      sleep 60
     EOT
   }
 }

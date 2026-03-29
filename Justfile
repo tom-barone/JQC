@@ -107,8 +107,8 @@ rails-console ENVIRONMENT:
 browse ENVIRONMENT:
     #!/usr/bin/env bash
     source scripts/ansible-env.sh {{ ENVIRONMENT }}
-    python3 -m webbrowser "http://$JQC_HOSTNAME"
-    #python3 -m webbrowser "http://$JQC_HOSTNAME_MONITORING"
+    python3 -m webbrowser "https://$JQC_HOSTNAME"
+    #python3 -m webbrowser "https://$JQC_HOSTNAME_MONITORING"
 
 [doc('Destroy infrastructure in the specified environment')]
 [group('Deploy')]
