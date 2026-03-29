@@ -11,6 +11,7 @@ export POSTGRES_DB := "jqc_production"
 export POSTGRES_HOST := "postgres"
 export POSTGRES_PORT := "5432"
 export POSTGRES_DOCKER_NETWORK := "postgres_network"
+export RAILS_ACTIVE_STORAGE_DIR := "/opt/rails/storage"
 
 # === Development ===
 
@@ -81,9 +82,7 @@ precommit: clean install format lint build
 deploy ENVIRONMENT:
     just tofu-init {{ ENVIRONMENT }}
     just tofu-apply {{ ENVIRONMENT }}
-    sleep 15 # Wait for the dust to settle after provisioning before trying to SSH
     just ansible-deploy {{ ENVIRONMENT }}
-    sleep 15 # Wait for the dust to settle after Ansible before runnning Kamal
     just kamal-deploy {{ ENVIRONMENT }}
 
 [doc('SSH to the server in the specified environment')]
@@ -92,6 +91,16 @@ ssh ENVIRONMENT:
     #!/usr/bin/env bash
     source scripts/ansible-env.sh {{ ENVIRONMENT }}
     ssh -o StrictHostKeyChecking=no "root@$JQC_SERVER_IP_ADDRESS"
+
+[doc('Open a shell within the application container in the specified environment')]
+[group('Deploy')]
+enter ENVIRONMENT:
+    just kamal {{ ENVIRONMENT }} app exec -i --reuse bash
+
+[doc('Open a rails console in the specified environment')]
+[group('Deploy')]
+rails-console ENVIRONMENT:
+    just kamal {{ ENVIRONMENT }} app exec -i --reuse "bin/rails console"
 
 [doc('View the application in the specified environment')]
 [group('Deploy')]
@@ -125,6 +134,13 @@ kamal-deploy ENVIRONMENT:
     kamal app exec --roles=web "bin/rails db:prepare"
     kamal deploy
     kamal app logs -n 1000
+
+[doc('Run a Kamal command')]
+[group('Deploy:Kamal')]
+kamal ENVIRONMENT *CMD:
+    #!/usr/bin/env bash
+    source scripts/ansible-env.sh {{ ENVIRONMENT }}
+    kamal {{ CMD }}
 
 # === OpenTofu ===
 

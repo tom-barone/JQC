@@ -44,3 +44,17 @@ resource "linode_instance" "server" {
   type            = "g6-standard-2"
   authorized_keys = [var.ANSIBLE_SSH_PUBLIC_KEY]
 }
+
+# Make sure the server is fully up and ready to go before 
+# connecting with Ansible.
+resource "terraform_data" "wait_for_new_server" {
+  triggers_replace = [
+    linode_instance.server.id
+  ]
+
+  provisioner "local-exec" {
+    command = <<EOT
+      sleep 180
+    EOT
+  }
+}

@@ -2,6 +2,14 @@
 - name: "Setup servers"
   hosts: "all"
   become: true
+  pre_tasks:
+    - name: "Create Active Storage directory"
+      ansible.builtin.file:
+        path: "{{ lookup('env', 'RAILS_ACTIVE_STORAGE_DIR') }}"
+        state: "directory"
+        owner: "1000"
+        group: "1000"
+        mode: "0755"
   roles:
     - role: "system_locale"
       vars:
