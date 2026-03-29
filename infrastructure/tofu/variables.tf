@@ -12,6 +12,11 @@ variable "LINODE_REGION" {
   sensitive = true
 }
 
+variable "LINODE_ROOT_PASSWORD" {
+  type      = string
+  sensitive = true
+}
+
 variable "ANSIBLE_SSH_PUBLIC_KEY" {
   type      = string
   sensitive = true
