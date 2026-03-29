@@ -14,6 +14,10 @@ export RESTIC_POSTGRES_S3_BUCKET=$(echo "$tofu_output_json" | jq -r '.RESTIC_POS
 export RESTIC_POSTGRES_S3_ENDPOINT=$(echo "$tofu_output_json" | jq -r '.RESTIC_POSTGRES_S3_ENDPOINT.value')
 export RESTIC_POSTGRES_S3_ACCESS_KEY=$(echo "$tofu_output_json" | jq -r '.RESTIC_POSTGRES_S3_ACCESS_KEY.value')
 export RESTIC_POSTGRES_S3_SECRET_KEY=$(echo "$tofu_output_json" | jq -r '.RESTIC_POSTGRES_S3_SECRET_KEY.value')
+export RESTIC_ACTIVE_STORAGE_S3_BUCKET=$(echo "$tofu_output_json" | jq -r '.RESTIC_ACTIVE_STORAGE_S3_BUCKET.value')
+export RESTIC_ACTIVE_STORAGE_S3_ENDPOINT=$(echo "$tofu_output_json" | jq -r '.RESTIC_ACTIVE_STORAGE_S3_ENDPOINT.value')
+export RESTIC_ACTIVE_STORAGE_S3_ACCESS_KEY=$(echo "$tofu_output_json" | jq -r '.RESTIC_ACTIVE_STORAGE_S3_ACCESS_KEY.value')
+export RESTIC_ACTIVE_STORAGE_S3_SECRET_KEY=$(echo "$tofu_output_json" | jq -r '.RESTIC_ACTIVE_STORAGE_S3_SECRET_KEY.value')
 
 # Add the SSH key to our agent first
 echo "$ANSIBLE_SSH_PRIVATE_KEY_B64" | base64 --decode | ssh-add -

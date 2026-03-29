@@ -148,3 +148,7 @@ If starting from scratch, you need to:
    - Set `Object Versioning` to enabled.
 5. Configure OpenTofu to use the S3 bucket as the state backend, done via SOPS
 6. Create a Linode token and configure OpenTofu to use it, done via SOPS
+
+
+TODO:
+- Update dev database to use docker compose postgres container instead of local postgres, to mirror production more closely and avoid postgres version issues.

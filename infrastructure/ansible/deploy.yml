@@ -37,3 +37,13 @@
         postgres_restic_backup_restic_password: "{{ lookup('env', 'RESTIC_PASSWORD') }}"
         postgres_restic_backup_postgres_container: "{{ lookup('env', 'POSTGRES_HOST') }}"
         postgres_restic_backup_postgres_user: "{{ lookup('env', 'POSTGRES_USERNAME') }}"
+    - role: "restic_backup"
+      vars:
+        restic_backup_dir: "/opt/active-storage-backup"
+        restic_backup_cron_job_name: "active-storage-restic-backup"
+        restic_backup_s3_endpoint: "{{ lookup('env', 'RESTIC_ACTIVE_STORAGE_S3_ENDPOINT') }}"
+        restic_backup_s3_bucket: "{{ lookup('env', 'RESTIC_ACTIVE_STORAGE_S3_BUCKET') }}"
+        restic_backup_s3_access_key: "{{ lookup('env', 'RESTIC_ACTIVE_STORAGE_S3_ACCESS_KEY') }}"
+        restic_backup_s3_secret_key: "{{ lookup('env', 'RESTIC_ACTIVE_STORAGE_S3_SECRET_KEY') }}"
+        restic_backup_restic_password: "{{ lookup('env', 'RESTIC_PASSWORD') }}"
+        restic_backup_path: "{{ lookup('env', 'RAILS_ACTIVE_STORAGE_DIR') }}"

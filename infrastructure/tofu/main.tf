@@ -36,9 +36,17 @@ terraform {
   }
 }
 
+provider "aws" {}
+
+data "aws_region" "current" {}
+
 locals {
-  environment   = var.ENVIRONMENT
-  domain_prefix = local.environment == "production" ? "" : "${local.environment}."
-  domain        = var.DOMAIN
-  subdomains    = ["monitoring"]
+  environment = var.ENVIRONMENT
+
+  # TODO: When ready flip this back to use the actual prod domain.
+  # domain_prefix = local.environment == "production" ? "" : "${local.environment}."
+  domain_prefix = "${local.environment}."
+
+  domain     = var.DOMAIN
+  subdomains = ["monitoring"]
 }
