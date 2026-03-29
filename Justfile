@@ -130,10 +130,9 @@ ansible-deploy ENVIRONMENT:
 kamal-deploy ENVIRONMENT:
     #!/usr/bin/env bash
     source scripts/ansible-env.sh {{ ENVIRONMENT }}
-    kamal setup
-    kamal app exec --roles=web "bin/rails db:prepare"
-    kamal deploy
-    kamal app logs -n 1000
+    kamal setup --quiet
+    kamal app exec --roles=web "bin/rails db:prepare" --quiet
+    kamal deploy --quiet
 
 [doc('Run a Kamal command')]
 [group('Deploy:Kamal')]
@@ -141,6 +140,18 @@ kamal ENVIRONMENT *CMD:
     #!/usr/bin/env bash
     source scripts/ansible-env.sh {{ ENVIRONMENT }}
     kamal {{ CMD }}
+
+# === Restic ===
+
+[doc('Manually run restic backups')]
+[group('Deploy:Restic')]
+restic-backup ENVIRONMENT:
+    source scripts/restic-backup.sh {{ ENVIRONMENT }}
+
+[doc('Restore a deployment from its restic backups')]
+[group('Deploy:Restic')]
+restic-restore ENVIRONMENT:
+    source scripts/restic-restore.sh {{ ENVIRONMENT }}
 
 # === OpenTofu ===
 
