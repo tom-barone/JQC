@@ -63,9 +63,26 @@
                             </span>
                           </div>
                         </th>
+                        <th class="fw-normal small text-center">
+                          <%= link_to 'Add',
+                                      '#',
+                                      class: 'add_fields btn btn-sm btn-success m-2',
+                                      data: {
+                                        association: 'application_type',
+                                        'association-insertion-node': '.application-type-fields',
+                                        'association-insertion-method': 'append',
+                                        'association-insertion-template':
+                                          fields_for(
+                                            'application_type_attributes[new_application_type]',
+                                            ApplicationType.new
+                                          ) do |f|
+                                            render('settings/application_types/application_type_fields', f: f)
+                                          end
+                                      } %>
+                        </th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="application-type-fields">
                       <% @application_types.each do |application_type| %>
                         <%= fields_for 'application_type_attributes[]', application_type do |application_type_fields| %>
                           <tr>
@@ -89,6 +106,7 @@
                             <td class="text-center">
                               <%= application_type_fields.checkbox :active, class: 'form-check-input' %>
                             </td>
+                            <td></td>
                           </tr>
                         <% end %>
                       <% end %>

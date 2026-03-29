@@ -81,8 +81,9 @@ precommit: clean install format lint build
 deploy ENVIRONMENT:
     just tofu-init {{ ENVIRONMENT }}
     just tofu-apply {{ ENVIRONMENT }}
-    sleep 30 # Wait a bit for the server to be up before trying to SSH
+    sleep 15 # Wait for the dust to settle after provisioning before trying to SSH
     just ansible-deploy {{ ENVIRONMENT }}
+    sleep 15 # Wait for the dust to settle after Ansible before runnning Kamal
     just kamal-deploy {{ ENVIRONMENT }}
 
 [doc('SSH to the server in the specified environment')]

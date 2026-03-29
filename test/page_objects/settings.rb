@@ -33,6 +33,15 @@ module SettingsPageObject
     end
   end
 
+  def click_add_application_type
+    click_on 'Add'
+  end
+
+  def within_new_application_type_row
+    row = all('tbody tr').last
+    yield row
+  end
+
   def click_save
     click_on SAVE_BUTTON
   end

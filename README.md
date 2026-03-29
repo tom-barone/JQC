@@ -148,8 +148,3 @@ If starting from scratch, you need to:
    - Set `Object Versioning` to enabled.
 5. Configure OpenTofu to use the S3 bucket as the state backend, done via SOPS
 6. Create a Linode token and configure OpenTofu to use it, done via SOPS
-
-
-TODO:
-- create staging seed data for PRs / ephemeral envs
-- add object versioning on active storage buckets as a backup measure against accidental deletion of files, and to be able to recover old versions of files if needed

@@ -8,21 +8,21 @@ module Settings
       @application_types = ApplicationType.ordered
     end
 
-    # rubocop:disable Metrics/AbcSize
     def update
-      application_type_params.each_key do |id|
-        @application_type = ApplicationType.find(id.to_i)
-        @application_type.update(
-          last_used: application_type_params[id]['last_used'],
-          display_priority: application_type_params[id]['display_priority'],
-          active: application_type_params[id]['active']
-        )
-      end
+      application_type_params.each { |id, attrs| upsert_application_type(id, attrs) }
       redirect_to session[:search_results] || '/'
     end
-    # rubocop:enable Metrics/AbcSize
 
     private
+
+    def upsert_application_type(id, attrs)
+      existing = ApplicationType.find_by(id: id)
+      if existing
+        existing.update(attrs.slice('last_used', 'display_priority', 'active'))
+      elsif attrs['application_type'].present?
+        ApplicationType.create(attrs.slice('application_type', 'last_used', 'display_priority', 'active'))
+      end
+    end
 
     def application_type_params
       params.expect(application_type_attributes: [

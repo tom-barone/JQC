@@ -3,6 +3,8 @@
 class ApplicationType < ApplicationRecord
   has_many :applications, dependent: :nullify
 
+  validates :application_type, presence: true, uniqueness: true
+
   scope :active, -> { where(active: true) }
   scope :ordered, -> { order(:display_priority) }
 

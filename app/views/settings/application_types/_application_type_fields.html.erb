@@ -1,0 +1,23 @@
+<tr class="nested-fields">
+  <td>
+    <%= f.text_field :application_type, class: 'form-control form-control-sm' %>
+  </td>
+  <td>
+    <%= f.text_field :last_used,
+                     type: 'number',
+                     step: '1',
+                     value: 0,
+                     class: 'form-control form-control-sm' %>
+  </td>
+  <td>
+    <%= f.text_field :display_priority,
+                     type: 'number',
+                     step: '1',
+                     value: 0,
+                     class: 'form-control form-control-sm' %>
+  </td>
+  <td class="text-center">
+    <%= f.check_box :active, { checked: true, class: 'form-check-input' } %>
+  </td>
+  <td></td>
+</tr>
