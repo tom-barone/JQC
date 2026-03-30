@@ -187,6 +187,13 @@ secrets-edit:
 secrets-export:
     @sops --decrypt secrets.sops.env
 
+# === Temp ===
+
+[doc('Restore from the old deployment setup')]
+[group('Temp')]
+restore-from-old-prod-backups ENVIRONMENT:
+    source scripts/restore-from-old-prod-backups.sh {{ ENVIRONMENT }}
+
 # === Aliases ===
 
 alias l := lint
