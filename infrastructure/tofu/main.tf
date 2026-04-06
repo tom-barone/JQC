@@ -41,12 +41,9 @@ provider "aws" {}
 data "aws_region" "current" {}
 
 locals {
-  environment = var.ENVIRONMENT
-
   # TODO: When ready flip this back to use the actual prod domain.
-  # domain_prefix = local.environment == "production" ? "" : "${local.environment}."
-  domain_prefix = "${local.environment}."
-
-  domain     = var.DOMAIN
+  # domain_prefix = var.ENVIRONMENT == "production" ? "" : "${var.ENVIRONMENT}."
+  domain_prefix = "${var.ENVIRONMENT}."
   subdomains = ["monitoring"]
 }
+
