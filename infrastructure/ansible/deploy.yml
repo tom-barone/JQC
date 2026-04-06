@@ -2,6 +2,8 @@
 - name: "Setup servers"
   hosts: "all"
   become: true
+  vars:
+    notification_email: "mail+jqc-{{ lookup('env', 'ENVIRONMENT') }}@tombarone.net"
   pre_tasks:
     - name: "Create Active Storage directory"
       ansible.builtin.file:
@@ -20,6 +22,21 @@
         system_harden_ssh_permit_root_login: "yes"
         system_harden_ssh_permit_password_authentication: "no"
         system_harden_ssh_public_key: "{{ lookup('env', 'ANSIBLE_SSH_PUBLIC_KEY') }}"
+    - role: "system_hostname"
+      vars:
+        system_hostname_short: "jqc-{{ lookup('env', 'ENVIRONMENT') }}"
+        system_hostname_fqdn: "{{ lookup('env', 'JQC_HOSTNAME') }}"
+    - role: "system_fail2ban"
+    - role: "postfix_relay"
+      vars:
+        postfix_relay_host: "{{ lookup('env', 'SMTP_RELAY_HOST') }}"
+        postfix_relay_port: "{{ lookup('env', 'SMTP_RELAY_PORT') }}"
+        postfix_relay_username: "{{ lookup('env', 'SMTP_RELAY_USERNAME') }}"
+        postfix_relay_password: "{{ lookup('env', 'SMTP_RELAY_PASSWORD') }}"
+        postfix_relay_hostname: "{{ lookup('env', 'JQC_HOSTNAME') }}"
+        postfix_relay_root_alias: "{{ notification_email }}"
+    - role: "ansible_flush_handlers"
+    - role: "system_logcheck"
     - role: "docker_install"
     - role: "postgres_install_docker"
       vars:

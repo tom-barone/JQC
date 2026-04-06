@@ -143,12 +143,11 @@ If starting from scratch, you need to:
 
 1. Create a new AWS account.
 2. Create an IAM user with `AdministratorAccess` permissions and generate access keys for that user.
-3. Setup the access keys in SOPS
-4. Create an S3 bucket to use as the state backend, e.g. `infrastructure-state-backend`
+   - Setup the access keys in SOPS.
+3. Create an S3 bucket to use as the state backend, e.g. `infrastructure-state-backend`.
    - Set `Object Versioning` to enabled.
-5. Configure OpenTofu to use the S3 bucket as the state backend, done via SOPS
-6. Create a Linode token and configure OpenTofu to use it, done via SOPS
-
-
-TODO:
-- Update dev database to use docker compose postgres container instead of local postgres, to mirror production more closely and avoid postgres version issues.
+   - Configure OpenTofu to use the S3 bucket as the state backend, done via SOPS.
+4. Configure Route53 to manage the DNS for the app domain.
+5. Setup AWS SES for sending emails from the app domain.
+   - Verify the domain via route53 and request production access to remove sandbox restrictions.
+6. Create a Linode token and configure OpenTofu to use it done via SOPS.
