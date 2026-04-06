@@ -69,7 +69,7 @@ resource "linode_stackscript" "harden_ssh" {
   script      = <<-EOF
     #!/bin/bash
     sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config
-    sed -i 's/^#*MaxAuthTries.*/MaxAuthTries 3/' /etc/ssh/sshd_config
+    echo "MaxStartups 100:30:200" >> /etc/ssh/sshd_config
     systemctl restart sshd
   EOF
 }

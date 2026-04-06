@@ -10,7 +10,7 @@ export POSTGRES_USERNAME := "postgres"
 export POSTGRES_DB := "jqc_production"
 export POSTGRES_HOST := "postgres"
 export POSTGRES_PORT := "5432"
-export POSTGRES_DOCKER_NETWORK := "postgres_network"
+export DOCKER_NETWORK := "jqc_network"
 export RAILS_ACTIVE_STORAGE_DIR := "/opt/rails/storage"
 
 # === Development ===
@@ -108,7 +108,7 @@ browse ENVIRONMENT:
     #!/usr/bin/env bash
     source scripts/ansible-env.sh {{ ENVIRONMENT }}
     python3 -m webbrowser "https://$JQC_HOSTNAME"
-    #python3 -m webbrowser "https://$JQC_HOSTNAME_MONITORING"
+    python3 -m webbrowser "https://$JQC_HOSTNAME_MONITORING/dashboards"
 
 [doc('Destroy infrastructure in the specified environment')]
 [group('Deploy')]
@@ -133,6 +133,13 @@ kamal-deploy ENVIRONMENT:
     kamal setup --quiet
     kamal app exec --roles=web "bin/rails db:prepare" --quiet
     kamal deploy --quiet
+    # Make sure the reverse-proxy can reach our docker network with all the services like grafana etc.
+    # This is annoying but eventually Kamal should have a nice way of reverse-proxying to other stuff
+    # without resorting to this.
+    ssh -o StrictHostKeyChecking=no "root@$JQC_SERVER_IP_ADDRESS" \
+      "docker network connect $DOCKER_NETWORK kamal-proxy 2>/dev/null || true"
+    ssh -o StrictHostKeyChecking=no "root@$JQC_SERVER_IP_ADDRESS" \
+      "docker exec kamal-proxy kamal-proxy deploy grafana --host $JQC_HOSTNAME_MONITORING --target grafana:3000 --tls --health-check-path /api/health"
 
 [doc('Run a Kamal command')]
 [group('Deploy:Kamal')]

@@ -38,11 +38,14 @@
     - role: "ansible_flush_handlers"
     - role: "system_logcheck"
     - role: "docker_install"
+    - role: "docker_network_create"
+      vars:
+        docker_network_create_name: "{{ lookup('env', 'DOCKER_NETWORK') }}"
     - role: "postgres_install_docker"
       vars:
         postgres_install_docker_password: "{{ lookup('env', 'POSTGRES_PASSWORD') }}"
         postgres_install_docker_user: "{{ lookup('env', 'POSTGRES_USERNAME') }}"
-        postgres_install_docker_network: "{{ lookup('env', 'POSTGRES_DOCKER_NETWORK') }}"
+        postgres_install_docker_network: "{{ lookup('env', 'DOCKER_NETWORK') }}"
         postgres_install_docker_port: "{{ lookup('env', 'POSTGRES_PORT') }}"
         postgres_install_docker_container_name: "{{ lookup('env', 'POSTGRES_HOST') }}"
     - role: "postgres_restic_backup"
@@ -64,3 +67,22 @@
         restic_backup_s3_secret_key: "{{ lookup('env', 'RESTIC_ACTIVE_STORAGE_S3_SECRET_KEY') }}"
         restic_backup_restic_password: "{{ lookup('env', 'RESTIC_PASSWORD') }}"
         restic_backup_path: "{{ lookup('env', 'RAILS_ACTIVE_STORAGE_DIR') }}"
+    - role: "monitoring_stack_install"
+      vars:
+        monitoring_stack_install_smtp_host: >-
+          {{ lookup('env', 'SMTP_RELAY_HOST') }}
+        monitoring_stack_install_smtp_port: >-
+          {{ lookup('env', 'SMTP_RELAY_PORT') }}
+        monitoring_stack_install_smtp_user: >-
+          {{ lookup('env', 'SMTP_RELAY_USERNAME') }}
+        monitoring_stack_install_smtp_password: >-
+          {{ lookup('env', 'SMTP_RELAY_PASSWORD') }}
+        monitoring_stack_install_smtp_from_address: >-
+          monitoring@{{ lookup('env', 'JQC_HOSTNAME') }}
+        monitoring_stack_install_alert_email_to: "{{ notification_email }}"
+        monitoring_stack_install_grafana_admin_user: >-
+          {{ lookup('env', 'MONITORING_GRAFANA_USER') }}
+        monitoring_stack_install_grafana_admin_password: >-
+          {{ lookup('env', 'MONITORING_GRAFANA_PASSWORD') }}
+        monitoring_stack_install_docker_network: >-
+          {{ lookup('env', 'DOCKER_NETWORK') }}
