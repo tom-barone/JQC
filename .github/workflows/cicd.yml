@@ -53,6 +53,14 @@ jobs:
           restore-keys: >-
             ${{ runner.os }}-uv-
 
+      # Needed for ansible to be able to ssh into the servers
+      - name: "Start ssh-agent"
+        shell: "bash"
+        run: |
+          eval "$(ssh-agent -s)"
+          echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> "$GITHUB_ENV"
+          echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> "$GITHUB_ENV"
+
       # See https://docs.docker.com/build/cache/backends/gha/
       - uses: "docker/setup-buildx-action@v4"
       - uses: "crazy-max/ghaction-github-runtime@v4"
@@ -69,4 +77,4 @@ jobs:
           just lint
           just build
           # just test
-          # just deploy "${{ env.ENVIRONMENT }}"
+          just deploy "${{ env.ENVIRONMENT }}"
