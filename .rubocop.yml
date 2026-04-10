@@ -18,6 +18,7 @@ AllCops:
   NewCops: enable
   Exclude:
     - ".ruby-lsp/**"
+    - "vendor/**/*"
 
 # Don't force a comment at the top of every class
 Style/Documentation:
