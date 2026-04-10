@@ -207,7 +207,7 @@ secrets-export:
 [doc('Mask sensitive values in GitHub Actions logs')]
 [group('Environment')]
 secrets-mask:
-    @IFS=$'\n'; for val in $(sops --decrypt secrets.sops.env | grep -v '^#' | cut -d'=' -f2-); do \
+    @sops --decrypt secrets.sops.env | grep -v '^#' | cut -d'=' -f2- | while read -r val; do \
         echo "::add-mask::$val"; \
     done
 
