@@ -47,11 +47,6 @@ lint:
     cd {{ TOFU_DIR }} && tofu validate
     tflint --chdir={{ TOFU_DIR }} --config=.tflint.hcl
 
-[doc('Build the Docker image')]
-[group('Development')]
-build:
-    docker buildx build . --tag jqc:latest --load {{ env("DOCKER_BUILD_ARGS", "") }}
-
 [doc('Run tests')]
 [group('Development')]
 test:
@@ -77,7 +72,7 @@ clean:
 
 [doc('Run all pre-commit checks')]
 [group('Development')]
-precommit: clean install format lint build
+precommit: clean install format lint
 
 # === Deployment ===
 
