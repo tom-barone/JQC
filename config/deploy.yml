@@ -32,7 +32,7 @@ proxy:
 # Where you keep your container images.
 registry:
   server: ghcr.io
-  username: <%= ENV.fetch('KAMAL_REGISTRY_USERNAME', 'tom-barone') %>
+  username: <%= ENV['KAMAL_REGISTRY_USERNAME'] %>
   password:
     - KAMAL_REGISTRY_PASSWORD
 
