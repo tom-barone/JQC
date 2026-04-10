@@ -35,6 +35,8 @@ dev:
 [group('Development')]
 lint:
     docker run --rm -i hadolint/hadolint < Dockerfile
+    yamllint --strict .github
+    actionlint -color
     bundle exec bin/rubocop --autocorrect-all --fail-level I
     bundle exec bin/brakeman --no-pager --quiet --no-summary
     bundle exec erb_lint --lint-all
