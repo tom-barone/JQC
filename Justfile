@@ -50,7 +50,7 @@ lint:
 [doc('Build the Docker image')]
 [group('Development')]
 build:
-    docker build . --tag jqc:latest
+    docker buildx build . --tag jqc:latest --load {{ env("DOCKER_BUILD_ARGS", "") }}
 
 [doc('Run tests')]
 [group('Development')]
