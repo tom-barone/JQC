@@ -37,6 +37,7 @@ jobs:
 
       - uses: "jdx/mise-action@v4.0.1"
         with:
+          cache_key: "mise-{{platform}}-{{version}}-{{file_hash}}"
           version: "2026.3.1"
 
       - name: "Mask secrets"
