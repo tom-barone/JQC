@@ -60,6 +60,22 @@ jobs:
           restore-keys: >-
             ${{ runner.os }}-uv-
 
+      - name: "Cache tflint plugins"
+        uses: "actions/cache@v5"
+        with:
+          path: "~/.tflint.d"
+          key: >-
+            ${{ runner.os }}-tflint-${{
+            hashFiles('infrastructure/tofu/.tflint.hcl') }}
+
+      - name: "Cache OpenTofu providers"
+        uses: "actions/cache@v5"
+        with:
+          path: "infrastructure/tofu/.terraform"
+          key: >-
+            ${{ runner.os }}-tofu-${{
+            hashFiles('infrastructure/tofu/.terraform.lock.hcl') }}
+
       # Needed for ansible to be able to ssh into the servers
       - name: "Start ssh-agent"
         shell: "bash"
@@ -80,3 +96,24 @@ jobs:
           # just lint
           # just test
           just deploy "${{ env.ENVIRONMENT }}"
+
+  tag_release:
+    needs: "lint-test-deploy"
+    if: "github.ref_name == 'master'"
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: "write"
+    steps:
+      - uses: "actions/checkout@v6"
+        with:
+          fetch-depth: 0
+
+      - name: "Get production version using todays date"
+        id: "production_version"
+        run: |
+          echo "VERSION=production$(date '+%Y%m%dt%H%M%S')" >> $GITHUB_OUTPUT
+
+      - name: "Create tag"
+        uses: "rickstaa/action-create-tag@v1"
+        with:
+          tag: "${{ steps.production_version.outputs.VERSION }}"
