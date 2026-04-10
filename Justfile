@@ -23,6 +23,8 @@ install:
     npm install
     tflint --chdir={{ TOFU_DIR }} --init --config=.tflint.hcl
     just tofu-init test
+    cd infrastructure/ansible && uv sync
+    cd infrastructure/ansible && uv run ansible-galaxy install -r requirements.yml
 
 [doc('Start the development server')]
 [group('Development')]
