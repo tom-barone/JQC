@@ -111,7 +111,7 @@ jobs:
       - name: "Get production version using todays date"
         id: "production_version"
         run: |
-          echo "VERSION=production$(date '+%Y%m%dt%H%M%S')" >> $GITHUB_OUTPUT
+          echo "VERSION=production$(date '+%Y%m%dt%H%M%S')" >> "$GITHUB_OUTPUT"
 
       - name: "Create tag"
         uses: "rickstaa/action-create-tag@v1"
