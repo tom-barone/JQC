@@ -24,44 +24,13 @@ class ApplicationsController < ApplicationController
   end
 
   # GET /applications/1.pdf
-  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
   def show
     @converted_application = @application.converted_application
     respond_to do |format|
       format.html { render :show }
-      format.pdf do
-        # Use Timeout with Concurrent::Future so we don't tank the main thread
-        # It's a hack, but whatever.
-        # I actually don't think it even works.
-        future = nil
-        pdf_result = Timeout.timeout(20) do
-          future = Concurrent::Future.new do
-            RenderPdfJob.perform_now(
-              render_to_string(template: 'applications/show', formats: [:html]),
-              "#{request.base_url}/",
-              request.protocol
-            )
-          end
-          future.execute
-          future.value!
-        end
-        send_data pdf_result, disposition: :inline, filename: "#{@application[:reference_number]}.pdf"
-      rescue Timeout::Error
-        future&.cancel if future&.incomplete?
-        flash[:warning] = 'PDF generation is taking longer than expected sorry. Please try again.'
-        redirect_to edit_application_path(@application)
-      rescue StandardError => e
-        future&.cancel if future&.incomplete?
-        ExceptionNotifier.notify_exception(e)
-        flash[:error] = 'Failed to generate PDF. Please try again later.'
-        redirect_to edit_application_path(@application)
-      ensure
-        future&.cancel if future&.incomplete?
-        future = nil
-      end
+      format.pdf { render_application_pdf }
     end
   end
-  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize, Metrics/BlockLength
 
   # GET /applications/new
   def new
@@ -176,6 +145,19 @@ class ApplicationsController < ApplicationController
       :page,  # What page of results
       :format # Whether we're asking for HTML or CSV
     )
+  end
+
+  def render_application_pdf
+    render ferrum_pdf: pdf_render_options, template: 'applications/show',
+           disposition: :inline, filename: "#{@application[:reference_number]}.pdf"
+  rescue StandardError => e
+    ExceptionNotifier.notify_exception(e)
+    flash[:error] = 'Failed to generate PDF. Please try again later.'
+    redirect_to edit_application_path(@application)
+  end
+
+  def pdf_render_options
+    { landscape: true, scale: 0.6, paper_width: 8.3, paper_height: 11.7, margin_top: 1 }
   end
 
   # Only allow a list of trusted parameters through.
