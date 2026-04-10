@@ -150,4 +150,4 @@ If starting from scratch, you need to:
 4. Configure Route53 to manage the DNS for the app domain.
 5. Setup AWS SES for sending emails from the app domain.
    - Verify the domain via route53 and request production access to remove sandbox restrictions.
-6. Create a Linode token and configure OpenTofu to use it done via SOPS.
+6. Create a Linode token and configure OpenTofu to use it done via SOPS
