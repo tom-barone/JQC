@@ -134,9 +134,9 @@ ansible-deploy ENVIRONMENT:
 kamal-deploy ENVIRONMENT:
     #!/usr/bin/env bash
     source scripts/ansible-env.sh {{ ENVIRONMENT }}
-    kamal setup --quiet
-    kamal app exec --roles=web "bin/rails db:prepare" --quiet
-    kamal deploy --quiet
+    bundle exec kamal setup --quiet
+    bundle exec kamal app exec --roles=web "bin/rails db:prepare" --quiet
+    bundle exec kamal deploy --quiet
     # Make sure the reverse-proxy can reach our docker network with all the services like grafana etc.
     # This is annoying but eventually Kamal should have a nice way of reverse-proxying to other stuff
     # without resorting to this.
@@ -150,7 +150,7 @@ kamal-deploy ENVIRONMENT:
 kamal ENVIRONMENT *CMD:
     #!/usr/bin/env bash
     source scripts/ansible-env.sh {{ ENVIRONMENT }}
-    kamal {{ CMD }}
+    bundle exec kamal {{ CMD }}
 
 # === Restic ===
 
