@@ -157,11 +157,13 @@ kamal ENVIRONMENT *CMD:
 [doc('Manually run restic backups')]
 [group('Deploy:Restic')]
 restic-backup ENVIRONMENT:
+    #!/usr/bin/env bash
     source scripts/restic-backup.sh {{ ENVIRONMENT }}
 
 [doc('Restore a deployment from its restic backups')]
 [group('Deploy:Restic')]
 restic-restore ENVIRONMENT:
+    #!/usr/bin/env bash
     source scripts/restic-restore.sh {{ ENVIRONMENT }}
 
 # === OpenTofu ===
@@ -169,21 +171,25 @@ restic-restore ENVIRONMENT:
 [doc('Initialize OpenTofu in the specified environment')]
 [group('Deploy:Tofu')]
 tofu-init ENVIRONMENT:
+    #!/usr/bin/env bash
     source scripts/tofu-init.sh {{ ENVIRONMENT }}
 
 [doc('Apply OpenTofu changes in the specified environment')]
 [group('Deploy:Tofu')]
 tofu-apply ENVIRONMENT:
+    #!/usr/bin/env bash
     source scripts/tofu-apply.sh {{ ENVIRONMENT }}
 
 [doc('Output OpenTofu values in the specified environment')]
 [group('Deploy:Tofu')]
 tofu-output ENVIRONMENT:
+    #!/usr/bin/env bash
     source scripts/tofu-output.sh {{ ENVIRONMENT }}
 
 [doc('Destroy OpenTofu infrastructure in the specified environment')]
 [group('Deploy:Tofu')]
 tofu-destroy ENVIRONMENT:
+    #!/usr/bin/env bash
     source scripts/tofu-destroy.sh {{ ENVIRONMENT }}
 
 # === Environment ===
@@ -203,6 +209,7 @@ secrets-export:
 [doc('Restore from the old deployment setup')]
 [group('Temp')]
 restore-from-old-prod-backups ENVIRONMENT:
+    #!/usr/bin/env bash
     source scripts/restore-from-old-prod-backups.sh {{ ENVIRONMENT }}
 
 # === Aliases ===
