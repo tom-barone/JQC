@@ -32,10 +32,7 @@ proxy:
 # Where you keep your container images.
 registry:
   server: ghcr.io
-  # This env var will be set in CI to GITHUB_TOKEN,
-  # but locally we want to use the GitHub CLI to get the username of the logged in user
-  # for doing stuff
-  username: <%= ENV['KAMAL_REGISTRY_USERNAME'] || `gh api user --jq .login`.strip %>
+  username: "tom-barone"
   password:
     - KAMAL_REGISTRY_PASSWORD
 
