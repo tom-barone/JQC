@@ -105,6 +105,12 @@ enter ENVIRONMENT:
 rails-console ENVIRONMENT:
     just kamal {{ ENVIRONMENT }} app exec -i --reuse "bin/rails console"
 
+[doc('Open pgadmin4 connected to the specified environment')]
+[group('Deploy')]
+pgadmin ENVIRONMENT:
+    #!/usr/bin/env bash
+    source scripts/pgadmin-connect.sh {{ ENVIRONMENT }}
+
 [doc('View the application in the specified environment')]
 [group('Deploy')]
 browse ENVIRONMENT:
