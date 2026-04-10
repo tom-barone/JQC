@@ -16,6 +16,10 @@ plugins:
 
 AllCops:
   NewCops: enable
+  Exclude:
+    - ".ruby-lsp/**"
+    # Used in CI to cache gems
+    - "vendor/**/*"
 
 # Don't force a comment at the top of every class
 Style/Documentation:

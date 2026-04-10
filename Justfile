@@ -47,11 +47,6 @@ lint:
     cd {{ TOFU_DIR }} && tofu validate
     tflint --chdir={{ TOFU_DIR }} --config=.tflint.hcl
 
-[doc('Build the Docker image')]
-[group('Development')]
-build:
-    docker build . --tag jqc:latest
-
 [doc('Run tests')]
 [group('Development')]
 test:
@@ -77,16 +72,16 @@ clean:
 
 [doc('Run all pre-commit checks')]
 [group('Development')]
-precommit: clean install format lint build
+precommit: clean install format lint
 
 # === Deployment ===
 
 [doc('Deploy to the specified environment')]
 [group('Deploy')]
 deploy ENVIRONMENT:
-    just tofu-init {{ ENVIRONMENT }}
-    just tofu-apply {{ ENVIRONMENT }}
-    just ansible-deploy {{ ENVIRONMENT }}
+    #just tofu-init {{ ENVIRONMENT }}
+    #just tofu-apply {{ ENVIRONMENT }}
+    #just ansible-deploy {{ ENVIRONMENT }}
     just kamal-deploy {{ ENVIRONMENT }}
 
 [doc('SSH to the server in the specified environment')]
@@ -134,9 +129,9 @@ ansible-deploy ENVIRONMENT:
 kamal-deploy ENVIRONMENT:
     #!/usr/bin/env bash
     source scripts/ansible-env.sh {{ ENVIRONMENT }}
-    kamal setup --quiet
-    kamal app exec --roles=web "bin/rails db:prepare" --quiet
-    kamal deploy --quiet
+    bundle exec kamal setup --quiet
+    bundle exec kamal app exec --roles=web "bin/rails db:prepare" --quiet
+    bundle exec kamal deploy --quiet
     # Make sure the reverse-proxy can reach our docker network with all the services like grafana etc.
     # This is annoying but eventually Kamal should have a nice way of reverse-proxying to other stuff
     # without resorting to this.
@@ -150,7 +145,7 @@ kamal-deploy ENVIRONMENT:
 kamal ENVIRONMENT *CMD:
     #!/usr/bin/env bash
     source scripts/ansible-env.sh {{ ENVIRONMENT }}
-    kamal {{ CMD }}
+    bundle exec kamal {{ CMD }}
 
 # === Restic ===
 
@@ -203,6 +198,13 @@ secrets-edit:
 [group('Environment')]
 secrets-export:
     @sops --decrypt secrets.sops.env
+
+[doc('Mask sensitive values in GitHub Actions logs')]
+[group('Environment')]
+secrets-mask:
+    @sops --decrypt secrets.sops.env | grep -v '^#' | cut -d'=' -f2- | while read -r val; do \
+        echo "::add-mask::$val"; \
+    done
 
 # === Temp ===
 

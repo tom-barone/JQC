@@ -27,4 +27,5 @@ export SMTP_RELAY_PASSWORD=$(echo "$tofu_output_json" | jq -r '.SMTP_RELAY_PASSW
 # Add the SSH key to our agent first
 echo "$ANSIBLE_SSH_PRIVATE_KEY_B64" | base64 --decode | ssh-add - 2>/dev/null
 # Removing the server from known_hosts to avoid SSH warnings about changed host keys
+mkdir -p ~/.ssh && touch ~/.ssh/known_hosts
 ssh-keygen -R "$JQC_SERVER_IP_ADDRESS"

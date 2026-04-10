@@ -22,7 +22,7 @@ eval "$(bundle exec rails runner '
 ')"
 
 echo "Stopping kamal app containers..."
-kamal app stop --quiet
+bundle exec kamal app stop --quiet
 
 echo "Recreating postgres container on server..."
 ssh -o StrictHostKeyChecking=no "root@$JQC_SERVER_IP_ADDRESS" bash -s <<'REMOTE'
@@ -96,7 +96,7 @@ docker exec postgres psql -U postgres -d jqc_production -c "UPDATE active_storag
 REMOTE
 
 echo "Starting kamal app..."
-kamal app boot --quiet
-kamal app exec --roles=web "bin/rails db:migrate" --quiet
+bundle exec kamal app boot --quiet
+bundle exec kamal app exec --roles=web "bin/rails db:migrate" --quiet
 
 echo "Migration from old production complete!"
