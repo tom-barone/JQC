@@ -68,6 +68,10 @@ jobs:
           echo "SSH_AUTH_SOCK=$SSH_AUTH_SOCK" >> "$GITHUB_ENV"
           echo "SSH_AGENT_PID=$SSH_AGENT_PID" >> "$GITHUB_ENV"
 
+      # Needed for Kamal's GHA docker build cache
+      - uses: "docker/setup-buildx-action@v4"
+      - uses: "crazy-max/ghaction-github-runtime@v4"
+
       - name: "Run checks and deploy"
         run: |
           # Make bundler use our cached gems
