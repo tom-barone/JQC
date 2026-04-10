@@ -204,6 +204,13 @@ secrets-edit:
 secrets-export:
     @sops --decrypt secrets.sops.env
 
+[doc('Mask sensitive values in GitHub Actions logs')]
+[group('Environment')]
+secrets-mask:
+    @IFS=$'\n'; for val in $(sops --decrypt secrets.sops.env | grep -v '^#' | cut -d'=' -f2-); do \
+        echo "::add-mask::$val"; \
+    done
+
 # === Temp ===
 
 [doc('Restore from the old deployment setup')]

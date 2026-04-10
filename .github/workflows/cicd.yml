@@ -32,6 +32,9 @@ jobs:
         with:
           version: "2026.3.1"
 
+      - name: "Mask secrets"
+        run: "just secrets-mask"
+
       - name: "Cache Ruby gems"
         uses: "actions/cache@v5"
         with:
