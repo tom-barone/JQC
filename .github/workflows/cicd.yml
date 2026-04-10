@@ -20,7 +20,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  check:
+  lint-test-deploy:
     runs-on: "ubuntu-latest"
     env:
       RAILS_MASTER_KEY: "${{ secrets.RAILS_MASTER_KEY }}"
@@ -33,7 +33,7 @@ jobs:
           version: "2026.3.1"
 
       - name: "Cache Ruby gems"
-        uses: "actions/cache@v4"
+        uses: "actions/cache@v5"
         with:
           path: "vendor/bundle"
           key: "${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}"
@@ -41,7 +41,7 @@ jobs:
             "${{ runner.os }}-gems-"
 
       - name: "Cache Python dependencies"
-        uses: "actions/cache@v4"
+        uses: "actions/cache@v5"
         with:
           path: "infrastructure/ansible/.venv"
           key: >-
@@ -55,3 +55,7 @@ jobs:
           bundle config set --local path vendor/bundle
           just install
           just lint
+
+      - name: "Deploy"
+        run: |
+          just deploy "${{ env.ENVIRONMENT }}"
