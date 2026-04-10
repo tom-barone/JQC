@@ -16,6 +16,8 @@ plugins:
 
 AllCops:
   NewCops: enable
+  Exclude:
+    - ".ruby-lsp/**"
 
 # Don't force a comment at the top of every class
 Style/Documentation:
