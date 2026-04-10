@@ -84,9 +84,9 @@ precommit: clean install format lint build
 [doc('Deploy to the specified environment')]
 [group('Deploy')]
 deploy ENVIRONMENT:
-    just tofu-init {{ ENVIRONMENT }}
-    just tofu-apply {{ ENVIRONMENT }}
-    just ansible-deploy {{ ENVIRONMENT }}
+    #just tofu-init {{ ENVIRONMENT }}
+    #just tofu-apply {{ ENVIRONMENT }}
+    #just ansible-deploy {{ ENVIRONMENT }}
     just kamal-deploy {{ ENVIRONMENT }}
 
 [doc('SSH to the server in the specified environment')]

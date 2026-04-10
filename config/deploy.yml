@@ -91,6 +91,11 @@ builder:
   # Setting this to '.' uses the current local checkout instead.
   context: .
 
+  # Comment out if deploying locally and not on GH actions 
+  cache:
+    type: gha
+    options: mode=max
+
   # # Build image via remote server (useful for faster amd64 builds on arm64 computers)
   # remote: ssh://docker@docker-builder-server
   #
