@@ -5,6 +5,10 @@ default: help
 help:
     @just --list
 
+# If deploying locally
+# export KAMAL_REGISTRY_USERNAME="$(gh api user --jq .login)"
+# export KAMAL_REGISTRY_PASSWORD="$(gh auth token)"
+
 export TOFU_DIR := "infrastructure/tofu"
 export POSTGRES_USERNAME := "postgres"
 export POSTGRES_DB := "jqc_production"
