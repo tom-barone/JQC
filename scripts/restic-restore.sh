@@ -6,7 +6,7 @@ environment="$1"
 source scripts/ansible-env.sh "$environment"
 
 echo "Stopping kamal app containers..."
-kamal app stop --quiet
+bundle exec kamal app stop --quiet
 
 echo "Restoring backups on server..."
 ssh -o StrictHostKeyChecking=no "root@$JQC_SERVER_IP_ADDRESS" bash -s <<'REMOTE'
@@ -32,4 +32,4 @@ restic restore latest --target /
 REMOTE
 
 echo "Restart app with kamal..."
-kamal app boot --quiet
+bundle exec kamal app boot --quiet
