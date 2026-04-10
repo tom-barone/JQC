@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
-module FerrumPdfExtension
-  def quit
-    @browser&.quit
-    @browser = nil
-  end
+FerrumPdf.configure do |config|
+  config.process_timeout = 10
+  config.browser_options = { 'no-sandbox': nil }
 end
-
-# Apply the monkey patch to the FerrumPdf module
-FerrumPdf.singleton_class.prepend(FerrumPdfExtension)

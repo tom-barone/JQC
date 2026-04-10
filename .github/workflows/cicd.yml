@@ -17,8 +17,7 @@ env:
 
 concurrency:
   group: "${{ github.head_ref || github.ref_name }}"
-  # Only cancel in-progress runs for PRs, not for pushes to master
-  cancel-in-progress: "${{ github.event_name == 'pull_request' }}"
+  cancel-in-progress: false
 
 jobs:
   lint-test-deploy:
