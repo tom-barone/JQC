@@ -54,6 +54,20 @@ lint:
 [doc('Run tests')]
 [group('Development')]
 test:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    CONTAINER_NAME="jqc_test_postgres"
+    # Start a test postgres container if one isn't already running
+    if ! docker inspect --format='{{`{{.State.Running}}`}}' "$CONTAINER_NAME" 2>/dev/null | grep -q true; then
+        docker rm -f "$CONTAINER_NAME" 2>/dev/null || true
+        docker run -d --name "$CONTAINER_NAME" \
+            -e POSTGRES_USER=postgres \
+            -e POSTGRES_PASSWORD=postgres \
+            -p 5432:5432 \
+            postgres:17.6
+        until docker exec "$CONTAINER_NAME" pg_isready -U postgres; do sleep 1; done
+    fi
+    export DATABASE_URL="postgres://postgres:postgres@localhost:5432"
     npm run test
     RAILS_ENV=test bundle exec bin/rails db:prepare
     COVERAGE=true bundle exec bin/rails test:all
@@ -72,6 +86,7 @@ format:
 [doc('Clean up generated files')]
 [group('Development')]
 clean:
+    docker rm -f jqc_test_postgres 2>/dev/null || true
     rm -rf ci
 
 [doc('Run all pre-commit checks')]
