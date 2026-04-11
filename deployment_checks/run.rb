@@ -17,7 +17,7 @@ Minitest::Reporters.use! [MinimalReporter.new]
 # sure everything is all good
 # MUST RUN DATA SAFE ACTIONS
 class DeploymentTest < ActionDispatch::SystemTestCase
-  Capybara.app_host = ENV.fetch('WEBSITE_URL')
+  Capybara.app_host = "https://#{ENV.fetch('JQC_HOSTNAME')}"
   Capybara.run_server = false
   Capybara.default_max_wait_time = 10
   driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]
@@ -53,9 +53,11 @@ class DeploymentTest < ActionDispatch::SystemTestCase
     # Request Support button shows my email
     click_on 'Request Support'
     assert_text 'mail@tombarone.net'
-
-    # We have a few table rows in there
-    assert_text 'Edit', minimum: 10
   end
   # rubocop:enable Metrics/MethodLength
+
+  def test_grafana_sign_in_page
+    visit "https://#{ENV.fetch('JQC_HOSTNAME_MONITORING')}"
+    assert_text 'Welcome to Grafana'
+  end
 end

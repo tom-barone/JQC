@@ -148,9 +148,11 @@ class ApplicationsController < ApplicationController
   end
 
   def render_application_pdf
-    FerrumPdf.render_pdf(url: 'https://example.com') # Make sure browser is warmed up before rendering the our content
-    render ferrum_pdf: pdf_render_options, template: 'applications/show',
-           disposition: :inline, filename: "#{@application[:reference_number]}.pdf"
+    browser = Ferrum::Browser.new(process_timeout: 15, browser_options: { 'no-sandbox' => nil })
+    html = render_to_string(template: 'applications/show', formats: [:html], content_type: 'text/html')
+    pdf_data = FerrumPdf.render_pdf(html: html, browser: browser, pdf_options: pdf_render_options)
+    send_data pdf_data, disposition: :inline, filename: "#{@application[:reference_number]}.pdf",
+                        type: 'application/pdf'
   rescue StandardError => e
     ExceptionNotifier.notify_exception(e)
     flash[:error] = 'Failed to generate PDF. Please try again later.'

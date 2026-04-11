@@ -104,6 +104,9 @@ jobs:
       - name: "Deploy"
         run: "just deploy ${{ env.ENVIRONMENT }}"
 
+      - name: "Deployment checks"
+        run: "just deploy-test ${{ env.ENVIRONMENT }}"
+
   tag_release:
     needs: "lint-test-deploy"
     if: "github.ref_name == 'master'"
