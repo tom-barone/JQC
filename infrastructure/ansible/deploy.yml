@@ -2,8 +2,6 @@
 - name: "Setup servers"
   hosts: "all"
   become: true
-  vars:
-    notification_email: "mail+jqc-{{ lookup('env', 'ENVIRONMENT') }}@tombarone.net"
   pre_tasks:
     - name: "Create Active Storage directory"
       ansible.builtin.file:
@@ -34,7 +32,7 @@
         postfix_relay_username: "{{ lookup('env', 'SMTP_RELAY_USERNAME') }}"
         postfix_relay_password: "{{ lookup('env', 'SMTP_RELAY_PASSWORD') }}"
         postfix_relay_hostname: "{{ lookup('env', 'JQC_HOSTNAME') }}"
-        postfix_relay_root_alias: "{{ notification_email }}"
+        postfix_relay_root_alias: "{{ lookup('env', 'ALERTS_EMAIL') }}"
     - role: "ansible_flush_handlers"
     - role: "system_logcheck"
     - role: "docker_install"
@@ -79,7 +77,7 @@
           {{ lookup('env', 'SMTP_RELAY_PASSWORD') }}
         monitoring_stack_install_smtp_from_address: >-
           monitoring@{{ lookup('env', 'JQC_HOSTNAME') }}
-        monitoring_stack_install_alert_email_to: "{{ notification_email }}"
+        monitoring_stack_install_alert_email_to: "{{ lookup('env', 'ALERTS_EMAIL') }}"
         monitoring_stack_install_grafana_admin_user: >-
           {{ lookup('env', 'MONITORING_GRAFANA_USER') }}
         monitoring_stack_install_grafana_admin_password: >-
