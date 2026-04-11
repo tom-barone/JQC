@@ -58,4 +58,9 @@ class DeploymentTest < ActionDispatch::SystemTestCase
     assert_text 'Edit', minimum: 10
   end
   # rubocop:enable Metrics/MethodLength
+
+  def test_grafana_sign_in_page
+    visit "https://#{ENV.fetch('JQC_HOSTNAME_MONITORING')}"
+    assert_text 'Welcome to Grafana'
+  end
 end
