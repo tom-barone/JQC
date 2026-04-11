@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 ENV['RAILS_ENV'] ||= 'test'
-ENV['ALERTS_EMAIL'] ||= 'test-alerts@example.com'
-ENV['JQC_HOSTNAME'] ||= 'test.example.com'
 require_relative '../config/environment'
 require 'rails/test_help'
 
