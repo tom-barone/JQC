@@ -54,9 +54,18 @@ lint:
 [doc('Run tests')]
 [group('Development')]
 test:
+    #!/usr/bin/env bash
+    set -euo pipefail
     npm run test
+    docker stop jqc_test_postgres 2>/dev/null || true
+    docker run -d --rm --name jqc_test_postgres \
+        -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres \
+        -p 5432:5432 postgres:17.6
+    until docker exec jqc_test_postgres pg_isready -U postgres; do sleep 1; done
+    export DATABASE_URL="postgres://postgres:postgres@localhost:5432"
     RAILS_ENV=test bundle exec bin/rails db:prepare
     COVERAGE=true bundle exec bin/rails test:all
+    docker stop jqc_test_postgres
 
 [doc('Run formatters')]
 [group('Development')]
@@ -72,6 +81,7 @@ format:
 [doc('Clean up generated files')]
 [group('Development')]
 clean:
+    docker stop jqc_test_postgres 2>/dev/null || true
     rm -rf ci
 
 [doc('Run all pre-commit checks')]

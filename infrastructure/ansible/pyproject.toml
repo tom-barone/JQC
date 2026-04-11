@@ -3,6 +3,12 @@ name = "jqc-ansible"
 version = "0.1.0"
 description = "For managing self hosted servers"
 requires-python = ">=3.13,<3.14"
+dependencies = [
+  "mitogen>=0.3.45",
+  "yamllint>=1.37.1",
+  "ansible-dev-tools>=26.2.0",
+  "ansible>=13.5.0",
+]
 
 [dependency-groups]
-dev = ["yamllint>=1.37.1", "ansible-dev-tools>=26.2.0"]
+dev = []
