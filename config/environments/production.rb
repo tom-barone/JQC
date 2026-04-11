@@ -84,10 +84,10 @@ Rails.application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV.fetch('SMTP_RELAY_HOST'),
-    port: ENV.fetch('SMTP_RELAY_PORT'),
-    user_name: ENV.fetch('SMTP_RELAY_USERNAME'),
-    password: ENV.fetch('SMTP_RELAY_PASSWORD'),
+    address: ENV.fetch('SMTP_RELAY_HOST', nil),
+    port: ENV.fetch('SMTP_RELAY_PORT', nil),
+    user_name: ENV.fetch('SMTP_RELAY_USERNAME', nil),
+    password: ENV.fetch('SMTP_RELAY_PASSWORD', nil),
     authentication: 'plain',
     enable_starttls_auto: true
   }
