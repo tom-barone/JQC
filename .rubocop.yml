@@ -18,8 +18,9 @@ AllCops:
   NewCops: enable
   Exclude:
     - ".ruby-lsp/**"
-    # Used in CI to cache gems
     - "vendor/**/*"
+    - "infrastructure/**/*"
+    - "node_modules/**/*"
 
 # Don't force a comment at the top of every class
 Style/Documentation:
