@@ -17,7 +17,7 @@ Minitest::Reporters.use! [MinimalReporter.new]
 # sure everything is all good
 # MUST RUN DATA SAFE ACTIONS
 class DeploymentTest < ActionDispatch::SystemTestCase
-  Capybara.app_host = ENV.fetch('WEBSITE_URL')
+  Capybara.app_host = "https://#{ENV.fetch('JQC_HOSTNAME')}"
   Capybara.run_server = false
   Capybara.default_max_wait_time = 10
   driven_by :selenium, using: :headless_chrome, screen_size: [1400, 1400]

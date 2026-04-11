@@ -129,6 +129,13 @@ browse ENVIRONMENT:
     python3 -m webbrowser "https://$JQC_HOSTNAME"
     python3 -m webbrowser "https://$JQC_HOSTNAME_MONITORING/dashboards"
 
+[doc('Run deployment checks against the specified environment')]
+[group('Deploy')]
+deploy-test ENVIRONMENT:
+    #!/usr/bin/env bash
+    source scripts/ansible-env.sh {{ ENVIRONMENT }}
+    bundle exec ruby deployment_checks/run.rb
+
 [doc('Destroy infrastructure in the specified environment')]
 [group('Deploy')]
 destroy ENVIRONMENT: (tofu-destroy ENVIRONMENT)
