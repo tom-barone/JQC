@@ -42,7 +42,7 @@ gem 'thruster', '~> 0.1.14', require: false
 # gem "image_processing", "~> 1.2"
 
 # User management [https://github.com/heartcombo/devise]
-gem 'devise', '~> 4.9.4'
+gem 'devise', '~> 5.0'
 
 # Quickly cloning a parent record with all of it's children [https://github.com/amoeba-rb/amoeba]
 gem 'amoeba', '~> 3.3.0'
