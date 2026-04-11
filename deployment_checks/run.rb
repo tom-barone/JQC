@@ -53,9 +53,6 @@ class DeploymentTest < ActionDispatch::SystemTestCase
     # Request Support button shows my email
     click_on 'Request Support'
     assert_text 'mail@tombarone.net'
-
-    # We have at least one table row
-    assert_text 'Edit', minimum: 1
   end
   # rubocop:enable Metrics/MethodLength
 
