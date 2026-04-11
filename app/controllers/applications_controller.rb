@@ -148,6 +148,7 @@ class ApplicationsController < ApplicationController
   end
 
   def render_application_pdf
+    FerrumPdf.render_pdf(url: 'https://example.com') # Make sure browser is warmed up before rendering the our content
     render ferrum_pdf: pdf_render_options, template: 'applications/show',
            disposition: :inline, filename: "#{@application[:reference_number]}.pdf"
   rescue StandardError => e
