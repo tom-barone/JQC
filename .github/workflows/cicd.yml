@@ -94,8 +94,8 @@ jobs:
           # Make bundler use our cached gems
           bundle config set --local path vendor/bundle
           just install
-          # just lint
-          # just test
+          just lint
+          just test
           just deploy "${{ env.ENVIRONMENT }}"
 
   tag_release:
