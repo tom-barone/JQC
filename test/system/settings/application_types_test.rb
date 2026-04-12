@@ -28,6 +28,8 @@ module Settings
       end
       click_save_settings
 
+      assert_current_path '/'
+
       click_settings_link
 
       assert_selector "input[value='DA']"
