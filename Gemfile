@@ -53,8 +53,10 @@ gem 'pagy', '~> 9.3.5'
 # For reporting exceptions [https://github.com/smartinez87/exception_notification]
 gem 'exception_notification', '~> 5.0.0'
 
-# For monitoring and metrics [https://github.com/Shopify/statsd-instrument]
-gem 'statsd-instrument', '~> 3.9.9'
+# Observability via OpenTelemetry [https://opentelemetry.io/docs/languages/ruby/]
+gem 'opentelemetry-exporter-otlp', '~> 0.33.0'
+gem 'opentelemetry-instrumentation-all', '~> 0.91.0'
+gem 'opentelemetry-sdk', '~> 1.11.0'
 
 # Won't be included by default in the future
 gem 'csv', '~> 3.3.5'

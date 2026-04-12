@@ -6,107 +6,39 @@
 
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=security_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=vulnerabilities)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
 
-Rails/PostgreSQL app deployed with Dokku and styled with Bootstrap.
-
-## Monitoring
-
-If deployed using [tom-barone/web-server-init](https://github.com/tom-barone/web-server-init), there is a [Grafana](https://grafana.com) / [Graphite](https://graphiteapp.org/) instance available at `http://monitoring.<website_domain>` to use.
-
-Definitions for a working Grafana dashboard and set of alerts are included in the `/monitoring` directory.
-
-![Grafana Dashboard Screenshot](./monitoring/grafana_dashboard_screenshot.png)
-
-Alerts:
-
-- Disk storage almost full.
-- JQC RAM usage too high.
-- System RAM usage too high.
-- CPU usage too high.
+Rails/PostgreSQL app deployed with Kamal, styled with Bootstrap.
 
 ## Deployment
 
-### Dokku
+Runs on a Linode host provisioned by [OpenTofu](https://opentofu.org) and configured by [Ansible](https://docs.ansible.com), then deployed via [Kamal](https://kamal-deploy.org).
 
-```bash
-# Create the app
-ssh -t <user>@<dokku_server> dokku apps:create <website_domain>
-# Add the dokku git remote to the repo
-git remote add <remote_name> ssh://dokku@<dokku_server>:<port>/<website_domain>
-# Set the domain for the dokku container
-dokku --remote <remote_name> domains:set <website_domain>
-# Create & link postgres and redis containers (can limit memory usage in MB with --memory)
-dokku --remote <remote_name> postgres:create <app_name>-db --memory 1024
-dokku --remote <remote_name> postgres:link <app_name>-db <website_domain>
-dokku --remote <remote_name> redis:create <app_name>-redis
-dokku --remote <remote_name> redis:link <app_name>-redis <website_domain>
-# Set important environment variables
-dokku --remote <remote_name> config:set RAILS_MASTER_KEY=$(cat config/master.key)
-dokku --remote <remote_name> config:set DOMAIN=<website_domain>
-# Set on the staging environment
-dokku --remote <remote_name> config:set STAGING=true
-# Setup LetsEncrypt certs
-# - Make sure to have your domain DNS settings point <website_domain> to the server before running this
-dokku --remote <remote_name> letsencrypt:enable
-# If using a branch other than main or master to deploy from
-dokku --remote <remote_name> git:set deploy-branch <branch_name>
-# Push the code to the server and deploy
-git push <remote_name> <branch>
-# Scale up the web and worker processes
-dokku --remote <remote_name> ps:scale web=1 worker=1
-# Limit the app resources, set these to whatever you need
-# See https://docs.docker.com/engine/containers/resource_constraints
-dokku --remote <remote_name> resource:limit --memory 1.5g --process-type web
-dokku --remote <remote_name> resource:limit --memory 500m --process-type worker
-dokku --remote <remote_name> resource:report
-# Setup persistent logging to a file at /var/log/dokku/apps/<app_name>.log
-# The regular app logs are not kept between container restarts / deploys
-dokku --remote <remote_name> logs:set vector-sink "file://?encoding[codec]=csv&encoding[csv][fields][]=timestamp&encoding[csv][fields][]=message&encoding[csv][quote_style]=always&path=/var/log/dokku/apps/<app_name>.log"
-dokku --remote <remote_name> logs:vector-start
-# If using dokku-graphite and reporting with StatsD,
-# this will make the environment variable STATSD_URL available in the app
-dokku --remote <remote_name> graphite:link <graphite_service> <app_name>
+Currently setup to use AWS for:
 
-# Anytime you need to deploy a new release
-git push <remote_name> <branch>
-```
+- S3
+  - OpenTofu state backend.
+  - [Restic](https://restic.net/) backups for the Postgres database and ActiveStorage files.
+- Route53 for DNS management.
+- SES for sending emails.
 
-You can omit the `<remote_name>` and keep it as the default `dokku` remote if you like. But it's nice if you've got a staging and production servers to have different remotes, e.g. `staging` and `production`. That way you can deploy to each server with:
+CI/CD is wired up in `.github/workflows/cicd.yml` and runs on every push to `master`.
 
-```bash
-git push staging master
-git push production master
-```
+### Bootstrapping
 
-I like to use `pgAdmin` to interface with the postgres database, which can be done with SSH tunneling. First you'll need to expose the database port from the docker container to the host machine.
+To bootstrap the infrastructure to a point where OpenTofu / Ansible can take over:
 
-```bash
-# Expose the database internally from dokku to 0.0.0.0 on the host
-dokku --remote <remote_name> postgres:expose <app_name>-db 5432
-# Undo the port expose with
-dokku --remote <remote_name> postgres:unexpose <app_name>-db 5432
-# View the connection string (password etc.) and use it in pgAdmin, along with relevant SSH tunnel settings
-dokku --remote <remote_name> postgres:info <app_name>-db
-```
+1. Create an AWS account.
+2. Create an IAM user with appropriate permissions and generate access keys.
+3. Create an S3 bucket to use as the state backend, e.g. `infrastructure-state.<website_domain>`.
+   - Set `Object Versioning` to enabled.
+4. Configure Route53 to manage the DNS for the app domain.
+5. Configure SES for sending emails from the app domain.
+   - Verify the domain via Route53 and request production access to remove sandbox restrictions.
+6. Create a Linode account and access token.
+7. Configure all the above credentials and config values in SOPS `secrets.sops.env`.
 
-Sometimes it's handy to blast away the database and start fresh:
+## Monitoring
 
-```bash
-dokku --remote <remote_name> postgres:unlink <app_name>-db <website_domain>
-dokku --remote <remote_name> postgres:destroy <app_name>-db --force
-dokku --remote <remote_name> postgres:create <app_name>-db
-dokku --remote <remote_name> postgres:link <app_name>-db <website_domain>
-```
-
-To recreate the database from a backup:
-
-```bash
-# Downloads the most recent backup to ./backup/export
-rake fetch_most_recent_backup
-# For a local development database
-pg_restore --clean --dbname=<local_db_name> --exit-on-error backup/export
-# For a dokku hosted database (you may need to blast away and recreate the database first)
-dokku --remote <remote_name> postgres:import <app_name>-db < backup/export
-```
+A [Grafana](https://grafana.com) instance is provisioned by the Ansible `monitoring_stack_install` role and reachable at `http://monitoring.<website_domain>`.
 
 ## Development
 
@@ -117,20 +49,4 @@ rails db:migrate:reset
 rails db:drop:queue
 # Reset the db/queue_schema.rb file
 rails db:prepare
-rake restore_development_db_from_most_recent_backup
 ```
-
-## OpenTofu
-
-If starting from scratch, you need to:
-
-1. Create a new AWS account.
-2. Create an IAM user with `AdministratorAccess` permissions and generate access keys for that user.
-   - Setup the access keys in SOPS.
-3. Create an S3 bucket to use as the state backend, e.g. `infrastructure-state-backend`.
-   - Set `Object Versioning` to enabled.
-   - Configure OpenTofu to use the S3 bucket as the state backend, done via SOPS.
-4. Configure Route53 to manage the DNS for the app domain.
-5. Setup AWS SES for sending emails from the app domain.
-   - Verify the domain via route53 and request production access to remove sandbox restrictions.
-6. Create a Linode token and configure OpenTofu to use it done via SOPS.
