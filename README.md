@@ -8,32 +8,37 @@
 
 Rails/PostgreSQL app deployed with Kamal, styled with Bootstrap.
 
+## Deployment
+
+Runs on a Linode host provisioned by [OpenTofu](https://opentofu.org) and configured by [Ansible](https://docs.ansible.com), then deployed via [Kamal](https://kamal-deploy.org).
+
+Currently setup to use AWS for:
+
+- S3
+  - OpenTofu state backend.
+  - [Restic](https://restic.net/) backups for the Postgres database and ActiveStorage files.
+- Route53 for DNS management.
+- SES for sending emails.
+
+CI/CD is wired up in `.github/workflows/cicd.yml` and runs on every push to `master`.
+
+### Bootstrapping
+
+To bootstrap the infrastructure to a point where OpenTofu / Ansible can take over:
+
+1. Create an AWS account.
+2. Create an IAM user with appropriate permissions and generate access keys.
+3. Create an S3 bucket to use as the state backend, e.g. `infrastructure-state.<website_domain>`.
+   - Set `Object Versioning` to enabled.
+4. Configure Route53 to manage the DNS for the app domain.
+5. Configure SES for sending emails from the app domain.
+   - Verify the domain via Route53 and request production access to remove sandbox restrictions.
+6. Create a Linode account and access token.
+7. Configure all the above credentials and config values in SOPS `secrets.sops.env`.
+
 ## Monitoring
 
 A [Grafana](https://grafana.com) instance is provisioned by the Ansible `monitoring_stack_install` role and reachable at `http://monitoring.<website_domain>`.
-
-## Deployment
-
-Production runs on a Linode host provisioned by [OpenTofu](https://opentofu.org) and configured by [Ansible](https://docs.ansible.com), then deployed via [Kamal](https://kamal-deploy.org). CI/CD is wired up in `.github/workflows/cicd.yml` and runs on every push to `master`.
-
-- Kamal service config: `config/deploy.yml`
-- Ansible playbook + roles: `infrastructure/ansible/`
-- OpenTofu (Linode + AWS): `infrastructure/tofu/`
-
-To deploy manually from a local checkout:
-
-```bash
-bin/kamal deploy
-```
-
-Useful aliases (defined in `config/deploy.yml`):
-
-```bash
-bin/kamal console   # Rails console
-bin/kamal shell     # Bash inside the app container
-bin/kamal logs      # Tail app logs
-bin/kamal dbc       # Rails dbconsole
-```
 
 ## Development
 
@@ -44,22 +49,4 @@ rails db:migrate:reset
 rails db:drop:queue
 # Reset the db/queue_schema.rb file
 rails db:prepare
-rake restore_development_db_from_most_recent_backup
 ```
-
-## Infrastructure bootstrap
-
-Day-to-day server config is handled by Ansible (`infrastructure/ansible/deploy.yml`); `tofu apply` only needs to run when the underlying cloud resources change.
-
-If starting from scratch, you need to:
-
-1. Create a new AWS account.
-2. Create an IAM user with `AdministratorAccess` permissions and generate access keys for that user.
-   - Setup the access keys in SOPS.
-3. Create an S3 bucket to use as the state backend, e.g. `infrastructure-state-backend`.
-   - Set `Object Versioning` to enabled.
-   - Configure OpenTofu to use the S3 bucket as the state backend, done via SOPS.
-4. Configure Route53 to manage the DNS for the app domain.
-5. Setup AWS SES for sending emails from the app domain.
-   - Verify the domain via route53 and request production access to remove sandbox restrictions.
-6. Create a Linode token and configure OpenTofu to use it done via SOPS.
