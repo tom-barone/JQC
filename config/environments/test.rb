@@ -8,6 +8,7 @@
 # Set defaults for env vars used by initializers (e.g. exception_notification)
 ENV['ALERTS_EMAIL'] ||= 'test-alerts@example.com'
 ENV['JQC_HOSTNAME'] ||= 'test.example.com'
+ENV['OTEL_SDK_DISABLED'] ||= 'true'
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.

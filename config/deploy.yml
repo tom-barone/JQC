@@ -38,6 +38,11 @@ registry:
 
 # Inject ENV variables into containers (secrets come from .kamal/secrets).
 env:
+  clear:
+    OTEL_SERVICE_NAME: jqc
+    OTEL_EXPORTER_OTLP_ENDPOINT: http://alloy:4318
+    OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
+    OTEL_RESOURCE_ATTRIBUTES: deployment.environment=production
   secret:
     - RAILS_MASTER_KEY
     - DATABASE_URL
@@ -47,7 +52,6 @@ env:
     - SMTP_RELAY_PASSWORD
     - ALERTS_EMAIL
     - JQC_HOSTNAME
-  # clear:
   # Run the Solid Queue Supervisor inside the web server's Puma process to do jobs.
   # When you start using multiple servers, you should split out job processing to a dedicated machine.
   # SOLID_QUEUE_IN_PUMA: true
