@@ -55,6 +55,12 @@
         postgres_restic_backup_restic_password: "{{ lookup('env', 'RESTIC_PASSWORD') }}"
         postgres_restic_backup_postgres_container: "{{ lookup('env', 'POSTGRES_HOST') }}"
         postgres_restic_backup_postgres_user: "{{ lookup('env', 'POSTGRES_USERNAME') }}"
+    - role: "postgres_restic_backup_verify"
+      vars:
+        postgres_restic_backup_verify_postgres_user: "{{ lookup('env', 'POSTGRES_USERNAME') }}"
+        postgres_restic_backup_verify_postgres_database: "{{ lookup('env', 'POSTGRES_DB') }}"
+        postgres_restic_backup_verify_queries:
+          - "SELECT (COUNT(*) > 10000) FROM applications"
     - role: "restic_backup"
       vars:
         restic_backup_dir: "/opt/active-storage-backup"
