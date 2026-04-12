@@ -6,106 +6,33 @@
 
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=security_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=reliability_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=sqale_rating)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=tom-barone_JQC&metric=vulnerabilities)](https://sonarcloud.io/summary/overall?id=tom-barone_JQC)
 
-Rails/PostgreSQL app deployed with Dokku and styled with Bootstrap.
+Rails/PostgreSQL app deployed with Kamal, styled with Bootstrap.
 
 ## Monitoring
 
-If deployed using [tom-barone/web-server-init](https://github.com/tom-barone/web-server-init), there is a [Grafana](https://grafana.com) / [Graphite](https://graphiteapp.org/) instance available at `http://monitoring.<website_domain>` to use.
-
-Definitions for a working Grafana dashboard and set of alerts are included in the `/monitoring` directory.
-
-![Grafana Dashboard Screenshot](./monitoring/grafana_dashboard_screenshot.png)
-
-Alerts:
-
-- Disk storage almost full.
-- JQC RAM usage too high.
-- System RAM usage too high.
-- CPU usage too high.
+A [Grafana](https://grafana.com) instance is provisioned by the Ansible `monitoring_stack_install` role and reachable at `http://monitoring.<website_domain>`.
 
 ## Deployment
 
-### Dokku
+Production runs on a Linode host provisioned by [OpenTofu](https://opentofu.org) and configured by [Ansible](https://docs.ansible.com), then deployed via [Kamal](https://kamal-deploy.org). CI/CD is wired up in `.github/workflows/cicd.yml` and runs on every push to `master`.
+
+- Kamal service config: `config/deploy.yml`
+- Ansible playbook + roles: `infrastructure/ansible/`
+- OpenTofu (Linode + AWS): `infrastructure/tofu/`
+
+To deploy manually from a local checkout:
 
 ```bash
-# Create the app
-ssh -t <user>@<dokku_server> dokku apps:create <website_domain>
-# Add the dokku git remote to the repo
-git remote add <remote_name> ssh://dokku@<dokku_server>:<port>/<website_domain>
-# Set the domain for the dokku container
-dokku --remote <remote_name> domains:set <website_domain>
-# Create & link postgres and redis containers (can limit memory usage in MB with --memory)
-dokku --remote <remote_name> postgres:create <app_name>-db --memory 1024
-dokku --remote <remote_name> postgres:link <app_name>-db <website_domain>
-dokku --remote <remote_name> redis:create <app_name>-redis
-dokku --remote <remote_name> redis:link <app_name>-redis <website_domain>
-# Set important environment variables
-dokku --remote <remote_name> config:set RAILS_MASTER_KEY=$(cat config/master.key)
-dokku --remote <remote_name> config:set DOMAIN=<website_domain>
-# Set on the staging environment
-dokku --remote <remote_name> config:set STAGING=true
-# Setup LetsEncrypt certs
-# - Make sure to have your domain DNS settings point <website_domain> to the server before running this
-dokku --remote <remote_name> letsencrypt:enable
-# If using a branch other than main or master to deploy from
-dokku --remote <remote_name> git:set deploy-branch <branch_name>
-# Push the code to the server and deploy
-git push <remote_name> <branch>
-# Scale up the web and worker processes
-dokku --remote <remote_name> ps:scale web=1 worker=1
-# Limit the app resources, set these to whatever you need
-# See https://docs.docker.com/engine/containers/resource_constraints
-dokku --remote <remote_name> resource:limit --memory 1.5g --process-type web
-dokku --remote <remote_name> resource:limit --memory 500m --process-type worker
-dokku --remote <remote_name> resource:report
-# Setup persistent logging to a file at /var/log/dokku/apps/<app_name>.log
-# The regular app logs are not kept between container restarts / deploys
-dokku --remote <remote_name> logs:set vector-sink "file://?encoding[codec]=csv&encoding[csv][fields][]=timestamp&encoding[csv][fields][]=message&encoding[csv][quote_style]=always&path=/var/log/dokku/apps/<app_name>.log"
-dokku --remote <remote_name> logs:vector-start
-# If using dokku-graphite and reporting with StatsD,
-# this will make the environment variable STATSD_URL available in the app
-dokku --remote <remote_name> graphite:link <graphite_service> <app_name>
-
-# Anytime you need to deploy a new release
-git push <remote_name> <branch>
+bin/kamal deploy
 ```
 
-You can omit the `<remote_name>` and keep it as the default `dokku` remote if you like. But it's nice if you've got a staging and production servers to have different remotes, e.g. `staging` and `production`. That way you can deploy to each server with:
+Useful aliases (defined in `config/deploy.yml`):
 
 ```bash
-git push staging master
-git push production master
-```
-
-I like to use `pgAdmin` to interface with the postgres database, which can be done with SSH tunneling. First you'll need to expose the database port from the docker container to the host machine.
-
-```bash
-# Expose the database internally from dokku to 0.0.0.0 on the host
-dokku --remote <remote_name> postgres:expose <app_name>-db 5432
-# Undo the port expose with
-dokku --remote <remote_name> postgres:unexpose <app_name>-db 5432
-# View the connection string (password etc.) and use it in pgAdmin, along with relevant SSH tunnel settings
-dokku --remote <remote_name> postgres:info <app_name>-db
-```
-
-Sometimes it's handy to blast away the database and start fresh:
-
-```bash
-dokku --remote <remote_name> postgres:unlink <app_name>-db <website_domain>
-dokku --remote <remote_name> postgres:destroy <app_name>-db --force
-dokku --remote <remote_name> postgres:create <app_name>-db
-dokku --remote <remote_name> postgres:link <app_name>-db <website_domain>
-```
-
-To recreate the database from a backup:
-
-```bash
-# Downloads the most recent backup to ./backup/export
-rake fetch_most_recent_backup
-# For a local development database
-pg_restore --clean --dbname=<local_db_name> --exit-on-error backup/export
-# For a dokku hosted database (you may need to blast away and recreate the database first)
-dokku --remote <remote_name> postgres:import <app_name>-db < backup/export
+bin/kamal console   # Rails console
+bin/kamal shell     # Bash inside the app container
+bin/kamal logs      # Tail app logs
+bin/kamal dbc       # Rails dbconsole
 ```
 
 ## Development
@@ -120,7 +47,9 @@ rails db:prepare
 rake restore_development_db_from_most_recent_backup
 ```
 
-## OpenTofu
+## Infrastructure bootstrap
+
+Day-to-day server config is handled by Ansible (`infrastructure/ansible/deploy.yml`); `tofu apply` only needs to run when the underlying cloud resources change.
 
 If starting from scratch, you need to:
 
