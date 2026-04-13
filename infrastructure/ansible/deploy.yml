@@ -24,6 +24,7 @@
       vars:
         system_hostname_short: "jqc-{{ lookup('env', 'ENVIRONMENT') }}"
         system_hostname_fqdn: "{{ lookup('env', 'JQC_HOSTNAME') }}"
+    - role: "system_swapfile"
     - role: "system_fail2ban"
     - role: "postfix_relay"
       vars:
