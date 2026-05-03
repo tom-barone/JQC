@@ -7,7 +7,11 @@ ExceptionNotification.configure do |config|
   # ActiveRecord::RecordNotFound, AbstractController::ActionNotFound and
   # ActionController::RoutingError are already added.
   # config.ignored_exceptions += %w{ActionView::TemplateError CustomError}
-  config.ignored_exceptions += %w[ActionDispatch::Http::MimeNegotiation::InvalidType URI::InvalidComponentError]
+  config.ignored_exceptions += %w[
+    ActionDispatch::Http::MimeNegotiation::InvalidType
+    URI::InvalidComponentError
+    ActionController::BadRequest
+  ]
 
   # Adds a condition to decide when an exception must be ignored or not.
   # The ignore_if method can be invoked multiple times to add extra conditions.
