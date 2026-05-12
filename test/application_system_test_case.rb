@@ -25,6 +25,12 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   # (Usually checked automatically for most capybara methods)
   Capybara.test_id = 'data-testid'
 
+  # Give each parallel worker a distinct port — Capybara's find_available_port is
+  # racy and two forks can roll the same port and collide on bind.
+  parallelize_setup do |worker|
+    Capybara.server_port = 9887 + worker
+  end
+
   include NavigationHelper
   include CookiesHelper
   include ApplicationTypesHelper
