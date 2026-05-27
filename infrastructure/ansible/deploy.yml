@@ -34,6 +34,8 @@
         postfix_relay_password: "{{ lookup('env', 'SMTP_RELAY_PASSWORD') }}"
         postfix_relay_hostname: "{{ lookup('env', 'JQC_HOSTNAME') }}"
         postfix_relay_root_alias: "{{ lookup('env', 'ALERTS_EMAIL') }}"
+        postfix_relay_custom_headers:
+          - "X-Origin-Host: {{ lookup('env', 'JQC_HOSTNAME') }}"
     - role: "ansible_flush_handlers"
     - role: "system_logcheck"
     - role: "docker_install"
