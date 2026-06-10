@@ -302,7 +302,7 @@ GEM
       ruby-progressbar
     msgpack (1.8.0)
     mutex_m (0.3.0)
-    net-imap (0.6.4)
+    net-imap (0.6.4.1)
       date
       net-protocol
     net-pop (0.1.2)
@@ -526,11 +526,11 @@ GEM
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
       rack
-    psych (5.3.1)
+    psych (5.4.0)
       date
       stringio
     public_suffix (7.0.5)
-    puma (7.0.4)
+    puma (7.2.1)
       nio4r (~> 2.0)
     raabro (1.4.0)
     racc (1.8.1)
@@ -745,7 +745,7 @@ DEPENDENCIES
   pagy (~> 9.3.5)
   pg (~> 1.5.9)
   propshaft (~> 1.2.1)
-  puma (~> 7.0.3)
+  puma (~> 7.2.1)
   rails (~> 8.1.2)
   rubocop (~> 1.81.7)
   rubocop-capybara (~> 2.22.1)
