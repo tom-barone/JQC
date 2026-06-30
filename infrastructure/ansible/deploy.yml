@@ -11,6 +11,7 @@
         group: "1000"
         mode: "0755"
   roles:
+    - role: "system_unattended_upgrades"
     - role: "system_locale"
       vars:
         system_locale_name: "en_AU.UTF-8"
