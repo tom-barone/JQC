@@ -22,6 +22,7 @@ class StructuralEngineer < ApplicationRecord
           se.structural_engineer_fee,
           se.engineer_certificate_received,
           se.certificate_reference,
+          se.structural_engineer_notes,
           se.structural_engineer_ok_to_pay,
           a.certification_notes
       FROM structural_engineers AS se

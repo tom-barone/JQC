@@ -615,7 +615,8 @@ CREATE TABLE public.structural_engineers (
     structural_engineer_ok_to_pay boolean DEFAULT false NOT NULL,
     application_id bigint,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    structural_engineer_notes text
 );
 
 
@@ -1392,6 +1393,7 @@ ALTER TABLE ONLY public.structural_engineers
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260703072237'),
 ('20250808042802'),
 ('20250306231800'),
 ('20250227114919'),
