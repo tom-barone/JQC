@@ -82,7 +82,7 @@ format:
 [group('Development')]
 clean:
     docker stop jqc_test_postgres 2>/dev/null || true
-    rm -rf ci
+    rm -rf ci node_modules infrastructure/ansible/.venv {{ TOFU_DIR }}/.terraform
 
 [doc('Run all pre-commit checks')]
 [group('Development')]
