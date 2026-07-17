@@ -7,9 +7,7 @@ plugin "terraform" {
 
 plugin "aws" {
     enabled = true
-    version = "0.43.0"
+    version = "0.48.0"
     source  = "github.com/terraform-linters/tflint-ruleset-aws"
-    # Attestation verification crashes tflint since GitHub removed the
-    # `bundle` field from its API (terraform-linters/tflint#2591).
     signature = "pgp"
 }
