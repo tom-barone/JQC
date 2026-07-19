@@ -27,6 +27,13 @@ jobs:
         with:
           cache_key: "mise-{{platform}}-{{version}}-{{file_hash}}"
           version: "2026.3.1"
+        env:
+          # We seem to keep timing out here during the CICD runs,
+          # so try increasing the timeout 4x to 120s (default was 20s)
+          MISE_FETCH_REMOTE_VERSIONS_TIMEOUT: "120s"
+          # Unauthenticated GitHub API requests from shared runner IPs
+          # get rate limited and hang, so authenticate them
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: "Mask secrets"
         run: "just secrets-mask"
