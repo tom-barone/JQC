@@ -110,3 +110,11 @@ builder:
 # ssh:
 #   user: app
 
+# GitHub Actions runners sit behind Azure's NAT, which silently drops TCP
+# connections after ~4 minutes idle. Kamal's SSH connection pool keeps idle
+# connections for 900s by default, so after a long docker build it reuses a
+# connection the NAT has already dropped and dies with Errno::ECONNRESET.
+# Evict idle connections before the NAT does.
+sshkit:
+  pool_idle_timeout: 180
+
