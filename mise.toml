@@ -14,3 +14,10 @@ uv = "0.10.8"
 # Faster than compiling from source
 [settings.ruby]
 compile = false
+
+[settings]
+# We seem to keep timing out at mise installs during github actions. Have seen failures at:
+#  1. the default (20s)
+#  2. 120s
+# so now try increasing to 240s to see if that helps.
+fetch_remote_versions_timeout = "240s"
