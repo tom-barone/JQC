@@ -28,13 +28,13 @@ module Applications
 
     def click_search
       click_on SEARCH_BUTTON
-      begin
-        # Wait for our search to complete by checking the button state
-        find_button(SEARCH_BUTTON, disabled: true, wait: 0.5)
-        find_button(SEARCH_BUTTON, disabled: false, wait: 0.5)
-      rescue Capybara::ElementNotFound
-        # Our search might've finished really quickly, so ignore the errors
-      end
+      # Turbo marks the form with [aria-busy] while the submission is in
+      # flight and the <html> element with [aria-busy] until the new page
+      # has rendered. Wait for the whole cycle so we never read the old
+      # results table while the response is still on its way.
+      has_css?('[aria-busy]', wait: 1)
+
+      assert_no_selector '[aria-busy]'
     end
 
     def click_clear_search
