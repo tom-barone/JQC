@@ -255,6 +255,7 @@ url_api = "https://api.github.com/repos/opentofu/opentofu/releases/assets/354856
 [[tools.ruby]]
 version = "3.3.10"
 backend = "core:ruby"
+specifiers = ["3.3.10"]
 
 [tools.ruby."platforms.windows-x64"]
 checksum = "sha256:80203102617b216dc0bcdcc8c21cc3889aa3fde7f15860e2e22ee5487480f694"
