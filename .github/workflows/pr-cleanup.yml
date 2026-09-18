@@ -23,10 +23,10 @@ jobs:
         with:
           submodules: "recursive"
 
-      - uses: "jdx/mise-action@v4.0.1"
+      - uses: "jdx/mise-action@v4.2.1"
         with:
           cache_key: "mise-{{platform}}-{{version}}-{{file_hash}}"
-          version: "2026.3.1"
+          version: "2026.9.1"
         env:
           # We seem to keep timing out here during the CICD runs,
           # so try increasing the timeout 4x to 120s (default was 20s)
