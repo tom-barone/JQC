@@ -64,7 +64,7 @@
     - role: "restic_backup"
       vars:
         restic_backup_dir: "/opt/active-storage-backup"
-        restic_backup_cron_job_name: "active-storage-restic-backup"
+        restic_backup_job_name: "active-storage-restic-backup"
         restic_backup_repository: >-
           s3:{{ lookup('env', 'RESTIC_ACTIVE_STORAGE_S3_ENDPOINT') }}/{{
           lookup('env', 'RESTIC_ACTIVE_STORAGE_S3_BUCKET') }}
