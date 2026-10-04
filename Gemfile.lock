@@ -622,7 +622,7 @@ GEM
     ruby-progressbar (1.13.0)
     ruby-statistics (4.1.0)
     ruby2_keywords (0.0.5)
-    rubyzip (3.2.2)
+    rubyzip (3.7.0)
     schema_to_scaffold (0.8.0)
       activesupport (>= 3.2.1)
     securerandom (0.4.1)
