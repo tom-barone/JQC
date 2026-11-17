@@ -150,7 +150,8 @@ class ApplicationsController < ApplicationController
   def render_application_pdf
     browser = Ferrum::Browser.new(process_timeout: 15, browser_options: { 'no-sandbox' => nil })
     html = render_to_string(template: 'applications/show', formats: [:html], content_type: 'text/html')
-    pdf_data = FerrumPdf.render_pdf(html: html, browser: browser, pdf_options: pdf_render_options)
+    pdf_data = FerrumPdf.render_pdf(html: html, display_url: request.original_url, browser: browser,
+                                    pdf_options: pdf_render_options)
     send_data pdf_data, disposition: :inline, filename: "#{@application[:reference_number]}.pdf",
                         type: 'application/pdf'
   rescue StandardError => e
