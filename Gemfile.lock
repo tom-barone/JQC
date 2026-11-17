@@ -300,7 +300,7 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
-    msgpack (1.8.4)
+    msgpack (1.8.7)
     mutex_m (0.3.0)
     net-imap (0.6.7)
       date
